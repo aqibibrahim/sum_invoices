@@ -1,0 +1,225 @@
+<!--
+  Generated template for the InvoicedeatilsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="lightblue"> 
+    <ion-title color="grey">invoice Details</ion-title>
+    <ion-buttons end>
+        <button ion-button (click)="searchToggle()">
+          <ion-icon name="create"></ion-icon>
+      </button>
+      </ion-buttons>
+    <ion-buttons end>
+        <button ion-button (click)="sendEmail()">
+          <ion-icon name="mail"></ion-icon>
+      </button>
+      </ion-buttons>
+    <ion-buttons end>
+        <button ion-button (click)="presentActionSheet()">
+          <ion-icon name="more"></ion-icon>
+        </button>
+      </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+   <!-- Header of Invoice detail pge -->
+  <div style="
+  background-color: #646666;
+  width: -webkit-fill-available; 
+  position: relative;
+  z-index: 1;
+  height: fit-content;
+  min-width: 1000px;
+  max-width: 1500px;
+  margin: -30px auto;
+  padding-top: 16%;
+  margin-left: -16px;
+  padding-left: 38px;
+  color:white;
+">
+    <p>{{invoice_number}}</p>
+    <h3 style="
+    text-decoration-line: underline;
+">{{customer_name}}</h3>
+    <h2>PKR{{balance}}</h2>
+    <p>Balance</p>
+
+  </div>
+<!-- Sub Information of Invoice -->
+  <div style="
+  margin-top: inherit;
+">
+<ion-row>
+  <ion-col>
+    <ion-item>
+      <p>{{invoice_date}}</p>
+      <p style="color:coral">Invoice Date</p>
+    </ion-item>
+</ion-col>
+<ion-col>
+  <ion-item>
+    <p>{{due_date}}</p>
+    <p style="color:coral">Due Date</p>
+  </ion-item>
+</ion-col>
+</ion-row>
+  </div>
+
+  <!-- Add Reference Number -->
+  <ion-item style="border-bottom: lightgrey">
+    <p style="color:coral">
+      Reference#
+    </p>
+    <p>1</p>
+  </ion-item>
+
+  <!-- Billing Address -->
+  <ion-item style="border-bottom: lightgrey">
+    <p style="color:coral">
+      Billing Address
+    </p>
+    <p>
+      Sardar Arcade Bahria Town Phase 7
+    </p>
+  </ion-item>
+
+  <ion-toolbar style="
+  /* background-color: #646666; */
+  width: 110%;
+  margin-left: -5%;
+  margin-top: -1%;
+  /* color: blue; */
+">
+    <ion-grid>
+        <ion-row >
+          <ion-col>
+            <div class="ion-text-left">
+              <p style="color:coral">Items</p>
+             
+            </div>
+          </ion-col>
+          <ion-col col-3>
+            <div class="ion-float-right">
+              <p style="
+              color: coral;
+          ">Amount</p>
+             
+            </div>
+          </ion-col>
+ </ion-row>
+ </ion-grid>
+</ion-toolbar>
+ 
+<ion-row style="border-bottom: 1px solid lightgray;">
+   <ion-col col-9 class="ion-text-end">
+     
+       <p style="
+       margin-top: 3px;
+   color:grey;font-weight: bold;">{{item_name}}</p>
+       <p>{{quantity}} X PKR{{rate}}</p>
+       <p>{{description}}</p>
+     
+   </ion-col>
+   <ion-col col-3>
+      <h4 style="
+      margin-top: 3px;color:grey;
+  ">PKR{{subtotal}}</h4>
+   </ion-col>
+ </ion-row>
+
+  <!-- Sub Total -->
+ <ion-row style="border-bottom: 1px solid lightgray;">
+    <ion-col col-8 text-end style="color:coral; margin-top: 5%">
+    Sub Total
+    </ion-col>
+    <ion-col text-end style="margin-top: 5%">
+        PKR {{subtotal}}
+    </ion-col>
+  </ion-row>
+
+   <!-- Discount Price -->
+   <ion-row >
+      <ion-col col-8 text-end style="color:coral; margin-top: 5%">
+        Discount Price
+      </ion-col>
+      <ion-col text-end style="margin-top: 5%; color: red">
+         (-) PKR {{discount}}
+      </ion-col>
+    </ion-row>
+
+ <!-- Adjustment -->
+  <ion-row >
+      <ion-col col-8 text-end style="color:coral; margin-top: 5%">
+       Adjustment
+      </ion-col>
+      <ion-col text-end style="margin-top: 5%">
+          PKR {{adjustment}}
+      </ion-col>
+    </ion-row>
+   
+    <!-- Shipping Charges -->
+    <ion-row >
+        <ion-col col-8 text-end style="color:coral; margin-top: 5%">
+          Shipping Charges
+        </ion-col>
+        <ion-col text-end style="margin-top: 5%">
+            PKR {{shipping}}
+        </ion-col>
+      </ion-row>
+        
+    
+
+    <!-- Total -->
+    <ion-row >
+        <ion-col col-8 text-end style="color:coral; margin-top: 5%">
+          Total
+        </ion-col>
+        <ion-col text-end style="margin-top: 5%">
+            PKR {{balance}}
+        </ion-col>
+      </ion-row>
+
+      <!-- Payment Made -->
+      <ion-row >
+          <ion-col col-8 text-end style="color:coral; margin-top: 5%">
+            Payment Made
+          </ion-col>
+          <ion-col text-end style="margin-top: 5%;color: red">
+              (-) PKR 0.00   <!--PKR {{subtotal}}-->
+          </ion-col>
+        </ion-row>
+          
+    <!-- Credits Applies     -->
+    <ion-row >
+        <ion-col col-8 text-end style="color:coral; margin-top: 5%">
+          Credit Appllied
+        </ion-col>
+        <ion-col text-end style="margin-top: 5%; color: red">
+           (-) PKR 0.00 <!--{{subtotal}}-->
+        </ion-col>
+      </ion-row>
+    
+      <!-- Balance Due -->
+      <ion-row >
+          <ion-col col-8 text-end style="color:coral; margin-top: 5%">
+            Balance Due
+          </ion-col>
+          <ion-col text-end style="margin-top: 5%">
+              PKR {{balance}}
+          </ion-col>
+        </ion-row>
+     
+     <ion-item>
+     <p style="color: coral">Notes</p>
+     <p style="color:grey"> Thanks For Your Business</p>   
+    </ion-item>   
+    <ion-item>
+        <p style="color: coral">Attachment</p>
+        <p style="color:grey"> Attachment List is Empty</p>   
+      </ion-item>
+      
+</ion-content>

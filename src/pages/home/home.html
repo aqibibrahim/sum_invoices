@@ -1,0 +1,129 @@
+<ion-header>
+  <ion-navbar color="lightblue">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Dashboard</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+       
+  <div style="
+  background-color: #646666;
+  width: -webkit-fill-available; 
+  position: fixed;
+  z-index: 1;
+  height: max-content;
+  margin: -30px auto;
+  padding-top: 16%;
+  margin-left: -16px;
+  padding-left: 38px;
+  color:white;
+  top:0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+">
+    <div style="text-align: center"><img src="assets/imgs/avatar.png" class="larger" /></div>
+  <!-- <button (click)="getcontacts()" style="margin-top: 10% !important;">Login With Google</button> -->
+  <h3 style="text-align: center">Welcome!</h3>
+</div>
+<div>
+<ion-grid style="margin-top: 49%">
+  <ion-row style="text-align: -webkit-center;">
+    <ion-col (click)="contactpage()">
+      <div>
+          <img src="assets/imgs/contact.png" class="larger">
+      </div>
+      <div>
+        <p>
+          New Contacts
+        </p>
+      </div>
+      
+      
+    </ion-col>
+      
+    <ion-col (click)="invoicepage()">
+      <div>
+           <img src="assets/imgs/invoice_check-512.png" class="larger">
+      </div>
+      <div>
+        <p>
+            New Invoice
+        </p>
+      </div>
+      
+    </ion-col>
+
+  </ion-row>
+  <ion-row style="text-align: -webkit-center;margin-top: 10%;">
+    <ion-col (click)="reportspage()">
+      <div >
+          <img src="assets/imgs/record.png" class="larger">
+          <!-- <ion-icon ios="ios-contacts" md="md-contacts" class="larger"></ion-icon> -->
+      </div>
+      <div>
+        <p>
+           Reports
+        </p>
+      </div>
+      
+    </ion-col>
+    <ion-col (click)="estimatespage()">
+      <div>
+          <img src="assets/imgs/estimates.png" class="larger">
+      </div>
+      <div>
+        <p>
+            Estimates
+        </p>
+      </div>
+      
+    </ion-col>
+  </ion-row>
+  <ion-row style="text-align: -webkit-center;margin-top: 10%;">
+    <ion-col (click)="billspage()">
+      <div >
+          <img src="assets/imgs/bills.png" class="larger">
+          <!-- <ion-icon ios="ios-contacts" md="md-contacts" class="larger"></ion-icon> -->
+      </div>
+      <div>
+        <p>
+           Bills
+        </p>
+      </div>
+      
+    </ion-col>
+    <ion-col>
+      <div>
+          <img src="assets/imgs/log.png" class="larger">
+      </div>
+      <div>
+        <p>
+            Log Time
+        </p>
+      </div>
+      
+    </ion-col>
+  </ion-row>
+</ion-grid>
+</div>
+<ion-list>
+  <ion-item *ngFor=" let item of allContacts" (click)="selectCP(item)">
+      {{item.displayName}}
+  </ion-item>
+</ion-list>
+  <!-- <ion-card style="width:100%">
+    <ion-card-header>
+      Header
+    </ion-card-header>
+    <ion-card-content>
+      The British use the term "header", but the American term "head-shot" the English simply refuse to adopt.
+    </ion-card-content>
+  </ion-card> -->
+  
+</ion-content>
+
+

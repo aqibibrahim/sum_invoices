@@ -1,0 +1,278 @@
+<!--
+  Generated template for the CreateInvoicesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header >
+  <ion-navbar color="lightblue">
+    <ion-title>New Invoice</ion-title>
+    <!-- <ion-buttons end>
+        <button ion-button (click)="sendEmail()">
+          <ion-icon name="send"></ion-icon>
+      </button>
+      </ion-buttons> -->
+    <ion-buttons end>
+        <button ion-button (click)="invoicedetails()">
+        Save As Draft
+      </button>
+      </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card>
+  <ion-card-content>
+    <ion-list>
+        <ion-item>
+            <ion-label>Contact</ion-label>
+            <ion-select [(ngModel)]="gaming" ionCancel="onCancel()" okText="Ok">
+              <ion-option *ngFor="let name of namesList" [value] = "name.firstName">{{name.firstName}}</ion-option>
+            </ion-select>
+          </ion-item>
+  </ion-list>
+    <ion-item>
+<ion-label fixed>Email</ion-label>
+      <!-- <ion-input type="email" value="" [(ngModel)]="email"></ion-input> -->
+      <ion-input type="email" [(ngModel)]="email"  name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required ></ion-input>
+</ion-item>
+    <ion-item>
+      <ion-label fixed>Invoice #</ion-label>
+      <ion-input type="number" value="" [(ngModel)]="invoice"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>Order Number</ion-label>
+      <ion-input type="number" value="" [(ngModel)]="order"></ion-input>
+    </ion-item>
+    </ion-card-content>
+  
+  </ion-card>
+
+  <ion-card>
+      <ion-card-content>
+       
+        <ion-row style="border-bottom: 1px solid grey">
+            <ion-col >
+                <ion-item style="border-bottom: 1px solid grey">
+                    <ion-label floating>Date</ion-label>
+                    <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="invoicedate"></ion-input>
+                  </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item style="border-bottom: 1px solid grey">
+                    <ion-label floating>Due</ion-label>
+                    <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="duedate"></ion-input>
+                  </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-list>
+              <ion-item>
+                <ion-label color="lightblue">Terms</ion-label>
+                <ion-select [(ngModel)]="terms">
+                  <ion-option value="noterms">Due on Recipt</ion-option>
+                  <ion-option value="dueonreceipt">Nert 15</ion-option>
+                  <ion-option value="net15">Net 30</ion-option>
+                  <ion-option value="net15">Net 45</ion-option>
+                  <ion-option value="net15">Net 60</ion-option>
+                  <ion-option value="net15">Due end of the Month</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+      
+
+      </ion-card>
+
+      <ion-card>
+        <ion-card-content>
+            <ion-list>
+                <ion-item>
+                  <ion-label color="lightblue">Sales Person</ion-label>
+                  <ion-select [(ngModel)]="terms">
+                    <ion-option value="noterms" selected>None</ion-option>
+                    <ion-option value="dueonreceipt">Include in amounts</ion-option>
+                    <ion-option value="net15">Not Applicable</ion-option>
+                  </ion-select>
+                </ion-item>
+              </ion-list>
+            </ion-card-content>
+        </ion-card>
+
+        <ion-card>
+          <ion-card-content>
+              
+                <button ion-button icon-end clear full (click)='adlineitem()'>
+                    Add Line Item
+                    <ion-icon name="add" ></ion-icon>
+                  </button>
+          
+                  <ion-item *ngIf="input_name != null" >
+
+                      <ion-row style="border-bottom: 1px solid lightgrey">
+                          <ion-col col-6>
+                              <ion-item >
+                                  <!-- <ion-label color="primary">Items</ion-label> -->
+                                  <ion-input type="text" placeholder="Customer Notes" [(ngModel)]="items" [readonly]="isReadonly()" style="color:lightgrey"></ion-input>
+                                </ion-item>
+                                </ion-col>
+                                <ion-col col-6>
+                                    <ion-item>
+                                        <!-- <ion-label color="primary">Items</ion-label> -->
+                                        <ion-input type="text" placeholder="Customer Notes" [(ngModel)]="amount" [readonly]="isReadonly()" style="color:lightgrey"></ion-input>
+                                      </ion-item>
+                                      </ion-col>
+                                     
+                              </ion-row>
+                    <ion-row>
+                      <ion-col >
+                          <ion-item >
+                              <!-- <ion-label color="primary">Items</ion-label> -->
+                             
+                              <ion-input type="text" placeholder="Customer Notes" [(ngModel)]="input_name" [readonly]="isReadonly()"></ion-input>
+                            </ion-item>
+                            </ion-col>
+                          </ion-row>
+                      <ion-row style="border-bottom: 1px solid lightgrey; height: 33.33%">
+                              <ion-col col-7>
+                            <ion-item >
+                              <ion-input type="text" placeholder="Customer Notes" [(ngModel)]="qty" [readonly]="isReadonly()"></ion-input>
+                              <ion-input type="text" placeholder="Customer Notes" [(ngModel)]="x" [readonly]="isReadonly()"></ion-input>
+                               <ion-input type="text" placeholder="Customer Notes" [(ngModel)]="rat" [readonly]="isReadonly()"></ion-input>
+                              </ion-item>
+                      </ion-col>
+                      <ion-col col-5>
+                          <ion-item>
+                              
+                              <!-- <ion-label color="primary">Amount</ion-label> -->
+                              <ion-input type="number" placeholder="Customer Notes" [(ngModel)]="subtotal" [readonly]="isReadonly()" style="text-align: right"></ion-input>
+                            </ion-item>
+                      </ion-col>
+                    </ion-row>
+
+                    <ion-row >
+                <ion-col col-7>
+                      <ion-item >
+                        <h3 >Subtotal</h3>
+                        </ion-item>
+                </ion-col>
+                <ion-col col-5>
+                <ion-item>
+                        <ion-input type="number" placeholder="Customer Notes" [(ngModel)]="subtotal" [readonly]="isReadonly()" style="text-align: right"></ion-input>
+                      </ion-item>
+                </ion-col>
+                
+              </ion-row>
+
+              <ion-row>
+                  <ion-col col-6>
+                        <ion-item >
+                          <h4>Discount</h4>
+                         
+                          </ion-item>
+                  </ion-col>
+                  <ion-col col-6>
+                  <ion-item style="border-bottom: 1px solid lightgrey">
+                          <ion-input type="number" placeholder="Discount" [(ngModel)]="discountprice" style="text-align: right" (input)='onInputTime($event.target.value)'></ion-input>
+                        </ion-item>
+                  </ion-col>
+                  
+                </ion-row>
+
+                <ion-row>
+                    <ion-col col-6>
+                          <ion-item >
+                            <h4>Shipping</h4>
+                           
+                            </ion-item>
+                    </ion-col>
+                    <ion-col col-6>
+                    <ion-item style="border-bottom: 1px solid lightgrey">
+                            <ion-input type="number" placeholder="Shipping" [(ngModel)]="shippingprice" style="text-align: right" (input)='onShipping($event.target.value)'></ion-input>
+                          </ion-item>
+                    </ion-col>
+                    
+                  </ion-row>
+
+                  <ion-row>
+                      <ion-col col-6>
+                            <ion-item >
+                              <h4>Adjustment</h4>
+                             
+                              </ion-item>
+                      </ion-col>
+                      <ion-col col-6>
+                      <ion-item style="border-bottom: 1px solid lightgrey">
+                              <ion-input type="number" placeholder="Adjustment" [(ngModel)]="adjustmentprice" style="text-align: right" (input)='onAdjustment($event.target.value)'></ion-input>
+                            </ion-item>
+                      </ion-col>
+                      
+                    </ion-row>
+
+                    <ion-row>
+                        <ion-col col-6>
+                              <ion-item >
+                                <h3>Total</h3>
+                               
+                                </ion-item>
+                        </ion-col>
+                        <ion-col col-6>
+                        <ion-item>
+                                <ion-input type="text" placeholder="Customer Notes" [(ngModel)]="total" style="text-align: right" [readonly]="isReadonly()"></ion-input>
+                              </ion-item>
+                        </ion-col>
+                        
+                      </ion-row>
+                  </ion-item>
+
+              </ion-card-content>
+          
+    
+          </ion-card>
+
+          <ion-card>
+            <ion-card-content>
+                
+              <ion-list>
+
+                <ion-item>
+                  <ion-input type="text" placeholder="Customer Notes"></ion-input>
+                </ion-item>
+              
+                <ion-item>
+                  <ion-input type="text" placeholder="Terms & Conditions"></ion-input>
+                </ion-item>
+              
+              </ion-list>
+            
+                </ion-card-content>
+            
+      
+            </ion-card>
+          </ion-content>
+      <!-- <ion-item *ngFor="let att of anArray; let idx = index">
+          <ion-label color="primary">{{att.label}}{{idx+1}}</ion-label> 
+          <ion-input type="text"  text-right  [(ngModel)]="anArray[idx].value"></ion-input>
+          
+      </ion-item>
+
+      <button ion-button   (click)="Add()">Add More</button>
+      <button ion-button full  (click)="goTo()" >let's go</button>
+     
+     <ion-card *ngIf="data">
+      <ion-item *ngFor="let att of anArray;">
+        <div class="card-title">{{att.value}}</div>
+      </ion-item>
+     </ion-card> -->
+         
+            <!-- <span *ngIf="email.errors">
+                <span [hidden]="!email.errors.required">
+                    <ion-label style="color: red; margin-left: 16px;"> Email is required </ion-label>
+                </span>
+                <span [hidden]="!email.errors.pattern">
+                    <ion-label style="color: red; margin-left: 16px;"> Please enter a valid email </ion-label>
+                </span>
+            </span> -->
+     
+

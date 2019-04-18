@@ -1,0 +1,111 @@
+<!--
+  Generated template for the ContactdetailsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header >
+  <ion-navbar color="lightblue">
+    <ion-title>Contact Details</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="searchToggle()">
+        <ion-icon name="create"></ion-icon>
+    </button>
+    </ion-buttons>
+  <ion-buttons end>
+      <button ion-button (click)="searchToggle()">
+        <ion-icon name="more"></ion-icon>
+    </button>
+    </ion-buttons>
+    
+  </ion-navbar>
+    
+</ion-header>
+
+<ion-content padding>
+  <ion-card color="lightblue">
+    <ion-card-header>
+      <h1 style="font-weight: bold;">Mr. Aqib</h1>
+    </ion-card-header>
+    <!-- <ion-card-content>
+      The British use the term "header", but the American term "head-shot" the English simply refuse to adopt.
+    </ion-card-content> -->
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6>
+          <h3>Outstanding</h3>
+          <h4 style="font-size: large;font-weight: bold;">PKR0.00</h4>
+        </ion-col>
+        <ion-col col-6>
+            <h3>Credits</h3>
+            <h4 style="font-size: large;font-weight: bold;">PKR0.00</h4>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+  </ion-card>
+  <!-- <button ion-button full round (click)="onButtonClick()">Click</button> -->
+
+<!-- <ion-input *ngIf="buttonClicked" type="text" value=""></ion-input> -->
+<ion-card>
+
+    <div>
+
+        <ion-row>
+            <ion-col col-6>
+                <button ion-button  block (click)="onButtonClick1()">Overview</button>
+            </ion-col>
+            <ion-col col-6>
+                <button ion-button  block (click)="onButtonClick2()">Recent Activity</button>
+            </ion-col>
+          </ion-row>
+    </div>
+
+    <ion-grid *ngIf="buttonClicked1">
+        <ion-row>
+          <ion-col col-6>
+            <h3>Name</h3>
+            <h4 style="font-size: large;font-weight: bold;">Mr.Aqib</h4>
+          </ion-col>
+          <ion-col col-6>
+              <h3>Company Name</h3>
+              <h4 style="font-size: large;font-weight: bold;">Zekab</h4>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-3>
+                <ion-icon name="mail" style="color:grey; margin-top: 10px; font-size: 1.7em !important;margin-left: 12px;"></ion-icon>
+            </ion-col>
+            <ion-col col-9>
+                <ion-input type="text" placeholder="Email" value={{this.email}} readonly>{{this.email}} </ion-input>
+            </ion-col>
+            <ion-col col-3>
+                <ion-icon name="call" style="color:grey; margin-top: 10px; font-size: 1.7em !important; margin-left: 12px;"></ion-icon>
+              </ion-col>
+              <ion-col col-9>
+                  <ion-input type="text" placeholder="Phone" value={{this.phone_number}}>{{this.phone_number}}</ion-input>
+              </ion-col>
+            
+              <ion-col col-3 >
+                  <ion-icon name="phone-portrait" style="color:grey; margin-top: 10px; font-size: 1.7em !important;margin-left: 12px;"></ion-icon>
+                </ion-col>
+                <ion-col col-9>
+                    <ion-input type="text" placeholder="Mobile" value={{this.mobile_number}}>{{this.mobile_number}}</ion-input>
+                </ion-col>
+                
+          </ion-row>
+      </ion-grid>
+
+      <ion-list *ngIf="buttonClicked2">
+              <ion-item>
+                  <h3 style="color: black">Contact Created</h3>
+                  <p>by aqib</p>
+                  {{mydate | date: 'dd/MM/yyyy'}}
+                </ion-item>
+              <!-- <ion-item *ngFor="let post of posts" (click)="contactdetails()"> -->
+      </ion-list>
+</ion-card>
+
+
+   
+</ion-content>

@@ -1,0 +1,59 @@
+<!--
+  Generated template for the ReportsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar color="lightblue">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+          </button>
+      <ion-title>Reports</ion-title>
+      
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <ion-list-header color="dark">
+          Financial Reports
+        </ion-list-header>
+        <ion-item (click)="balance_sheet()">Balance Sheet</ion-item>
+        <ion-item (click)="profit_and_loss()">Profit and Loss</ion-item>
+        <ion-item (click)="cash_flow_statement()">Cash Flow Statement</ion-item>
+      </ion-list>
+      <ion-list>
+
+          <ion-list-header color="dark"> 
+            Sales
+          </ion-list-header>
+          <ion-item (click)="sales_by_customer()">Sales by Customer</ion-item>
+          <ion-item (click)="sales_by_item()">Sales by Item</ion-item>
+          <ion-item (click)="sales_sales_person()">Sales by Sales Person</ion-item>
+        </ion-list>
+        <ion-list>
+            <ion-list-header color="dark">
+              Receivables
+            </ion-list-header>
+            <ion-item (click)="customer_balance()">Customer Balances</ion-item>
+            <ion-item (click)="aging_summary()">Aging Summary</ion-item>
+            <ion-item (click)="payment_recieved()">Payment Recieved</ion-item>
+          </ion-list>
+          <ion-list>
+              <ion-list-header color="dark">
+                Expenses
+              </ion-list-header>
+              <ion-item (click)="expense_by_category()">Expense by Category</ion-item>
+              
+            </ion-list>
+            <ion-list>
+                <ion-list-header color="dark">
+                  Payables
+                </ion-list-header>
+                <ion-item (click)="vendor_balance()">Vendor Balances</ion-item>
+                <ion-item (click)="payment_made()">Payments Made</ion-item>
+                
+              </ion-list>
+
+</ion-content>

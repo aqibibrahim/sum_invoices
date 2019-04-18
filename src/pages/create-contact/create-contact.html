@@ -1,0 +1,167 @@
+<!--
+  Generated template for the CreateContactPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header >
+    <ion-navbar color="lightblue">
+      <ion-title>New Contact</ion-title>
+      <ion-buttons end>
+          <button ion-button (click)="opencontact()">
+            <ion-icon name="book"></ion-icon>
+        </button>
+        </ion-buttons>
+      <ion-buttons end>
+          <button ion-button (click)="savedata()">
+          Save
+        </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <ion-card>
+        <ion-card-header color="lightblue">
+          Primary Contact
+        </ion-card-header>
+        <ion-card-content >
+            <ion-item>
+            <ion-select [(ngModel)]="gaming" placeholder="Saln.">
+                <ion-option value="dr">Dr.</ion-option>
+                <ion-option value="n64">Mr.</ion-option>
+                <ion-option value="ps">Mrs.</ion-option>
+                <ion-option value="genesis">Miss.</ion-option>
+                <ion-option value="saturn">Ms.</ion-option>
+              </ion-select>
+            </ion-item>
+              <ion-item>
+                 
+                  <ion-input type="text" placeholder="First name" [(ngModel)]="firstname" name="username"></ion-input>
+                </ion-item>
+                <ion-item>
+                    
+                    <ion-input type="text" placeholder="Last name" [(ngModel)]="lastname"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                      
+                      <ion-input type="text" placeholder="Company name" [(ngModel)]="companyname"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        
+                        <ion-input type="text" placeholder="Contact Display name"></ion-input>
+                      </ion-item>
+        </ion-card-content>
+    </ion-card>
+    <ion-card>
+        <ion-card-content >
+            
+            
+              <ion-item>
+                  
+                  <ion-input type="text" placeholder="Contact Email"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <!-- <ion-label>Work Phone</ion-label> -->
+                    <ion-input type="text" placeholder="Work Phone."></ion-input>
+                    <!-- <ion-label>Mobile</ion-label> -->
+                    <ion-input type="text" placeholder="Mobile"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                     
+                      <ion-input type="text" placeholder="Company name"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        
+                        <ion-input type="text" placeholder="Contact Display name"></ion-input>
+                      </ion-item>
+                      <ion-label color="lightblue">Contact Type</ion-label>     
+                      <ion-row radio-group [(ngModel)]="sexe">
+                          <ion-col>
+                            <ion-item>
+                              <ion-label>Customer</ion-label>
+                              <ion-radio value="customer"></ion-radio>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                             <ion-label>Vendor</ion-label>
+                              <ion-radio value="vendor"></ion-radio>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-item>
+                        <ion-label color="lightblue">Currency</ion-label>  
+                        <ion-select [(ngModel)]="currency">
+                            <ion-option value="usd">USD</ion-option>
+                            <ion-option value="inr">INR</ion-option>
+                            <ion-option value="cad">CAD</ion-option>
+                            <ion-option value="gbp">GBP</ion-option>
+                            <ion-option value="aud">AUD</ion-option>
+                            <ion-option value="zar">ZAR</ion-option>
+                            <ion-option value="eur">EUR</ion-option>
+                            <ion-option value="jpy">JPY</ion-option>
+                            <ion-option value="cny">CNY</ion-option>
+                            <ion-option value="pkr">PKR</ion-option>
+                            <ion-option value="sar">SAR</ion-option>
+                            <ion-option value="aed">AED</ion-option>
+                            
+                            
+                          </ion-select> 
+                        </ion-item>
+                          <ion-item>
+                          <ion-label color="lightblue">Payment Terms</ion-label>  
+                        <ion-select [(ngModel)]="payment">
+                            <ion-option value="net15">Net 15</ion-option>
+                            <ion-option value="ne30">Net 30</ion-option>
+                            <ion-option value="net45">Net 45</ion-option>
+                            <ion-option value="net60">Net 60</ion-option>
+                            <ion-option value="eom">Due End of Month</ion-option>
+                            <ion-option value="eonm">Due END OF Next Month</ion-option>
+                            <ion-option value="dor">Due on</ion-option>
+                            
+                          </ion-select> 
+                        </ion-item>
+
+                        <ion-item>
+                            <ion-label>Enable Portal Access</ion-label>
+                            <ion-toggle disabled="false"></ion-toggle>
+                          </ion-item>
+
+                          <ion-item>
+                              <ion-label color="lightblue">Portal Language</ion-label>  
+                            <ion-select [(ngModel)]="language">
+                                <ion-option value="english">English</ion-option>
+                              </ion-select> 
+                            </ion-item>
+        </ion-card-content>
+      </ion-card>
+
+
+      <ion-card>
+          <ion-card-content >
+          <ion-item>
+              <button ion-button block (click)="openbillingpage()">
+                  <ion-icon name="home" item-left></ion-icon>
+                  Billing Address
+                </button>
+              
+          </ion-item>
+          
+          <ion-item>
+              <button ion-button block (click)="openshippingpage()">
+                  <ion-icon name="home" item-left></ion-icon>
+                  Shipping Address
+                </button>
+              
+          </ion-item>
+
+          <ion-item>
+              <ion-input type="text" placeholder="Remarks"></ion-input>
+              
+          </ion-item>
+          </ion-card-content>
+        </ion-card>
+
+</ion-content>
