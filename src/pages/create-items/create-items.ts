@@ -41,7 +41,13 @@ export class CreateItemsPage {
     let data = {
       item_name:this.name,
       item_type : this.sexe,
-      unit:this.units
+      unit:this.units,
+      sale_rate: this.sale_rate,
+      sale_tax:this.sale_tax,
+      sale_desc:this.sale_desc,
+      purchase_rate:this.purchase_rate,
+      purchase_account:this.purchase_account,
+      purchase_desc:this.purchase_desc
     };
     //console.log(this.data.username);
     this.http.post('https://sum-finance.herokuapp.com/item/create', data)
