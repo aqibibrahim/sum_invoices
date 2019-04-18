@@ -41,7 +41,8 @@ export class CreateItemsPage {
     let data = {
       item_name:this.name,
       item_type : this.sexe,
-      unit:this.units
+      unit:this.units,
+      
 
   };
     //console.log(this.data.username);
