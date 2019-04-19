@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ToastController, Toast } from 'ionic-angular';
 import {Http ,Response} from '@angular/http';
-
+import {ItemPage} from '../item/item'
 /**
  * Generated class for the CreateItemsPage page.
  *
@@ -28,7 +28,7 @@ export class CreateItemsPage {
 
   public saleinformation:boolean=false;
   public purchaseinformation:boolean=false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http:Http) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http:Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
   }
 
   ionViewDidLoad() {
@@ -37,6 +37,10 @@ export class CreateItemsPage {
   createitem(){
     
     console.log(this.sexe);
+    let loader = this.loadingCtrl.create({
+      content:'Waiting...'
+    });
+    loader.present();
     //this.afd.list('Books/Books').push({name:this.name});
     let data = {
       item_name:this.name,
@@ -53,8 +57,21 @@ export class CreateItemsPage {
     this.http.post('https://sum-finance.herokuapp.com/item/create', data)
         .subscribe(response => {
           console.log('POST Response:', response);
+          loader.dismiss();
+          let toast = this.tostctrl.create({
+            message:'Data Save',
+            duration:2000
+          });
+          toast.present();
+        this.navCtrl.push(ItemPage);
         }, error => {
-        console.log("Oooops!");
+          loader.dismiss();
+          let toast = this.tostctrl.create({
+            message:'Data not Save',
+            duration:2000
+          });
+          toast.present();
+         console.log("Oooops!");
         });
-        }
+              }
   }

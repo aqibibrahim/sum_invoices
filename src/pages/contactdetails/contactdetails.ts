@@ -21,6 +21,7 @@ export class ContactdetailsPage {
    phone_number:any;
    email:any;
    mydate:any; 
+   displayname:any;
    
 //   settings = {
 //     theme: 'material'
@@ -41,6 +42,7 @@ export class ContactdetailsPage {
     this.phone_number=this.navParams.get('phone');
     this.mobile_number = this.navParams.get('mobile');
     this.email = this.navParams.get('email');
+    this.displayname = this.navParams.get('');
     console.log(this.contact_id);
   }
 

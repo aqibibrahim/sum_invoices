@@ -44,4 +44,5 @@ export class ContactsPage {
   contactdetails(name,phone,mobile,email){
     this.navCtrl.push(ContactdetailsPage, {last_name:name,phone:phone,mobile:mobile,email:email});
   }
+  
 }

@@ -6,17 +6,17 @@
 -->
 <ion-header>
     <ion-navbar color="lightblue">
-      <ion-title>New Item</ion-title>
+      <ion-title>Edit Item</ion-title>
       <ion-buttons end>
-          <button ion-button (click)="searchToggle()">
-          Save
+          <button ion-button (click)="updateitem()">
+          Update
         </button>
         </ion-buttons>
     </ion-navbar>
   </ion-header>
   
   <ion-content padding>
-      <ion-card>
+      <ion-card >
         <ion-card-content>
             <ion-label color="lightblue">Type</ion-label>     
                         <ion-row radio-group [(ngModel)]="sexe">
@@ -33,21 +33,21 @@
                               </ion-item>
                             </ion-col>
                           </ion-row>
-  
+             <div *ngFor="let item of items">             
             <ion-item>
                 <ion-label color="red">Item Name</ion-label>
             </ion-item>
             <ion-item>
-                <ion-input type="text" placeholder="Name"></ion-input>
+                <ion-input type="text" placeholder="Name">{{item.item_name}}</ion-input>
             </ion-item>
   
             <ion-item>
                 <ion-label color="lightblue">Unit</ion-label>  
             </ion-item>
             <ion-item>
-                <ion-input type="text" placeholder="Select or Type to add"></ion-input>
+                <ion-input type="text" placeholder="Select or Type to add">{{item.unit}}</ion-input>
             </ion-item>
-            
+          </div>
         </ion-card-content>
         </ion-card>
   

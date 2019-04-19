@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
+
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import {GooglePlus} from '@ionic-native/google-plus';
 import firebase from 'firebase';
@@ -46,6 +47,7 @@ import {ContactdetailsPage} from '../pages/contactdetails/contactdetails';
 import {CreateInvoicesPage} from '../pages/create-invoices/create-invoices';
 import {AddLineItemPage} from '../pages/add-line-item/add-line-item';
 import {InvoicedeatilsPage} from '../pages/invoicedeatils/invoicedeatils';
+import {EdititemPage} from '../pages/edititem/edititem';
 
 import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts';
 
@@ -81,7 +83,8 @@ import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/cont
     AddLineItemPage,
     InvoicedeatilsPage,
     BillsPage,
-    LoginPage
+    LoginPage,
+    EdititemPage
   ],
   imports: [ 
     FormsModule, 
@@ -122,7 +125,8 @@ import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/cont
     AddLineItemPage,
     InvoicedeatilsPage,
     BillsPage,
-    LoginPage
+    LoginPage,
+    EdititemPage
   ],
   providers: [
     
