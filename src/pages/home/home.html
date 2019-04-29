@@ -1,108 +1,88 @@
-<ion-header>
-  <ion-navbar color="lightblue">
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Dashboard</ion-title>
-  </ion-navbar>
-</ion-header>
+
 
 <ion-content padding>
-       
-  <div style="
-  background-color: #646666;
-  width: -webkit-fill-available; 
-  position: fixed;
-  z-index: 1;
-  height: max-content;
-  margin: -30px auto;
-  padding-top: 16%;
-  margin-left: -16px;
-  padding-left: 38px;
-  color:white;
-  top:0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-">
-    <div style="text-align: center"><img src="assets/imgs/avatar.png" class="larger" /></div>
+    
+  <div class="companydiv">
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+    <div style="text-align: center"><img src="assets/imgs/avatar.png" class="larger" style="margin-top: 0%" /></div>
   <!-- <button (click)="getcontacts()" style="margin-top: 10% !important;">Login With Google</button> -->
-  <h3 style="text-align: center">Welcome!</h3>
+  <h3 style="text-align: center; margin-top: initial;">Welcome!</h3>
 </div>
-<div>
-<ion-grid style="margin-top: 49%">
-  <ion-row style="text-align: -webkit-center;">
-    <ion-col (click)="contactpage()">
-      <div>
-          <img src="assets/imgs/contact.png" class="larger">
+<div class="optionsdiv">
+<ion-grid >
+
+  <ion-row style="text-align: -webkit-center;margin-top: 0%;">
+    <ion-col (click)="contactpage()" style="display: block; background-color: #FFFAFA; margin: 8px; border-radius: 5px;">
+      <div style="margin-top: 15%">
+           <img src="assets/imgs/contact.png" class="larger">
       </div>
       <div>
-        <p>
-          New Contacts
+        <p style="color: #535454">
+            CONTACTS
         </p>
       </div>
       
-      
     </ion-col>
-      
-    <ion-col (click)="invoicepage()">
-      <div>
-           <img src="assets/imgs/invoice_check-512.png" class="larger">
+    <ion-col (click)="invoicepage()" style="display: block; background-color: #FFFAFA; margin: 8px; border-radius: 5px;">
+      <div style="margin-top: 15%">
+           <img src="assets/imgs/invoice.png" class="larger">
       </div>
       <div>
-        <p>
-            New Invoice
+        <p style="color: #535454">
+            INVOICES
         </p>
       </div>
       
     </ion-col>
 
   </ion-row>
-  <ion-row style="text-align: -webkit-center;margin-top: 10%;">
-    <ion-col (click)="reportspage()">
-      <div >
-          <img src="assets/imgs/record.png" class="larger">
+  <ion-row style="text-align: -webkit-center;margin-top: 0%;">
+    <ion-col (click)="reportspage()" style="display: block; background-color: #FFFAFA; margin: 8px; border-radius: 5px;">
+      <div style="margin-top: 15%">
+          <img src="assets/imgs/reports.png" class="larger">
           <!-- <ion-icon ios="ios-contacts" md="md-contacts" class="larger"></ion-icon> -->
       </div>
       <div>
-        <p>
-           Reports
+        <p style="color: #535454">
+           REPORTS
         </p>
       </div>
       
     </ion-col>
-    <ion-col (click)="estimatespage()">
-      <div>
-          <img src="assets/imgs/estimates.png" class="larger">
+    <ion-col (click)="itemspage()" style="display: block; background-color: #FFFAFA; margin: 8px; border-radius: 5px;">
+      <div style="margin-top: 15%">
+          <img src="assets/imgs/item.png" class="larger">
       </div>
       <div>
-        <p>
-            Estimates
+        <p style="color: #535454">
+            ITEMS
         </p>
       </div>
       
     </ion-col>
   </ion-row>
-  <ion-row style="text-align: -webkit-center;margin-top: 10%;">
-    <ion-col (click)="billspage()">
-      <div >
+  <ion-row style="text-align: -webkit-center;margin-top: 0%;">
+    <ion-col (click)="billspage()" style="display: block; background-color: #FFFAFA; margin: 8px; border-radius: 5px;">
+      <div style="margin-top: 15%">
           <img src="assets/imgs/bills.png" class="larger">
           <!-- <ion-icon ios="ios-contacts" md="md-contacts" class="larger"></ion-icon> -->
       </div>
       <div>
-        <p>
-           Bills
+        <p style="color: #535454">
+           BILLS
         </p>
       </div>
       
     </ion-col>
-    <ion-col>
-      <div>
-          <img src="assets/imgs/log.png" class="larger">
+    <ion-col style="display: block; background-color: #FFFAFA; margin: 8px; border-radius: 5px;">
+      <div style="margin-top: 15%">
+          <img src="assets/imgs/employee.png" class="larger">
       </div>
       <div>
-        <p>
-            Log Time
+        <p style="color: #535454">
+            PROFILE
         </p>
       </div>
       
@@ -115,15 +95,6 @@
       {{item.displayName}}
   </ion-item>
 </ion-list>
-  <!-- <ion-card style="width:100%">
-    <ion-card-header>
-      Header
-    </ion-card-header>
-    <ion-card-content>
-      The British use the term "header", but the American term "head-shot" the English simply refuse to adopt.
-    </ion-card-content>
-  </ion-card> -->
-  
 </ion-content>
 
 

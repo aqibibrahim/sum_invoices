@@ -5,8 +5,9 @@ import { NavController, Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import {CreateContactPage} from '../create-contact/create-contact';
 import {CreateInvoicesPage} from '../create-invoices/create-invoices';
+import {CreateItemsPage} from '../create-items/create-items';
 import {ReportsPage} from '../reports/reports'
-import {CreateEstimatePage} from '../create-estimate/create-estimate'
+import {ItemPage} from '../item/item'
 import {BillsPage} from '../bills/bills';
 
 import pdfMake from 'pdfmake/build/pdfmake';
@@ -34,23 +35,6 @@ export class HomePage {
   console.log('ionViewDidLoad DashboardPage');
   
 }
-// createdb(){
-//   this.sqlite.create({
-//     name: 'data.db',
-//     location: 'default'
-//   })
-//     .then((db: SQLiteObject) => {
-  
-  
-//       db.executeSql('create table danceMoves(name VARCHAR(32))', [])
-//         .then(() => console.log('Executed SQL'))
-//         .catch(e => console.log(e));
-  
-  
-//     })
-//     .catch(e => console.log(e));
-// }
-
 getcontacts(){
 this.contacts.find(['displayName', 'name', 'phoneNumbers', 'emails'], {filter: "", multiple: true})
     .then(data => {
@@ -70,8 +54,8 @@ invoicepage(){
 reportspage(){
   this.navCtrl.push(ReportsPage);
 }
-estimatespage(){
-this.navCtrl.push(CreateEstimatePage);
+itemspage(){
+this.navCtrl.push(CreateItemsPage);
 }
 billspage(){
 this.navCtrl.push(BillsPage);

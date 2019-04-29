@@ -7,6 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { BillsPage } from '../pages/bills/bills';
 import { ItemPage } from '../pages/item/item';
+import {TaxPage} from '../pages/tax/tax';
 import { ReportsPage } from '../pages/reports/reports';
 import {InvoicesPage} from '../pages/invoices/invoices';
 import { CreateEstimatePage } from '../pages/create-estimate/create-estimate';
@@ -38,7 +39,9 @@ export class MyApp {
       { title: 'Estimates', component: CreateEstimatePage },
       { title: 'Invoices', component: InvoicesPage },
       {title: 'Bills', component: BillsPage },
+      {title:'Tax' ,component: TaxPage},
       {title:'Logout' ,component: LoginPage}
+
       // { title: 'Items', component: CreateEstimatePage }
     ];
 

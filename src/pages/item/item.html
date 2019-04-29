@@ -10,51 +10,22 @@
         <ion-icon name="menu"></ion-icon>
       </button>
   <ion-title>All Items</ion-title> 
-  <ion-buttons end>
+  <!-- <ion-buttons end>
       <button ion-button (click)="createcitems()">
       <ion-icon name="add"></ion-icon>
     </button>
-    </ion-buttons>
+    </ion-buttons> -->
 </ion-navbar>
 </ion-header>
 
 <ion-content padding>
     <ion-list>
-        <ion-item-sliding *ngFor="let item of items">
-          <button ion-item (click)="itemTapped(item)">
-                  {{item.item_name}}
-          </button>
-          <ion-item-options>
-              <button ion-button expandable (click)="removeItem(item)" color="danger"><ion-icon name="trash"></ion-icon></button>
-              <button ion-button expandable (click)="edititems(item)" color="secondary"><ion-icon name="create"></ion-icon></button>
-              
-              
-            <!-- <button (click)="deleteitem(item)" color="danger"> </button> -->
-            <!-- <button (click)="share(item)">Share</button> -->
-          </ion-item-options>
-        </ion-item-sliding>
+        <ion-item  *ngFor="let item of items" >
+            {{item.item_name}}
+           <button ion-button item-end  (click)="removeItem(item)" color="danger"><ion-icon name="trash"></ion-icon></button>
+            <button ion-button item-end (click)="edititems(item)" color="secondary"><ion-icon name="create"></ion-icon></button>
+          </ion-item> 
       </ion-list>
-
-
-
-
-
-    <!-- <ion-list>
-      <ion-item-sliding *ngFor="let item of items" (click)="itemTapped(item)"> -->
-        
-          <!-- <ion-item-option>
-            <button danger>
-              
-            </button>
-          </ion-item-option> -->
-      <!-- </ion-item-sliding> -->
-        <!-- <button ion-item *ngFor="let item of items" (click)="itemTapped(item)">
-          
-          <div class="item-note" item-end>
-            {{item.note}}
-          </div> 
-        </button>--> 
-       <!-- </ion-list> -->
   <ion-fab bottom right >
     <button ion-fab (click)="createcitems()" color="lightblue"><ion-icon name="add" ></ion-icon></button>
   </ion-fab>

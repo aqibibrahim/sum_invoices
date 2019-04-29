@@ -6,6 +6,9 @@
 -->
 <ion-header >
   <ion-navbar color="lightblue">
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
     <ion-title>New Invoice</ion-title>
     
     <ion-buttons end>
@@ -18,31 +21,38 @@
 <ion-content padding>
   <ion-card>
     <ion-card-content>
-      <ion-item>
-        <ion-label fixed>Item</ion-label>
-        <ion-input type="text" value="" name="item_name" [(ngModel)]="name" style="border-bottom: 1px solid grey"></ion-input>
-      </ion-item>
+        <ion-list >
+            <ion-item >
+                <ion-label>Item Name</ion-label>
+                <ion-select #S interface="popover" class="selector" [(ngModel)]="gaming" placeholder="Item Name" ionCancel="onCancel()" okText="Ok" (ionChange)="onItemChange(S.value)" >
+                  <ion-option *ngFor="let name of items" [value] = "name" class="option" text-wrap>{{name.item_name}}</ion-option>
+                </ion-select>
+              </ion-item>
+      </ion-list>
       <ion-item>
         <ion-label fixed>Description</ion-label>
-        <ion-input type="text" value="" name="description" text-wrap [(ngModel)]="description" style="border-bottom: 1px solid grey"></ion-input>
+        <ion-input type="text" value="{{this.value_desc}}" name="description" text-wrap [(ngModel)]="description" style="border-bottom: 1px solid grey"></ion-input>
       </ion-item>
       <ion-row>
         <ion-col >
             <ion-item style="border-bottom: 1px solid grey">
                 <ion-label floating>Quantity</ion-label>
-                <ion-input type="number" value="" name="quantity" [(ngModel)]="quantity"></ion-input>
+                <ion-input type="number" value="1" name="quantity" [(ngModel)]="quantity" (ionChange)="quantitychange()"></ion-input>
               </ion-item>
         </ion-col>
         <ion-col>
             <ion-item style="border-bottom: 1px solid grey">
                 <ion-label floating>Rate</ion-label>
-                <ion-input type="number" value="" name="rate" [(ngModel)]="rate"></ion-input>
+                <!-- <ion-input type="number" value="{{this.value_rate}}" name="rate" [readonly]="isReadonly()" [(ngModel)]="rate" ></ion-input> -->
+                <ion-input type="number" value="{{this.value_rate}}" name="rate" [(ngModel)]="rate" [readonly]="isReadonly()"></ion-input>
               </ion-item>
         </ion-col>
       </ion-row>
-      <ion-item>
-        <ion-label fixed>Tax</ion-label>
-        <ion-input type="number" value="" name="tax" style="border-bottom: 1px solid grey" [(ngModel)]="tax"></ion-input>
+      <ion-item >
+        <ion-label>Tax</ion-label>
+        <ion-select #S [(ngModel)]="taxinput" ionCancel="onCancel()" okText="Ok" (ionChange)="onSelectChange(S.value)">
+          <ion-option *ngFor="let tax of taxvalue" [value] = "tax" >{{tax.tax_name}}</ion-option>
+        </ion-select>
       </ion-item>
       </ion-card-content>
     

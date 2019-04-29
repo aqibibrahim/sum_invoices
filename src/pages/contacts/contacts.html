@@ -20,18 +20,25 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
-      <ion-item-sliding *ngFor="let post of posts">
-        <button ion-item (click)="contactdetails(post.last_name,post.work_phone,post.mobile,post.email,post.display_name)">
-            {{post.first_name}}
-        </button>
-        <ion-item-options>
-            <button ion-button expandable (click)="removeItem(item)" color="danger"><ion-icon name="trash"></ion-icon></button>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
 
-    <ion-fab bottom right>
+    <ion-list>
+        <ion-item *ngFor="let post of posts">
+            {{post.first_name}}
+           <button ion-button item-end  (click)="removeItem(post)" color="danger"><ion-icon name="trash"></ion-icon></button>
+           <button ion-button item-end (click)="contactdetails(post)" color="secondary"><ion-icon name="create"></ion-icon></button>
+          </ion-item> 
+      </ion-list>
+
+
+  <!-- <ion-list>
+      <ion-item  >
+        <button ion-item (click)="contactdetails(post)">
+           
+        </button>
+        <button ion-button item-end  (click)="removeItem(post)" color="danger"><ion-icon name="trash"></ion-icon></button>
+        </ion-item>
+    </ion-list> -->
+  <ion-fab bottom right>
         <button ion-fab color="primary" (click)="createcontact()" color="lightblue"><ion-icon name="add" ></ion-icon></button>
       </ion-fab>
 </ion-content>

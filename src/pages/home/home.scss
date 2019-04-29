@@ -16,5 +16,53 @@ page-home {
         color: #f37321;
         max-width: 22% !important;
     }
-    
+    .fixed-content{
+        //background-color: #D1D1D3;
+        //background-image: url('assets/imgs/background.png');
+        background-image: url('../assets/imgs/background.png');
+        //background-repeat: no-repeat;
+        
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .col{
+        height:115px
+    }
+    .companydiv{
+        background-image: url('../assets/imgs/foeg.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: -webkit-fill-available;
+        position: fixed;
+        z-index: 0;
+        height: 42%;
+        height: -moz-max-content;
+        /* height: max-content; */
+        margin: -30px auto;
+        padding-top: 16%;
+        margin-left: -16px;
+        padding-left: 38px;
+        color: white;
+        top: 0;
+        right: 0;
+        /* left: 0; */
+        bottom: 0;
+        /* margin-left: 100px; */
+        /* background: #fff; */
+        display: block;
+    }
+    .optionsdiv{
+        margin-top: 52%;
+        position: relative;
+    }
+    .button-md{
+        background: none;
+        background-color: none !important;
+        box-shadow: none !important;
+        font-size: 3.1rem !important;
+        margin-top: -3%; 
+        margin-left: -2.1rem;
+    }
     }

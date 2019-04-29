@@ -24,6 +24,7 @@ import {ShippingPage} from '../pages/shipping/shipping';
 import {BillingPage} from '../pages/billing/billing';
 import { BillsPage } from '../pages/bills/bills';
 import {LoginPage} from '../pages/login/login';
+import {TaxPage} from '../pages/tax/tax';
 
 import { HttpModule } from '@angular/http';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -84,7 +85,8 @@ import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/cont
     InvoicedeatilsPage,
     BillsPage,
     LoginPage,
-    EdititemPage
+    EdititemPage,
+    TaxPage
   ],
   imports: [ 
     FormsModule, 
@@ -126,7 +128,8 @@ import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/cont
     InvoicedeatilsPage,
     BillsPage,
     LoginPage,
-    EdititemPage
+    EdititemPage,
+    TaxPage
   ],
   providers: [
     

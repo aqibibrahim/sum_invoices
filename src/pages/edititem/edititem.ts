@@ -18,6 +18,7 @@ export class EdititemPage {
   id:any;
   
   items:any;
+  itemname:any;
   name:any;
   sexe: string;
   units:any;
@@ -28,25 +29,44 @@ export class EdititemPage {
   purchase_rate:any;
   purchase_account:any;
   purchase_desc:any;
+
+
+  value_sale_rate:any;
+  value_item_name:any;
+  value_unit:any;
+  value_sale_desc:any;
+  value_purchase_rate:any;
+  value_item_type:any;
+  value_purchase_desc:any;
+
   public check1:boolean=false;
   public purchaseinformation:boolean=false;
   constructor(public navCtrl: NavController, public navParams: NavParams,public http: Http) {
     this.id= this.navParams.get('id');
-    console.log(this.id);
-    let data = {
-      getid : this.id
-    }
+    
+  this.http.get('https://sum-finance.herokuapp.com/item/get/'+this.id+'').map(res => res.json()).subscribe(data => {
+      console.log(data);
+         this.items = data
+         var key_sale_rate = Object.keys(this.items)[4];
+         var key_item_name = Object.keys(this.items)[1];
+         var key_unit = Object.keys(this.items)[3];
+         var key_sale_desc = Object.keys(this.items)[5];
+         var key_purchase_rate = Object.keys(this.items)[6];
+         var key_item_type = Object.keys(this.items)[2];
+         var key_purchase_desc = Object.keys(this.items)[7];
 
-    // this.http.post('https://sum-finance.herokuapp.com/item/get/"'+this.id+'"').map(res => res.json()).subscribe(data => {
-    //   console.log(data);
-    //      //this.posts = data.json();
-    //      this.items = data 
-    //      // for(var i=0;i<result.data.length;i++){
-    //      //   this.posts = result.data[i].first_name;
-    //      //   console.log(this.posts);
-    //      // }
 
-    //    });
+          this.value_sale_rate = this.items[key_sale_rate];
+          this.value_item_name = this.items[key_item_name];
+          this.value_unit = this.items[key_unit];
+          this.value_sale_desc = this.items[key_sale_desc];
+          this.value_purchase_rate = this.items[key_purchase_rate];
+          this.value_item_type = this.items[key_item_type];
+          this.value_purchase_desc = this.items[key_purchase_desc];
+          
+
+        console.log( key_sale_rate,key_item_name,key_unit,key_sale_desc,key_purchase_rate,key_item_type,key_purchase_desc)
+       });
   }
 
   ionViewDidLoad() {

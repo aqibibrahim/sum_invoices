@@ -14,7 +14,23 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-fab bottom right>
-    <button ion-fab color="primary" (click)="createinvoice()" color="lightblue"><ion-icon name="add" ></ion-icon></button>
-  </ion-fab>
-</ion-content>
+    <ion-content padding>
+        <ion-list *ngFor="let invoice of invoices">
+
+            <ion-item>
+                {{invoice.customer}}
+               <button ion-button item-end  (click)="removeItem(invoice)" color="danger"><ion-icon name="trash"></ion-icon></button>
+                <button ion-button item-end (click)="edititems(invoice)" color="secondary"><ion-icon name="create"></ion-icon></button>
+              </ion-item> 
+              <ion-row>
+                <ion-col>
+                  {{invoice.invoice_date}}
+                </ion-col>
+              </ion-row>
+          </ion-list>
+          <ion-fab bottom right>
+              <button ion-fab color="primary" (click)="createinvoice()" color="lightblue"><ion-icon name="add" ></ion-icon></button>
+            </ion-fab>   
+    </ion-content>
+  
+

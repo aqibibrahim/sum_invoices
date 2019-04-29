@@ -16,7 +16,7 @@
   </ion-header>
   
   <ion-content padding>
-      <ion-card >
+      <ion-card>
         <ion-card-content>
             <ion-label color="lightblue">Type</ion-label>     
                         <ion-row radio-group [(ngModel)]="sexe">
@@ -33,19 +33,19 @@
                               </ion-item>
                             </ion-col>
                           </ion-row>
-             <div *ngFor="let item of items">             
+             <div>             
             <ion-item>
                 <ion-label color="red">Item Name</ion-label>
             </ion-item>
             <ion-item>
-                <ion-input type="text" placeholder="Name">{{item.item_name}}</ion-input>
+                <ion-input type="text" placeholder="Name" value={{this.value_item_name}} [(ngModel)]="name">{{this.value_item_name}}</ion-input>
             </ion-item>
   
             <ion-item>
                 <ion-label color="lightblue">Unit</ion-label>  
             </ion-item>
             <ion-item>
-                <ion-input type="text" placeholder="Select or Type to add">{{item.unit}}</ion-input>
+                <ion-input type="text" placeholder="Select or Type to add" value={{this.value_unit}} [(ngModel)]="units">{{this.value_unit}}</ion-input>
             </ion-item>
           </div>
         </ion-card-content>
@@ -60,18 +60,18 @@
               
               <div *ngIf="check1">
                       <ion-label color="red">Rate</ion-label>
-                      <ion-input type="text" placeholder="Enter Rate"></ion-input>
+                      <ion-input type="text" placeholder="Enter Rate" value={{this.value_sale_rate}} [(ngModel)]="sale_rate">{{this.value_sale_rate}} </ion-input>
                   
                       <ion-label color="red">Account</ion-label>
-                      <ion-input type="text" placeholder="Select Account"></ion-input>
+                      <ion-input type="text" placeholder="Select Account" value={{this.value_sale_rate}} [(ngModel)]="sale_account">{{this.value_sale_rate}}</ion-input>
                   
                   
                       <ion-label color="lightblue">Tax</ion-label>
-                      <ion-input type="text" placeholder="None"></ion-input>
+                      <ion-input type="text" placeholder="None" value={{this.value_sale_rate}} [(ngModel)]="sale_tax"></ion-input>
                   
                   
                       <ion-label color="lightblue">Description</ion-label>
-                      <ion-input type="text" placeholder=""></ion-input>
+                      <ion-input type="text" placeholder="" value={{this.value_sale_desc}} [(ngModel)]="sale_desc">{{this.value_sale_desc}}</ion-input>
                   
                 </div>
           </ion-card-content>
@@ -86,13 +86,13 @@
                 
                 <div *ngIf="purchaseinformation">
                         <ion-label color="red">Purchase Rate</ion-label>
-                        <ion-input type="text" placeholder="Enter Rate"></ion-input>
+                        <ion-input type="text" placeholder="Enter Rate" value={{this.value_purchase_rate}} [(ngModel)]="purchase_rate">{{this.value_purchase_rate}}</ion-input>
                     
                         <ion-label color="red">Account</ion-label>
-                        <ion-input type="text" placeholder="Select Account"></ion-input>
+                        <ion-input type="text" placeholder="Select Account" value={{this.value_purchase_desc}} [(ngModel)]="purchase_account">{{this.value_purchase_desc}}</ion-input>
                     
                         <ion-label color="lightblue">Description</ion-label>
-                        <ion-input type="text" placeholder=""></ion-input>
+                        <ion-input type="text" placeholder="" value={{ this.value_purchase_desc}} [(ngModel)]="purchase_desc">{{ this.value_purchase_desc}}</ion-input>
                     
                   </div>
             </ion-card-content>

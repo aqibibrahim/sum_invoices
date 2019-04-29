@@ -6,6 +6,9 @@
 -->
 <ion-header >
   <ion-navbar color="lightblue">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>New Invoice</ion-title>
     <!-- <ion-buttons end>
         <button ion-button (click)="sendEmail()">
@@ -27,15 +30,15 @@
     <ion-list>
         <ion-item>
             <ion-label>Contact</ion-label>
-            <ion-select [(ngModel)]="gaming" ionCancel="onCancel()" okText="Ok">
-              <ion-option *ngFor="let name of namesList" [value] = "name.firstName">{{name.firstName}}</ion-option>
+            <ion-select interface="popover" [(ngModel)]="gaming" ionCancel="onCancel()" okText="Ok" (ionChange)="onContactChange()">
+              <ion-option *ngFor="let name of namesList" [value] = "name">{{name.first_name}}</ion-option>
             </ion-select>
           </ion-item>
   </ion-list>
     <ion-item>
 <ion-label fixed>Email</ion-label>
       <!-- <ion-input type="email" value="" [(ngModel)]="email"></ion-input> -->
-      <ion-input type="email" [(ngModel)]="email"  name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required ></ion-input>
+      <ion-input type="email" [(ngModel)]="email"  name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" value="{{this.email}}"  required ></ion-input>
 </ion-item>
     <ion-item>
       <ion-label fixed>Invoice #</ion-label>
@@ -51,18 +54,20 @@
 
   <ion-card>
       <ion-card-content>
-       
+          
         <ion-row style="border-bottom: 1px solid grey">
             <ion-col >
                 <ion-item style="border-bottom: 1px solid grey">
                     <ion-label floating>Date</ion-label>
-                    <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="invoicedate"></ion-input>
+                    <!-- <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="invoicedate"></ion-input> -->
+                    <ion-datetime displayFormat="DD MMM YYYY" (ionChange)="fecha()" pickerFormat="DD MMM YYYY"  [(ngModel)]="invoicedate" cancelText ="Cancelar" doneText="Ok" ></ion-datetime>
                   </ion-item>
             </ion-col>
             <ion-col>
                 <ion-item style="border-bottom: 1px solid grey">
                     <ion-label floating>Due</ion-label>
-                    <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="duedate"></ion-input>
+                    <ion-datetime displayFormat="DD MMM YYYY" (ionChange)="fecha()" pickerFormat="DD MMM YYYY"  [(ngModel)]="duedate" cancelText ="Cancelar" doneText="Ok" ></ion-datetime>
+                    <!-- <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="duedate"></ion-input> -->
                   </ion-item>
             </ion-col>
           </ion-row>
@@ -70,7 +75,7 @@
           <ion-list>
               <ion-item>
                 <ion-label color="lightblue">Terms</ion-label>
-                <ion-select [(ngModel)]="terms">
+                <ion-select [(ngModel)]="terms" interface="popover">
                   <ion-option value="noterms">Due on Recipt</ion-option>
                   <ion-option value="dueonreceipt">Nert 15</ion-option>
                   <ion-option value="net15">Net 30</ion-option>
@@ -90,7 +95,7 @@
             <ion-list>
                 <ion-item>
                   <ion-label color="lightblue">Sales Person</ion-label>
-                  <ion-select [(ngModel)]="terms">
+                  <ion-select [(ngModel)]="terms" interface="popover">
                     <ion-option value="noterms" selected>None</ion-option>
                     <ion-option value="dueonreceipt">Include in amounts</ion-option>
                     <ion-option value="net15">Not Applicable</ion-option>
@@ -108,7 +113,7 @@
                     <ion-icon name="add" ></ion-icon>
                   </button>
           
-                  <ion-item *ngIf="input_name != null" >
+                  <ion-item *ngIf="this.input_name != null" >
 
                       <ion-row style="border-bottom: 1px solid lightgrey">
                           <ion-col col-6>
@@ -146,12 +151,25 @@
                           <ion-item>
                               
                               <!-- <ion-label color="primary">Amount</ion-label> -->
-                              <ion-input type="number" placeholder="Customer Notes" [(ngModel)]="subtotal" [readonly]="isReadonly()" style="text-align: right"></ion-input>
+                              <ion-input type="number" placeholder="Customer Notes" [(ngModel)]="amount_total" [readonly]="isReadonly()" style="text-align: right"></ion-input>
                             </ion-item>
                       </ion-col>
                     </ion-row>
 
-                    <ion-row >
+                    <ion-row>
+                      <ion-col col-7>
+                            <ion-item >
+                              <h3 >Tax {{this.tax}}%</h3>
+                              </ion-item>
+                      </ion-col>
+                      <ion-col col-5>
+                      <ion-item>
+                              <ion-input type="number" placeholder="Tax" [(ngModel)]="taxtotal" [readonly]="isReadonly()" style="text-align: right"></ion-input>
+                            </ion-item>
+                      </ion-col>
+                      
+                    </ion-row>
+                    <ion-row>
                 <ion-col col-7>
                       <ion-item >
                         <h3 >Subtotal</h3>
@@ -237,11 +255,11 @@
               <ion-list>
 
                 <ion-item>
-                  <ion-input type="text" placeholder="Customer Notes"></ion-input>
+                  <ion-input type="text" placeholder="Customer Notes" [(ngModel)]="customer_notes"></ion-input>
                 </ion-item>
               
                 <ion-item>
-                  <ion-input type="text" placeholder="Terms & Conditions"></ion-input>
+                  <ion-input type="text" placeholder="Terms & Conditions" [(ngModel)]="terms_condition"></ion-input>
                 </ion-item>
               
               </ion-list>

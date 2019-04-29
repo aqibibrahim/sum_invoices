@@ -1,5 +1,5 @@
 import { Component,NgModule  } from '@angular/core';
-import { IonicPage, NavController, NavParams,AlertController, Item,LoadingController  } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,AlertController, Item,LoadingController, ToastController  } from 'ionic-angular';
 import {CreateItemsPage} from '../create-items/create-items';
 import {EdititemPage} from '../edititem/edititem';
 import {CreateInvoicesPage} from '../create-invoices/create-invoices';
@@ -21,7 +21,7 @@ export class ItemPage {
   selectedItem: any;
   items: any;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,public http: Http, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,public http: Http, public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     this.selectedItem = navParams.get('item');
   
     this.http.get('https://sum-finance.herokuapp.com/item/get-all').map(res => res.json()).subscribe(data => {
@@ -34,7 +34,17 @@ export class ItemPage {
          // }
        });
 }
-
+ionViewDidEnter() {
+  this.http.get('https://sum-finance.herokuapp.com/item/get-all').map(res => res.json()).subscribe(data => {
+    console.log(data);
+       //this.posts = data.json();
+       this.items = data 
+       // for(var i=0;i<result.data.length;i++){
+       //   this.posts = result.data[i].first_name;
+       //   console.log(this.posts);
+       // }
+     });
+}
   ionViewDidLoad() {
     console.log('ionViewDidLoad ItemPage');
   }
@@ -53,16 +63,31 @@ export class ItemPage {
     this.navCtrl.push(EdititemPage,{id:item._id})
 }
 removeItem(item):void{
-
+  let loader = this.loadingCtrl.create({
+    content:'Waiting...'
+  });
+  loader.present();
   let data={
     id:item._id
   }
   this.http.post('https://sum-finance.herokuapp.com/item/delete/'+item._id+'', data)
   .subscribe(res => {
-    console.log(res);
-    this.navCtrl.push(ItemPage);
+    
+    loader.dismiss();
+          let toast = this.tostctrl.create({
+            message:'Item Delete Successfully',
+            duration:2000
+          });
+          toast.present();
+    this.ionViewDidEnter();
   }, err => {
-    console.log(err);
+    loader.dismiss();
+          let toast = this.tostctrl.create({
+            message:'Item not Delete',
+            duration:2000
+          });
+          toast.present();
+   
   });
 }
 

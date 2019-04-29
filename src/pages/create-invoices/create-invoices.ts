@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform ,LoadingController, ToastController} from 'ionic-angular';
 import {InvoicedeatilsPage} from '../invoicedeatils/invoicedeatils';
 import { Storage } from '@ionic/storage';
 
@@ -33,7 +33,9 @@ export class CreateInvoicesPage {
   adjustmentprice:any;
   total:any;
   subtotal:any;
-
+  amount_total:any;
+  subamounttotall:any;
+  //tax:any;
   dst:any;
   shp:any;
   adj:any;
@@ -47,12 +49,14 @@ export class CreateInvoicesPage {
   qty:any;
   rat:any;
   tax:any;
+  taxtotal:any;
   x:any;
   items:any;
   amount:any;
   data=false;
-  
-
+  customer_notes:any;
+  terms_condition:any;
+  gamingname:any;
   namesList:any;
 
   gaming:any;
@@ -67,33 +71,26 @@ export class CreateInvoicesPage {
   Isshowing =false;
   pdfObj = null;
   pdfnumber =2;
-  constructor(public navCtrl: NavController,public http:Http, private storage: Storage,public navParams: NavParams,public emailComposer: EmailComposer, private plt: Platform, private file: File, private fileOpener: FileOpener) {
+  constructor(public navCtrl: NavController,public http:Http,public loadingCtrl: LoadingController, public tostctrl: ToastController, private storage: Storage,public navParams: NavParams,public emailComposer: EmailComposer, private plt: Platform, private file: File, private fileOpener: FileOpener) {
     // this.value=navParams.get('item_name');
     // console.log(this.value);
     this.input_name = this.navParams.get('inputname');
     this.qty= this.navParams.get('quantity');
     this.rat = this.navParams.get('rate');
     this.desc = this.navParams.get('description');
+    this.tax = this.navParams.get('tax');
     this.x='X';
     this.items = 'Items';
     this.amount = 'Amount';
-    this.subtotal = this.qty*this.rat
+    this.taxtotal = this.navParams.get('taxtotal');
+    this.amount_total = this.qty*this.rat;
+    this.subamounttotall = +this.taxtotal;
+    this.subtotal = (this.qty*this.rat)+this.subamounttotall;
     if(this.subtotal == undefined){
       this.total = 0
     }else{
       this.total = this.subtotal;
     }
-    
-    
-  }
-   
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CreateInvoicesPage');
-    console.log(this.navParams.get('inputname'));
-    // console.log(this.navParams.get('description')); 
-    // console.log(this.navParams.get('quantity')); 
-    // console.log(this.navParams.get('rate'));
-    // console.log(this.navParams.get('tax'));
     this.http.get('https://sum-finance.herokuapp.com/finance/get-all').map(res => res.json()).subscribe(data => {
      console.log(data);
         //this.posts = data.json();
@@ -103,6 +100,17 @@ export class CreateInvoicesPage {
         //   console.log(this.posts);
         // }
       });
+    
+  }
+   
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad CreateInvoicesPage');
+    console.log(this.input_name);
+    // console.log(this.navParams.get('description')); 
+    // console.log(this.navParams.get('quantity')); 
+    // console.log(this.navParams.get('rate'));
+    // console.log(this.navParams.get('tax'));
+    
 
 
     if(this.gaming !==undefined){
@@ -111,8 +119,6 @@ export class CreateInvoicesPage {
       this.storage.set('invoice', this.invoice);
       this.storage.set('order', this.order);
     }
-
-    
     if(this.gaming == undefined){
       this.storage.get('customername').then((val) => {
         console.log('Your name is', val);
@@ -129,6 +135,15 @@ export class CreateInvoicesPage {
     }
     
       
+  }
+  onContactChange(){
+    console.log(this.gaming.email)
+    this.gamingname = this.gaming.first_name;
+    this.email = this.gaming.email;
+    // var key = Object.keys(this.gaming)[1];
+    // var value_item = this.gaming[key];
+    // console.log("key = ", key); // bar
+    //   console.log("value = ", value_item);
   }
   onInputTime(data) : void {
     console.log("onChangeTime to time: " + this.discountprice + ". Event data: " + data);  
@@ -321,10 +336,45 @@ export class CreateInvoicesPage {
    /////////Open invoice detail page/////////////////////
    invoicedetails(){
      console.log(this.gaming);
-     this.navCtrl.push(InvoicedeatilsPage,{'customername':this.gaming,'invoice':this.invoice,'balance':this.total,'invoicedate':this.invoicedate,'duedate':this.duedate,'description':this.desc,
+     let loader = this.loadingCtrl.create({
+      content:'Waiting...'
+    });
+    loader.present();
+    let data = {
+      customer:this.gamingname,
+      order_no:this.order,
+      invoice_date:this.invoicedate,
+      Due_date:this.duedate,
+      sales_person:"Aqib",
+      customer_note:this.customer_notes,
+      terms_and_conditions:this.terms_condition,
+      item_quantity:this.qty,
+      item_discount:this.discountprice
+    }
+    this.http.post('https://sum-finance.herokuapp.com/invoice/create', data)
+    .subscribe(response => {
+      console.log('POST Response:', response);
+      loader.dismiss();
+      let toast = this.tostctrl.create({
+        message:'Data Save',
+        duration:2000
+      });
+      toast.present();
+      this.navCtrl.push(InvoicedeatilsPage,{'customername':this.gamingname,'invoice':this.invoice,'balance':this.total,'invoicedate':this.invoicedate,'duedate':this.duedate,'description':this.desc,
     'item_name':this.input_name,'subtotal':this.subtotal,'discount':this.discountprice,'shipping':this.shippingprice,'adjustment':this.adjustmentprice,'quantity':this.qty,'rate':this.rat,
   'email':this.email,'order':this.order});
-   }
+   
+    }, error => {
+      loader.dismiss();
+      let toast = this.tostctrl.create({
+        message:'Data not Save',
+        duration:2000
+      });
+      toast.present();
+    console.log("Oooops!");
+    });
+  }
+     
    onCancel(){
      alert("Ha g");
      console.log(this.gaming);

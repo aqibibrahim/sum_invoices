@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,AlertController,LoadingController, ToastController } from 'ionic-angular';
 import {BillingPage} from '../billing/billing';
 import {ShippingPage} from '../shipping/shipping';
+import {ContactsPage} from '../contacts/contacts'
 import {Http ,Response } from '@angular/http';
 import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts';
 /**
@@ -17,15 +18,27 @@ import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/cont
   templateUrl: 'create-contact.html',
 })
 export class CreateContactPage {
-  //data:any = {};
+  data:any = {};
   firstname: string;
   lastname: string;
   companyname: string;
+  gaming:string;
+  sexe:string;
+  currency:string;
+  payment:string;
+  language:string;
+  contactdisplay:any;
+  email:any;
+  phone:any;
+  mobile:any;
+  conttype:any;
+  
+
   listItems: Array<any> = [];
   testRadioOpen:boolean;
   testRadioResult:any;
   public allContacts: any
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,private contacts: Contacts,public http: Http) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,private contacts: Contacts,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     //this.data.username = '';
     this.listItems = [];
     contacts.find(['displayName', 'name', 'phoneNumbers', 'emails'], {filter: "", multiple: true})
@@ -52,20 +65,6 @@ export class CreateContactPage {
   openbillingpage(){
     this.navCtrl.push(BillingPage);
   }
-  
-  // opencontact(){
-    
-  //   let alert = this.alertCtrl.create({
-  //     //title: item.title,
-  //     title: 'Low battery',
-  //     subTitle: '10% of battery remaining',
-  //     cssClass: 'my-class',
-      
-      
-  //   });
-  //   alert.present();
-  // }
-
   opencontact() {
     let alert = this.alertCtrl.create();
     alert.setTitle('Select Gender');
@@ -87,17 +86,43 @@ export class CreateContactPage {
     alert.present();
   }
   savedata(){
-
+    let loader = this.loadingCtrl.create({
+      content:'Waiting...'
+    });
+    loader.present();
     let data = {
-      firstname: this.firstname,
-      lastname:this.lastname,
-      companyname:this.companyname
+      cont_saln:this.gaming,
+      first_name: this.firstname,
+      last_name:this.lastname,
+      comp_name:this.companyname,
+      display_name:this.contactdisplay,
+      email:this.email,
+      phone:this.phone,
+      mobile:this.mobile,
+      cont_type:this.sexe,
+      currency:this.currency,
+      payment:this.payment,
+      language:this.language
+
   };
     //console.log(this.data.username);
     this.http.post('https://sum-finance.herokuapp.com/finance/create', data)
         .subscribe(response => {
           console.log('POST Response:', response);
+          loader.dismiss();
+          let toast = this.tostctrl.create({
+            message:'Data Save',
+            duration:2000
+          });
+          toast.present();
+          this.navCtrl.push(ContactsPage);
         }, error => {
+          loader.dismiss();
+          let toast = this.tostctrl.create({
+            message:'Data not Save',
+            duration:2000
+          });
+          toast.present();
         console.log("Oooops!");
         });
         }
