@@ -9,6 +9,7 @@
     <div style="text-align: center"><img src="assets/imgs/avatar.png" class="larger" style="margin-top: 0%" /></div>
   <!-- <button (click)="getcontacts()" style="margin-top: 10% !important;">Login With Google</button> -->
   <h3 style="text-align: center; margin-top: initial;">Welcome!</h3>
+  <h3 style="text-align: center; margin-top: initial;">{{this.companyname}}</h3>
 </div>
 <div class="optionsdiv">
 <ion-grid >
@@ -64,14 +65,14 @@
     </ion-col>
   </ion-row>
   <ion-row style="text-align: -webkit-center;margin-top: 0%;">
-    <ion-col (click)="billspage()" style="display: block; background-color: #FFFAFA; margin: 8px; border-radius: 5px;">
+    <ion-col (click)="expensepage()" style="display: block; background-color: #FFFAFA; margin: 8px; border-radius: 5px;">
       <div style="margin-top: 15%">
           <img src="assets/imgs/bills.png" class="larger">
           <!-- <ion-icon ios="ios-contacts" md="md-contacts" class="larger"></ion-icon> -->
       </div>
       <div>
         <p style="color: #535454">
-           BILLS
+           Expense
         </p>
       </div>
       

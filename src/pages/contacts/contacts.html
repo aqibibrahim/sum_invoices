@@ -19,25 +19,43 @@
   
 </ion-header>
 
-<ion-content padding>
-
-    <ion-list>
-        <ion-item *ngFor="let post of posts">
-            {{post.first_name}}
-           <button ion-button item-end  (click)="removeItem(post)" color="danger"><ion-icon name="trash"></ion-icon></button>
-           <button ion-button item-end (click)="contactdetails(post)" color="secondary"><ion-icon name="create"></ion-icon></button>
-          </ion-item> 
-      </ion-list>
+<ion-content padding class="my-class">
 
 
-  <!-- <ion-list>
-      <ion-item  >
-        <button ion-item (click)="contactdetails(post)">
-           
-        </button>
-        <button ion-button item-end  (click)="removeItem(post)" color="danger"><ion-icon name="trash"></ion-icon></button>
-        </ion-item>
-    </ion-list> -->
+    <ion-card *ngFor="let post of posts" style="
+    border-radius: 7px;">
+        <ion-card-content>
+          <ion-row>
+            <ion-col style="font-size: large; color: black" col-4>
+                {{post.first_name}}
+            </ion-col>
+            <ion-col style="font-size: large; color: black; text-align: end" col-6>
+              {{post.cont_type}}
+            </ion-col>
+          </ion-row>
+          <ion-row style="border-bottom: 1px solid;">
+            <ion-col style="color:#747474" col-5>
+              {{post.comp_name}}<!-- INV no:  {{invoice.order_no}} -->
+            </ion-col >
+            <ion-col style="color:#747474; text-align: end" col-5>
+             Payable
+            </ion-col>
+          </ion-row>
+              <ion-row>
+                <ion-col style="text-align: center">
+                <button ion-button item-end  (click)="removeItem(post)" color="editbutton" style="border-radius: 10px; width: -webkit-fill-available;"><ion-icon name="trash" style="
+                  margin-right: 11%;
+              "></ion-icon>Delete</button>
+                </ion-col>
+                <ion-col style="text-align: center">
+                    <button ion-button item-end (click)="contactdetails(post)" color="editbutton" style="border-radius: 10px; width: -webkit-fill-available;"><ion-icon name="create" style="
+                      margin-right: 11%;
+                  "></ion-icon>Edit</button>
+                </ion-col>
+              </ion-row>
+        </ion-card-content>
+    </ion-card>
+   
   <ion-fab bottom right>
         <button ion-fab color="primary" (click)="createcontact()" color="lightblue"><ion-icon name="add" ></ion-icon></button>
       </ion-fab>

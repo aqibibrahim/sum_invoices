@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Platform } from 'ionic-angular';
+import { NavController, Platform, NavParams } from 'ionic-angular';
 // import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 // import { AngularFireDatabase } from '@angular/fire/database';
 import { Storage } from '@ionic/storage';
@@ -9,7 +9,8 @@ import {CreateItemsPage} from '../create-items/create-items';
 import {ReportsPage} from '../reports/reports'
 import {ItemPage} from '../item/item'
 import {BillsPage} from '../bills/bills';
-
+import {ExpensePage} from '../expense/expense';
+import {GlobalProvider} from '../../providers/global/global'
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -25,10 +26,17 @@ import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/cont
 export class HomePage {
   public prolfies: any;
   public allContacts: any
+  companyname:any;
+  userid:any;
   // books: Observable<any[]>;
-   constructor(public navCtrl: NavController, private plt: Platform, private file: File, private fileOpener: FileOpener, private storage: Storage,private contacts: Contacts) {
+   constructor(public navCtrl: NavController, private navparm:NavParams,public global:GlobalProvider,private plt: Platform, private file: File, private fileOpener: FileOpener, private storage: Storage,private contacts: Contacts) {
     // this.books = afDB.list('/Books/Books').valueChanges();
     storage.set('name', 'Max');
+    this.companyname = this.navparm.get('companyname');
+    this.userid = this.navparm.get('userid');
+    console.log(this.companyname, "User ID" +this.userid);
+    console.log("User ID : "+ this.global.userid);
+    
 }
  
  ionViewDidLoad() {
@@ -57,7 +65,7 @@ reportspage(){
 itemspage(){
 this.navCtrl.push(CreateItemsPage);
 }
-billspage(){
-this.navCtrl.push(BillsPage);
+expensepage(){
+this.navCtrl.push(ExpensePage);
 }
 }

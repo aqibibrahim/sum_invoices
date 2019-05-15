@@ -1,10 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform,AlertController  } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 
 import { HomePage } from '../pages/home/home';
+import {DashboardPage} from '../pages/dashboard/dashboard';
 import { BillsPage } from '../pages/bills/bills';
 import { ItemPage } from '../pages/item/item';
 import {TaxPage} from '../pages/tax/tax';
@@ -12,7 +13,7 @@ import { ReportsPage } from '../pages/reports/reports';
 import {InvoicesPage} from '../pages/invoices/invoices';
 import { CreateEstimatePage } from '../pages/create-estimate/create-estimate';
 import { CreateInvoicePaymentPage } from '../pages/create-invoice-payment/create-invoice-payment';
-
+import { App } from 'ionic-angular';
 // import { CreateItemsPage } from '../pages/create-items/create-items';
 import { ContactsPage } from '../pages/contacts/contacts';
 import {LoginPage} from '../pages/login/login';
@@ -23,11 +24,11 @@ import {LoginPage} from '../pages/login/login';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = DashboardPage;
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,public app: App,public alertCtrl: AlertController) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -40,7 +41,7 @@ export class MyApp {
       { title: 'Invoices', component: InvoicesPage },
       {title: 'Bills', component: BillsPage },
       {title:'Tax' ,component: TaxPage},
-      {title:'Logout' ,component: LoginPage}
+      {title:'Logout' ,component: DashboardPage}
 
       // { title: 'Items', component: CreateEstimatePage }
     ];
@@ -55,7 +56,39 @@ export class MyApp {
       this.hideSplashScreen();
       //this.splashScreen.hide();
     });
+    this.platform.registerBackButtonAction(() => {
+      // Catches the active view
+      let nav = this.app.getActiveNavs()[0];
+      let activeView = nav.getActive();                
+      // Checks if can go back before show up the alert
+      if(activeView.name === 'HomePage') {
+          if (nav.canGoBack()){
+              nav.pop();
+          } else {
+              const alert = this.alertCtrl.create({
+                  title: 'Fechar o App',
+                  message: 'Você tem certeza?',
+                  buttons: [{
+                      text: 'Cancelar',
+                      role: 'cancel',
+                      handler: () => {
+                        this.nav.setRoot('HomePage');
+                        console.log('** Saída do App Cancelada! **');
+                      }
+                  },{
+                      text: 'Fechar o App',
+                      handler: () => {
+                        
+                        this.platform.exitApp();
+                      }
+                  }]
+              });
+              alert.present();
+          }
+      }
+  });
   }
+  
   hideSplashScreen() {
     if (this.splashScreen) {
       setTimeout(() => {

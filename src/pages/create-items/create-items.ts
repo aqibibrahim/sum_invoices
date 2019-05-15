@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ToastController, Toast } from 'ionic-angular';
 import {Http ,Response} from '@angular/http';
-import {ItemPage} from '../item/item'
+import {ItemPage} from '../item/item';
+import {GlobalProvider} from '../../providers/global/global';
 /**
  * Generated class for the CreateItemsPage page.
  *
@@ -25,10 +26,11 @@ export class CreateItemsPage {
   purchase_rate:any;
   purchase_account:any;
   purchase_desc:any;
-
+  qty:any;
   public saleinformation:boolean=false;
   public purchaseinformation:boolean=false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http:Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+  constructor(public navCtrl: NavController, public global:GlobalProvider,public navParams: NavParams, public http:Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+ console.log(this.global.userid);
   }
 
   ionViewDidLoad() {
@@ -51,10 +53,14 @@ export class CreateItemsPage {
       sale_desc:this.sale_desc,
       purchase_rate:this.purchase_rate,
       purchase_account:this.purchase_account,
-      purchase_desc:this.purchase_desc
+      purchase_desc:this.purchase_desc,
+      item_quantity:this.qty,
+      userId:this.global.userid, 
+      sale_account:this.sale_account
+
     };
     //console.log(this.data.username);
-    this.http.post('https://sum-finance.herokuapp.com/item/create', data)
+    this.http.post('https://sum-finance-latest2.herokuapp.com/item/create', data)
         .subscribe(response => {
           console.log('POST Response:', response);
           loader.dismiss();

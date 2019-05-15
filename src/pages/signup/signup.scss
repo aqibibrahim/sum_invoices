@@ -17,3 +17,28 @@ page-signup {
               }
     
 }
+.my-class{
+      background: #D1D3D3 !important;
+      color:#D1D3D3;
+  
+      }
+      .mycard
+    {
+       height: 100%;
+      //  margin: 0px !important;
+       border-radius: 5px;
+    }
+    .my-content{
+        margin-top: 5%;
+    }
+    .center{
+      margin-left: auto;
+      margin-right: auto;
+      display: block !important;
+    }
+    page-signup .item-md.item-block .item-inner{
+      border-bottom: 1px solid #D1D3D3 !important;
+    }
+    .borderremove{
+          border-bottom: none !important;
+    }

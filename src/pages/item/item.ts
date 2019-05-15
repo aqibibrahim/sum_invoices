@@ -4,6 +4,7 @@ import {CreateItemsPage} from '../create-items/create-items';
 import {EdititemPage} from '../edititem/edititem';
 import {CreateInvoicesPage} from '../create-invoices/create-invoices';
 import {Http ,Response} from '@angular/http';
+import {GlobalProvider} from '../../providers/global/global';
 //import { AngularFireDatabase } from 'angularfire2/database';
 /**
  * Generated class for the ItemPage page.
@@ -21,13 +22,16 @@ export class ItemPage {
   selectedItem: any;
   items: any;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,public http: Http, public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+  constructor(public navCtrl: NavController, public global:GlobalProvider,public navParams: NavParams, private alertCtrl: AlertController,public http: Http, public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     this.selectedItem = navParams.get('item');
-  
-    this.http.get('https://sum-finance.herokuapp.com/item/get-all').map(res => res.json()).subscribe(data => {
+    console.log(this.global.userid);
+    this.http.get('https://sum-finance-latest2.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
       console.log(data);
+      // if(data.length == 0){
+      //   alert("There is no Item Added");
+      // }
          //this.posts = data.json();
-         this.items = data 
+         this.items = data
          // for(var i=0;i<result.data.length;i++){
          //   this.posts = result.data[i].first_name;
          //   console.log(this.posts);
@@ -35,14 +39,11 @@ export class ItemPage {
        });
 }
 ionViewDidEnter() {
-  this.http.get('https://sum-finance.herokuapp.com/item/get-all').map(res => res.json()).subscribe(data => {
+  this.http.get('https://sum-finance-latest2.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
     console.log(data);
-       //this.posts = data.json();
+      
        this.items = data 
-       // for(var i=0;i<result.data.length;i++){
-       //   this.posts = result.data[i].first_name;
-       //   console.log(this.posts);
-       // }
+       
      });
 }
   ionViewDidLoad() {
@@ -70,7 +71,7 @@ removeItem(item):void{
   let data={
     id:item._id
   }
-  this.http.post('https://sum-finance.herokuapp.com/item/delete/'+item._id+'', data)
+  this.http.post('https://sum-finance-latest2.herokuapp.com/item/delete/'+item._id+'', data)
   .subscribe(res => {
     
     loader.dismiss();

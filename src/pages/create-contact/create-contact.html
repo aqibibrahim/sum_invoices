@@ -5,7 +5,12 @@
   Ionic pages and navigation.
 -->
 <ion-header >
-    <ion-navbar color="lightblue">
+    <ion-toolbar color="lightblue">
+        <ion-buttons left>
+            <button ion-button icon-only menuToggle start>
+                <ion-icon name="menu"></ion-icon>
+              </button>
+        </ion-buttons>
       <ion-title>New Contact</ion-title>
       <ion-buttons end>
           <button ion-button (click)="opencontact()">
@@ -17,10 +22,10 @@
           Save
         </button>
         </ion-buttons>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="my-class">
 
     <ion-card>
         <ion-card-header color="lightblue">

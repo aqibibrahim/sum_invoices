@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component,NgZone  } from '@angular/core';
+import { IonicPage, NavController, NavParams,LoadingController, ToastController  } from 'ionic-angular';
 import {HomePage} from '../home/home'
-
+import {Http ,Response } from '@angular/http';
+import * as jQuery from 'jquery';
+import {GlobalProvider}  from '../../providers/global/global'
 /**
  * Generated class for the LoginPage page.
  *
@@ -15,17 +17,46 @@ import {HomePage} from '../home/home'
   templateUrl: 'login.html',
 })
 export class LoginPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  private captchaPassed: boolean = false;
+  private captchaResponse: string;
+  email:any;
+  password:any;
+  data:any;
+  company_name:any;
+  userid:any;
+  constructor(public navCtrl: NavController, public global: GlobalProvider,public navParams: NavParams,private zone: NgZone,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
   }
   login(){
-    this.navCtrl.push(HomePage);
+   
+    console.log(this.email,this.password);
+    let loader = this.loadingCtrl.create({
+      content:'Waiting...'
+    });
+    loader.present();
+    this.global.login(this.email, this.password);
+    loader.dismiss();
+    let toast = this.tostctrl.create({
+                message:'Login Successfully',
+                duration:2000
+              });
+              toast.present();
+               this.navCtrl.push(HomePage,{companyname:this.global.company_name,userid:this.global.userid});
+  
   }
   signup(){
     alert("Please Create your account")
   }
+  captchaResolved(response: string): void {
+
+    this.zone.run(() => {
+        this.captchaPassed = true;
+        this.captchaResponse = response;
+    });
+
+}
+
 }

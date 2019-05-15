@@ -3,19 +3,24 @@ import { FormsModule } from '@angular/forms';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-
+import { NativeStorage } from '@ionic-native/native-storage';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import {GooglePlus} from '@ionic-native/google-plus';
 import firebase from 'firebase';
 import { IonicStorageModule } from '@ionic/storage';
+
 import { File } from '@ionic-native/file';
 import { FileOpener } from '@ionic-native/file-opener';
 import {ActionSheet} from '@ionic-native/action-sheet/ngx';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { SMS } from '@ionic-native/sms';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { RecaptchaModule } from 'ng-recaptcha';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import {DashboardPage} from '../pages/dashboard/dashboard';
 import { ListPage } from '../pages/list/list';
 import { ItemPage } from '../pages/item/item';
 import { ReportsPage } from '../pages/reports/reports';
@@ -25,7 +30,10 @@ import {BillingPage} from '../pages/billing/billing';
 import { BillsPage } from '../pages/bills/bills';
 import {LoginPage} from '../pages/login/login';
 import {TaxPage} from '../pages/tax/tax';
-
+import {SignupPage} from '../pages/signup/signup';
+import {EditinvoicePage} from '../pages/editinvoice/editinvoice';
+import {ExpensePage} from '../pages/expense/expense';
+import {ProfitLossReportPage} from '../pages/profit-loss-report/profit-loss-report';
 import { HttpModule } from '@angular/http';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -51,6 +59,7 @@ import {InvoicedeatilsPage} from '../pages/invoicedeatils/invoicedeatils';
 import {EdititemPage} from '../pages/edititem/edititem';
 
 import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts';
+import { GlobalProvider } from '../providers/global/global';
 
 
 
@@ -86,7 +95,12 @@ import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/cont
     BillsPage,
     LoginPage,
     EdititemPage,
-    TaxPage
+    TaxPage,
+    DashboardPage,
+    SignupPage,
+    EditinvoicePage,
+    ExpensePage,
+    ProfitLossReportPage
   ],
   imports: [ 
     FormsModule, 
@@ -95,6 +109,7 @@ import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/cont
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
+    RecaptchaModule.forRoot(),
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
@@ -129,7 +144,12 @@ import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/cont
     BillsPage,
     LoginPage,
     EdititemPage,
-    TaxPage
+    TaxPage,
+    DashboardPage,
+    SignupPage,
+    EditinvoicePage,
+    ExpensePage,
+    ProfitLossReportPage
   ],
   providers: [
     
@@ -143,7 +163,11 @@ import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/cont
     SocialSharing,
     ActionSheet,
     EmailComposer,
-    Contacts
+    Contacts,
+    SMS,
+    AndroidPermissions,
+    GlobalProvider,
+    NativeStorage 
     ]
 })
 export class AppModule {}

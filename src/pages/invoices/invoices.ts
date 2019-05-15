@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform,LoadingController, ToastController } from 'ionic-angular';
 import {CreateInvoicesPage} from '../create-invoices/create-invoices';
+import {EditinvoicePage} from '../editinvoice/editinvoice';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import {Http ,Response} from '@angular/http';
 import { File } from '@ionic-native/file';
 import { FileOpener } from '@ionic-native/file-opener';
+import {GlobalProvider} from '../../providers/global/global';
 /**
  * Generated class for the InvoicesPage page.
  *
@@ -27,15 +29,15 @@ export class InvoicesPage {
   }
   invoices:any;
   pdfObj = null;
-  constructor(public navCtrl: NavController, public navParams: NavParams,private plt: Platform, public http: Http,private file: File, private fileOpener: FileOpener,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
-    this.http.get('https://sum-finance.herokuapp.com/invoice/get-all').map(res => res.json()).subscribe(data => {
-      console.log(data);
-         //this.posts = data.json();
+  constructor(public navCtrl: NavController, public navParams: NavParams,public global:GlobalProvider,private plt: Platform, public http: Http,private file: File, private fileOpener: FileOpener,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+    console.log(this.global.userid);
+    this.http.get('https://sum-finance-latest2.herokuapp.com/invoice/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+    console.log(data);  
+    console.log(data.length);
+    if(data.length == 0){
+      alert("There is no invoice genrated by this user");
+    }
          this.invoices = data 
-         // for(var i=0;i<result.data.length;i++){
-         //   this.posts = result.data[i].first_name;
-         //   console.log(this.posts);
-         // }
        });
   }
 
@@ -47,7 +49,7 @@ export class InvoicesPage {
     this.navCtrl.push(CreateInvoicesPage);
  }
  ionViewDidEnter() {
-  this.http.get('https://sum-finance.herokuapp.com/invoice/get-all').map(res => res.json()).subscribe(data => {
+  this.http.get('https://sum-finance-latest2.herokuapp.com/invoice/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
     console.log(data);
        //this.posts = data.json();
        this.invoices = data 
@@ -65,7 +67,7 @@ export class InvoicesPage {
   let data={
     id:invoice._id
   }
-  this.http.post('https://sum-finance.herokuapp.com/invoice/delete/'+invoice._id+'', data)
+  this.http.post(' https://sum-finance-latest2.herokuapp.com/invoice/delete/'+invoice._id+'', data)
   .subscribe(res => {
     
     loader.dismiss();
@@ -84,5 +86,8 @@ export class InvoicesPage {
           toast.present();
    
   });
+}
+edititems(invoice){
+this.navCtrl.push(EditinvoicePage,{id:invoice._id});
 }
 }

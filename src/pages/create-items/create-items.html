@@ -5,17 +5,23 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar color="lightblue">
+
+   <ion-toolbar color="lightblue">
+      <ion-buttons left>
+          <button ion-button icon-only menuToggle start>
+              <ion-icon name="menu"></ion-icon>
+            </button>
+      </ion-buttons>
     <ion-title>New Item</ion-title>
     <ion-buttons end>
         <button ion-button (click)="createitem()">
         Save
       </button>
       </ion-buttons>
-  </ion-navbar>
+   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="my-class">
     <ion-card>
       <ion-card-content>
           <ion-label color="lightblue">Type</ion-label>     
@@ -47,7 +53,12 @@
           <ion-item style="border-bottom: 0.3px solid">
               <ion-input type="text" placeholder="Select or Type to add" [(ngModel)]="units"></ion-input>
           </ion-item>
-          
+          <ion-item >
+            <ion-label color="lightblue">Quantity</ion-label>  
+        </ion-item>
+          <ion-item style="border-bottom: 0.3px solid">
+            <ion-input type="number" placeholder="Quantity" [(ngModel)]="qty"></ion-input>
+        </ion-item>
       </ion-card-content>
       </ion-card>
 

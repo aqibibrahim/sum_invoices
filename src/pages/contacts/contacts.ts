@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams,AlertController,LoadingController, 
 import {CreateContactPage} from '../create-contact/create-contact';
 import {Http ,Response} from '@angular/http';
 import {ContactdetailsPage} from '../contactdetails/contactdetails';
-
+import {GlobalProvider} from '../../providers/global/global';
 import 'rxjs/add/operator/map';
 
 /**
@@ -20,25 +20,23 @@ import 'rxjs/add/operator/map';
 })
 export class ContactsPage {
   posts: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+  constructor(public navCtrl: NavController, public global: GlobalProvider,public navParams: NavParams,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ContactsPage');
     
-    this.http.get('https://sum-finance.herokuapp.com/finance/get-all').map(res => res.json()).subscribe(data => {
+    this.http.get('https://sum-finance-latest2.herokuapp.com/finance/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
      console.log(data);
-        //this.posts = data.json();
+     if(data.length == 0){
+      alert("There is no Contact added");
+    }
         this.posts = data 
-        // for(var i=0;i<result.data.length;i++){
-        //   this.posts = result.data[i].first_name;
-        //   console.log(this.posts);
-        // }
       });
     }
     ionViewDidEnter() {
-      this.http.get('https://sum-finance.herokuapp.com/finance/get-all').map(res => res.json()).subscribe(data => {
+      this.http.get('https://sum-finance-latest2.herokuapp.com/finance/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
         console.log(data);
            //this.posts = data.json();
            this.posts = data 
@@ -67,7 +65,7 @@ export class ContactsPage {
     let data={
       id:post._id
     }
-    this.http.post('https://sum-finance.herokuapp.com/finance/delete/'+post._id+'', data)
+    this.http.post('https://sum-finance-latest2.herokuapp.com/finance/delete/'+post._id+'', data)
     .subscribe(res => {
       console.log(res);
       loader.dismiss();

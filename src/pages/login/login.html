@@ -4,18 +4,43 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-content padding>
+<ion-header>
+    <ion-navbar color="lightblue">
+        <ion-title>Sign In</ion-title>
+      </ion-navbar>
+</ion-header>
 
-<img src="assets/imgs/final-sum-logo-05.png" alt="logo"/>
+<ion-content padding class="my-class">
+<!-- <ion-card class="mycard">
+  <ion-card-content >
+      <img src="assets/imgs/final-sum-logo-05.png" alt="logo"/>
+      <ion-item style="border-bottom: 0.3px solid">
+          <ion-input type="text" placeholder="Email Address" [(ngModel)]="email"></ion-input>
+      </ion-item>
 
-<br>
-<br>
-<br>
+      <ion-item style="border-bottom: 0.3px solid">
+          <ion-input type="password" placeholder="Password" [(ngModel)]="password"></ion-input>
+      </ion-item>
+      <button color="lightblue" ion-button block  (click)="login()">Sign In</button>
+  </ion-card-content>
+  </ion-card> -->
 
-<input type="text" placeholder="Login">
-<input type="text" placeholder="Password">
+  <ion-card class="mycard">
+      <ion-card-content class="my-content">
+          <img src="assets/imgs/final-sum-logo-05.png" alt="logo"/>
+          <ion-item style="border-bottom: 0.3px solid; margin-top: 12%">
+              <ion-input type="text" placeholder="Email Address/User Name" [(ngModel)]="email"></ion-input>
+          </ion-item>
+    
+          <ion-item style="border-bottom: 0.3px solid; margin-top: 5%">
+              <ion-input type="password" placeholder="Password" [(ngModel)]="password"></ion-input>
+          </ion-item>
+          <button ion-button color="lightblue" clear style="margin-top: 5%" class="center">Forgot Password?</button>
+          <button ion-button color="lightblue" clear class="center">Sign in with Google or other IDPs</button>
+          <re-captcha (resolved)="captchaResolved($event)" siteKey="6LdKZKEUAAAAAIGfBwt54B9UUc1QTaywW7tfeeLA"></re-captcha>
+          <button color="lightblue" ion-button large  (click)="login()" class="center" style="width:70%; border-radius: 10px;">Sign In</button>
 
-<button color="lightblue" ion-button class="login" (click)="login()">LOGIN</button>
-<button color="lightblue" ion-button class="login" (click)="signup()">Signup</button>
+      </ion-card-content>
 
+      </ion-card>
 </ion-content>

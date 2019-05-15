@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { createHostBinding } from '@angular/compiler/src/core';
-
+import {LoginPage} from '../login/login';
+import {SignupPage} from '../signup/signup';
 /**
  * Generated class for the DashboardPage page.
  *
@@ -24,5 +25,10 @@ export class DashboardPage {
    
   }
 
-  
+  loginpage(){
+  this.navCtrl.push(LoginPage);
+  }
+  signuppage(){
+    this.navCtrl.push(SignupPage);
+  }
 }

@@ -18,14 +18,50 @@
 </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-    <ion-list>
-        <ion-item  *ngFor="let item of items" >
+<ion-content padding class="my-class">
+    <!-- <ion-list> -->
+
+        <ion-card *ngFor="let item of items" style="
+        border-radius: 7px;">
+            <ion-card-content>
+              <ion-row>
+                <ion-col style="font-size: large; color: black" col-6>
+                    {{item.item_name}}
+                </ion-col>
+                <ion-col style="font-size: large; color: black" col-4>
+                  PKR {{item.sale_rate}}
+                </ion-col>
+              </ion-row>
+              <ion-row style="border-bottom: 1px solid;">
+                <ion-col style="color:#747474">
+                  QTY: {{item.item_quantity}}<!-- INV no:  {{invoice.item_quantity}} -->
+                </ion-col>
+                <ion-col style="color:#747474" class="ion-text-end">
+                 {{item.item_type | uppercase}}
+                </ion-col>
+              </ion-row>
+                  <ion-row>
+                    <ion-col style="text-align: center">
+                    <button ion-button item-end  (click)="removeItem(item)" color="editbutton" style="border-radius: 10px; width: -webkit-fill-available;"><ion-icon name="trash" style="
+                      margin-right: 11%;
+                  "></ion-icon>Delete</button>
+                    </ion-col>
+                    <ion-col style="text-align: center">
+                        <button ion-button item-end (click)="edititems(item)" color="editbutton" style="border-radius: 10px; width: -webkit-fill-available;"><ion-icon name="create" style="
+                          margin-right: 11%;
+                      "></ion-icon>Edit</button>
+                    </ion-col>
+                  </ion-row>
+            </ion-card-content>
+        </ion-card>
+
+
+        <!-- <ion-item  *ngFor="let item of items" >
             {{item.item_name}}
            <button ion-button item-end  (click)="removeItem(item)" color="danger"><ion-icon name="trash"></ion-icon></button>
             <button ion-button item-end (click)="edititems(item)" color="secondary"><ion-icon name="create"></ion-icon></button>
           </ion-item> 
-      </ion-list>
+      </ion-list> -->
   <ion-fab bottom right >
     <button ion-fab (click)="createcitems()" color="lightblue"><ion-icon name="add" ></ion-icon></button>
   </ion-fab>
