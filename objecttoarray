@@ -1,0 +1,16 @@
+[{"_id":"5cc043d631494c00176bbc34","item_name":"alooo123","item_type":"goods","unit":"kg","sale_rate":"18","__v":0},{"_id":"5cc0442f31494c00176bbc35","item_name":"piyaz","item_type":"goods","unit":"kg","sale_rate":"80","sale_desc":"nothing","__v":0},{"_id":"5cc189b0aaeac30017f1a54f","item_name":"abcd","item_type":"goods","unit":"1","sale_rate":"500","sale_desc":"Aaa","purchase_rate":"250","purchase_desc":"Bbb","__v":0,"sale_tax":"500"},{"_id":"5cc1b0d8aaeac30017f1a553","item_name":"Potato","item_type":"goods","unit":"1","sale_rate":"100","purchase_rate":"80","__v":0},{"_id":"5cd01754fe37ee00a0d77796","item_name":"hm","item_type":"goods","unit":"kg","sale_rate":"80","sale_desc":"nothing","__v":0},{"_id":"5cd158762e94482728e3d170","item_type":"test","item_name":"test","unit":"test","_userInfo":"5ccfc81f7196ec1fdcbdfe58","__v":0},{"_id":"5cd1a3c4f54a1f34e4065b7a","item_type":"test","item_name":"test","unit":"test","__v":0},{"_id":"5cd1a4c1ec0b98426cd98c01","item_type":"test","item_name":"test","unit":"test","createdBy":"5ccfc91c2337941f54f4ce27","__v":0},{"_id":"5cd1a829ec0b98426cd98c02","item_type":"test","item_name":"test","unit":"test","__v":0},{"_id":"5cd1a84b64a84f397027f089","item_type":"touqeer","item_name":"aslam","unit":"khan","userId":"5ccfc91c2337941f54f4ce27","__v":0},{"_id":"5cd26a86afddaa0017aa2e74","item_name":"test123","item_type":"aqib daikh ly ","unit":"soch ly","sale_rate":"aik dafa bta","__v":0},{"_id":"5cd26b1eafddaa0017aa2e75","item_name":"test123","item_type":"aqib daikh ly ","unit":"soch ly","sale_rate":"aik dafa bta","__v":0},{"_id":"5cd26bfa5fb05f1bc8f3dded","item_name":"test123","item_type":"aqib daikh ly ","unit":"soch ly","sale_rate":"aik dafa bta","userId":"5ccfca44bf175e27a035e465","__v":0},{"_id":"5cd278d54aad19082c054525","item_name":"karela","item_type":"sabzi","unit":"3246","sale_rate":"100","sale_desc":"sahi se bach","purchase_rate":"20","purchase_desc":"waisay he mil gaye","sale_tax":"10","item_quantity":"3200","userId":"5ccfca44bf175e27a035e465","__v":0},{"_id":"5cd285e5e1812f0017fa5b9a","item_name":"Apple","item_type":"goods","unit":"Kg","sale_rate":"360","sale_tax":"None","purchase_rate":"300","item_quantity":"150","userId":"5ccfca44bf175e27a035e465","__v":0}]
+
+
+ const mapped = Object.keys(this.gaming).map(key => ({type: key, value: this.gaming[key]}));
+
+        console.log(mapped);
+        for (var i=0;i<mapped.length;i++){
+          if(mapped[i].type =="purchase_rate"){
+            this.purchase_rate = mapped[i].value;
+          }
+          if(mapped[i].type =="sale_rate"){
+            this.value_key_rate = mapped[i].value;
+          }
+          if(mapped[i].type =="item_quantity"){
+            this.quantity = mapped[i].value;
+          }

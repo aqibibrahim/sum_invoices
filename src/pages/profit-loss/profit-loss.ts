@@ -25,6 +25,7 @@ import {ProfitLossReportPage} from '../profit-loss-report/profit-loss-report';
     todate:any;
     item_id:any;
     itemname:string;
+    item_name:any
     items:any;
     expenseamount:any;
     sale_rate:any;
@@ -55,47 +56,38 @@ import {ProfitLossReportPage} from '../profit-loss-report/profit-loss-report';
       this.http.post('https://sum-finance-latest2.herokuapp.com/expense/expensedate', data).map(response => response.json())
         .subscribe(data => {
           //response = jQuery.parseJSON(response);
+          console.log(data);
           loader.dismiss();
-        let toast = this.tostctrl.create({
-          message:'Generate Report',
-          duration:2000
-        });
-        toast.present();
-        this.navCtrl.push(ProfitLossReportPage);
+        if( data[0].purchaseRate == "Invoice not found for this item id"){
+          let toast = this.tostctrl.create({
+            message:'No Record Found',
+            duration:2000
+          });
+          toast.present();
+        }else{
+          let toast = this.tostctrl.create({
+            message:'Generate Report',
+            duration:2000
+          });
+          toast.present();
           this.expenseamount = data[0].totalExp;
           this.purchase_rate = data[0].purchaseRate;
           this.sale_rate = data[0].saleRate;
           this.quatity = data[0].totalquantity;
+          this.navCtrl.push(ProfitLossReportPage,{expenseamount:this.expenseamount,purchaserate:this.purchase_rate,salerate:this.sale_rate,quantity:this.quatity,fromdate:this.fromdate,todate:this.todate,itemname:this.item_name
+          ,startdate:this.fromdate,enddate:this.todate});
+        }
         }, error => {
         console.log("Oooops!");
         });
-
-
-      this.http.post('https://sum-finance-latest2.herokuapp.com/expense/expensedate', data)
-      .subscribe(response => {
-        console.log('POST Response:', response);
-        loader.dismiss();
-        let toast = this.tostctrl.create({
-          message:'Generate Report',
-          duration:2000
-        });
-        toast.present();
-        this.navCtrl.push(ProfitLossReportPage,{expenseamount:this.expenseamount,purchaserate:this.purchase_rate,salerate:this.sale_rate,quantity:this.quatity,fromdate:this.fromdate,todate:this.todate});
-      }, error => {
-        loader.dismiss();
-        let toast = this.tostctrl.create({
-          message:'Data not Save',
-          duration:2000
-        });
-        toast.present();
-      console.log("Oooops!");
-      });
-    }
+ }
 
     onItemChange(){
       console.log(this.itemname);
       var key_id = Object.keys(this.itemname)[0];
+      var key_id1 = Object.keys(this.itemname)[1];
       this.item_id = this.itemname[key_id];
-      console.log(this.item_id);
+      this.item_name = this.itemname[key_id1];
+      console.log(this.item_id,key_id1);
     }
     }

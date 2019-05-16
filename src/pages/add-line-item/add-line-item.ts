@@ -48,7 +48,7 @@ export class AddLineItemPage {
     console.log('ionViewDidLoad AddLineItemPage');
     this.http.get('https://sum-finance-latest2.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
       console.log(data);
-         this.items = data 
+         this.items = data
        });
        this.http.get('https://sum-finance.herokuapp.com/tax/get-all').map(res => res.json()).subscribe(data => {
         console.log(data);

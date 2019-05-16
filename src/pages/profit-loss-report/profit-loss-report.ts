@@ -14,14 +14,37 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'profit-loss-report.html',
 })
 export class ProfitLossReportPage {
-
+  s_date:any;
+  e_date:any;
+  item_name:any;
+  expense:any;
+  p_rate:any;
+  s_rate:any;
+  quantity:any;
+  pandr:any;
+  purchase_cost:any;
+  sale_cost:any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    console.log(this.navParams.get('expenseamount'),this.navParams.get('purchaserate'),this.navParams.get('salerate'),this.navParams.get('quantity'));
-
+    console.log(this.navParams.get('expenseamount'),this.navParams.get('purchaserate'),this.navParams.get('salerate'),this.navParams.get('quantity'),this.navParams.get('startdate'),this.navParams.get('enddate'));
+    this.s_date = this.navParams.get('startdate');
+    this.e_date = this.navParams.get('enddate');
+    this.item_name = this.navParams.get('itemname');
+    this.expense = this.navParams.get('expenseamount');
+    this.p_rate = this.navParams.get('purchaserate');
+    this.s_rate = this.navParams.get('salerate');
+    this.quantity = this.navParams.get('quantity');
+    
+    this.purchase_cost = this.p_rate*this.quantity;
+    this.sale_cost = this.s_rate*this.quantity;
+    this.pandr = this.sale_cost - (this.purchase_cost+this.expense);
+    console.log("Purchase Cost"+this.purchase_cost,"Sale Cost"+this.sale_cost,"Progit and Loss"+this.pandr);
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfitLossReportPage');
   }
 
+ isReadonly() {
+    return this.isReadonly;   //return true/false 
+  }
 }
