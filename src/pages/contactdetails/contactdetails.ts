@@ -46,31 +46,17 @@ export class ContactdetailsPage {
     this.http.get('https://sum-finance-latest2.herokuapp.com/finance/get/'+this.id+'').map(res => res.json()).subscribe(data => {
       console.log(data);
          this.posts = data 
-         
-         var key_company_name = Object.keys(this.posts)[4];
-         var key_contact_saln = Object.keys(this.posts)[1];
-         var key_contact_type = Object.keys(this.posts)[9];
-         var key_currency = Object.keys(this.posts)[3];
-         var key_display_name = Object.keys(this.posts)[5];
-         var key_email = Object.keys(this.posts)[6];
-         var key_first_name = Object.keys(this.posts)[2];
-         var key_last_name = Object.keys(this.posts)[3];
-         var key_mobile = Object.keys(this.posts)[8];
-         var key_phone = Object.keys(this.posts)[7];
-
-          this.value_company_name = this.posts[key_company_name];
-          this.value_contact_saln = this.posts[key_contact_saln];
-          this.value_contact_type = this.posts[key_contact_type];
-          this.value_currency = this.posts[key_currency];
-          this.value_display_name = this.posts[key_display_name];
-          this.value_email = this.posts[key_email];
-          this.value_first_name = this.posts[key_first_name];
-          this.value_last_name = this.posts[key_last_name];
-          this.value_mobile = this.posts[key_mobile];
-          this.value_phone = this.posts[key_phone];
-
-        console.log(key_company_name,key_contact_saln,key_contact_type,key_currency,key_display_name,key_email,key_first_name,key_last_name,key_mobile,key_phone)
-       });
+          this.value_company_name = data[0].comp_name;
+          this.value_contact_saln = data[0].cont_saln;
+          this.value_contact_type = data[0].cont_type;
+          this.value_currency = data[0].currency;
+          this.value_display_name = data[0].display_name;
+          this.value_email = data[0].email;
+          this.value_first_name = data[0].first_name;
+          this.value_last_name = data[0].last_name;
+          this.value_mobile = data[0].mobile;
+          this.value_phone =data[0].phone;
+});
 }
 
   ionViewDidLoad() {

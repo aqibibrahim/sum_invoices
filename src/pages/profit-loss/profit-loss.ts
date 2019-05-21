@@ -71,8 +71,8 @@ import {ProfitLossReportPage} from '../profit-loss-report/profit-loss-report';
           });
           toast.present();
           this.expenseamount = data[0].totalExp;
-          this.purchase_rate = data[0].purchaseRate;
-          this.sale_rate = data[0].saleRate;
+          this.purchase_rate = data[0].purchaserate;
+          this.sale_rate = data[0].salerate;
           this.quatity = data[0].totalquantity;
           this.navCtrl.push(ProfitLossReportPage,{expenseamount:this.expenseamount,purchaserate:this.purchase_rate,salerate:this.sale_rate,quantity:this.quatity,fromdate:this.fromdate,todate:this.todate,itemname:this.item_name
           ,startdate:this.fromdate,enddate:this.todate});

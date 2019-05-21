@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform ,LoadingController, ToastController} from 'ionic-angular';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {InvoicedeatilsPage} from '../invoicedeatils/invoicedeatils';
 import { Storage } from '@ionic/storage';
 import { SMS } from '@ionic-native/sms';
@@ -27,6 +28,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
   templateUrl: 'create-invoices.html',
 })
 export class CreateInvoicesPage {
+  registrationForm: FormGroup;
   public anArray:any=[];
 
   value:any;
@@ -86,6 +88,13 @@ export class CreateInvoicesPage {
   constructor(public navCtrl: NavController,private nativeStorage: NativeStorage, public global:GlobalProvider,private sms: SMS,public http:Http,public loadingCtrl: LoadingController, public tostctrl: ToastController, private storage: Storage,public navParams: NavParams,public emailComposer: EmailComposer, private plt: Platform, private file: File, private fileOpener: FileOpener) {
     // this.value=navParams.get('item_name');
     // console.log(this.value);
+    this.registrationForm = new FormGroup({
+      invoice: new FormControl('', [Validators.required,Validators.minLength(1
+        )]),
+      order: new FormControl('', [Validators.required, Validators.minLength(1)])
+      })
+
+
     this.input_name = this.navParams.get('inputname');
     this.qty= this.navParams.get('quantity');
     this.rat = this.navParams.get('rate');
@@ -113,7 +122,7 @@ export class CreateInvoicesPage {
     }else{
       this.total = this.subtotal;
     }
-    this.http.get('https://sum-finance.herokuapp.com/finance/get-all').map(res => res.json()).subscribe(data => {
+    this.http.get('https://sum-finance-latest2.herokuapp.com/finance/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
      console.log(data);
         //this.posts = data.json();
         this.namesList = data 
@@ -372,6 +381,10 @@ this.storage.get('orderno').then((val4) => {
    /////////Open invoice detail page/////////////////////
    invoicedetails(){
     //this.sms.send(this.namesList., 'Hello world!');
+
+    // firstName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+    // lastName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+
      console.log(this.invoicedate);
      let loader = this.loadingCtrl.create({
       content:'Waiting...'
@@ -393,7 +406,8 @@ this.storage.get('orderno').then((val4) => {
       item_name:this.input_name,
       item_id:this.item_id,
       sale_rate:this.sale_rate,
-      purchase_rate:this.purchase_rate
+      purchase_rate:this.purchase_rate,
+      status:"Pending"
     }
     this.http.post('https://sum-finance-latest2.herokuapp.com/invoice/create', data)
     .subscribe(response => {
@@ -407,7 +421,7 @@ this.storage.get('orderno').then((val4) => {
   //    this.navCtrl.push(InvoicesPage);
       this.navCtrl.push(InvoicedeatilsPage,{'customername':this.gamingname,'invoice':this.invoice,'balance':this.total,'invoicedate':this.invoicedate,'duedate':this.duedate,'description':this.desc,
     'item_name':this.input_name,'subtotal':this.subtotal,'discount':this.discountprice,'shipping':this.shippingprice,'adjustment':this.adjustmentprice,'quantity':this.qty,'rate':this.rat,
-  'email':this.email,'order':this.order});
+  'email':this.email,'order':this.order,'status':"Pending"});
    
     }, error => {
       loader.dismiss();

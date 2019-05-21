@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController,Platform } from 'ionic-angular';
+import { Component ,ViewChild} from '@angular/core';
+import { IonicPage, NavController, NavParams, ActionSheetController,Platform ,Navbar } from 'ionic-angular';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { EmailComposer } from '@ionic-native/email-composer';
@@ -11,6 +11,7 @@ import { FileOpener } from '@ionic-native/file-opener';
 import { l } from '@angular/core/src/render3';
 import { isRightSide } from 'ionic-angular/umd/util/util';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import {InvoicesPage} from '../invoices/invoices';
 /**
  * Generated class for the InvoicedeatilsPage page.
  *
@@ -24,7 +25,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
   templateUrl: 'invoicedeatils.html',
 })
 export class InvoicedeatilsPage {
-
+  @ViewChild(Navbar) navBar: Navbar;
   invoice_date:any;
   due_date:any;
   customer_name:any;
@@ -40,7 +41,7 @@ export class InvoicedeatilsPage {
   rate:any;
   email:any;
   order_number:any;
-
+  status:any;
 
   pdfObj = null;
   letterObj = {
@@ -48,7 +49,7 @@ export class InvoicedeatilsPage {
     from: '',
     text: ''
   }
-  constructor(public navCtrl: NavController, public navParams: NavParams,  private socialSharing: SocialSharing,public emailComposer: EmailComposer,private plt: Platform, private file: File, private fileOpener: FileOpener,private actionSheet: ActionSheet,public actionSheetCtrl: ActionSheetController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform, private socialSharing: SocialSharing,public emailComposer: EmailComposer,private plt: Platform, private file: File, private fileOpener: FileOpener,private actionSheet: ActionSheet,public actionSheetCtrl: ActionSheetController) {
   
     // Getting Parameter Value from cREATE iNVOICE pAGE
       this.customer_name = this.navParams.get('customername');
@@ -66,7 +67,7 @@ export class InvoicedeatilsPage {
       this.rate = this.navParams.get('rate');
       this.email = this.navParams.get('email');
       this.order_number = this.navParams.get('order');
-
+      this.status = this.navParams.get('status');
   console.log("Customer Name:"+this.customer_name,"Email:"+this.email);
   
     
@@ -93,6 +94,14 @@ export class InvoicedeatilsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad InvoicedeatilsPage');
+    this.setBackButtonAction()
+  }
+  setBackButtonAction(){
+    this.navBar.backButtonClick = () => {
+    //alert("Where you want to go");
+    this.navCtrl.push(InvoicesPage);
+     //this.navCtrl.pop()
+    }
   }
   presentActionSheet() {
     {

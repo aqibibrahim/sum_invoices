@@ -22,22 +22,25 @@ import {GlobalProvider} from '../../providers/global/global';
   templateUrl: 'invoices.html',
 })
 export class InvoicesPage {
+  dateinput:any;
+  output:any;
   letterObj = {
     to: '',
     from: '',
     text: ''
   }
   invoices:any;
+  duedate=[];
+  //selectcity = [];
   pdfObj = null;
   constructor(public navCtrl: NavController, public navParams: NavParams,public global:GlobalProvider,private plt: Platform, public http: Http,private file: File, private fileOpener: FileOpener,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     console.log(this.global.userid);
     this.http.get('https://sum-finance-latest2.herokuapp.com/invoice/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
     console.log(data);  
-    console.log(data.length);
     if(data.length == 0){
       alert("There is no invoice genrated by this user");
     }
-         this.invoices = data 
+      this.invoices = data 
        });
   }
 
@@ -57,7 +60,10 @@ export class InvoicesPage {
        //   this.posts = result.data[i].first_name;
        //   console.log(this.posts);
        // }
-     });
+      //   this.dateinput= this.invoices.Due_Date;
+      //  this.output = this.dateinput.substring(0, 10);
+      //  console.log("Out Date formatt"+this.output);
+            });
 }
  removeItem(invoice):void{
   let loader = this.loadingCtrl.create({

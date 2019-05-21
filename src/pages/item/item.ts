@@ -27,15 +27,7 @@ export class ItemPage {
     console.log(this.global.userid);
     this.http.get('https://sum-finance-latest2.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
       console.log(data);
-      // if(data.length == 0){
-      //   alert("There is no Item Added");
-      // }
-         //this.posts = data.json();
          this.items = data
-         // for(var i=0;i<result.data.length;i++){
-         //   this.posts = result.data[i].first_name;
-         //   console.log(this.posts);
-         // }
        });
 }
 ionViewDidEnter() {
@@ -52,14 +44,8 @@ ionViewDidEnter() {
   createcitems(){
     this.navCtrl.push(CreateItemsPage);
   }
-  // itemTapped(event, item) {
-  //   // That's right, we're pushing to ourselves!
-  //   this.navCtrl.push(CreateInvoicesPage, {
-  //     item: item
-  //   });
-  // }
+  
   edititems(item):void {
-    //console.log(item.title);
     console.log(item._id);
     this.navCtrl.push(EdititemPage,{id:item._id})
 }

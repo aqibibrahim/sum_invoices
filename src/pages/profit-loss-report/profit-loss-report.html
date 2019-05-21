@@ -10,61 +10,127 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding  class="my-class">
   <ion-card>
     <ion-card-content>
+      <ion-row>
+          <ion-item>
+              <ion-label style="text-align: center;font-family: fantasy;font-size: larger;">Item Name : {{this.item_name}}</ion-label>
+              <!-- <ion-input type="text" value={{this.item_name}} text-wrap [readonly]="isReadonly()"></ion-input> -->
+            </ion-item>
+      </ion-row>
+      <ion-row>
+       
+            <ion-item>
+                <ion-input type="Date" value={{this.s_date}}  [readonly]="isReadonly()"> </ion-input> <ion-input type="Date" value={{this.e_date}} [readonly]="isReadonly()"></ion-input>
+              </ion-item>
+       
+      </ion-row>
+      
+      <ion-row style="background-color:#D1D3D3; color: black;">
+        <ion-col style="text-align: center;">
+            Account
+        </ion-col>
+        <ion-col style="text-align: center;">
+              Total
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col >
+            <ion-item style="text-align: center;">
+                <ion-label>Sale Rate</ion-label>
+              </ion-item>
+        </ion-col>
+        <ion-col>
+            <ion-item style="text-align: center;">
+                <ion-label>{{this.s_rate}}</ion-label>
+              </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col >
+            <ion-item style="text-align: center;">
+                <ion-label>Quantity</ion-label>
+              </ion-item>
+        </ion-col>
+        <ion-col>
+            <ion-item style="text-align: center;">
+                <ion-label>{{this.quantity}}</ion-label>
+                <!-- <ion-input type="number" value="{{this.value_rate}}" name="rate" [readonly]="isReadonly()" [(ngModel)]="rate" ></ion-input> -->
+                <!-- <ion-input type="number" value="{{this.p_rate}}" name="rate"  [readonly]="isReadonly()"></ion-input> -->
+              </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row style="background-color: #D1D3D3; color: black;">
+        <ion-col style="text-align: center;">
+            Total Sale Rate
+        </ion-col>
+        <ion-col style="text-align: center;">
+         {{this.sale_cost}} 
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col >
+            <ion-item style="text-align: center;">
+                <ion-label>Purchase Rate</ion-label>
+              </ion-item>
+        </ion-col>
+        <ion-col>
+            <ion-item style="text-align: center;">
+                <ion-label>{{this.p_rate}}</ion-label>
+              </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col >
+            <ion-item style="text-align: center;">
+                <ion-label>Quantity</ion-label>
+              </ion-item>
+        </ion-col>
+        <ion-col>
+            <ion-item style="text-align: center;">
+                <ion-label>{{this.quantity}}</ion-label>
+              </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="background-color: #D1D3D3; color: black;">
+        <ion-col style="text-align: center;">
+            Total Purchase Rate
+        </ion-col>
+        <ion-col style="text-align: center;">
+         {{this.purchase_cost1}} 
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col >
+            <ion-item style="text-align: center;">
+                <ion-label>Total Expense</ion-label>
+              </ion-item>
+        </ion-col>
+        <ion-col>
+            <ion-item style="text-align: center;">
+                <ion-label>{{this.expense}}</ion-label>
+              </ion-item>
+        </ion-col>
+      </ion-row>
+
       <!-- <ion-item>
-        <ion-label fixed>StartDate</ion-label>
-        <ion-input type="text" name="description" text-wrap [(ngModel)]="description" style="border-bottom: 1px solid grey">Fruit</ion-input>
-      </ion-item> -->
-      <ion-row>
-        <ion-col >
-            <ion-item style="border-bottom: 1px solid grey">
-                <ion-label floating>Start Date</ion-label>
-                <ion-input type="Date" value={{this.s_date}}  [readonly]="isReadonly()"> </ion-input>
-              </ion-item>
-        </ion-col>
-        <ion-col>
-            <ion-item style="border-bottom: 1px solid grey">
-                <ion-label floating>End Date</ion-label>
-                <!-- <ion-input type="number" value="{{this.value_rate}}" name="rate" [readonly]="isReadonly()" [(ngModel)]="rate" ></ion-input> -->
-                <ion-input type="Date" value={{this.e_date}} [readonly]="isReadonly()"></ion-input>
-              </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-item>
-        <ion-label fixed>Item Name</ion-label>
-        <ion-input type="text" value={{this.item_name}} text-wrap  style="border-bottom: 1px solid grey" [readonly]="isReadonly()"></ion-input>
-      </ion-item>
-      <ion-row>
-        <ion-col >
-            <ion-item style="border-bottom: 1px solid grey">
-                <ion-label floating>Sale Rate</ion-label>
-                <ion-input type="number" value={{this.s_rate}} name="quantity"  [readonly]="isReadonly()"></ion-input>
-              </ion-item>
-        </ion-col>
-        <ion-col>
-            <ion-item style="border-bottom: 1px solid grey">
-                <ion-label floating>Purchase Rate</ion-label>
-                <!-- <ion-input type="number" value="{{this.value_rate}}" name="rate" [readonly]="isReadonly()" [(ngModel)]="rate" ></ion-input> -->
-                <ion-input type="number" value="{{this.p_rate}}" name="rate"  [readonly]="isReadonly()"></ion-input>
-              </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-item>
         <ion-label fixed>Total Expense</ion-label>
         <ion-input type="text" value={{this.expense}} text-wrap  [readonly]="isReadonly()" style="border-bottom: 1px solid grey">Fruit</ion-input>
-      </ion-item>
-      </ion-card-content>
-    
-      <ion-item-divider color="secondary">
-        <ion-label>
-          Profit and Loss
-          {{this.pandr}}
-        </ion-label>
-        <!-- <ion-input type="text" value={{this.pandr}} [readonly]="isReadonly()" style="border-bottom: 1px solid grey">Fruit</ion-input> -->
-      </ion-item-divider>
-      
+      </ion-item> -->
+      <ion-row style="background-color: #D1D3D3; color: black;">
+        <ion-col style="text-align: center;">
+            Total Profit/Loss
+        </ion-col>
+        <ion-col style="text-align: center;color: red;">
+         {{this.pandr1}} 
+        </ion-col>
+      </ion-row>
+  </ion-card-content>
     </ion-card>
   
 </ion-content>

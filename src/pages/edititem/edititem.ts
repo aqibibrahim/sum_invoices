@@ -53,6 +53,7 @@ export class EdititemPage {
          this.sale_account = data[0].sale_account;
          this.sale_tax = data[0].sale_tax;
          this.sale_desc = data[0].sale_desc;
+         
        });
   }
 

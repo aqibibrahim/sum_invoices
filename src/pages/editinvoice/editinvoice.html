@@ -7,9 +7,265 @@
 <ion-header>
   <ion-navbar color="lightblue">
     <ion-title>Edit Invoice</ion-title>
+    <ion-buttons end>
+        <button ion-button (click)="updateinvoice()">
+        Update Invoice
+      </button>
+      </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
 
+    <ion-card>
+        <ion-card-content>
+          <ion-list>
+              <ion-item>
+                  <ion-label>Contact</ion-label>
+                  <ion-input type="text" [(ngModel)]="name"  value="{{this.value_customer}}" [readonly]="isReadonly()"></ion-input>
+                 
+                </ion-item>
+        </ion-list>
+          <ion-item>
+            <ion-label fixed>Invoice #</ion-label>
+            <ion-input type="number" [(ngModel)]="invoice" value="{{this.value_invoice_number}}" [readonly]="isReadonly()"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label fixed>Order Number</ion-label>
+            <ion-input type="number" [(ngModel)]="order" value="{{this.value_order_no}}" [readonly]="isReadonly()"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label fixed>Item Name</ion-label>
+              <ion-input type="text" [(ngModel)]="itemname" value="{{this.value_item_name}}" [readonly]="isReadonly()"></ion-input>
+            </ion-item>
+          </ion-card-content>
+        
+        </ion-card>
+<!--       
+        <ion-card>
+            <ion-card-content>
+                
+              <ion-row style="border-bottom: 1px solid grey">
+                  <ion-col >
+                      <ion-item style="border-bottom: 1px solid grey">
+                          <ion-label floating>Date</ion-label> -->
+                          <!-- <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="invoicedate"></ion-input> -->
+                          <!-- <ion-datetime displayFormat="DD MMM YYYY" (ionChange)="fecha()" pickerFormat="DD MMM YYYY"  [(ngModel)]="invoicedate" cancelText ="Cancelar" doneText="Ok" ></ion-datetime>
+                        </ion-item>
+                  </ion-col>
+                  <ion-col>
+                      <ion-item style="border-bottom: 1px solid grey">
+                          <ion-label floating>Due</ion-label>
+                          <ion-datetime displayFormat="DD MMM YYYY" (ionChange)="fecha()" pickerFormat="DD MMM YYYY"  [(ngModel)]="duedate" cancelText ="Cancelar" doneText="Ok" ></ion-datetime> -->
+                          <!-- <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="duedate"></ion-input> -->
+                        <!-- </ion-item>
+                  </ion-col>
+                </ion-row> -->
+      
+                <!-- <ion-list>
+                    <ion-item>
+                      <ion-label color="lightblue">Terms</ion-label>
+                      <ion-select [(ngModel)]="terms" interface="popover">
+                        <ion-option value="noterms">Due on Recipt</ion-option>
+                        <ion-option value="dueonreceipt">Nert 15</ion-option>
+                        <ion-option value="net15">Net 30</ion-option>
+                        <ion-option value="net15">Net 45</ion-option>
+                        <ion-option value="net15">Net 60</ion-option>
+                        <ion-option value="net15">Due end of the Month</ion-option>
+                      </ion-select>
+                    </ion-item>
+                  </ion-list>
+                </ion-card-content>
+            
+      
+            </ion-card> -->
+      
+            <!-- <ion-card>
+              <ion-card-content>
+                  <ion-list>
+                      <ion-item>
+                        <ion-label color="lightblue">Sales Person</ion-label>
+                        <ion-select [(ngModel)]="terms" interface="popover">
+                          <ion-option value="noterms" selected>None</ion-option>
+                          <ion-option value="dueonreceipt">Include in amounts</ion-option>
+                          <ion-option value="net15">Not Applicable</ion-option>
+                        </ion-select>
+                      </ion-item>
+                    </ion-list>
+                  </ion-card-content>
+              </ion-card>
+       -->
+              <ion-card>
+                <ion-card-content>
+                    
+                      <!-- <button ion-button icon-end clear full (click)='adlineitem()'>
+                          Add Line Item
+                          <ion-icon name="add" ></ion-icon>
+                        </button>
+                
+                        <ion-item *ngIf="this.input_name != null" >
+      
+                            <ion-row style="border-bottom: 1px solid lightgrey">
+                                <ion-col col-6>
+                                    <ion-item > -->
+                                        <!-- <ion-label color="primary">Items</ion-label> -->
+                                        <!-- <ion-input type="text" placeholder="Customer Notes" [(ngModel)]="items" [readonly]="isReadonly()" style="color:lightgrey"></ion-input>
+                                      </ion-item>
+                                      </ion-col>
+                                      <ion-col col-6>
+                                          <ion-item> -->
+                                              <!-- <ion-label color="primary">Items</ion-label> -->
+                                              <!-- <ion-input type="text" placeholder="Customer Notes" [(ngModel)]="amount" [readonly]="isReadonly()" style="color:lightgrey"></ion-input>
+                                            </ion-item>
+                                            </ion-col>
+                                           
+                                    </ion-row> -->
+                          <!-- <ion-row>
+                            <ion-col >
+                                <ion-item > -->
+                                    <!-- <ion-label color="primary">Items</ion-label> -->
+                                   
+                                    <ion-input type="text"  [(ngModel)]="status" value="{{this.value_status}}"></ion-input>
+                                    <ion-list>
+                                        <ion-item>
+                                          <ion-label color="lightblue">Status</ion-label>
+                                          <ion-select [(ngModel)]="status" interface="popover">
+                                            <ion-option value="paid" selected>Paid</ion-option>
+                                            <ion-option value="pending">Pending</ion-option>
+                                          </ion-select>
+                                        </ion-item>
+                                      </ion-list>
+                                  <!-- </ion-item>
+                                  </ion-col>
+                                </ion-row>
+                            <ion-row style="border-bottom: 1px solid lightgrey; height: 33.33%">
+                                    <ion-col col-7>
+                                  <ion-item >
+                                    <ion-input type="text" placeholder="Customer Notes" [(ngModel)]="qty" [readonly]="isReadonly()"></ion-input>
+                                    <ion-input type="text" placeholder="Customer Notes" [(ngModel)]="x" [readonly]="isReadonly()"></ion-input>
+                                     <ion-input type="text" placeholder="Customer Notes" [(ngModel)]="rat" [readonly]="isReadonly()"></ion-input>
+                                    </ion-item>
+                            </ion-col>
+                            <ion-col col-5>
+                                <ion-item> -->
+                                    
+                                    <!-- <ion-label color="primary">Amount</ion-label> -->
+                                    <!-- <ion-input type="number" placeholder="Customer Notes" [(ngModel)]="amount_total" [readonly]="isReadonly()" style="text-align: right" ></ion-input>
+                                  </ion-item>
+                            </ion-col>
+                          </ion-row>
+      
+                          <ion-row>
+                            <ion-col col-7>
+                                  <ion-item >
+                                    <h3 >Tax {{this.tax}}%</h3>
+                                    </ion-item>
+                            </ion-col>
+                            <ion-col col-5>
+                            <ion-item>
+                                    <ion-input type="number" placeholder="Tax" [(ngModel)]="taxtotal" [readonly]="isReadonly()" style="text-align: right"></ion-input>
+                                  </ion-item>
+                            </ion-col>
+                            
+                          </ion-row>
+                          <ion-row>
+                      <ion-col col-7>
+                            <ion-item >
+                              <h3 >Subtotal</h3>
+                              </ion-item>
+                      </ion-col>
+                      <ion-col col-5>
+                      <ion-item>
+                              <ion-input type="number" placeholder="Customer Notes" [(ngModel)]="subtotal" [readonly]="isReadonly()" style="text-align: right"></ion-input>
+                            </ion-item>
+                      </ion-col>
+                      
+                    </ion-row>
+      
+                    <ion-row>
+                        <ion-col col-6>
+                              <ion-item >
+                                <h4>Discount</h4>
+                               
+                                </ion-item>
+                        </ion-col>
+                        <ion-col col-6>
+                        <ion-item style="border-bottom: 1px solid lightgrey">
+                                <ion-input type="number" placeholder="Discount" [(ngModel)]="discountprice" style="text-align: right" (input)='onInputTime($event.target.value)'></ion-input>
+                              </ion-item>
+                        </ion-col>
+                        
+                      </ion-row>
+      
+                      <ion-row>
+                          <ion-col col-6>
+                                <ion-item >
+                                  <h4>Shipping</h4>
+                                 
+                                  </ion-item>
+                          </ion-col>
+                          <ion-col col-6>
+                          <ion-item style="border-bottom: 1px solid lightgrey">
+                                  <ion-input type="number" placeholder="Shipping" [(ngModel)]="shippingprice" style="text-align: right" (input)='onShipping($event.target.value)'></ion-input>
+                                </ion-item>
+                          </ion-col>
+                          
+                        </ion-row>
+      
+                        <ion-row>
+                            <ion-col col-6>
+                                  <ion-item >
+                                    <h4>Adjustment</h4>
+                                   
+                                    </ion-item>
+                            </ion-col>
+                            <ion-col col-6>
+                            <ion-item style="border-bottom: 1px solid lightgrey">
+                                    <ion-input type="number" placeholder="Adjustment" [(ngModel)]="adjustmentprice" style="text-align: right" (input)='onAdjustment($event.target.value)'></ion-input>
+                                  </ion-item>
+                            </ion-col>
+                            
+                          </ion-row>
+      
+                          <ion-row>
+                              <ion-col col-6>
+                                    <ion-item >
+                                      <h3>Total</h3>
+                                     
+                                      </ion-item>
+                              </ion-col>
+                              <ion-col col-6>
+                              <ion-item>
+                                      <ion-input type="text" placeholder="Customer Notes" [(ngModel)]="total" style="text-align: right" [readonly]="isReadonly()"></ion-input>
+                                    </ion-item>
+                              </ion-col>
+                              
+                            </ion-row>
+                        </ion-item>
+      
+                    </ion-card-content>
+                
+          
+                </ion-card>
+      
+                <ion-card>
+                  <ion-card-content>
+                      
+                    <ion-list>
+      
+                      <ion-item>
+                        <ion-input type="text" placeholder="Customer Notes" [(ngModel)]="customer_notes"></ion-input>
+                      </ion-item>
+                    
+                      <ion-item>
+                        <ion-input type="text" placeholder="Terms & Conditions" [(ngModel)]="terms_condition"></ion-input>
+                      </ion-item>
+                    
+                    </ion-list> -->
+                  
+                      </ion-card-content>
+                  
+            
+                  </ion-card>
+               
 </ion-content>

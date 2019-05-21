@@ -12,11 +12,11 @@
               </button>
         </ion-buttons>
       <ion-title>New Contact</ion-title>
-      <ion-buttons end>
+      <!-- <ion-buttons end>
           <button ion-button (click)="opencontact()">
             <ion-icon name="book"></ion-icon>
         </button>
-        </ion-buttons>
+        </ion-buttons> -->
       <ion-buttons end>
           <button ion-button (click)="savedata()">
           Save
@@ -32,6 +32,7 @@
           Primary Contact
         </ion-card-header>
         <ion-card-content>
+          
 
             <ion-item style="border-bottom: 0.3px solid">
                 <ion-label color="lightblue">Saln.</ion-label>  
@@ -48,6 +49,7 @@
                  
                   <ion-input type="text" placeholder="First name" [(ngModel)]="firstname" name="username"></ion-input>
                 </ion-item>
+                
                 <ion-item style="border-bottom: 0.3px solid">
                     
                     <ion-input type="text" placeholder="Last name" [(ngModel)]="lastname"></ion-input>
@@ -63,21 +65,22 @@
 
                       <ion-item style="border-bottom: 0.3px solid">
                   
-                          <ion-input type="text" placeholder="Contact Email" [(ngModel)]="email"></ion-input>
+                          <ion-input type="email" placeholder="Contact Email" [(ngModel)]="email"></ion-input>
                         </ion-item>
         
                         <ion-row>
                             <ion-col>
                                 <ion-item style="border-bottom: 0.3px solid">
-                                    <ion-input type="text" placeholder="Work Phone." [(ngModel)]="phone"></ion-input>
+                                    <ion-input type="number" placeholder="Work Phone." [(ngModel)]="phone"></ion-input>
                               </ion-item>
                             </ion-col>
                             <ion-col>
                               <ion-item style="border-bottom: 0.3px solid">
-                                <ion-input type="text" placeholder="Mobile" [(ngModel)]="mobile" ></ion-input>
+                                <ion-input type="number" placeholder="Mobile" [(ngModel)]="mobile" ></ion-input>
                               </ion-item>
                             </ion-col>
                           </ion-row>
+                         
         </ion-card-content>
     </ion-card>
     <ion-card>

@@ -70,7 +70,7 @@ export class CreateContactPage {
   }
   opencontact() {
     let alert = this.alertCtrl.create();
-    alert.setTitle('Select Gender');
+    alert.setTitle('Select Contact');
 
     alert.addInput({
       type: 'radio',
