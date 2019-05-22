@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform,LoadingController, ToastController } from 'ionic-angular';
+import { Component,ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Platform,LoadingController, ToastController,Navbar } from 'ionic-angular';
 import {CreateInvoicesPage} from '../create-invoices/create-invoices';
 import {EditinvoicePage} from '../editinvoice/editinvoice';
 import pdfMake from 'pdfmake/build/pdfmake';
@@ -9,6 +9,7 @@ import {Http ,Response} from '@angular/http';
 import { File } from '@ionic-native/file';
 import { FileOpener } from '@ionic-native/file-opener';
 import {GlobalProvider} from '../../providers/global/global';
+import {DashboardPage} from '../dashboard/dashboard';
 /**
  * Generated class for the InvoicesPage page.
  *
@@ -22,6 +23,7 @@ import {GlobalProvider} from '../../providers/global/global';
   templateUrl: 'invoices.html',
 })
 export class InvoicesPage {
+  @ViewChild(Navbar) navBar: Navbar;
   dateinput:any;
   output:any;
   letterObj = {
@@ -46,6 +48,14 @@ export class InvoicesPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad InvoicesPage');
+    this.setBackButtonAction()
+  }
+  setBackButtonAction(){
+    this.navBar.backButtonClick = () => {
+    //alert("Where you want to go");
+    this.navCtrl.push(DashboardPage);
+     //this.navCtrl.pop()
+    }
   }
   createinvoice(){
 

@@ -33,8 +33,12 @@ export class SignupPage {
       phone: ['',[Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
+    this.http.get('/assets/countries.json')
+    .subscribe(res => {  
+      console.log("HTTP RESPONSE:")
+      console.log(res)
+    })
   }
-
   validate(data){
     if(data == 'name'){
       this.isName = true;
@@ -52,7 +56,15 @@ export class SignupPage {
       this.isPassword = true;
     }
   }
+  _keyUp(event: any) {
+    const pattern = /[0-9\+\-\ ]/;
+    let inputChar = String.fromCharCode(event.charCode);
 
+    if (!pattern.test(inputChar)) {
+      // invalid character, prevent input
+      event.preventDefault();
+    }
+}
   submit(){
     let loader = this.loadingCtrl.create({
       content:'Waiting...'

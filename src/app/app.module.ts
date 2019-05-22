@@ -57,7 +57,7 @@ import {CreateInvoicesPage} from '../pages/create-invoices/create-invoices';
 import {AddLineItemPage} from '../pages/add-line-item/add-line-item';
 import {InvoicedeatilsPage} from '../pages/invoicedeatils/invoicedeatils';
 import {EdititemPage} from '../pages/edititem/edititem';
-
+import {ForgotpasswordPage} from '../pages/forgotpassword/forgotpassword';
 import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts';
 import { GlobalProvider } from '../providers/global/global';
 
@@ -100,7 +100,8 @@ import { GlobalProvider } from '../providers/global/global';
     SignupPage,
     EditinvoicePage,
     ExpensePage,
-    ProfitLossReportPage
+    ProfitLossReportPage,
+    ForgotpasswordPage
   ],
   imports: [ 
     FormsModule, 
@@ -149,7 +150,8 @@ import { GlobalProvider } from '../providers/global/global';
     SignupPage,
     EditinvoicePage,
     ExpensePage,
-    ProfitLossReportPage
+    ProfitLossReportPage,
+    ForgotpasswordPage 
   ],
   providers: [
     

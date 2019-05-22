@@ -257,11 +257,13 @@
               <ion-list>
 
                 <ion-item>
-                  <ion-input type="text" placeholder="Customer Notes" [(ngModel)]="customer_notes"></ion-input>
+                    <ion-textarea clearOnEdit="true" placeholder="Customer Notes" [(ngModel)]="customer_notes"></ion-textarea>
+                  
                 </ion-item>
               
                 <ion-item>
-                  <ion-input type="text" placeholder="Terms & Conditions" [(ngModel)]="terms_condition"></ion-input>
+                    <ion-textarea clearOnEdit="true" placeholder="Terms & Conditions" [(ngModel)]="terms_condition"></ion-textarea>
+                  
                 </ion-item>
               
               </ion-list>

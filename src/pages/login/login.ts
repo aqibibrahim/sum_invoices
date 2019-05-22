@@ -3,7 +3,8 @@ import { IonicPage, NavController, NavParams,LoadingController, ToastController 
 import {HomePage} from '../home/home'
 import {Http ,Response } from '@angular/http';
 import * as jQuery from 'jquery';
-import {GlobalProvider}  from '../../providers/global/global'
+import {GlobalProvider}  from '../../providers/global/global';
+import {ForgotpasswordPage} from '../forgotpassword/forgotpassword';
 /**
  * Generated class for the LoginPage page.
  *
@@ -33,12 +34,9 @@ export class LoginPage {
   login(){
    
     console.log(this.email,this.password);
-    let loader = this.loadingCtrl.create({
-      content:'Waiting...'
-    });
-    loader.present();
+    
     this.global.login(this.email, this.password);
-    loader.dismiss();
+    
     //console.log(this.global.userid);
     // if(this.global.userid == undefined){
     //   let toast = this.tostctrl.create({
@@ -66,6 +64,9 @@ export class LoginPage {
         this.captchaResponse = response;
     });
 
+}
+forgot(){
+this.navCtrl.push(ForgotpasswordPage);
 }
 
 }

@@ -66,7 +66,7 @@ export class AddLineItemPage {
       console.log("value = ", value) // baz
       console.log(this.taxinput);
       this.qtyinhands = this.value_desc - this.quantity;
-      if(this.quantity > this.qtyinhands){
+      if(this.quantity > this.value_desc){
       alert ("Given Quantity is more than actual quantity");
       }
       else{

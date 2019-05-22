@@ -28,11 +28,13 @@ export class HomePage {
   public allContacts: any
   companyname:any;
   userid:any;
+  nativename:any;
   // books: Observable<any[]>;
    constructor(public navCtrl: NavController, private navparm:NavParams,public global:GlobalProvider,private plt: Platform, private file: File, private fileOpener: FileOpener, private storage: Storage,private contacts: Contacts) {
     // this.books = afDB.list('/Books/Books').valueChanges();
-    storage.set('name', 'Max');
+    
     this.companyname = this.navparm.get('companyname');
+    this.storage.set('customername', this.companyname);
     this.userid = this.navparm.get('userid');
     console.log(this.companyname, "User ID" +this.userid);
     console.log("User ID : "+ this.global.userid);
@@ -41,7 +43,12 @@ export class HomePage {
  
  ionViewDidLoad() {
   console.log('ionViewDidLoad DashboardPage');
-  
+ }
+ ionViewWillEnter(){
+  this.storage.get('customername').then((val1) => {
+    console.log('Your name is', val1);
+    this.nativename = val1;
+  })
 }
 getcontacts(){
 this.contacts.find(['displayName', 'name', 'phoneNumbers', 'emails'], {filter: "", multiple: true})

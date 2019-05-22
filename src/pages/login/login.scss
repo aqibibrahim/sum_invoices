@@ -36,3 +36,8 @@ page-login {
       ion-app.md [padding] .scroll-content {
         padding: 9px !important;
     }
+
+    .alert-md .alert-title {
+        font-size: 22px;
+        text-align: -webkit-center;
+      }

@@ -26,10 +26,10 @@
                  
                 </ion-item>
         </ion-list>
-          <ion-item>
+          <!-- <ion-item>
             <ion-label fixed>Invoice #</ion-label>
             <ion-input type="number" [(ngModel)]="invoice" value="{{this.value_invoice_number}}" [readonly]="isReadonly()"></ion-input>
-          </ion-item>
+          </ion-item> -->
           <ion-item>
             <ion-label fixed>Order Number</ion-label>
             <ion-input type="number" [(ngModel)]="order" value="{{this.value_order_no}}" [readonly]="isReadonly()"></ion-input>
@@ -38,6 +38,26 @@
               <ion-label fixed>Item Name</ion-label>
               <ion-input type="text" [(ngModel)]="itemname" value="{{this.value_item_name}}" [readonly]="isReadonly()"></ion-input>
             </ion-item>
+            <ion-item>
+                <ion-label fixed>Total Bill</ion-label>
+                <ion-input type="text" [(ngModel)]="bill" value="{{this.value_total_cost}}" [readonly]="isReadonly()"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label style="color: #747474">
+                    Invoice Date:
+                </ion-label>
+                <ion-label>
+                    {{this.value_invoice_date | date: 'yyyy/MM/dd'}}
+                 </ion-label>
+                </ion-item>  
+                <ion-item>
+                  <ion-label style="color: #747474">
+                      Due Date: 
+                  </ion-label>
+                   <ion-label>
+                      {{this.value_due_date | date: 'yyyy/MM/dd'}}
+                   </ion-label>  
+                   </ion-item> 
           </ion-card-content>
         
         </ion-card>
@@ -124,8 +144,10 @@
                             <ion-col >
                                 <ion-item > -->
                                     <!-- <ion-label color="primary">Items</ion-label> -->
-                                   
-                                    <ion-input type="text"  [(ngModel)]="status" value="{{this.value_status}}"></ion-input>
+                                   <ion-item>
+                                      <ion-input type="text"  [(ngModel)]="statusvalue" value="{{this.value_status | uppercase}}" [readonly]="isReadonly()"></ion-input>
+                                   </ion-item>
+                                    
                                     <ion-list>
                                         <ion-item>
                                           <ion-label color="lightblue">Status</ion-label>
