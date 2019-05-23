@@ -9,7 +9,7 @@ import {Http ,Response} from '@angular/http';
 import { File } from '@ionic-native/file';
 import { FileOpener } from '@ionic-native/file-opener';
 import {GlobalProvider} from '../../providers/global/global';
-import {DashboardPage} from '../dashboard/dashboard';
+import {HomePage} from '../home/home';
 /**
  * Generated class for the InvoicesPage page.
  *
@@ -53,7 +53,7 @@ export class InvoicesPage {
   setBackButtonAction(){
     this.navBar.backButtonClick = () => {
     //alert("Where you want to go");
-    this.navCtrl.push(DashboardPage);
+    this.navCtrl.push(HomePage);
      //this.navCtrl.pop()
     }
   }

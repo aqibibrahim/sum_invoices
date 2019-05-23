@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,AlertController,LoadingController, ToastController } from 'ionic-angular';
+import { Component,ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams,AlertController,LoadingController, ToastController,Navbar } from 'ionic-angular';
 import {CreateContactPage} from '../create-contact/create-contact';
 import {Http ,Response} from '@angular/http';
 import {ContactdetailsPage} from '../contactdetails/contactdetails';
 import {GlobalProvider} from '../../providers/global/global';
 import 'rxjs/add/operator/map';
+import {HomePage} from '../home/home';
 
 /**
  * Generated class for the ContactsPage page.
@@ -19,6 +20,7 @@ import 'rxjs/add/operator/map';
   templateUrl: 'contacts.html',
 })
 export class ContactsPage {
+  @ViewChild(Navbar) navBar: Navbar;
   posts: any;
   constructor(public navCtrl: NavController, public global: GlobalProvider,public navParams: NavParams,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     
@@ -44,7 +46,15 @@ export class ContactsPage {
            //   this.posts = result.data[i].first_name;
            //   console.log(this.posts);
            // }
+           this.setBackButtonAction();
          });
+    }
+    setBackButtonAction(){
+      this.navBar.backButtonClick = () => {
+      //alert("Where you want to go");
+      this.navCtrl.push(HomePage);
+       //this.navCtrl.pop()
+      }
     }
   createcontact(){
     this.navCtrl.push(CreateContactPage);

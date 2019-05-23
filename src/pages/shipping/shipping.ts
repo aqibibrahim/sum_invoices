@@ -21,5 +21,7 @@ export class ShippingPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ShippingPage');
   }
-
+  saveshipping(){
+    
+  }
 }

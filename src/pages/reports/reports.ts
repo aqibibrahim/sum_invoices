@@ -36,43 +36,54 @@ export class ReportsPage {
   }
   //Financial Reports
   balance_sheet(){
-    this.navCtrl.push(BalanceSheetPage);
+    alert("Report is Under construction")
+    //this.navCtrl.push(BalanceSheetPage);
   }
   profit_and_loss(){
     this.navCtrl.push(ProfitLossPage);
   }
   cash_flow_statement(){
-    this.navCtrl.push(CashFlowStatementPage);
+    alert("Report is Under construction")
+    //this.navCtrl.push(CashFlowStatementPage);
   }
 //Sales report
   sales_by_customer(){
-    this.navCtrl.push(SalesCustomerPage);
+    alert("Report is Under construction")
+    //this.navCtrl.push(SalesCustomerPage);
   }
   sales_by_item(){
-    this.navCtrl.push(SalesTeamPage);
+    alert("Report is Under construction")
+    //this.navCtrl.push(SalesTeamPage);
   }
   sales_sales_person(){
-    this.navCtrl.push(SaleSalePersonPage);
+    alert("Report is Under construction")
+    //this.navCtrl.push(SaleSalePersonPage);
   }
   //Receivables Reports
   customer_balance(){
-    this.navCtrl.push(CustomerBalancePage);
+    alert("Report is Under construction")
+    //this.navCtrl.push(CustomerBalancePage);
   }
   aging_summary(){
-    this.navCtrl.push(AgingSummaryPage);
+    alert("Report is Under construction")
+    //this.navCtrl.push(AgingSummaryPage);
   }
   payment_recieved(){ 
-    this.navCtrl.push(PaymentRecievedPage);
+    alert("Report is Under construction")
+    //this.navCtrl.push(PaymentRecievedPage);
   }
 //Expenses Reports
   expense_by_category(){
-    this.navCtrl.push(ExpenseCategoryPage);
+    alert("Report is Under construction")
+    //this.navCtrl.push(ExpenseCategoryPage);
   }
 // Payables Reports
 vendor_balance(){
-  this.navCtrl.push(VendorBalncesPage);
+  alert("Report is Under construction")
+  //this.navCtrl.push(VendorBalncesPage);
   }
   payment_made(){
-    this.navCtrl.push(PaymentMadePage);
+    alert("Report is Under construction")
+    //this.navCtrl.push(PaymentMadePage);
   }
 }

@@ -8,50 +8,51 @@
   <ion-navbar color="lightblue">
     <ion-title>Shipping Address</ion-title>
     <ion-buttons end>
-        <button ion-button (click)="searchToggle()">
+        <button ion-button (click)="saveshipping()">
         Save
       </button>
       </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="my-class">
     <ion-card>
         <ion-card-content >
         <!-- <ion-item> -->
             <ion-item>
                 <ion-label>Street1</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input type="text" [(ngModel)]="shipping_street1"></ion-input>
               </ion-item>
             <!-- <ion-input type="text" placeholder="Street1"></ion-input>
         </ion-item> -->
         <ion-item>
             <ion-label>Street2</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input type="text" [(ngModel)]="shipping_street2"></ion-input>
         </ion-item>
         <ion-item>
+          <ion-label>Country</ion-label>
+          <ion-input type="text" [(ngModel)]="shipping_country"></ion-input>
+      </ion-item>
+        <ion-item>
             <ion-label>City</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input type="text" [(ngModel)]="shipping_city"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label>State</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="text" [(ngModel)]="shipping_state"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label>Zip Code</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input type="text" [(ngModel)]="shipping_zipcode"></ion-input>
         </ion-item>
-        <ion-item>
-            <ion-label>Country</ion-label>
-            <ion-input type="text"></ion-input>
-        </ion-item>
+       
         <ion-item>
             <ion-label>Phone</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input type="number" [(ngModel)]="shipping_phone"></ion-input>
         </ion-item>  
           <ion-item>
                 <ion-label>Fax</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input type="text" [(ngModel)]="shipping_fax"></ion-input>
         </ion-item>
         </ion-card-content>
       </ion-card>

@@ -43,6 +43,10 @@ import {ProfitLossReportPage} from '../profit-loss-report/profit-loss-report';
       }
     run_report_profit_loss(){
       console.log(this.fromdate, this.todate);
+      if(this.fromdate > this.todate)
+    {
+        alert ("Due Date must be greater than Invoice Date")
+    }else{
       let loader = this.loadingCtrl.create({
         content:'Waiting...'
       });
@@ -80,6 +84,8 @@ import {ProfitLossReportPage} from '../profit-loss-report/profit-loss-report';
         }, error => {
         console.log("Oooops!");
         });
+    }
+      
  }
 
     onItemChange(){

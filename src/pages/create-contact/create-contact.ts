@@ -41,9 +41,13 @@ export class CreateContactPage {
   testRadioOpen:boolean;
   testRadioResult:any;
   public allContacts: any
+
+  billing_address:any;
   constructor(public navCtrl: NavController, public global:GlobalProvider,public navParams: NavParams, private sms: SMS,private alertCtrl: AlertController,private contacts: Contacts,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     //this.data.username = '';
     this.listItems = [];
+    this.billing_address = this.navParams.get('billing_address');
+    console.log(this.billing_address);
     contacts.find(['displayName', 'name', 'phoneNumbers', 'emails'], {filter: "", multiple: true})
     .then(data => {
       this.allContacts = data
@@ -106,7 +110,8 @@ export class CreateContactPage {
       currency:this.currency,
       payment:this.payment,
       language:this.language,
-      userId:this.global.userid
+      userId:this.global.userid,
+      billing_address:this.billing_address
   };
     //console.log(this.data.username);
     this.http.post('https://sum-finance-latest2.herokuapp.com/finance/create', data)
@@ -117,19 +122,19 @@ export class CreateContactPage {
             message:'Data Save',
             duration:2000
           });
-          toast.present();
-          this.sms.send("+923335175480", "this.message")
-      .then(()=>{
-        let toast = this.tostctrl.create({
-          message: 'Message send successfully',
-          duration: 3000        });
-        toast.present();
-      },()=>{
-        let toast = this.tostctrl.create({
-          message: 'Failure',
-          duration: 3000        });
-        toast.present();
-      });
+      //     toast.present();
+      //     //this.sms.send("+923335175480", "this.message")
+      // .then(()=>{
+      //   let toast = this.tostctrl.create({
+      //     message: 'Message send successfully',
+      //     duration: 3000        });
+      //   toast.present();
+      // },()=>{
+      //   let toast = this.tostctrl.create({
+      //     message: 'Failure',
+      //     duration: 3000        });
+      //   toast.present();
+      // });
           this.navCtrl.push(ContactsPage);
         }, error => {
           loader.dismiss();

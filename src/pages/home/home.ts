@@ -47,7 +47,7 @@ export class HomePage {
  ionViewWillEnter(){
   this.storage.get('customername').then((val1) => {
     console.log('Your name is', val1);
-    this.nativename = val1;
+    this.nativename = this.global.company_name;
   })
 }
 getcontacts(){

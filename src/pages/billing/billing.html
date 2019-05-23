@@ -8,51 +8,60 @@
   <ion-navbar color="lightblue">
     <ion-title >Billing Address</ion-title>
     <ion-buttons end>
-        <button ion-button (click)="searchToggle()">
+        <button ion-button (click)="savebilling()">
         Save
       </button>
       </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="my-class">
 
     <ion-card>
         <ion-card-content >
         <!-- <ion-item> -->
             <ion-item>
                 <ion-label>Street1</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input type="text" [(ngModel)]="billing_street1"></ion-input>
               </ion-item>
             <!-- <ion-input type="text" placeholder="Street1"></ion-input>
         </ion-item> -->
         <ion-item>
             <ion-label>Street2</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input type="text" [(ngModel)]="billing_street2"></ion-input>
         </ion-item>
+        <!-- <ion-list>
+          <ion-item>
+              <ion-label>Country*</ion-label>
+              <ion-select [(ngModel)]="billing_country" ionCancel="onCancel()" okText="Ok">
+                <ion-option *ngFor="let country of data" [value] = "name">{{country.Name}}</ion-option>
+              </ion-select>
+            </ion-item>
+    </ion-list> -->
+        <ion-item>
+          <ion-label>Country</ion-label>
+          <ion-input type="text" [(ngModel)]="billing_country"></ion-input>
+      </ion-item>
         <ion-item>
             <ion-label>City</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input type="text" [(ngModel)]="billing_city"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label>State</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="text" [(ngModel)]="billing_state"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label>Zip Code</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input type="text" [(ngModel)]="billing_zipcode"></ion-input>
         </ion-item>
-        <ion-item>
-            <ion-label>Country</ion-label>
-            <ion-input type="text"></ion-input>
-        </ion-item>
+        
         <ion-item>
             <ion-label>Phone</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input type="number" [(ngModel)]="billing_phone"></ion-input>
         </ion-item>  
           <ion-item>
                 <ion-label>Fax</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input type="text" [(ngModel)]="billing_fax"></ion-input>
         </ion-item>
         </ion-card-content>
       </ion-card>

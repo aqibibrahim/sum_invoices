@@ -1,10 +1,11 @@
-import { Component,NgModule  } from '@angular/core';
-import { IonicPage, NavController, NavParams,AlertController, Item,LoadingController, ToastController  } from 'ionic-angular';
+import { Component,NgModule,ViewChild  } from '@angular/core';
+import { IonicPage, NavController, NavParams,AlertController, Item,LoadingController, ToastController,Navbar  } from 'ionic-angular';
 import {CreateItemsPage} from '../create-items/create-items';
 import {EdititemPage} from '../edititem/edititem';
 import {CreateInvoicesPage} from '../create-invoices/create-invoices';
 import {Http ,Response} from '@angular/http';
 import {GlobalProvider} from '../../providers/global/global';
+import {HomePage} from '../home/home';
 //import { AngularFireDatabase } from 'angularfire2/database';
 /**
  * Generated class for the ItemPage page.
@@ -19,6 +20,7 @@ import {GlobalProvider} from '../../providers/global/global';
   templateUrl: 'item.html',
 })
 export class ItemPage {
+  @ViewChild(Navbar) navBar: Navbar;
   selectedItem: any;
   items: any;
   
@@ -40,6 +42,14 @@ ionViewDidEnter() {
 }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ItemPage');
+    this.setBackButtonAction();
+  }
+  setBackButtonAction(){
+    this.navBar.backButtonClick = () => {
+    //alert("Where you want to go");
+    this.navCtrl.push(HomePage);
+     //this.navCtrl.pop()
+    }
   }
   createcitems(){
     this.navCtrl.push(CreateItemsPage);

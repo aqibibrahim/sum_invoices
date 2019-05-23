@@ -15,6 +15,7 @@ import {Http ,Response} from '@angular/http';
 import {GlobalProvider} from '../../providers/global/global';
 import {InvoicesPage} from '../invoices/invoices';
 import { NativeStorage } from '@ionic-native/native-storage';
+import { ConditionalExpr } from '@angular/compiler';
 /**
  * Generated class for the CreateInvoicesPage page.
  *
@@ -67,8 +68,8 @@ export class CreateInvoicesPage {
   gamingname:any;
   namesList:any;
 
-  nativename:any
-  nativeemail:any;
+  nativeindate:any
+  nativeduedate:any;
   nativeinvoice:any;
   nativeorder:any;
   
@@ -93,7 +94,7 @@ export class CreateInvoicesPage {
         )]),
       order: new FormControl('', [Validators.required, Validators.minLength(1)])
       })
-
+      
 
     this.input_name = this.navParams.get('inputname');
     this.qty= this.navParams.get('quantity');
@@ -157,34 +158,12 @@ export class CreateInvoicesPage {
     }
   }
   ionViewWillEnter(){
-//     this.nativeStorage.getItem('myitem')
-//   .then(
-//     data => console.log(data.name),
-//     data1=> console.log(data1.email),
-//     error => console.error(error)
-// );
-  this.storage.get('name').then((val1) => {
-  console.log('Your name is', val1);
-  this.nativename = val1;
-
-});
-this.storage.get('email').then((val2) => {
-  console.log('Your email is', val2);
-  this.nativeemail = val2;
-
-});
-this.storage.get('invoiceno').then((val3) => {
-  console.log('Your invoice is', val3);
-  this.nativeinvoice = val3;
-
-});
-this.storage.get('orderno').then((val4) => {
-  console.log('Your order is', val4);
-  this.nativeorder = val4;
-
-});
-
-
+  
+  this.nativeinvoice = this.navParams.get('add_inno');
+  this.nativeorder = this.navParams.get('add_orno');
+  this.nativeindate = this.navParams.get('add_indate');
+  this.nativeduedate = this.navParams.get('add_dudate');
+  console.log(this.nativeindate,this.nativeduedate)
   }
   onContactChange(){
     console.log(this.gaming.email)
@@ -380,58 +359,72 @@ this.storage.get('orderno').then((val4) => {
    }
    /////////Open invoice detail page/////////////////////
    invoicedetails(){
+     console.log(this.invoicedate,this.duedate)
+     
+    if(this.invoicedate > this.duedate)
+    {
+        alert ("Due Date must be greater than Invoice Date")
+    }
+
+    if(this.email == undefined || this.invoice == undefined || this.order == undefined || this.invoicedate == undefined || this.duedate == undefined){
+      alert ("Please fill all Manadatory fields");
+    }
+    else
+    {
+      console.log(this.invoicedate);
+      let loader = this.loadingCtrl.create({
+       content:'Waiting...'
+     });
+     loader.present();
+     let data = {
+       customer:this.gamingname,
+       order_no:this.order,
+       invoice_number:this.invoice,
+       invoice_date:this.invoicedate,
+       Due_date:this.duedate,
+       sales_person:"Aqib",
+       customer_note:this.customer_notes,
+       terms_and_conditions:this.terms_condition,
+       item_quantity:this.qty,
+       item_discount:this.discountprice,
+       total_cost:this.total,
+       userId:this.global.userid,
+       item_name:this.input_name,
+       item_id:this.item_id,
+       sale_rate:this.sale_rate,
+       purchase_rate:this.purchase_rate,
+       status:"Pending"
+     }
+     this.http.post('https://sum-finance-latest2.herokuapp.com/invoice/create', data)
+     .subscribe(response => {
+       console.log('POST Response:', response);
+       loader.dismiss();
+       let toast = this.tostctrl.create({
+         message:'Data Save',
+         duration:2000
+       });
+       toast.present();
+   //    this.navCtrl.push(InvoicesPage);
+       this.navCtrl.push(InvoicedeatilsPage,{'customername':this.gamingname,'invoice':this.invoice,'balance':this.total,'invoicedate':this.invoicedate,'duedate':this.duedate,'description':this.desc,
+     'item_name':this.input_name,'subtotal':this.subtotal,'discount':this.discountprice,'shipping':this.shippingprice,'adjustment':this.adjustmentprice,'quantity':this.qty,'rate':this.rat,
+   'email':this.email,'order':this.order,'status':"Pending"});
+    
+     }, error => {
+       loader.dismiss();
+       let toast = this.tostctrl.create({
+         message:'Data not Save',
+         duration:2000
+       });
+       toast.present();
+     console.log("Oooops!");
+     });
+    }
     //this.sms.send(this.namesList., 'Hello world!');
 
     // firstName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
     // lastName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
 
-     console.log(this.invoicedate);
-     let loader = this.loadingCtrl.create({
-      content:'Waiting...'
-    });
-    loader.present();
-    let data = {
-      customer:this.gamingname,
-      order_no:this.order,
-      invoice_number:this.invoice,
-      invoice_date:this.invoicedate,
-      Due_date:this.duedate,
-      sales_person:"Aqib",
-      customer_note:this.customer_notes,
-      terms_and_conditions:this.terms_condition,
-      item_quantity:this.qty,
-      item_discount:this.discountprice,
-      total_cost:this.total,
-      userId:this.global.userid,
-      item_name:this.input_name,
-      item_id:this.item_id,
-      sale_rate:this.sale_rate,
-      purchase_rate:this.purchase_rate,
-      status:"Pending"
-    }
-    this.http.post('https://sum-finance-latest2.herokuapp.com/invoice/create', data)
-    .subscribe(response => {
-      console.log('POST Response:', response);
-      loader.dismiss();
-      let toast = this.tostctrl.create({
-        message:'Data Save',
-        duration:2000
-      });
-      toast.present();
-  //    this.navCtrl.push(InvoicesPage);
-      this.navCtrl.push(InvoicedeatilsPage,{'customername':this.gamingname,'invoice':this.invoice,'balance':this.total,'invoicedate':this.invoicedate,'duedate':this.duedate,'description':this.desc,
-    'item_name':this.input_name,'subtotal':this.subtotal,'discount':this.discountprice,'shipping':this.shippingprice,'adjustment':this.adjustmentprice,'quantity':this.qty,'rate':this.rat,
-  'email':this.email,'order':this.order,'status':"Pending"});
-   
-    }, error => {
-      loader.dismiss();
-      let toast = this.tostctrl.create({
-        message:'Data not Save',
-        duration:2000
-      });
-      toast.present();
-    console.log("Oooops!");
-    });
+     
   }
      
    onCancel(){
@@ -439,16 +432,12 @@ this.storage.get('orderno').then((val4) => {
      console.log(this.gaming);
    }
    adlineitem(){
-    this.storage.set('name', this.gamingname);
-    this.storage.set('email', this.email);
-    this.storage.set('invoiceno', this.invoice);
-    this.storage.set('orderno',this.order);
-    // this.nativeStorage.setItem('myitem', {name: this.gamingname, email: this.email,invoiceno:this.invoice,orderno:this.order})
-    // .then(
-    //   () => console.log('Stored item!'),
-    //   error => console.error('Error storing item', error)
-    // );
-    this.navCtrl.push(AddLineItemPage);
+    // this.storage.set('name', this.gamingname);
+    // this.storage.set('email', this.email);
+    // this.storage.set('invoiceno', this.invoice);
+    // this.storage.set('orderno',this.order);
+    
+    this.navCtrl.push(AddLineItemPage,{invoicenumber:this.invoice,ordernumber:this.order,invoiced:this.invoicedate,dued:this.duedate});
    }
    goTo(){
     console.log('this.anArray',this.anArray);

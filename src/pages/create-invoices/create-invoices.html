@@ -31,24 +31,24 @@
   <ion-card-content>
     <ion-list>
         <ion-item>
-            <ion-label>Contact</ion-label>
+            <ion-label>Contact*</ion-label>
             <ion-select interface="popover" [(ngModel)]="gaming" ionCancel="onCancel()" okText="Ok" (ionChange)="onContactChange()">
               <ion-option *ngFor="let name of namesList" [value] = "name">{{name.first_name}}</ion-option>
             </ion-select>
           </ion-item>
   </ion-list>
     <ion-item>
-<ion-label fixed>Email</ion-label>
+<ion-label fixed>Email*</ion-label>
       <!-- <ion-input type="email" value="" [(ngModel)]="email"></ion-input> -->
-      <ion-input type="email" [(ngModel)]="email"  name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" value="{{this.email}}" required ></ion-input>
+      <ion-input type="email" [(ngModel)]="email"  name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" value="{{this.email}}" required [readonly]="isReadonly()"></ion-input>
 </ion-item>
     <ion-item>
-      <ion-label fixed>Invoice #</ion-label>
-      <ion-input type="number" value="" [(ngModel)]="invoice"></ion-input>
+      <ion-label fixed>Invoice #*</ion-label>
+      <ion-input type="number" value="{{this.nativeinvoice}}" [(ngModel)]="invoice"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label fixed>Order Number</ion-label>
-      <ion-input type="number" value="" [(ngModel)]="order"></ion-input>
+      <ion-label fixed>Order Number*</ion-label>
+      <ion-input type="number" value="{{this.nativeorder}}" [(ngModel)]="order"></ion-input>
     </ion-item>
     </ion-card-content>
   
@@ -60,14 +60,14 @@
         <ion-row style="border-bottom: 1px solid grey">
             <ion-col >
                 <ion-item style="border-bottom: 1px solid grey">
-                    <ion-label floating>Date</ion-label>
+                    <ion-label floating>Invoice Date*</ion-label>
                     <!-- <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="invoicedate"></ion-input> -->
                     <ion-datetime displayFormat="DD MMM YYYY" (ionChange)="fecha()" pickerFormat="DD MMM YYYY"  [(ngModel)]="invoicedate" cancelText ="Cancelar" doneText="Ok" ></ion-datetime>
                   </ion-item>
             </ion-col>
             <ion-col>
                 <ion-item style="border-bottom: 1px solid grey">
-                    <ion-label floating>Due</ion-label>
+                    <ion-label floating>Due Date*</ion-label>
                     <ion-datetime displayFormat="DD MMM YYYY" (ionChange)="fecha()" pickerFormat="DD MMM YYYY"  [(ngModel)]="duedate" cancelText ="Cancelar" doneText="Ok" ></ion-datetime>
                     <!-- <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="duedate"></ion-input> -->
                   </ion-item>

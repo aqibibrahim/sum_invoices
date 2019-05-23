@@ -3,17 +3,20 @@ import { NavController,LoadingController, ToastController } from 'ionic-angular'
 import {Http ,Response } from '@angular/http';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {LoginPage} from '../login/login';
+import * as Inputmask from 'inputmask';
+import { Directive, Attribute } from '@angular/core';
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html'
 })
+
 export class SignupPage {
-  
   myForm: FormGroup;
+  pattern: string;
 
   isName: boolean = false;
   isEmail: boolean = false;
-  isPhone: boolean = false;
+  isfullname: boolean = false;
   isPassword: boolean = false;
   iscountry: boolean = false;
 
@@ -24,21 +27,21 @@ export class SignupPage {
   country:any;
 
   constructor(
+    
     public navCtrl: NavController,
     public fb: FormBuilder,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+      
     this.myForm = this.fb.group({
-      name: ['', [Validators.required]],
-      country:['',[Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['',[Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+      name: ['', [Validators.required, Validators.pattern("[a-zA-Z ]*")]],
+      fullname:['',[Validators.required,Validators.pattern("[a-zA-Z ]*")]],
+       country:['',[Validators.required]],
+      email: ['', [Validators.required, Validators.email,Validators.pattern(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/)]],
+       //phone: ['',[Validators.required, Validators.maxLength(11), Validators.minLength(11)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
-    this.http.get('/assets/countries.json')
-    .subscribe(res => {  
-      console.log("HTTP RESPONSE:")
-      console.log(res)
-    })
+    
   }
+  
   validate(data){
     if(data == 'name'){
       this.isName = true;
@@ -49,22 +52,13 @@ export class SignupPage {
     else if(data == 'email'){
       this.isEmail = true;
     }
-    else if(data == 'phone'){
-      this.isPhone = true;
+    else if(data == 'fullname'){
+      this.isfullname = true;
     }
     else if(data == 'password'){
       this.isPassword = true;
     }
   }
-  _keyUp(event: any) {
-    const pattern = /[0-9\+\-\ ]/;
-    let inputChar = String.fromCharCode(event.charCode);
-
-    if (!pattern.test(inputChar)) {
-      // invalid character, prevent input
-      event.preventDefault();
-    }
-}
   submit(){
     let loader = this.loadingCtrl.create({
       content:'Waiting...'

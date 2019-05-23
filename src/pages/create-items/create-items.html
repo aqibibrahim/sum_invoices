@@ -22,9 +22,11 @@
 </ion-header>
 
 <ion-content padding class="my-class">
+  
     <ion-card>
       <ion-card-content>
-          <ion-label color="lightblue">Type</ion-label>     
+
+          <ion-label color="lightblue">Type*</ion-label>     
                       <ion-row radio-group [(ngModel)]="sexe">
                           <ion-col>
                             <ion-item style="border-bottom: 0.3px solid">
@@ -41,7 +43,7 @@
                         </ion-row>
 
           <ion-item >
-              <ion-label color="red" >Item Name</ion-label>
+              <ion-label color="red" >Item Name*</ion-label>
           </ion-item>
           <ion-item style="border-bottom: 0.3px solid">
               <ion-input type="text" placeholder="Name" [(ngModel)]="name"></ion-input>
@@ -54,7 +56,7 @@
               <ion-input type="text" placeholder="Select or Type to add" [(ngModel)]="units"></ion-input>
           </ion-item>
           <ion-item >
-            <ion-label color="lightblue">Quantity</ion-label>  
+            <ion-label color="lightblue">Quantity*</ion-label>  
         </ion-item>
           <ion-item style="border-bottom: 0.3px solid">
             <ion-input type="number" placeholder="Quantity" [(ngModel)]="qty"></ion-input>
@@ -71,9 +73,9 @@
             
             <div *ngIf="saleinformation">
 
-                    <ion-label color="red">Rate</ion-label>
+                    <ion-label color="red">Sale Rate*</ion-label>
                     <ion-item style="border-bottom: 0.3px solid">
-                        <ion-input type="text" placeholder="Enter Rate" [(ngModel)]="sale_rate"></ion-input>
+                        <ion-input type="number" placeholder="Enter Rate" [(ngModel)]="sale_rate"></ion-input>
                     </ion-item>
                     
                 
@@ -83,7 +85,7 @@
                     </ion-item>
                     <ion-label color="lightblue">Tax</ion-label>
                     <ion-item style="border-bottom: 0.3px solid">
-                        <ion-input type="text" placeholder="None" [(ngModel)]="sale_tax"></ion-input>
+                        <ion-input type="number" placeholder="None" [(ngModel)]="sale_tax"></ion-input>
                     </ion-item>
                 
                     <ion-label color="lightblue">Description</ion-label>
@@ -104,9 +106,9 @@
             </ion-item>
               
               <div *ngIf="purchaseinformation">
-                      <ion-label color="red">Purchase Rate</ion-label>
+                      <ion-label color="red">Purchase Rate*</ion-label>
                       <ion-item style="border-bottom: 0.3px solid">
-                          <ion-input type="text" placeholder="Enter Rate" [(ngModel)]="purchase_rate"></ion-input>
+                          <ion-input type="number" placeholder="Enter Rate" [(ngModel)]="purchase_rate"></ion-input>
                       </ion-item>
                       
                       <ion-label color="red">Account</ion-label>

@@ -52,7 +52,7 @@ export class ForgotpasswordPage {
       email:this.email,
       password: this.password
   };
-  this.http.post('https://sum-finance-latest2.herokuapp.com/user/signup', data)
+  this.http.post('https://sum-finance-latest2.herokuapp.com/user/forget', data)
   .subscribe(response => {
     console.log('POST Response:', response);
     loader.dismiss();

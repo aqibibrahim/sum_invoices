@@ -38,8 +38,9 @@ login(email,password){
                 message:'Login Successfully',
                 duration:2000
               });
-              toast.present();
               loader.dismiss();
+              toast.present();
+              
               this.app.getActiveNav().push(HomePage,{companyname:this.company_name,userid:this.userid});
               
         }, error => {
