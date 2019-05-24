@@ -37,6 +37,20 @@ export class ContactsPage {
     }
         this.posts = data 
       });
+      this.platform.registerBackButtonAction(() => {
+          // Catches the active view
+          let nav = this.app.getActiveNavs()[0];
+          let activeView = nav.getActive();                
+          // Checks if can go back before show up the alert
+          if(activeView.name === 'ContactsPage') {
+              if (nav.canGoBack()){
+                  nav.pop();
+              } else {
+                this.navCtrl.push(HomePage);
+                 
+              }
+          }
+      });
     }
     ionViewDidEnter() {
       this.http.get('https://sum-finance-latest2.herokuapp.com/finance/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
@@ -52,28 +66,13 @@ export class ContactsPage {
           // Checks if can go back before show up the alert
           if(activeView.name === 'ContactsPage') {
               if (nav.canGoBack()){
-                  nav.pop();
+                this.navCtrl.push(HomePage);
               } else {
-                  const alert = this.alertCtrl.create({
-                      title: 'Exit',
-                      message: 'Want to Exit App?',
-                      buttons: [{
-                          text: 'Cancel',
-                          role: 'cancel',
-                          handler: () => {
-                            this.nav.setRoot('HomePage');
-                          }
-                      },{
-                          text: 'OK',
-                          handler: () => {
-                            this.platform.exitApp();
-                          }
-                      }]
-                  });
-                  alert.present();
+                this.navCtrl.push(HomePage);
               }
           }
       });
+         
     }
     
   createcontact(){

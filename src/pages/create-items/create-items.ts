@@ -77,9 +77,41 @@ export class CreateItemsPage {
           }
       });
   }
+  ionViewDidEnter(){
+    this.platform.registerBackButtonAction(() => {
+      // Catches the active view
+      let nav = this.app.getActiveNavs()[0];
+      let activeView = nav.getActive();                
+      // Checks if can go back before show up the alert
+      if(activeView.name === 'CreateItemsPage') {
+          if (nav.canGoBack()){
+              nav.pop();
+          } else {
+              const alert = this.alertCtrl.create({
+                  title: 'Exit',
+                  message: 'Want to Exit App?',
+                  buttons: [{
+                      text: 'Cancel',
+                      role: 'cancel',
+                      handler: () => {
+                        this.nav.setRoot('HomePage');
+                      }
+                  },{
+                      text: 'OK',
+                      handler: () => {
+                        
+                        this.platform.exitApp();
+                      }
+                  }]
+              });
+              alert.present();
+          }
+      }
+  });
+  }
   
   createitem(){
-    if(this.sexe == "" || this.name == undefined || this.units == undefined || this.qty == undefined || this.sale_rate == undefined || this.sale_account == undefined || this.sale_tax == undefined || this.sale_desc == undefined
+    if(this.sexe == "" || this.name == undefined || this.units == undefined || this.qty == undefined || this.sale_rate == undefined || this.sale_account == undefined || this.sale_desc == undefined
     || this.purchase_rate == undefined || this.purchase_account == undefined || this.purchase_desc == undefined){
       alert ("Please fill all the fields");
     }

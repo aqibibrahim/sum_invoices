@@ -60,6 +60,8 @@ import {EdititemPage} from '../pages/edititem/edititem';
 import {ForgotpasswordPage} from '../pages/forgotpassword/forgotpassword';
 import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts';
 import { GlobalProvider } from '../providers/global/global';
+import { SignupProvider } from '../providers/signup/signup';
+import {CreateYourCompanyPage} from '../pages/create-your-company/create-your-company';
 
 
 
@@ -101,7 +103,8 @@ import { GlobalProvider } from '../providers/global/global';
     EditinvoicePage,
     ExpensePage,
     ProfitLossReportPage,
-    ForgotpasswordPage
+    ForgotpasswordPage,
+    CreateYourCompanyPage
   ],
   imports: [ 
     FormsModule, 
@@ -151,7 +154,8 @@ import { GlobalProvider } from '../providers/global/global';
     EditinvoicePage,
     ExpensePage,
     ProfitLossReportPage,
-    ForgotpasswordPage 
+    ForgotpasswordPage ,
+    CreateYourCompanyPage
   ],
   providers: [
     
@@ -169,7 +173,8 @@ import { GlobalProvider } from '../providers/global/global';
     SMS,
     AndroidPermissions,
     GlobalProvider,
-    NativeStorage 
+    NativeStorage,
+    SignupProvider 
     ]
 })
 export class AppModule {}

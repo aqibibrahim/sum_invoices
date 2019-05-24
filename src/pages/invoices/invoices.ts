@@ -50,7 +50,20 @@ export class InvoicesPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad InvoicesPage');
-    
+    this.plt.registerBackButtonAction(() => {
+      // Catches the active view
+      let nav = this.app.getActiveNavs()[0];
+      let activeView = nav.getActive();                
+      // Checks if can go back before show up the alert
+      if(activeView.name === 'InvoicesPage') {
+          if (nav.canGoBack()){
+              nav.pop();
+          } else {
+              this.navCtrl.push(HomePage);
+              
+          }
+      }
+  });
   }
  
   createinvoice(){
@@ -63,36 +76,20 @@ export class InvoicesPage {
        //this.posts = data.json();
        this.invoices = data 
             });
-            this.plt.registerBackButtonAction(() => {
-              // Catches the active view
-              let nav = this.app.getActiveNavs()[0];
-              let activeView = nav.getActive();                
-              // Checks if can go back before show up the alert
-              if(activeView.name === 'InvoicesPage') {
-                  if (nav.canGoBack()){
-                      nav.pop();
-                  } else {
-                      const alert = this.alertCtrl.create({
-                          title: 'Exit',
-                          message: 'Want to Exit App?',
-                          buttons: [{
-                              text: 'Cancel',
-                              role: 'cancel',
-                              handler: () => {
-                                this.nav.setRoot('HomePage');
-                              }
-                          },{
-                              text: 'OK',
-                              handler: () => {
-                                
-                                this.plt.exitApp();
-                              }
-                          }]
-                      });
-                      alert.present();
-                  }
-              }
-          });
+
+           this.plt.registerBackButtonAction(() => {
+      // Catches the active view
+      let nav = this.app.getActiveNavs()[0];
+      let activeView = nav.getActive();                
+      // Checks if can go back before show up the alert
+      if(activeView.name === 'InvoicesPage') {
+          if (nav.canGoBack()){
+            this.navCtrl.push(HomePage);
+          } else {
+            this.navCtrl.push(HomePage);
+          }
+      }
+  });
 }
  removeItem(invoice):void{
   let loader = this.loadingCtrl.create({

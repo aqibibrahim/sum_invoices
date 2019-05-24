@@ -32,9 +32,9 @@ login(email,password){
   this.http.post('https://sum-finance-latest2.herokuapp.com/user/login', data).map(response => response.json())
         .subscribe(data => {
           console.log(data);
-          console.log(data[0].company_name, data[0]._id);
-          this.company_name = data[0].company_name;
-          this.userid = data[0]._id;
+          console.log(data.company_name);
+          this.company_name = data.company_name;
+          this.userid = data._id;
           this.app.getActiveNav().push(HomePage,{companyname:this.company_name,userid:this.userid});
           let toast = this.tostctrl.create({
                 message:'Login Successfully',
@@ -43,18 +43,16 @@ login(email,password){
               loader.dismiss();
               toast.present();
         }, error => {
-          let loader = this.loadingCtrl.create({
-            content:'Waiting...'
-          });
-          loader.present();
+          
           let alert = this.alrtctrl.create({
             title: 'Login Failed',
             subTitle: 'Invalid Username and Password',
             buttons: ['OK']
             
             });
-            alert.present();
             loader.dismiss();
+            alert.present();
+          
           //alert("Invalid Username and Password");
           console.log("Oooops!");
         });

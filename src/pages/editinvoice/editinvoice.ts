@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,LoadingController, ToastController } from 'ionic-angular';
+import { Component,ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams,LoadingController, ToastController,Nav,AlertController,Platform } from 'ionic-angular';
 import {Http ,Response} from '@angular/http';
 import {InvoicesPage} from '../invoices/invoices';
+import { App } from 'ionic-angular';
 /**
  * Generated class for the EditinvoicePage page.
  *
@@ -15,6 +16,7 @@ import {InvoicesPage} from '../invoices/invoices';
   templateUrl: 'editinvoice.html',
 })
 export class EditinvoicePage {
+  @ViewChild(Nav) nav: Nav;
 id:any;
 invoice:any;
 status:any;
@@ -36,7 +38,7 @@ status:any;
   value_status:any;
   value_item_name:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public app: App,public platform:Platform,public alertCtrl:AlertController,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     this.id= this.navParams.get('id');
     this.http.get('https://sum-finance-latest2.herokuapp.com/invoice/get/'+this.id+'').map(res => res.json()).subscribe(data => {
       console.log(data);
@@ -63,7 +65,37 @@ console.log( this.value_invoice_number);
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditinvoicePage');
+    this.platform.registerBackButtonAction(() => {
+      // Catches the active view
+      let nav = this.app.getActiveNavs()[0];
+      let activeView = nav.getActive();                
+      // Checks if can go back before show up the alert
+      if(activeView.name === 'EditinvoicePage') {
+          if (nav.canGoBack()){
+              nav.pop();
+          } else {
+            this.navCtrl.push(InvoicesPage);
+          }
+      }
+  });
   }
+  ionViewDidEnter() {
+    
+    this.platform.registerBackButtonAction(() => {
+     // Catches the active view
+     let nav = this.app.getActiveNavs()[0];
+     let activeView = nav.getActive();                
+     // Checks if can go back before show up the alert
+     if(activeView.name === 'EditinvoicePage') {
+         if (nav.canGoBack()){
+           this.navCtrl.push(InvoicesPage);
+         } else {
+           this.navCtrl.push(InvoicesPage);
+         }
+     }
+ });
+    
+}
   updateinvoice(){
     let loader = this.loadingCtrl.create({
       content:'Waiting...'

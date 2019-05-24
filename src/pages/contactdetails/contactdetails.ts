@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,LoadingController, ToastController } from 'ionic-angular';
+import { Component,ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams,LoadingController, ToastController,Nav,AlertController,Platform } from 'ionic-angular';
 import {Http ,Response} from '@angular/http';
 import {ContactsPage} from '../contacts/contacts';
+import { App } from 'ionic-angular';
 /**
  * Generated class for the ContactdetailsPage page.
  *
@@ -15,6 +16,7 @@ import {ContactsPage} from '../contacts/contacts';
   templateUrl: 'contactdetails.html',
 })
 export class ContactdetailsPage {
+  @ViewChild(Nav) nav: Nav;
   id:any;
   posts:any;
    buttonClicked1 = true;
@@ -39,7 +41,7 @@ export class ContactdetailsPage {
 
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public app: App,public platform:Platform,public alertCtrl:AlertController,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     this.mydate=new Date();
     this.id= this.navParams.get('id');
     
@@ -61,7 +63,37 @@ export class ContactdetailsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ContactdetailsPage');
+    this.platform.registerBackButtonAction(() => {
+      // Catches the active view
+      let nav = this.app.getActiveNavs()[0];
+      let activeView = nav.getActive();                
+      // Checks if can go back before show up the alert
+      if(activeView.name === 'ContactsPage') {
+          if (nav.canGoBack()){
+              nav.pop();
+          } else {
+            this.navCtrl.push(ContactsPage);
+          }
+      }
+  });
   }
+  ionViewDidEnter() {
+    
+    this.platform.registerBackButtonAction(() => {
+     // Catches the active view
+     let nav = this.app.getActiveNavs()[0];
+     let activeView = nav.getActive();                
+     // Checks if can go back before show up the alert
+     if(activeView.name === 'ContactdetailsPage') {
+         if (nav.canGoBack()){
+           this.navCtrl.push(ContactsPage);
+         } else {
+           this.navCtrl.push(ContactsPage);
+         }
+     }
+ });
+    
+}
   onButtonClick1() {
 
     this.buttonClicked1 = !this.buttonClicked1;

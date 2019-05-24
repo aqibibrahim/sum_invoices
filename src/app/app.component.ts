@@ -56,36 +56,7 @@ export class MyApp {
       this.hideSplashScreen();
       //this.splashScreen.hide();
     });
-  //   this.platform.registerBackButtonAction(() => {
-  //     // Catches the active view
-  //     let nav = this.app.getActiveNavs()[0];
-  //     let activeView = nav.getActive();                
-  //     // Checks if can go back before show up the alert
-  //     if(activeView.name === 'HomePage') {
-  //         if (nav.canGoBack()){
-  //             nav.pop();
-  //         } else {
-  //             const alert = this.alertCtrl.create({
-  //                 title: 'Exit',
-  //                 message: 'Want to Exit App?',
-  //                 buttons: [{
-  //                     text: 'Cancel',
-  //                     role: 'cancel',
-  //                     handler: () => {
-  //                       this.nav.setRoot('HomePage');
-  //                     }
-  //                 },{
-  //                     text: 'OK',
-  //                     handler: () => {
-                        
-  //                       this.platform.exitApp();
-  //                     }
-  //                 }]
-  //             });
-  //             alert.present();
-  //         }
-  //     }
-  // });
+  
   }
   
   hideSplashScreen() {

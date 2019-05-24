@@ -10,7 +10,8 @@ import {ReportsPage} from '../reports/reports'
 import {ItemPage} from '../item/item'
 import {BillsPage} from '../bills/bills';
 import {ExpensePage} from '../expense/expense';
-import {GlobalProvider} from '../../providers/global/global'
+import {GlobalProvider} from '../../providers/global/global';
+import {SignupProvider} from '../../providers/signup/signup';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -30,7 +31,7 @@ export class HomePage {
   userid:any;
   nativename:any;
   // books: Observable<any[]>;
-   constructor(public navCtrl: NavController, private navparm:NavParams,public global:GlobalProvider,private plt: Platform, private file: File, private fileOpener: FileOpener, private storage: Storage,private contacts: Contacts) {
+   constructor(public navCtrl: NavController, private navparm:NavParams,public signuppro:SignupProvider,public global:GlobalProvider,private plt: Platform, private file: File, private fileOpener: FileOpener, private storage: Storage,private contacts: Contacts) {
     // this.books = afDB.list('/Books/Books').valueChanges();
     
     this.companyname = this.navparm.get('companyname');

@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component,ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams,Nav,AlertController,Platform } from 'ionic-angular';
 import {Http ,Response} from '@angular/http';
 import {ItemPage} from '../item/item';
+import { App } from 'ionic-angular';
 
 /**
  * Generated class for the EdititemPage page.
@@ -16,6 +17,7 @@ import {ItemPage} from '../item/item';
   templateUrl: 'edititem.html',
 })
 export class EdititemPage {
+  @ViewChild(Nav) nav: Nav;
   id:any;
   oldqty:any;
   qty:any;
@@ -40,7 +42,7 @@ export class EdititemPage {
 
   public check1:boolean=false;
   public purchaseinformation:boolean=false;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public http: Http) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public app: App,public platform:Platform,public http: Http,public alertCtrl:AlertController) {
     this.id= this.navParams.get('id');
     
   this.http.get('https://sum-finance-latest2.herokuapp.com/item/get/'+this.id+'').map(res => res.json()).subscribe(data => {
@@ -59,6 +61,37 @@ export class EdititemPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EdititemPage');
+    this.platform.registerBackButtonAction(() => {
+      // Catches the active view
+      let nav = this.app.getActiveNavs()[0];
+      let activeView = nav.getActive();                
+      // Checks if can go back before show up the alert
+      if(activeView.name === 'EdititemPage') {
+          if (nav.canGoBack()){
+              nav.pop();
+          } else {
+            this.navCtrl.push(ItemPage);
+             
+          }
+      }
+  });
+  }
+  ionViewDidEnter() {
+    
+       this.platform.registerBackButtonAction(() => {
+        // Catches the active view
+        let nav = this.app.getActiveNavs()[0];
+        let activeView = nav.getActive();                
+        // Checks if can go back before show up the alert
+        if(activeView.name === 'EdititemPage') {
+            if (nav.canGoBack()){
+              this.navCtrl.push(ItemPage);
+            } else {
+              this.navCtrl.push(ItemPage);
+            }
+        }
+    });
+       
   }
   updateitem(){
     

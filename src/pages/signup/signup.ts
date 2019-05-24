@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {LoginPage} from '../login/login';
 import * as Inputmask from 'inputmask';
 import { Directive, Attribute } from '@angular/core';
+import {SignupProvider}  from '../../providers/signup/signup';
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html'
@@ -29,7 +30,7 @@ export class SignupPage {
   constructor(
     
     public navCtrl: NavController,
-    public fb: FormBuilder,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+    public fb: FormBuilder,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController, public signup:SignupProvider) {
       
     this.myForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern("[a-zA-Z ]*")]],
@@ -60,36 +61,7 @@ export class SignupPage {
     }
   }
   submit(){
-    let loader = this.loadingCtrl.create({
-      content:'Waiting...'
-    });
-    loader.present();
-    let data = {
-      email:this.email,
-      password: this.password,
-      company_name: this.compname,
-      user_name:this.fullname,
-      country:this.country
-  };
-  this.http.post('https://sum-finance-latest2.herokuapp.com/user/signup', data)
-  .subscribe(response => {
-    console.log('POST Response:', response);
-    loader.dismiss();
-    let toast = this.tostctrl.create({
-      message:'Signup Successfully',
-      duration:2000
-    });
-    toast.present();
-    this.navCtrl.push(LoginPage);
-  }, error => {
-    loader.dismiss();
-    let toast = this.tostctrl.create({
-      message:'User already esist',
-      duration:2000
-    });
-    toast.present();
-  console.log("Oooops!");
-  });
+      this.signup.signup(this.email,this.password,this.compname,this.fullname,this.country);
   }
 
 }

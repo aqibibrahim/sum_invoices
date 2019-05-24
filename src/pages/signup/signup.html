@@ -17,16 +17,16 @@
       <form [formGroup]="myForm" (ngSubmit)="submit()" novalidate>
           
         <ion-item no-padding [class.invalid]="(!myForm.controls.name.valid) && isName" style="border-bottom-color: #D1D3D3">
-            <ion-label stacked style="color:grey;font-size: larger">Company Name</ion-label>
-          <ion-input type="text" (keyup)="validate('name')" formControlName="name" [(ngModel)]="compname"></ion-input>
+            <!-- <ion-label stacked style="color:grey;font-size: larger">Company Name</ion-label> -->
+          <ion-input type="text" (keyup)="validate('name')" formControlName="name" [(ngModel)]="compname" placeholder="Company Name"></ion-input>
         </ion-item>
         <p *ngIf="myForm.get('name').errors && myForm.get('name').dirty" >
           <span style="color: red" ion-text *ngIf="myForm.get('name').hasError('required')">Field is required</span>
         </p>
 
         <ion-item no-padding [class.invalid]="(!myForm.controls.fullname.valid) && isfullname" style="border-bottom-color: #D1D3D3">
-          <ion-label color="dark" stacked style="color:grey;font-size: large">Full Name</ion-label>
-        <ion-input type="text" (keyup)="validate('fullname')" formControlName="fullname" [(ngModel)]="fullname"></ion-input>
+          <!-- <ion-label color="dark" stacked style="color:grey;font-size: large">Full Name</ion-label> -->
+        <ion-input type="text" (keyup)="validate('fullname')" formControlName="fullname" [(ngModel)]="fullname" placeholder="Full Name"></ion-input>
       </ion-item>
       <p *ngIf="myForm.get('fullname').errors && myForm.get('fullname').dirty" >
         <span style="color: red" ion-text *ngIf="myForm.get('fullname').hasError('required')">Field is required, </span>
@@ -34,8 +34,8 @@
       </p>
 
         <ion-item no-padding [class.invalid]="(!myForm.controls.email.valid) && isEmail" style="border-bottom-color: #D1D3D3">
-            <ion-label color="dark" stacked style="color:grey;font-size: large">Email</ion-label>
-          <ion-input type="email" (keyup)="validate('email')" formControlName="email" [(ngModel)]="email"></ion-input>
+            <!-- <ion-label color="dark" stacked style="color:grey;font-size: large">Email</ion-label> -->
+          <ion-input type="email" (keyup)="validate('email')" formControlName="email" [(ngModel)]="email" placeholder="Email"></ion-input>
         </ion-item>
         <p *ngIf="myForm.get('email').errors && myForm.get('email').dirty" >
           <span style="color: red" ion-text *ngIf="myForm.get('email').hasError('required')">Field is required</span>
@@ -43,8 +43,8 @@
         </p>
     
         <ion-item no-padding [class.invalid]="(!myForm.controls.password.valid) && isPassword" style="border-bottom-color: #D1D3D3">
-            <ion-label color="dark" stacked style="color:grey;font-size: large">Password</ion-label>
-          <ion-input type="password" (keyup)="validate('password')" formControlName="password" [(ngModel)]="password"></ion-input>
+            <!-- <ion-label color="dark" stacked style="color:grey;font-size: large">Password</ion-label> -->
+          <ion-input type="password" (keyup)="validate('password')" formControlName="password" [(ngModel)]="password" placeholder="Password"></ion-input>
         </ion-item>
         <p *ngIf="myForm.get('password').errors && myForm.get('password').dirty" >
           <span style="color: red" ion-text *ngIf="myForm.get('password').hasError('required')">Field is required, </span>
@@ -52,8 +52,8 @@
         </p>
     
         <ion-item no-padding [class.invalid]="(!myForm.controls.country.valid) && iscountry" style="border-bottom-color: #D1D3D3">
-          <ion-label color="dark" stacked style="color:grey;font-size: large">Choose Country</ion-label>
-        <ion-input type="text" (keyup)="validate('country')" formControlName="country" [(ngModel)]="country"></ion-input>
+          <!-- <ion-label color="dark" stacked style="color:grey;font-size: large">Choose Country</ion-label> -->
+        <ion-input type="text" (keyup)="validate('country')" formControlName="country" [(ngModel)]="country" placeholder="Country"></ion-input>
       </ion-item>
       <p *ngIf="myForm.get('country').errors && myForm.get('country').dirty" >
         <span style="color: red" ion-text *ngIf="myForm.get('country').hasError('required')">Field is required </span>

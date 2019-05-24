@@ -5,21 +5,104 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="lightblue">
       <ion-buttons left>
           <button ion-button icon-only menuToggle start>
               <ion-icon name="menu"></ion-icon>
             </button>
       </ion-buttons>
-    <ion-title>Company Info</ion-title>
-    <ion-buttons end>
-        <button ion-button (click)="next()">
-        Next
-      </button>
-      </ion-buttons>
+    <ion-title>Setup Organization</ion-title>
+   
   </ion-navbar>
 </ion-header>
 
 <ion-content padding class="my-class">
 
+
+    <ion-card>
+        <ion-card-header color="lightblue">
+          Primary Contact
+        </ion-card-header>
+        <ion-card-content>
+          <ion-item>
+              <ion-label stacked style="color:grey;font-size: larger">Organization Name</ion-label>
+              <ion-input type="text" placeholder="First name" [(ngModel)]="companyname" name="username" value={{this.companyname}} [readonly]="isReadonly()"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label stacked style="color:grey;font-size: larger">Portal Url</ion-label>
+              <ion-input type="text" placeholder="First name" [(ngModel)]="postal" name="username" ></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label stacked style="color:grey;font-size: larger">Business Location</ion-label>
+              <ion-input type="text" [(ngModel)]="businesslocation" name="businesslocation" value={{this.country}} [readonly]="isReadonly()"></ion-input>
+          </ion-item>
+            
+          <ion-item style="border-bottom: 0.3px solid">
+              <ion-label color="lightblue">Language</ion-label>  
+              <ion-select [(ngModel)]="language" interface="popover">
+                  <ion-option value="dr">English</ion-option>
+                  <ion-option value="n64">French</ion-option>
+                  <ion-option value="ps">Spanish</ion-option>
+                  <ion-option value="genesis">Arabic</ion-option>
+                  <ion-option value="saturn">Urdu</ion-option>
+                </ion-select>
+              </ion-item>
+          </ion-card-content>
+          </ion-card>
+    
+          <ion-card>
+              
+              <ion-card-content>
+                  <ion-item style="border-bottom: 0.3px solid">
+                      <ion-label color="lightblue">Time Zone</ion-label>  
+                      <ion-select [(ngModel)]="timezone" interface="popover">
+                          <ion-option value="dr">GMT 1</ion-option>
+                          <ion-option value="n64">GMT 2</ion-option>
+                          <ion-option value="ps">GMT 3</ion-option>
+                          <ion-option value="genesis">GMT 4</ion-option>
+                          <ion-option value="saturn">GMT 5</ion-option>
+                        </ion-select>
+                      </ion-item>
+                <ion-item style="border-bottom: 0.3px solid">
+                    <ion-label color="lightblue">Fiscal Year Start </ion-label>  
+                    <ion-select [(ngModel)]="fiscal" interface="popover">
+                        <ion-option value="dr">January</ion-option>
+                        <ion-option value="n64">Feburary</ion-option>
+                        <ion-option value="ps">March</ion-option>
+                        <ion-option value="genesis">Apiril</ion-option>
+                        <ion-option value="saturn">May</ion-option>
+                        <ion-option value="saturn">June</ion-option>
+                        <ion-option value="saturn">July</ion-option>
+                        <ion-option value="saturn">August</ion-option>
+                        <ion-option value="saturn">September</ion-option>
+                        <ion-option value="saturn">October</ion-option>
+                        <ion-option value="saturn">November</ion-option>
+                        <ion-option value="saturn">December</ion-option>
+                      </ion-select>
+                    </ion-item>
+                <ion-item style="border-bottom: 0.3px solid">
+                    <ion-label color="lightblue">Date Formatt</ion-label>  
+                    <ion-select [(ngModel)]="formatt" interface="popover">
+                        <ion-option value="dr">DD/MM/YY</ion-option>
+                        <ion-option value="n64">MM/DD/YYYY</ion-option>
+                        <ion-option value="ps">MM.DD.YYYY</ion-option>
+                        <ion-option value="genesis">YYYY.DD.MM</ion-option>
+                        <ion-option value="saturn">YYYY/MM/DD</ion-option>
+                      </ion-select>
+                    </ion-item>
+                <ion-item>
+                    <ion-label stacked style="color:grey;font-size: larger">Address</ion-label>
+                    <ion-input type="text" placeholder="First name" [(ngModel)]="address" name="address"></ion-input>
+                </ion-item>
+                  
+      
+                </ion-card-content>
+
+              
+                </ion-card>
 </ion-content>
+<ion-footer>
+  
+        <button ion-button color="lightblue" style="border-radius: 5px; width: -webkit-fill-available;" (click)="taxpage()">Next</button>
+  
+  </ion-footer>
