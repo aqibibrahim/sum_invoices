@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ToastController, Toast } from 'ionic-angular';
+import { Component,ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, AlertController,Nav,LoadingController, ToastController, Toast,Platform } from 'ionic-angular';
 import {Http ,Response} from '@angular/http';
 import {ItemPage} from '../item/item';
 import {GlobalProvider} from '../../providers/global/global';
 import {FormBuilder,FormGroup,Validators,AbstractControl} from '@angular/forms';
+import { HomePage } from '../home/home';
+import { App } from 'ionic-angular';
 /**
  * Generated class for the CreateItemsPage page.
  *
@@ -17,6 +19,7 @@ import {FormBuilder,FormGroup,Validators,AbstractControl} from '@angular/forms';
   templateUrl: 'create-items.html',
 })
 export class CreateItemsPage {
+  @ViewChild(Nav) nav: Nav;
   formgroup:FormGroup;
 
   name:AbstractControl;
@@ -32,18 +35,49 @@ export class CreateItemsPage {
   qty:any;
   public saleinformation:boolean=false;
   public purchaseinformation:boolean=false;
-  constructor(public navCtrl: NavController,public formbuilder:FormBuilder ,public global:GlobalProvider,public navParams: NavParams, public http:Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+  constructor(public navCtrl: NavController,public platform: Platform,public alertCtrl:AlertController, public app: App,public formbuilder:FormBuilder ,public global:GlobalProvider,public navParams: NavParams, public http:Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
  console.log(this.global.userid);
  this.formgroup = formbuilder.group({
    name:['',Validators.required],
    units:['',Validators.required]
  });
-  
+ 
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CreateItemsPage');
+    this.platform.registerBackButtonAction(() => {
+          // Catches the active view
+          let nav = this.app.getActiveNavs()[0];
+          let activeView = nav.getActive();                
+          // Checks if can go back before show up the alert
+          if(activeView.name === 'CreateItemsPage') {
+              if (nav.canGoBack()){
+                  nav.pop();
+              } else {
+                  const alert = this.alertCtrl.create({
+                      title: 'Exit',
+                      message: 'Want to Exit App?',
+                      buttons: [{
+                          text: 'Cancel',
+                          role: 'cancel',
+                          handler: () => {
+                            this.nav.setRoot('HomePage');
+                          }
+                      },{
+                          text: 'OK',
+                          handler: () => {
+                            
+                            this.platform.exitApp();
+                          }
+                      }]
+                  });
+                  alert.present();
+              }
+          }
+      });
   }
+  
   createitem(){
     if(this.sexe == "" || this.name == undefined || this.units == undefined || this.qty == undefined || this.sale_rate == undefined || this.sale_account == undefined || this.sale_tax == undefined || this.sale_desc == undefined
     || this.purchase_rate == undefined || this.purchase_account == undefined || this.purchase_desc == undefined){

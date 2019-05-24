@@ -33,7 +33,7 @@
         <ion-item>
             <ion-label>Contact*</ion-label>
             <ion-select interface="popover" [(ngModel)]="gaming" ionCancel="onCancel()" okText="Ok" (ionChange)="onContactChange()">
-              <ion-option *ngFor="let name of namesList" [value] = "name">{{name.first_name}}</ion-option>
+              <ion-option *ngFor="let name of namesList" [value] = "name" >{{name.first_name}}</ion-option>
             </ion-select>
           </ion-item>
   </ion-list>

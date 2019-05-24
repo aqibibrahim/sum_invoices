@@ -44,13 +44,14 @@ export class AddLineItemPage {
   invoice_ordno:any;
   invoice_indate:any;
   invoice_dudate:any;
-
+  selectedval:any;
   constructor(public navCtrl: NavController, public global:GlobalProvider,public navParams: NavParams,public http: Http) {
     this.invoice_invno = this.navParams.get('invoicenumber');
 
     this.invoice_ordno = this.navParams.get('ordernumber');
     this.invoice_indate = this.navParams.get('invoiced');
     this.invoice_dudate = this.navParams.get('dued');
+    this.selectedval = this.navParams.get('selectedvalue');
   }
 
   ionViewDidLoad() {
@@ -92,7 +93,7 @@ export class AddLineItemPage {
             console.log("Oooops!");
             });
     this.navCtrl.push(CreateInvoicesPage,{inputname:value, description:this.description,quantity:this.quantity,rate:this.quanitytnillrate,tax:this.value_tax,taxtotal:this.taxfixedvalue,purchaserate:this.purchase_rate,itemid:this.item_id
-    ,sale_rate:this.value_key_rate,add_inno:this.invoice_invno,add_orno:this.invoice_ordno,add_indate:this.invoice_indate,add_dudate:this.invoice_dudate});
+    ,sale_rate:this.value_key_rate,add_inno:this.invoice_invno,add_orno:this.invoice_ordno,add_indate:this.invoice_indate,add_dudate:this.invoice_dudate,valuesel:this.selectedval});
       }
       
   }

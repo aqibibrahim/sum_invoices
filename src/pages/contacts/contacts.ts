@@ -1,11 +1,12 @@
 import { Component,ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams,AlertController,LoadingController, ToastController,Navbar } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,AlertController,LoadingController, Nav,ToastController,Navbar,Platform } from 'ionic-angular';
 import {CreateContactPage} from '../create-contact/create-contact';
 import {Http ,Response} from '@angular/http';
 import {ContactdetailsPage} from '../contactdetails/contactdetails';
 import {GlobalProvider} from '../../providers/global/global';
 import 'rxjs/add/operator/map';
 import {HomePage} from '../home/home';
+import { App } from 'ionic-angular';
 
 /**
  * Generated class for the ContactsPage page.
@@ -20,9 +21,9 @@ import {HomePage} from '../home/home';
   templateUrl: 'contacts.html',
 })
 export class ContactsPage {
-  @ViewChild(Navbar) navBar: Navbar;
+  @ViewChild(Nav) nav: Nav;
   posts: any;
-  constructor(public navCtrl: NavController, public global: GlobalProvider,public navParams: NavParams,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+  constructor(public navCtrl: NavController, public global: GlobalProvider,public app: App,public platform:Platform,public navParams: NavParams,public http: Http,public loadingCtrl: LoadingController,public alertCtrl:AlertController, public tostctrl: ToastController) {
     
   }
 
@@ -42,20 +43,39 @@ export class ContactsPage {
         console.log(data);
            //this.posts = data.json();
            this.posts = data 
-           // for(var i=0;i<result.data.length;i++){
-           //   this.posts = result.data[i].first_name;
-           //   console.log(this.posts);
-           // }
-           this.setBackButtonAction();
+           
          });
+         this.platform.registerBackButtonAction(() => {
+          // Catches the active view
+          let nav = this.app.getActiveNavs()[0];
+          let activeView = nav.getActive();                
+          // Checks if can go back before show up the alert
+          if(activeView.name === 'ContactsPage') {
+              if (nav.canGoBack()){
+                  nav.pop();
+              } else {
+                  const alert = this.alertCtrl.create({
+                      title: 'Exit',
+                      message: 'Want to Exit App?',
+                      buttons: [{
+                          text: 'Cancel',
+                          role: 'cancel',
+                          handler: () => {
+                            this.nav.setRoot('HomePage');
+                          }
+                      },{
+                          text: 'OK',
+                          handler: () => {
+                            this.platform.exitApp();
+                          }
+                      }]
+                  });
+                  alert.present();
+              }
+          }
+      });
     }
-    setBackButtonAction(){
-      this.navBar.backButtonClick = () => {
-      //alert("Where you want to go");
-      this.navCtrl.push(HomePage);
-       //this.navCtrl.pop()
-      }
-    }
+    
   createcontact(){
     this.navCtrl.push(CreateContactPage);
   }

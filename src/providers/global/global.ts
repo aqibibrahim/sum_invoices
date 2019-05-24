@@ -24,25 +24,24 @@ login(email,password){
       email:email,
       password:password
   };
+  let loader = this.loadingCtrl.create({
+    content:'Waiting...'
+    
+  });
+  loader.present();
   this.http.post('https://sum-finance-latest2.herokuapp.com/user/login', data).map(response => response.json())
         .subscribe(data => {
           console.log(data);
           console.log(data[0].company_name, data[0]._id);
           this.company_name = data[0].company_name;
           this.userid = data[0]._id;
-          let loader = this.loadingCtrl.create({
-            content:'Waiting...'
-          });
-          loader.present();
+          this.app.getActiveNav().push(HomePage,{companyname:this.company_name,userid:this.userid});
           let toast = this.tostctrl.create({
                 message:'Login Successfully',
                 duration:2000
               });
               loader.dismiss();
               toast.present();
-              
-              this.app.getActiveNav().push(HomePage,{companyname:this.company_name,userid:this.userid});
-              
         }, error => {
           let loader = this.loadingCtrl.create({
             content:'Waiting...'

@@ -47,8 +47,8 @@
           <ion-input type="password" (keyup)="validate('password')" formControlName="password" [(ngModel)]="password"></ion-input>
         </ion-item>
         <p *ngIf="myForm.get('password').errors && myForm.get('password').dirty" >
-          <span style="color: red" ion-text *ngIf="myForm.get('password').hasError('required')">minimum 6 characters require, </span>
-          <span style="color: red" ion-text *ngIf="myForm.get('password').hasError('maxlength')">minimum 6 characters require</span>
+          <span style="color: red" ion-text *ngIf="myForm.get('password').hasError('required')">Field is required, </span>
+          <span style="color: red" ion-text *ngIf="myForm.get('password').hasError('minlength')">minimum 6 characters require</span>
         </p>
     
         <ion-item no-padding [class.invalid]="(!myForm.controls.country.valid) && iscountry" style="border-bottom-color: #D1D3D3">

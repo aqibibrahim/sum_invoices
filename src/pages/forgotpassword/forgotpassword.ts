@@ -26,7 +26,7 @@ export class ForgotpasswordPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,public fb: FormBuilder,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     this.myForm = this.fb.group({
      
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email,Validators.pattern(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }

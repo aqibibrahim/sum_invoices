@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform ,LoadingController, ToastController} from 'ionic-angular';
+import { Component,ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Platform ,AlertController,Nav,LoadingController, ToastController} from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {InvoicedeatilsPage} from '../invoicedeatils/invoicedeatils';
 import { Storage } from '@ionic/storage';
@@ -16,6 +16,8 @@ import {GlobalProvider} from '../../providers/global/global';
 import {InvoicesPage} from '../invoices/invoices';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { ConditionalExpr } from '@angular/compiler';
+import {HomePage} from '../home/home';
+import { App } from 'ionic-angular';
 /**
  * Generated class for the CreateInvoicesPage page.
  *
@@ -29,6 +31,7 @@ import { ConditionalExpr } from '@angular/compiler';
   templateUrl: 'create-invoices.html',
 })
 export class CreateInvoicesPage {
+  @ViewChild(Nav) nav: Nav;
   registrationForm: FormGroup;
   public anArray:any=[];
 
@@ -72,7 +75,8 @@ export class CreateInvoicesPage {
   nativeduedate:any;
   nativeinvoice:any;
   nativeorder:any;
-  
+  nativeval:any;
+
   gaming:any;
   invoicedate:any;
   duedate:any;
@@ -86,7 +90,7 @@ export class CreateInvoicesPage {
   Isshowing =false;
   pdfObj = null;
   pdfnumber =2;
-  constructor(public navCtrl: NavController,private nativeStorage: NativeStorage, public global:GlobalProvider,private sms: SMS,public http:Http,public loadingCtrl: LoadingController, public tostctrl: ToastController, private storage: Storage,public navParams: NavParams,public emailComposer: EmailComposer, private plt: Platform, private file: File, private fileOpener: FileOpener) {
+  constructor(public navCtrl: NavController,public platform: Platform,public alertCtrl:AlertController, public app: App,private nativeStorage: NativeStorage, public global:GlobalProvider,private sms: SMS,public http:Http,public loadingCtrl: LoadingController, public tostctrl: ToastController, private storage: Storage,public navParams: NavParams,public emailComposer: EmailComposer, private plt: Platform, private file: File, private fileOpener: FileOpener) {
     // this.value=navParams.get('item_name');
     // console.log(this.value);
     this.registrationForm = new FormGroup({
@@ -95,7 +99,7 @@ export class CreateInvoicesPage {
       order: new FormControl('', [Validators.required, Validators.minLength(1)])
       })
       
-
+      
     this.input_name = this.navParams.get('inputname');
     this.qty= this.navParams.get('quantity');
     this.rat = this.navParams.get('rate');
@@ -133,6 +137,36 @@ export class CreateInvoicesPage {
   }
    
   ionViewDidLoad() {
+    this.platform.registerBackButtonAction(() => {
+      // Catches the active view
+      let nav = this.app.getActiveNavs()[0];
+      let activeView = nav.getActive();                
+      // Checks if can go back before show up the alert
+      if(activeView.name === 'CreateInvoicesPage') {
+          if (nav.canGoBack()){
+              nav.pop();
+          } else {
+              const alert = this.alertCtrl.create({
+                  title: 'Exit',
+                  message: 'Want to Exit App?',
+                  buttons: [{
+                      text: 'Cancel',
+                      role: 'cancel',
+                      handler: () => {
+                        this.nav.setRoot('HomePage');
+                      }
+                  },{
+                      text: 'OK',
+                      handler: () => {
+                        
+                        this.platform.exitApp();
+                      }
+                  }]
+              });
+              alert.present();
+          }
+      }
+  });
     console.log('ionViewDidLoad CreateInvoicesPage');
     console.log(this.input_name);
     
@@ -163,6 +197,7 @@ export class CreateInvoicesPage {
   this.nativeorder = this.navParams.get('add_orno');
   this.nativeindate = this.navParams.get('add_indate');
   this.nativeduedate = this.navParams.get('add_dudate');
+    this.nativeval = this.navParams.get('valuesel');
   console.log(this.nativeindate,this.nativeduedate)
   }
   onContactChange(){
@@ -437,7 +472,7 @@ export class CreateInvoicesPage {
     // this.storage.set('invoiceno', this.invoice);
     // this.storage.set('orderno',this.order);
     
-    this.navCtrl.push(AddLineItemPage,{invoicenumber:this.invoice,ordernumber:this.order,invoiced:this.invoicedate,dued:this.duedate});
+    this.navCtrl.push(AddLineItemPage,{invoicenumber:this.invoice,ordernumber:this.order,invoiced:this.invoicedate,dued:this.duedate,selectedvalue:this.gaming});
    }
    goTo(){
     console.log('this.anArray',this.anArray);

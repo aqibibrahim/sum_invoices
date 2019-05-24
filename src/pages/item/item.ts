@@ -1,11 +1,12 @@
 import { Component,NgModule,ViewChild  } from '@angular/core';
-import { IonicPage, NavController, NavParams,AlertController, Item,LoadingController, ToastController,Navbar  } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,AlertController,Nav, Item,LoadingController, ToastController,Navbar,Platform  } from 'ionic-angular';
 import {CreateItemsPage} from '../create-items/create-items';
 import {EdititemPage} from '../edititem/edititem';
 import {CreateInvoicesPage} from '../create-invoices/create-invoices';
 import {Http ,Response} from '@angular/http';
 import {GlobalProvider} from '../../providers/global/global';
 import {HomePage} from '../home/home';
+import { App } from 'ionic-angular';
 //import { AngularFireDatabase } from 'angularfire2/database';
 /**
  * Generated class for the ItemPage page.
@@ -20,11 +21,11 @@ import {HomePage} from '../home/home';
   templateUrl: 'item.html',
 })
 export class ItemPage {
-  @ViewChild(Navbar) navBar: Navbar;
+  @ViewChild(Nav) nav: Nav;
   selectedItem: any;
   items: any;
   
-  constructor(public navCtrl: NavController, public global:GlobalProvider,public navParams: NavParams, private alertCtrl: AlertController,public http: Http, public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+  constructor(public navCtrl: NavController, public global:GlobalProvider,public app: App,public platform:Platform,public navParams: NavParams, private alertCtrl: AlertController,public http: Http, public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     this.selectedItem = navParams.get('item');
     console.log(this.global.userid);
     this.http.get('https://sum-finance-latest2.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
@@ -42,15 +43,37 @@ ionViewDidEnter() {
 }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ItemPage');
-    this.setBackButtonAction();
+    this.platform.registerBackButtonAction(() => {
+      // Catches the active view
+      let nav = this.app.getActiveNavs()[0];
+      let activeView = nav.getActive();                
+      // Checks if can go back before show up the alert
+      if(activeView.name === 'ItemPage') {
+          if (nav.canGoBack()){
+              nav.pop();
+          } else {
+              const alert = this.alertCtrl.create({
+                  title: 'Exit',
+                  message: 'Want to Exit App?',
+                  buttons: [{
+                      text: 'Cancel',
+                      role: 'cancel',
+                      handler: () => {
+                        this.nav.setRoot('HomePage');
+                      }
+                  },{
+                      text: 'OK',
+                      handler: () => {
+                        this.platform.exitApp();
+                      }
+                  }]
+              });
+              alert.present();
+          }
+      }
+  });
   }
-  setBackButtonAction(){
-    this.navBar.backButtonClick = () => {
-    //alert("Where you want to go");
-    this.navCtrl.push(HomePage);
-     //this.navCtrl.pop()
-    }
-  }
+  
   createcitems(){
     this.navCtrl.push(CreateItemsPage);
   }

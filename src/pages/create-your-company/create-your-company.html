@@ -6,10 +6,20 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title>CreateYourCompany</ion-title>
+      <ion-buttons left>
+          <button ion-button icon-only menuToggle start>
+              <ion-icon name="menu"></ion-icon>
+            </button>
+      </ion-buttons>
+    <ion-title>Company Info</ion-title>
+    <ion-buttons end>
+        <button ion-button (click)="next()">
+        Next
+      </button>
+      </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="my-class">
 
 </ion-content>

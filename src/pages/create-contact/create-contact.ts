@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,AlertController,LoadingController, ToastController } from 'ionic-angular';
+import { Component,ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams,AlertController,Nav,LoadingController, ToastController,Platform } from 'ionic-angular';
 import {BillingPage} from '../billing/billing';
 import {ShippingPage} from '../shipping/shipping';
 import {ContactsPage} from '../contacts/contacts'
@@ -8,6 +8,8 @@ import { SMS } from '@ionic-native/sms';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts';
 import {GlobalProvider} from '../../providers/global/global';
+import {HomePage} from '../home/home';
+import { App } from 'ionic-angular';
 /**
  * Generated class for the CreateContactPage page.
  *
@@ -21,6 +23,7 @@ import {GlobalProvider} from '../../providers/global/global';
   templateUrl: 'create-contact.html',
 })
 export class CreateContactPage {
+  @ViewChild(Nav) nav: Nav;
   data:any = {};
   firstname: string;
   lastname: string;
@@ -43,7 +46,7 @@ export class CreateContactPage {
   public allContacts: any
 
   billing_address:any;
-  constructor(public navCtrl: NavController, public global:GlobalProvider,public navParams: NavParams, private sms: SMS,private alertCtrl: AlertController,private contacts: Contacts,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+  constructor(public navCtrl: NavController, public platform: Platform,public app: App,public global:GlobalProvider,public navParams: NavParams, private sms: SMS,private alertCtrl: AlertController,private contacts: Contacts,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     //this.data.username = '';
     this.listItems = [];
     this.billing_address = this.navParams.get('billing_address');
@@ -60,10 +63,41 @@ export class CreateContactPage {
       }
       console.log(this.listItems);
     });
+    
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CreateContactPage');
+    this.platform.registerBackButtonAction(() => {
+      // Catches the active view
+      let nav = this.app.getActiveNavs()[0];
+      let activeView = nav.getActive();                
+      // Checks if can go back before show up the alert
+      if(activeView.name === 'CreateContactPage') {
+          if (nav.canGoBack()){
+              nav.pop();
+          } else {
+              const alert = this.alertCtrl.create({
+                  title: 'Exit',
+                  message: 'Want to Exit App?',
+                  buttons: [{
+                      text: 'Cancel',
+                      role: 'cancel',
+                      handler: () => {
+                        this.nav.setRoot('HomePage');
+                      }
+                  },{
+                      text: 'OK',
+                      handler: () => {
+                        
+                        this.platform.exitApp();
+                      }
+                  }]
+              });
+              alert.present();
+          }
+      }
+  });
   }
 
   openshippingpage(){
