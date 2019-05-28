@@ -11,6 +11,7 @@ import { FileOpener } from '@ionic-native/file-opener';
 import {GlobalProvider} from '../../providers/global/global';
 import {HomePage} from '../home/home';
 import { App } from 'ionic-angular';
+
 /**
  * Generated class for the InvoicesPage page.
  *
@@ -25,7 +26,7 @@ import { App } from 'ionic-angular';
 })
 export class InvoicesPage {
   @ViewChild(Nav) nav: Nav;
-  
+  @ViewChild(Navbar) navBar: Navbar;
   dateinput:any;
   output:any;
   letterObj = {
@@ -64,6 +65,14 @@ export class InvoicesPage {
           }
       }
   });
+  this.setBackButtonAction();
+  }
+  setBackButtonAction(){
+    this.navBar.backButtonClick = () => {
+    //alert("Where you want to go");
+    this.navCtrl.push(HomePage);
+     //this.navCtrl.pop()
+    }
   }
  
   createinvoice(){

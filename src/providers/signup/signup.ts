@@ -19,9 +19,7 @@ export class SignupProvider {
     console.log('Hello SignupProvider Provider');
   }
 signup(email,password,companyname,fullname,country){
-
-  console.log(email,password);
-  let data = {
+ let data = {
     email:email,
     password: password,
     company_name: companyname,
@@ -50,13 +48,14 @@ signup(email,password,companyname,fullname,country){
         loader.dismiss();
         toast.present();
   }, error => {
-    loader.dismiss();
+    
     let toast = this.tostctrl.create({
       message:'User already esist',
       duration:2000
     });
+    loader.dismiss();
     toast.present();
-  console.log("Oooops!");
+  
   });
 }
 }

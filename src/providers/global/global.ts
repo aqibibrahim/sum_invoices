@@ -32,9 +32,9 @@ login(email,password){
   this.http.post('https://sum-finance-latest2.herokuapp.com/user/login', data).map(response => response.json())
         .subscribe(data => {
           console.log(data);
-          console.log(data.company_name);
-          this.company_name = data.company_name;
-          this.userid = data._id;
+          console.log(data[0].company_name);
+          this.company_name = data[0].company_name;
+          this.userid = data[0]._id;
           this.app.getActiveNav().push(HomePage,{companyname:this.company_name,userid:this.userid});
           let toast = this.tostctrl.create({
                 message:'Login Successfully',

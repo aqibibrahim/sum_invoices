@@ -19,6 +19,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { File } from '@ionic-native/file';
 import { FileOpener } from '@ionic-native/file-opener';
 import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts';
+
  
 @Component({
   selector: 'page-home',
@@ -34,9 +35,9 @@ export class HomePage {
    constructor(public navCtrl: NavController, private navparm:NavParams,public signuppro:SignupProvider,public global:GlobalProvider,private plt: Platform, private file: File, private fileOpener: FileOpener, private storage: Storage,private contacts: Contacts) {
     // this.books = afDB.list('/Books/Books').valueChanges();
     
-    this.companyname = this.navparm.get('companyname');
+    this.companyname = this.global.company_name;
     this.storage.set('customername', this.companyname);
-    this.userid = this.navparm.get('userid');
+    this.userid = this.global.userid;
     console.log(this.companyname, "User ID" +this.userid);
     console.log("User ID : "+ this.global.userid);
     
@@ -46,10 +47,11 @@ export class HomePage {
   console.log('ionViewDidLoad DashboardPage');
  }
  ionViewWillEnter(){
-  this.storage.get('customername').then((val1) => {
-    console.log('Your name is', val1);
-    this.nativename = this.global.company_name;
-  })
+  // this.storage.get('customername').then((val1) => {
+  //   console.log('Your name is', val1);
+    
+  // })
+  this.nativename = this.global.company_name;
 }
 getcontacts(){
 this.contacts.find(['displayName', 'name', 'phoneNumbers', 'emails'], {filter: "", multiple: true})

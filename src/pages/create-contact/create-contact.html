@@ -18,7 +18,7 @@
         </button>
         </ion-buttons> -->
       <ion-buttons end>
-          <button ion-button (click)="savedata()">
+          <button ion-button (click)="savedata()" [disabled]="companyname?.length > 15 || !companyname || !email ||phone?.length > 7 || !phone ||mobile?.length > 11 || !mobile">
           Save
         </button>
         </ion-buttons>
@@ -32,9 +32,7 @@
           Primary Contact
         </ion-card-header>
         <ion-card-content>
-          
-
-            <ion-item style="border-bottom: 0.3px solid">
+          <ion-item style="border-bottom: 0.3px solid">
                 <ion-label color="lightblue">Saln.</ion-label>  
                 <ion-select [(ngModel)]="gaming" interface="popover">
                     <ion-option value="dr">Dr.</ion-option>
@@ -47,17 +45,25 @@
 
               <ion-item style="border-bottom: 0.3px solid">
                  
-                  <ion-input type="text" placeholder="First name" [(ngModel)]="firstname" name="username"></ion-input>
+                  <ion-input type="text" placeholder="First name" [(ngModel)]="firstname" name="username" ></ion-input>
+                  
                 </ion-item>
                 
                 <ion-item style="border-bottom: 0.3px solid">
                     
-                    <ion-input type="text" placeholder="Last name" [(ngModel)]="lastname"></ion-input>
+                  <ion-input type="text" placeholder="Last name" [(ngModel)]="lastname"></ion-input>
                   </ion-item>
                   <ion-item style="border-bottom: 0.3px solid">
                       
                       <ion-input type="text" placeholder="Company name" [(ngModel)]="companyname"></ion-input>
                     </ion-item>
+                   
+                    <p style="color:red" *ngIf="companyname?.length > 15">
+                      Maximum 15 Charcters
+                    </p>
+                    <p style="color:red" *ngIf="!companyname">
+                      required
+                    </p>
                     <ion-item style="border-bottom: 0.3px solid">
                         
                         <ion-input type="text" placeholder="Contact Display name" [(ngModel)]="contactdisplay"></ion-input>
@@ -67,17 +73,33 @@
                   
                           <ion-input type="email" placeholder="Contact Email" [(ngModel)]="email"></ion-input>
                         </ion-item>
-        
+                        
+                        <p style="color:red" *ngIf="!email">
+                          required
+                        </p>
                         <ion-row>
                             <ion-col>
                                 <ion-item style="border-bottom: 0.3px solid">
                                     <ion-input type="number" placeholder="Work Phone." [(ngModel)]="phone"></ion-input>
                               </ion-item>
+                              <p style="color:red" *ngIf="phone?.length > 7">
+                                7 digit Phone number
+                              </p>
+                              <p style="color:red" *ngIf="!phone">
+                                required
+                              </p>
                             </ion-col>
                             <ion-col>
                               <ion-item style="border-bottom: 0.3px solid">
-                                <ion-input type="number" placeholder="Mobile" [(ngModel)]="mobile" ></ion-input>
+                                <ion-input type="number" placeholder="Mobile" [(ngModel)]="mobile"></ion-input>
                               </ion-item>
+                              <p style="color:red" *ngIf="mobile?.length > 11">
+                                11 digit Mobile number
+                              </p>
+                              <p style="color:red" *ngIf="!mobile">
+                                required
+                              </p>
+
                             </ion-col>
                           </ion-row>
                          
@@ -119,7 +141,6 @@
                             <ion-option value="sar">SAR</ion-option>
                             <ion-option value="aed">AED</ion-option>
                             
-                            
                           </ion-select> 
                         </ion-item>
                           <ion-item style="border-bottom: 0.3px solid">
@@ -132,7 +153,6 @@
                             <ion-option value="eom">Due End of Month</ion-option>
                             <ion-option value="eonm">Due END OF Next Month</ion-option>
                             <ion-option value="dor">Due on</ion-option>
-                            
                           </ion-select> 
                         </ion-item>
 
@@ -149,32 +169,22 @@
                             </ion-item>
         </ion-card-content>
       </ion-card>
-
-
-      <ion-card>
+         <ion-card>
           <ion-card-header color="lightblue">
               Address Info
             </ion-card-header>
           <ion-card-content >
           <ion-item>
-              <button ion-button block (click)="openbillingpage()">
-                  <ion-icon name="home" item-left></ion-icon>
-                  Billing Address
-                </button>
-              
+            <ion-textarea clearOnEdit="true" placeholder="Billing Address" [(ngModel)]="billingaddress" style="border-bottom: 1px solid grey;"></ion-textarea> 
           </ion-item>
           
           <ion-item>
-              <button ion-button block (click)="openshippingpage()">
-                  <ion-icon name="home" item-left></ion-icon>
-                  Shipping Address
-                </button>
-              
+            <ion-textarea clearOnEdit="true" placeholder="Shipping Address" [(ngModel)]="shippingaddress" style="border-bottom: 1px solid grey;"></ion-textarea> 
           </ion-item>
 
           <ion-item>
               <!-- <ion-input type="text" placeholder="Remarks" [(ngModel)]="remarks"></ion-input> -->
-              <ion-textarea clearOnEdit="true" placeholder="Remarks" [(ngModel)]="remarks"></ion-textarea> 
+              <ion-textarea clearOnEdit="true" placeholder="Remarks" [(ngModel)]="remarks" style="border-bottom: 1px solid grey;"></ion-textarea> 
           </ion-item>
           </ion-card-content>
         </ion-card>

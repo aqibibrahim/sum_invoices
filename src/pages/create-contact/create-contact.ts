@@ -39,18 +39,20 @@ export class CreateContactPage {
   mobile:any;
   conttype:any;
   userid:any;
+  billingaddress:any;
+  shippingaddress:any;
+
 
   listItems: Array<any> = [];
   testRadioOpen:boolean;
   testRadioResult:any;
   public allContacts: any
 
-  billing_address:any;
+  
   constructor(public navCtrl: NavController, public platform: Platform,public app: App,public global:GlobalProvider,public navParams: NavParams, private sms: SMS,private alertCtrl: AlertController,private contacts: Contacts,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     //this.data.username = '';
     this.listItems = [];
-    this.billing_address = this.navParams.get('billing_address');
-    console.log(this.billing_address);
+    
     contacts.find(['displayName', 'name', 'phoneNumbers', 'emails'], {filter: "", multiple: true})
     .then(data => {
       this.allContacts = data
@@ -127,58 +129,65 @@ export class CreateContactPage {
     alert.present();
   }
   savedata(){
-    let loader = this.loadingCtrl.create({
-      content:'Waiting...'
-    });
-    loader.present();
-    let data = {
-      cont_saln:this.gaming,
-      first_name: this.firstname,
-      last_name:this.lastname,
-      comp_name:this.companyname,
-      display_name:this.contactdisplay,
-      email:this.email,
-      phone:this.phone,
-      mobile:this.mobile,
-      cont_type:this.sexe,
-      currency:this.currency,
-      payment:this.payment,
-      language:this.language,
-      userId:this.global.userid,
-      billing_address:this.billing_address
-  };
-    //console.log(this.data.username);
-    this.http.post('https://sum-finance-latest2.herokuapp.com/finance/create', data)
-        .subscribe(response => {
-          console.log('POST Response:', response);
-          loader.dismiss();
-          let toast = this.tostctrl.create({
-            message:'Data Save',
-            duration:2000
+    if(this.sexe == undefined){
+      alert("Please select customer type")
+    }
+    else{
+      let loader = this.loadingCtrl.create({
+        content:'Waiting...'
+      });
+      loader.present();
+      let data = {
+        cont_saln:this.gaming,
+        first_name: this.firstname,
+        last_name:this.lastname,
+        comp_name:this.companyname,
+        display_name:this.contactdisplay,
+        email:this.email,
+        phone:this.phone,
+        mobile:this.mobile,
+        cont_type:this.sexe,
+        currency:this.currency,
+        payment:this.payment,
+        language:this.language,
+        userId:this.global.userid,
+        billing_address:this.billingaddress,
+        shipping_address:this.shippingaddress
+    };
+      //console.log(this.data.username);
+      this.http.post('https://sum-finance-latest2.herokuapp.com/finance/create', data)
+          .subscribe(response => {
+            console.log('POST Response:', response);
+            loader.dismiss();
+            let toast = this.tostctrl.create({
+              message:'Data Save',
+              duration:2000
+            });
+        //     toast.present();
+        //     //this.sms.send("+923335175480", "this.message")
+        // .then(()=>{
+        //   let toast = this.tostctrl.create({
+        //     message: 'Message send successfully',
+        //     duration: 3000        });
+        //   toast.present();
+        // },()=>{
+        //   let toast = this.tostctrl.create({
+        //     message: 'Failure',
+        //     duration: 3000        });
+        //   toast.present();
+        // });
+            this.navCtrl.push(ContactsPage);
+          }, error => {
+            loader.dismiss();
+            let toast = this.tostctrl.create({
+              message:'Data not Save',
+              duration:2000
+            });
+            toast.present();
+          console.log("Oooops!");
           });
-      //     toast.present();
-      //     //this.sms.send("+923335175480", "this.message")
-      // .then(()=>{
-      //   let toast = this.tostctrl.create({
-      //     message: 'Message send successfully',
-      //     duration: 3000        });
-      //   toast.present();
-      // },()=>{
-      //   let toast = this.tostctrl.create({
-      //     message: 'Failure',
-      //     duration: 3000        });
-      //   toast.present();
-      // });
-          this.navCtrl.push(ContactsPage);
-        }, error => {
-          loader.dismiss();
-          let toast = this.tostctrl.create({
-            message:'Data not Save',
-            duration:2000
-          });
-          toast.present();
-        console.log("Oooops!");
-        });
+    }
+    
         }
       }
       

@@ -77,6 +77,9 @@ export class CreateInvoicesPage {
   nativeorder:any;
   nativeval:any;
 
+  billing_address:any;
+  shipping_address:any;
+
   gaming:any;
   invoicedate:any;
   duedate:any;
@@ -201,7 +204,12 @@ export class CreateInvoicesPage {
   console.log(this.nativeindate,this.nativeduedate)
   }
   onContactChange(){
+    console.log(this.gaming);
     console.log(this.gaming.email)
+    console.log(this.gaming.billing_address);
+    console.log(this.gaming.shipping_address);
+    this.billing_address = this.gaming.billing_address;
+    this.shipping_address = this.gaming.shipping_address;
     this.gamingname = this.gaming.first_name;
     this.email = this.gaming.email;
   }
@@ -442,7 +450,7 @@ export class CreateInvoicesPage {
    //    this.navCtrl.push(InvoicesPage);
        this.navCtrl.push(InvoicedeatilsPage,{'customername':this.gamingname,'invoice':this.invoice,'balance':this.total,'invoicedate':this.invoicedate,'duedate':this.duedate,'description':this.desc,
      'item_name':this.input_name,'subtotal':this.subtotal,'discount':this.discountprice,'shipping':this.shippingprice,'adjustment':this.adjustmentprice,'quantity':this.qty,'rate':this.rat,
-   'email':this.email,'order':this.order,'status':"Pending"});
+   'email':this.email,'order':this.order,'status':"Pending",'billingaddress':this.billing_address,'shippingaddress':this.shipping_address});
     
      }, error => {
        loader.dismiss();

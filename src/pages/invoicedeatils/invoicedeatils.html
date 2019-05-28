@@ -41,11 +41,11 @@
           padding-left: 38px;
           color:white;
           ">
-          <p>{{invoice_number}}</p>
+          <p>Invoice# {{invoice_number}}</p>
           <h3 style="
           text-decoration-line: underline;
           ">{{customer_name}}</h3>
-          <h2>PKR{{balance}}</h2>
+          <h2>PKR :{{balance}}</h2>
           <p style="text-transform: uppercase;font-family: fantasy;font-size: large;color: greenyellow;font-weight: bold;">{{this.status}}</p>
 
           </div>
@@ -80,10 +80,10 @@
           <!-- Billing Address -->
           <ion-item style="border-bottom: lightgrey">
           <p style="color:coral">
-          Billing Address
+          Shipping Address
           </p>
           <p>
-          Sardar Arcade Bahria Town Phase 7
+          {{this.shipping_address}}
           </p>
           </ion-item>
 

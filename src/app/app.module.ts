@@ -62,7 +62,7 @@ import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/cont
 import { GlobalProvider } from '../providers/global/global';
 import { SignupProvider } from '../providers/signup/signup';
 import {CreateYourCompanyPage} from '../pages/create-your-company/create-your-company';
-
+import {CompanytaxPage} from '../pages/companytax/companytax';
 
 
 @NgModule({
@@ -104,7 +104,8 @@ import {CreateYourCompanyPage} from '../pages/create-your-company/create-your-co
     ExpensePage,
     ProfitLossReportPage,
     ForgotpasswordPage,
-    CreateYourCompanyPage
+    CreateYourCompanyPage,
+    CompanytaxPage
   ],
   imports: [ 
     FormsModule, 
@@ -155,7 +156,8 @@ import {CreateYourCompanyPage} from '../pages/create-your-company/create-your-co
     ExpensePage,
     ProfitLossReportPage,
     ForgotpasswordPage ,
-    CreateYourCompanyPage
+    CreateYourCompanyPage,
+    CompanytaxPage
   ],
   providers: [
     
