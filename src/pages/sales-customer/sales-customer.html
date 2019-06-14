@@ -6,19 +6,31 @@
 -->
 <ion-header>
   <ion-navbar  color="lightblue">
-    <ion-title>Sales Customer</ion-title>
-    <ion-buttons end>
-      <button ion-button (click)="presentActionSheet()">
-        <ion-icon name="more"></ion-icon>
-      </button>
-    </ion-buttons>
-    
-    <!-- <ion-buttons slot="end" icon="more" (click)="presentActionSheet()">
-    <ion-icon name="more"></ion-icon>
-    </ion-buttons> -->
+    <ion-title>Sales By Customer</ion-title>
+   
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
 
+  <ion-item style="border-bottom: 1px solid grey">
+    <ion-label floating color="lightblue">From</ion-label>
+    <!-- <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="invoicedate"></ion-input> -->
+    <ion-datetime displayFormat="DD MMM YYYY"  pickerFormat="DD MMM YYYY"  [(ngModel)]="fromdate" cancelText ="Cancelar" doneText="Ok" ></ion-datetime>
+  </ion-item>
+  <ion-item style="border-bottom: 1px solid grey">
+      <ion-label floating color="lightblue">To</ion-label>
+      <!-- <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="invoicedate"></ion-input> -->
+      <ion-datetime displayFormat="DD MMM YYYY"  pickerFormat="DD MMM YYYY"  [(ngModel)]="todate" cancelText ="Cancelar" doneText="Ok" ></ion-datetime>
+    </ion-item>
+
+    <ion-list >
+        <ion-item >
+            <ion-label>Customer Name</ion-label>
+            <ion-select #S interface="popover" [(ngModel)]="gaming" ionCancel="onCancel()" okText="Ok" (ionChange)="onContactChange()">
+              <ion-option *ngFor="let name of namesList" [value] = "name" >{{name.first_name}}</ion-option>
+            </ion-select>
+          </ion-item>
+  </ion-list>
+  <button color="lightblue" ion-button large  (click)="run_report_sales_by_customer()" class="center" style="width:70%; border-radius: 10px;">Run Report</button>
 </ion-content>

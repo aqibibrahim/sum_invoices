@@ -44,7 +44,7 @@ export class ContactsPage {
           // Checks if can go back before show up the alert
           if(activeView.name === 'ContactsPage') {
               if (nav.canGoBack()){
-                  nav.pop();
+                this.navCtrl.push(HomePage);
               } else {
                 this.navCtrl.push(HomePage);
                  

@@ -1,0 +1,63 @@
+<!--
+  Generated template for the EditProfilePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="lightblue">
+    <ion-title>Edit Profile</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="my-class">
+
+  <ion-card>
+    <ion-card-content class="my-content">
+      <form [formGroup]="myForm" novalidate>
+          
+        <ion-item no-padding [class.invalid]="(!myForm.controls.name.valid) && isName" style="border-bottom-color: #D1D3D3">
+            <!-- <ion-label stacked style="color:grey;font-size: larger">Company Name</ion-label> -->
+          <ion-input type="text" (keyup)="validate('name')" formControlName="name" value="{{this.compname}}" [(ngModel)]="compname" placeholder="Company Name"></ion-input>
+        </ion-item>
+        <p *ngIf="myForm.get('name').errors && myForm.get('name').dirty" >
+          <span style="color: red" ion-text *ngIf="myForm.get('name').hasError('required')">Field is required</span>
+        </p>
+
+        <ion-item no-padding [class.invalid]="(!myForm.controls.fullname.valid) && isfullname" style="border-bottom-color: #D1D3D3">
+          <!-- <ion-label color="dark" stacked style="color:grey;font-size: large">Full Name</ion-label> -->
+        <ion-input type="text" (keyup)="validate('fullname')" formControlName="fullname" value="{{this.fullname}}" [(ngModel)]="fullname" placeholder="Full Name"></ion-input>
+      </ion-item>
+      <p *ngIf="myForm.get('fullname').errors && myForm.get('fullname').dirty" >
+        <span style="color: red" ion-text *ngIf="myForm.get('fullname').hasError('required')">Field is required, </span>
+        <span style="color: red" ion-text *ngIf="myForm.get('fullname').hasError('maxlength')">Max of 10 characters</span>
+      </p>
+
+        <ion-item no-padding [class.invalid]="(!myForm.controls.email.valid) && isEmail" style="border-bottom-color: #D1D3D3">
+            <!-- <ion-label color="dark" stacked style="color:grey;font-size: large">Email</ion-label> -->
+          <ion-input type="email" (keyup)="validate('email')" formControlName="email" value="{{this.email}}" [(ngModel)]="email" placeholder="Email"></ion-input>
+        </ion-item>
+        <p *ngIf="myForm.get('email').errors && myForm.get('email').dirty" >
+          <span style="color: red" ion-text *ngIf="myForm.get('email').hasError('required')">Field is required</span>
+          <span style="color: red" ion-text *ngIf="myForm.get('email').hasError('email')">It is not an email</span>
+        </p>
+      </form>
+      <ion-list>
+          <ion-item>
+              <ion-label>Choose Country</ion-label>
+              <ion-select [(ngModel)]="country" ionCancel="onCancel()" okText="Ok" >
+                <ion-option *ngFor="let name of country1" [value] = "name" >{{name.name}}</ion-option>
+              </ion-select>
+            </ion-item>
+    </ion-list>
+      
+   
+        <!-- <button ion-button block round style="margin-top: 15px;" type="submit" [disabled]="myForm.invalid" color="lightblue"> -->
+            <form [formGroup]="myForm" novalidate>
+          <button color="lightblue" ion-button large  (click)="submit()" class="center" style="width:70%; border-radius: 10px;" [disabled]="myForm.invalid">
+            Update
+        </button>
+     </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

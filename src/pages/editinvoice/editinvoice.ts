@@ -37,6 +37,7 @@ status:any;
   value_total_cost:any;
   value_status:any;
   value_item_name:any;
+  paymentoption:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public app: App,public platform:Platform,public alertCtrl:AlertController,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     this.id= this.navParams.get('id');
@@ -102,7 +103,8 @@ console.log( this.value_invoice_number);
     });
     loader.present();
     let data = {
-      status:this.status
+      status:"paid",
+      payment_option:this.paymentoption
     };
     //console.log(this.data.username);
     this.http.post('https://sum-finance-latest2.herokuapp.com/invoice/update/'+this.id+'', data)

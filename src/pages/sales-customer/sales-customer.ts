@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform,ActionSheetController   } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform,ActionSheetController,LoadingController,ToastController   } from 'ionic-angular';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { ActionSheet, ActionSheetOptions } from '@ionic-native/action-sheet/ngx';
-
+import {Http ,Response} from '@angular/http';
 import { File } from '@ionic-native/file';
 import { FileOpener } from '@ionic-native/file-opener';
+import {GlobalProvider} from '../../providers/global/global';
+import {SalesbycustomerreportPage} from '../salesbycustomerreport/salesbycustomerreport';
 /**
  * Generated class for the SalesCustomerPage page.
  *
@@ -27,8 +29,23 @@ export class SalesCustomerPage {
   }
  
   pdfObj = null;
+  namesList:any;
+  gaming:any;
+  fromdate:any;
+  todate:any;
+  customer_id:any;
+  customer_name:any;
+  itemname:any;
+  itemquantity:any;
+  totalamount:any;
+  date:any;
   myDate = new Date().toISOString();
-  constructor(public navCtrl: NavController,private plt: Platform, public navParams: NavParams, private file: File, private fileOpener: FileOpener,private actionSheet: ActionSheet,public actionSheetCtrl: ActionSheetController) {
+  constructor(public navCtrl: NavController,private plt: Platform,public global:GlobalProvider,public loadingCtrl: LoadingController, public tostctrl: ToastController,public http:Http, public navParams: NavParams, private file: File, private fileOpener: FileOpener,private actionSheet: ActionSheet,public actionSheetCtrl: ActionSheetController) {
+    this.http.get('https://sum-finance-latest2.herokuapp.com/finance/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+      console.log(data);
+         //this.posts = data.json();
+         this.namesList = data 
+ });
   }
   
   ionViewDidLoad() {
@@ -126,4 +143,34 @@ export class SalesCustomerPage {
       this.pdfObj.download();
     }
   }
+  run_report_sales_by_customer(){
+    if(this.todate == undefined){
+      alert("Please add Due Date")
+    }
+    else if(this.fromdate == undefined) {
+      alert("Please choose From Date");
+    }
+
+    else if(this.gaming==undefined){
+      alert("Please Select Customer Name");
+    }
+    //console.log(this.fromdate, this.todate);
+    else if(this.fromdate > this.todate)
+  {
+      alert ("Due Date must be greater than Invoice Date")
+  }else{
+         this.navCtrl.push(SalesbycustomerreportPage,{startdate:this.fromdate,enddate:this.todate,customername:this.customer_name,customerid:this.customer_id});
+  }
+
+}
+onContactChange(){
+  console.log(this.gaming);
+  var key_id = Object.keys(this.gaming)[0];
+  var key_id1 = Object.keys(this.gaming)[1];
+  var key_id2 = Object.keys(this.gaming)[2];
+  this.customer_id = this.gaming[key_id];
+  this.customer_name = this.gaming[key_id2];
+
+  console.log(this.customer_id,this.customer_name);
+}
  }

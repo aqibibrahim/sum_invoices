@@ -1,0 +1,59 @@
+<!--
+  Generated template for the ReceivablePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="lightblue">
+    <ion-title>Receivable</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="my-class">
+  <ion-card *ngFor="let invoice of invoices" style="
+  border-radius: 7px;">
+      <ion-card-content>
+        <ion-row>
+          <ion-col style="font-size: large; color: black" col-6>
+              {{invoice.customer}}
+          </ion-col>
+          <ion-col style="font-size: large; color: black" col-4>
+              PKR {{invoice.total_cost}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col style="color:#747474">
+            INV no:  {{invoice.invoice_number}}
+          </ion-col>
+          <ion-col style="color:#747474" class="ion-text-end">
+            {{invoice.item_name}}
+          </ion-col>
+        </ion-row>
+        <ion-row  class="datelabel">
+          <ion-col style="color:#747474">
+              Due: {{invoice.Due_date | date: 'yyyy/MM/dd'}}
+          </ion-col>
+          <ion-col style="color:green" class="ion-text-end">
+            {{invoice.status}}
+            </ion-col>
+        </ion-row>
+            <!-- <ion-row>
+              <ion-col style="text-align: center">
+              <button ion-button item-end  (click)="removeItem(invoice)" color="editbutton" style="border-radius: 10px; width: -webkit-fill-available;"><ion-icon name="trash" style="
+                margin-right: 11%;
+            "></ion-icon>Delete</button>
+              </ion-col>
+              <ion-col style="text-align: center">
+                  <button ion-button item-end (click)="edititems(invoice)" color="editbutton" style="border-radius: 10px; width: -webkit-fill-available;"><ion-icon name="create" style="
+                    margin-right: 11%;
+                "></ion-icon>Edit</button>
+              </ion-col>
+            </ion-row> -->
+      </ion-card-content>
+  </ion-card>
+
+</ion-content>

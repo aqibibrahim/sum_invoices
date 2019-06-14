@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,Platform } from 'ionic-angular';
 import {CreateInvoicesPage} from '../create-invoices/create-invoices';
 import {Http ,Response} from '@angular/http';
 import {GlobalProvider} from '../../providers/global/global';
+import { App } from 'ionic-angular';
+// import { AnyARecord } from 'dns';
+
 /**
  * Generated class for the AddLineItemPage page.
  *
@@ -39,13 +42,21 @@ export class AddLineItemPage {
   qtyinhands:any;
   purchase_rate:any;
   value_key_rate:any;
+  item_type:any;
+  purchase_account:any;
+  purchase_desc:any;
+  sale_Account:any;
+  sale_desc:any;
+  sale_rate:any;
+  unit:any;
   
+
   invoice_invno:any;
   invoice_ordno:any;
   invoice_indate:any;
   invoice_dudate:any;
   selectedval:any;
-  constructor(public navCtrl: NavController, public global:GlobalProvider,public navParams: NavParams,public http: Http) {
+  constructor(public navCtrl: NavController, public plt:Platform,public app: App,public global:GlobalProvider,public navParams: NavParams,public http: Http) {
     this.invoice_invno = this.navParams.get('invoicenumber');
 
     this.invoice_ordno = this.navParams.get('ordernumber');
@@ -64,14 +75,32 @@ export class AddLineItemPage {
         console.log(data);
            this.taxvalue = data 
          });
-  
-
+         this.plt.registerBackButtonAction(() => {
+          // Catches the active view
+          let nav = this.app.getActiveNavs()[0];
+          let activeView = nav.getActive();                
+          // Checks if can go back before show up the alert
+          if(activeView.name === 'AddLineItemPage') {
+              if (nav.canGoBack()){
+                  nav.pop();
+              } else {
+                  this.navCtrl.push(CreateInvoicesPage);
+                  
+              }
+          }
+      });
   }
 
   savelineitem(){
     var key = Object.keys(this.gaming)[1];
     var value = this.gaming[key];
-     
+    if(this.gaming == undefined){
+      alert("Please choose Item First");
+    }
+    else if(this.quantity == 0){
+       alert("Please choose quantity more than 0");
+     }
+    else{
       console.log("key = ", key) // bar
       console.log("value = ", value) // baz
       console.log(this.taxinput);
@@ -95,6 +124,8 @@ export class AddLineItemPage {
     this.navCtrl.push(CreateInvoicesPage,{inputname:value, description:this.description,quantity:this.quantity,rate:this.quanitytnillrate,tax:this.value_tax,taxtotal:this.taxfixedvalue,purchaserate:this.purchase_rate,itemid:this.item_id
     ,sale_rate:this.value_key_rate,add_inno:this.invoice_invno,add_orno:this.invoice_ordno,add_indate:this.invoice_indate,add_dudate:this.invoice_dudate,valuesel:this.selectedval});
       }
+     }
+     
       
   }
   onSelectChange(tax){
@@ -135,11 +166,11 @@ export class AddLineItemPage {
     var key_id9 = Object.keys(this.gaming)[10];
 
     var key_desc = Object.keys(this.gaming)[5];
-    this.itemquantity = this.gaming[key_id9];
+    this.itemquantity = this.gaming[key_id8];
     this.value_desc = this.gaming[key_id9];
     var key_item_quantity =Object.keys(this.gaming)[5];
     var key_rate = Object.keys(this.gaming)[4];
-    this.purchase_rate = this.gaming[key_id4];
+    this.purchase_rate = this.gaming[key_id3];
     this.quanitytnillrate = this.gaming[key_rate];
     this.value_key_rate = this.gaming[key_rate];
     this.value_rate = this.gaming[key_rate];
@@ -147,7 +178,7 @@ export class AddLineItemPage {
 
 
       console.log("key = ", key, "Key_Desc=",key_desc, "key_rate = ",key_rate,key_id,key_id3,key_id4,key_id5,key_id6,key_id7,key_id8,key_id9) // bar
-      console.log("value = ", this.value_item,"value_Des = ", this.value_desc,"value_rate = ", this.value_rate,this.itemquantity,this.purchase_rate) // baz
+console.log("value = ", this.value_item,"value_Des = ", this.value_desc,"value_rate = ", this.value_rate,this.itemquantity,this.purchase_rate, this.item_id) // baz
   }
   isReadonly() {
     return this.isReadonly;   //return true/false 

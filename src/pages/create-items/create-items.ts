@@ -146,8 +146,35 @@ export class CreateItemsPage {
             message:'Data Save',
             duration:2000
           });
+          let nav = this.app.getActiveNavs()[0];
+            let activeView = nav.getActive();   
+            if(activeView.name === 'CreateItemsPage') {
+              if (nav.canGoBack()){
+                  nav.pop();
+              }else{
+                const alert = this.alertCtrl.create({
+                  title: 'Exit',
+                  message: 'Want to Exit App?',
+                  buttons: [{
+                      text: 'Cancel',
+                      role: 'cancel',
+                      handler: () => {
+                        this.nav.setRoot('HomePage');
+                      }
+                  },{
+                      text: 'OK',
+                      handler: () => {
+                        this.platform.exitApp();
+                      }
+                  }]
+              });
+              alert.present();
+              }
+            } else {
+            this.nav.setRoot('ItemPage');
+            }
           toast.present();
-        this.navCtrl.push(ItemPage);
+        // this.navCtrl.push(ItemPage);
         }, error => {
           loader.dismiss();
           let toast = this.tostctrl.create({

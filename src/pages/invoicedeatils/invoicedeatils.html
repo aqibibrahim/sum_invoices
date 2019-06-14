@@ -7,11 +7,7 @@
           <ion-header>
           <ion-navbar color="lightblue"> 
           <ion-title color="grey">invoice Details</ion-title>
-          <ion-buttons end>
-          <button ion-button (click)="searchToggle()">
-            <ion-icon name="create"></ion-icon>
-          </button>
-          </ion-buttons>
+         
           <ion-buttons end>
           <button ion-button (click)="sendEmail()">
             <ion-icon name="mail"></ion-icon>
@@ -45,8 +41,8 @@
           <h3 style="
           text-decoration-line: underline;
           ">{{customer_name}}</h3>
-          <h2>PKR :{{balance}}</h2>
-          <p style="text-transform: uppercase;font-family: fantasy;font-size: large;color: greenyellow;font-weight: bold;">{{this.status}}</p>
+          <h2>PKR : {{balance}}</h2>
+          <p style="text-transform: uppercase;font-family: fantasy;font-size: large;color: greenyellow;font-weight: bold;">Status: {{this.status}}</p>
 
           </div>
           <!-- Sub Information of Invoice -->
@@ -87,13 +83,7 @@
           </p>
           </ion-item>
 
-          <ion-toolbar style="
-          /* background-color: #646666; */
-          width: 110%;
-          margin-left: -5%;
-          margin-top: -1%;
-          /* color: blue; */
-          ">
+          <ion-toolbar style="/* background-color: #646666; */width: 110%;margin-left: -5%;margin-top: -1%;/* color: blue; */">
           <ion-grid>
           <ion-row >
             <ion-col>
@@ -104,10 +94,7 @@
             </ion-col>
             <ion-col col-3>
               <div class="ion-float-right">
-                <p style="
-                color: coral;
-            ">Amount</p>
-                
+                <p style="color: coral;">Amount</p>
               </div>
             </ion-col>
           </ion-row>
@@ -125,9 +112,7 @@
 
           </ion-col>
           <ion-col col-3>
-          <h4 style="
-          margin-top: 3px;color:grey;
-          ">PKR{{subtotal}}</h4>
+          <h4 style="margin-top: 3px;color:grey;">PKR {{subtotal}}</h4>
           </ion-col>
           </ion-row>
 
@@ -146,8 +131,10 @@
           <ion-col col-8 text-end style="color:coral; margin-top: 5%">
           Discount Price
           </ion-col>
-          <ion-col text-end style="margin-top: 5%; color: red">
-            (-) PKR {{discount}}
+          <ion-col text-end style="margin-top: 4%; color: red">
+             
+              (-) PKR {{discount}}
+             <!-- {{discount}} -->
           </ion-col>
           </ion-row>
 
@@ -165,7 +152,7 @@
           <ion-row >
           <ion-col col-8 text-end style="color:coral; margin-top: 5%">
             Shipping Charges
-          </ion-col>
+          </ion-col >
           <ion-col text-end style="margin-top: 5%">
               PKR {{shipping}}
           </ion-col>
@@ -184,24 +171,17 @@
           </ion-row>
 
           <!-- Payment Made -->
-          <ion-row >
-            <ion-col col-8 text-end style="color:coral; margin-top: 5%">
-              Payment Made
-            </ion-col>
-            <ion-col text-end style="margin-top: 5%;color: red">
-                (-) PKR 0.00   <!--PKR {{subtotal}}-->
-            </ion-col>
-          </ion-row>
+         
             
           <!-- Credits Applies     -->
-          <ion-row >
+          <!-- <ion-row >
           <ion-col col-8 text-end style="color:coral; margin-top: 5%">
             Credit Appllied
           </ion-col>
           <ion-col text-end style="margin-top: 5%; color: red">
-              (-) PKR 0.00 <!--{{subtotal}}-->
+              (-) PKR 0.00 
           </ion-col>
-          </ion-row>
+          </ion-row> -->
 
           <!-- Balance Due -->
           <ion-row >

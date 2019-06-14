@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform,AlertController  } from 'ionic-angular';
+import { Nav, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
+import { Platform, IonicApp } from 'ionic-angular';
 
 import { HomePage } from '../pages/home/home';
 import {DashboardPage} from '../pages/dashboard/dashboard';
@@ -11,6 +11,7 @@ import { ItemPage } from '../pages/item/item';
 import {TaxPage} from '../pages/tax/tax';
 import { ReportsPage } from '../pages/reports/reports';
 import {InvoicesPage} from '../pages/invoices/invoices';
+import {ReceivablePage} from '../pages/receivable/receivable';
 import { CreateEstimatePage } from '../pages/create-estimate/create-estimate';
 import { CreateInvoicePaymentPage } from '../pages/create-invoice-payment/create-invoice-payment';
 import { App } from 'ionic-angular';
@@ -28,7 +29,7 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,public app: App,public alertCtrl: AlertController) {
+  constructor(public platform: Platform,  private ionicApp: IonicApp,public statusBar: StatusBar, public splashScreen: SplashScreen,public app: App,public alertCtrl: AlertController) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -37,10 +38,13 @@ export class MyApp {
       { title: 'Reports', component: ReportsPage },
       { title: 'Contacts', component: ContactsPage },
       { title: 'Items', component: ItemPage },
-      { title: 'Estimates', component: CreateEstimatePage },
+      // { title: 'Estimates', component: CreateEstimatePage },
       { title: 'Invoices', component: InvoicesPage },
-      {title: 'Bills', component: BillsPage },
+      {title:'Receivable' ,component: ReceivablePage},
+      {title:'Payable' ,component: TaxPage},
+      // {title: 'Bills', component: BillsPage },
       {title:'Tax' ,component: TaxPage},
+      
       {title:'Logout' ,component: DashboardPage}
 
       // { title: 'Items', component: CreateEstimatePage }
@@ -56,11 +60,29 @@ export class MyApp {
       this.statusBar.overlaysWebView(false);
       //this.statusBar.backgroundColorByHexString('#f37321');
       this.hideSplashScreen();
-     
-     
+      
       //this.splashScreen.hide();
     });
   
+  }
+  showAlert() {
+    let confirm = this.alertCtrl.create({
+      title: 'Exit Application?',
+      message: 'Do you want to exit this application?',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {}
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            this.platform.exitApp();
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
   
   hideSplashScreen() {

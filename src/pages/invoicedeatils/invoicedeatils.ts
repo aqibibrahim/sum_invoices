@@ -43,6 +43,7 @@ export class InvoicedeatilsPage {
   email:any;
   order_number:any;
   status:any;
+  
 
   billing_address:any;
   shipping_address:any;
@@ -74,6 +75,7 @@ export class InvoicedeatilsPage {
       this.status = this.navParams.get('status');
       this.billing_address = this.navParams.get('billingaddress');
       this.shipping_address = this.navParams.get('shippingaddress');
+      
   console.log("Customer Name:"+this.customer_name,"Email:"+this.email);
   
     
@@ -131,6 +133,15 @@ export class InvoicedeatilsPage {
            },
            
          },
+         {
+          text: 'Save',
+          role: 'save',
+          handler: () => {
+            console.log('Cancel clicked');
+            this.saveinvoice();
+          },
+          
+        },
          {
           text: 'Cancel',
           role: 'cancel',
@@ -313,4 +324,8 @@ export class InvoicedeatilsPage {
      this.pdfObj.download();
    }
   }
+  saveinvoice(){
+    
+  }
+
 }

@@ -29,14 +29,25 @@
     
   <ion-card>
   <ion-card-content>
-    <ion-list>
-        <ion-item>
-            <ion-label>Contact*</ion-label>
-            <ion-select interface="popover" [(ngModel)]="gaming" ionCancel="onCancel()" okText="Ok" (ionChange)="onContactChange()">
-              <ion-option *ngFor="let name of namesList" [value] = "name" >{{name.first_name}}</ion-option>
-            </ion-select>
-          </ion-item>
-  </ion-list>
+    <ion-row>
+      <ion-col col-10>
+          <ion-list>
+              <ion-item>
+                  <ion-label>Contact*</ion-label>
+                  <ion-select interface="popover" [(ngModel)]="gaming" ionCancel="onCancel()" okText="Ok" (ionChange)="onContactChange()">
+                    <ion-option *ngFor="let name of namesList" [value] = "name">{{name.first_name}}</ion-option>
+                  </ion-select>
+                </ion-item>
+               
+        </ion-list>
+      </ion-col>
+      <ion-col col-2>
+          <button ion-button icon-only (click)="opencontact()" style="background-color: coral;">
+              <ion-icon ios="ios-add-circle" md="md-add-circle" ></ion-icon>
+            </button>
+      </ion-col>
+    </ion-row>
+    
     <ion-item>
 <ion-label fixed>Email*</ion-label>
       <!-- <ion-input type="email" value="" [(ngModel)]="email"></ion-input> -->
@@ -47,7 +58,7 @@
       <ion-input type="number" value="{{this.nativeinvoice}}" [(ngModel)]="invoice"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label fixed>Order Number*</ion-label>
+      <ion-label fixed>Order Number</ion-label>
       <ion-input type="number" value="{{this.nativeorder}}" [(ngModel)]="order"></ion-input>
     </ion-item>
     </ion-card-content>
@@ -97,7 +108,7 @@
             <ion-list>
                 <ion-item>
                   <ion-label color="lightblue">Sales Person</ion-label>
-                  <ion-select [(ngModel)]="terms" interface="popover">
+                  <ion-select [(ngModel)]="salesperson" interface="popover">
                     <ion-option value="noterms" selected>None</ion-option>
                     <ion-option value="dueonreceipt">Include in amounts</ion-option>
                     <ion-option value="net15">Not Applicable</ion-option>
@@ -106,72 +117,97 @@
               </ion-list>
             </ion-card-content>
         </ion-card>
+        <!-- <ion-card>
+            <ion-card-content>
+                <ion-list>
+                    <ion-item>
+                      <ion-label color="lightblue">Payment Options</ion-label>
+                      <ion-select [(ngModel)]="paymentoption" interface="popover">
+                        <ion-option value="none" selected>None</ion-option>
+                        <ion-option value="banktransfer">Bank Transfer</ion-option>
+                        <ion-option value="cash">Cash</ion-option>
+                        <ion-option value="paypal">Paypal</ion-option>
+                        <ion-option value="stripe">Stripe</ion-option>
+                        <ion-option value="creditcard">Credit Card</ion-option>
+                      </ion-select>
+                    </ion-item>
+                  </ion-list>
+                </ion-card-content>
+            </ion-card> -->
 
         <ion-card>
           <ion-card-content>
-              
-                <button ion-button icon-end clear full (click)='adlineitem()'>
+            <ion-row>
+              <ion-col col-10>
+                  <ion-list>
+                      <ion-item >
+                          <ion-label>Item *</ion-label>
+                          <ion-select #S interface="popover" class="selector" [(ngModel)]="itemname1" ionCancel="onCancel()" okText="Ok" (ionChange)="onItemChange(S.value)" >
+                            <ion-option *ngFor="let name of items1" [value] = "name" class="option" text-wrap>{{name.item_name}}</ion-option>
+                          </ion-select>
+                        </ion-item>
+                </ion-list>
+              </ion-col>
+              <ion-col col-2>
+                  <button ion-button icon-only clear (click)="openitem()">
+                      <ion-icon ios="ios-add-circle" md="md-add-circle" ></ion-icon>
+                    </button>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col >
+                    <ion-item style="border-bottom: 1px solid grey">
+                        <ion-label floating>Quantity</ion-label>
+                        <ion-input type="number" value="1" name="quantity" [(ngModel)]="quantity" (ionChange)="quantitychange()"></ion-input>
+                      </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-item style="border-bottom: 1px solid grey">
+                        <ion-label floating>Rate</ion-label>
+                        <!-- <ion-input type="number" value="{{this.value_rate}}" name="rate" [readonly]="isReadonly()" [(ngModel)]="rate" ></ion-input> -->
+                        <ion-input type="number" value="{{this.value_rate1}}" name="rate" [(ngModel)]="rate" [readonly]="isReadonly()"></ion-input>
+                      </ion-item>
+                </ion-col>
+              </ion-row> 
+                <!-- <button ion-button icon-end clear full (click)='adlineitem()' style="background-color: transparent !important;">
                     Add Line Item
-                    <ion-icon name="add" ></ion-icon>
-                  </button>
+                    <ion-icon name="add"></ion-icon>
+                  </button> -->
           
-                  <ion-item *ngIf="this.input_name != null" >
+                  <ion-item>
 
-                      <ion-row style="border-bottom: 1px solid lightgrey">
+                     
+                   
+                      <ion-row style="border-bottom: 1px solid lightgrey; height: 33.33%">
                           <ion-col col-6>
                               <ion-item >
-                                  <!-- <ion-label color="primary">Items</ion-label> -->
-                                  <ion-input type="text" placeholder="Customer Notes" [(ngModel)]="items" [readonly]="isReadonly()" style="color:lightgrey"></ion-input>
+                                <h3 >SubTotal</h3>
                                 </ion-item>
-                                </ion-col>
-                                <ion-col col-6>
-                                    <ion-item>
-                                        <!-- <ion-label color="primary">Items</ion-label> -->
-                                        <ion-input type="text" placeholder="Customer Notes" [(ngModel)]="amount" [readonly]="isReadonly()" style="color:lightgrey"></ion-input>
-                                      </ion-item>
-                                      </ion-col>
-                                     
-                              </ion-row>
-                    <ion-row>
-                      <ion-col >
-                          <ion-item >
-                              <!-- <ion-label color="primary">Items</ion-label> -->
-                             
-                              <ion-input type="text" placeholder="Customer Notes" [(ngModel)]="input_name" [readonly]="isReadonly()"></ion-input>
-                            </ion-item>
-                            </ion-col>
-                          </ion-row>
-                      <ion-row style="border-bottom: 1px solid lightgrey; height: 33.33%">
-                              <ion-col col-7>
-                            <ion-item >
-                              <ion-input type="text" placeholder="Customer Notes" [(ngModel)]="qty" [readonly]="isReadonly()"></ion-input>
-                              <ion-input type="text" placeholder="Customer Notes" [(ngModel)]="x" [readonly]="isReadonly()"></ion-input>
-                               <ion-input type="text" placeholder="Customer Notes" [(ngModel)]="rat" [readonly]="isReadonly()"></ion-input>
-                              </ion-item>
-                      </ion-col>
-                      <ion-col col-5>
+                        </ion-col>
+                        <ion-col col-5>
                           <ion-item>
-                              
-                              <!-- <ion-label color="primary">Amount</ion-label> -->
-                              <ion-input type="number" placeholder="Customer Notes" [(ngModel)]="amount_total" [readonly]="isReadonly()" style="text-align: right" ></ion-input>
+                              <ion-input type="number" value="{{this.value_rate}}" [(ngModel)]="amount_total" [readonly]="isReadonly()"></ion-input>
                             </ion-item>
                       </ion-col>
                     </ion-row>
 
-                    <ion-row>
-                      <ion-col col-7>
-                            <ion-item >
-                              <h3 >Tax {{this.tax}}%</h3>
-                              </ion-item>
-                      </ion-col>
-                      <ion-col col-5>
+                    <!-- <ion-row>
+                      <ion-col>
+                          <ion-item >
+                              <ion-label>Tax</ion-label>
+                              <ion-select #S [(ngModel)]="taxinput" ionCancel="onCancel()" okText="Ok" (ionChange)="onSelectChange(S.value)">
+                                <ion-option *ngFor="let tax of taxvalue" [value] = "tax" >{{tax.tax_name}}</ion-option>
+                              </ion-select>
+                            </ion-item>
+                      </ion-col> -->
+                      <!-- <ion-col col-5>
                       <ion-item>
                               <ion-input type="number" placeholder="Tax" [(ngModel)]="taxtotal" [readonly]="isReadonly()" style="text-align: right"></ion-input>
                             </ion-item>
-                      </ion-col>
+                      </ion-col> -->
                       
-                    </ion-row>
-                    <ion-row>
+                    <!-- </ion-row> -->
+                    <!-- <ion-row>
                 <ion-col col-7>
                       <ion-item >
                         <h3 >Subtotal</h3>
@@ -183,7 +219,7 @@
                       </ion-item>
                 </ion-col>
                 
-              </ion-row>
+              </ion-row> -->
 
               <ion-row>
                   <ion-col col-6>
@@ -239,7 +275,7 @@
                         </ion-col>
                         <ion-col col-6>
                         <ion-item>
-                                <ion-input type="text" placeholder="Customer Notes" [(ngModel)]="total" style="text-align: right" [readonly]="isReadonly()"></ion-input>
+                                <ion-input type="text" value="{{this.total}}" [(ngModel)]="total" style="text-align: right" [readonly]="isReadonly()"></ion-input>
                               </ion-item>
                         </ion-col>
                         

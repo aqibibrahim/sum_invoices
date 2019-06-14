@@ -10,34 +10,38 @@
         <ion-icon name="menu"></ion-icon>
       </button>
   <ion-title>Tax</ion-title> 
-  <ion-buttons end>
-    <button ion-button (click)="savedata()">
-    Save
-  </button>
-  </ion-buttons>
-  <!-- <ion-buttons end>
-      <button ion-button (click)="createcitems()">
-      <ion-icon name="add"></ion-icon>
-    </button>
-    </ion-buttons> -->
 </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-card>
-    <ion-card-header color="lightblue">
-      Tax Info
-    </ion-card-header>
-    <ion-card-content>
-          <ion-item style="border-bottom: 0.3px solid">
-             
-              <ion-input type="text" placeholder="Tax Name" [(ngModel)]="taxname" name="taxname"></ion-input>
-            </ion-item>
-            <ion-item style="border-bottom: 0.3px solid">
-                
-                <ion-input type="number" placeholder="Tax Value in %" [(ngModel)]="taxvalue"></ion-input>
-                
-              </ion-item>
-    </ion-card-content>
-</ion-card>
+<ion-content padding class="my-class">
+      <ion-card *ngFor="let item of record" style="border-radius: 7px;">
+          <ion-card-content>
+            <ion-row>
+              <ion-col style="font-size: large; color: black">
+                  {{ item.tax_name}}
+              </ion-col>
+              
+              <ion-col style="font-size: large; color: black" col-4>
+                 {{item.tax_precentage}} %
+              </ion-col>
+            </ion-row>
+            <ion-row>
+                  <ion-col style="text-align: center">
+                  <button ion-button item-end  (click)="removeItem(item)" color="editbutton"  style="border-radius: 10px; width: -webkit-fill-available;"><ion-icon name="trash" style="
+                    margin-right: 11%;
+                "></ion-icon>Delete</button>
+                  </ion-col>
+                  <ion-col style="text-align: center">
+                      <button ion-button item-end (click)="edititems(item)" color="editbutton" style="border-radius: 10px; width: -webkit-fill-available;"><ion-icon name="create" style="
+                        margin-right: 11%;
+                    "></ion-icon>Edit</button>
+                  </ion-col>
+                </ion-row>
+          </ion-card-content>
+      </ion-card>
+
+
+      <ion-fab bottom right >
+          <button ion-fab (click)="createctax()" color="lightblue"><ion-icon name="add" ></ion-icon></button>
+        </ion-fab>
 </ion-content>

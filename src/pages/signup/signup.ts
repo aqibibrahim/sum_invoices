@@ -26,7 +26,7 @@ export class SignupPage {
   email:any;
   password:any;
   country:any;
-
+  country1:any;
   constructor(
     
     public navCtrl: NavController,
@@ -35,21 +35,26 @@ export class SignupPage {
     this.myForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern("[a-zA-Z ]*")]],
       fullname:['',[Validators.required,Validators.pattern("[a-zA-Z ]*")]],
-       country:['',[Validators.required]],
+      //  country:['',[Validators.required]],
       email: ['', [Validators.required, Validators.email,Validators.pattern(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/)]],
        //phone: ['',[Validators.required, Validators.maxLength(11), Validators.minLength(11)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
-    
+    this.http.get('https://restcountries.eu/rest/v2/all').map(res => res.json()).subscribe(data => {
+    console.log(data);
+      
+       this.country1 = data 
+       
+     });
   }
   
   validate(data){
     if(data == 'name'){
       this.isName = true;
     }
-    else if(data == 'country'){
-      this.iscountry = true;
-    }
+    // else if(data == 'country'){
+    //   this.iscountry = true;
+    // }
     else if(data == 'email'){
       this.isEmail = true;
     }

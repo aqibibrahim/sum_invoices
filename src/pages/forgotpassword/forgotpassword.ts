@@ -55,21 +55,25 @@ export class ForgotpasswordPage {
   this.http.post('https://sum-finance-latest2.herokuapp.com/user/forget', data)
   .subscribe(response => {
     console.log('POST Response:', response);
-    loader.dismiss();
+    
     let toast = this.tostctrl.create({
-      message:'Signup Successfully',
+      message:'Update Successfully',
       duration:2000
     });
+    loader.dismiss();
     toast.present();
     this.navCtrl.push(LoginPage);
   }, error => {
     loader.dismiss();
     let toast = this.tostctrl.create({
-      message:'Password Update Succesfully',
+      message:'Email id not Exist',
       duration:2000
     });
     toast.present();
+    return false;
   });
   }
   }
 
+  
+ 

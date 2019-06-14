@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,LoadingController, ToastController } from 'ionic-angular';
+import { Component,ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams,LoadingController, Nav,ToastController,Platform, IonicApp } from 'ionic-angular';
 import {Http ,Response} from '@angular/http';
 import {GlobalProvider} from '../../providers/global/global';
+import { App } from 'ionic-angular';
 /**
  * Generated class for the ExpensePage page.
  *
@@ -15,6 +16,7 @@ import {GlobalProvider} from '../../providers/global/global';
   templateUrl: 'expense.html',
 })
 export class ExpensePage {
+  @ViewChild(Nav) nav: Nav;
 items:any;
 expensedate:any;
 itemname:any;
@@ -22,7 +24,7 @@ amount:any;
 name:any;
 item_id:any;
 item_name:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public tostctrl: ToastController,public global:GlobalProvider, public http:Http) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public ionicApp:IonicApp,public app:App,public platform:Platform,public loadingCtrl: LoadingController, public tostctrl: ToastController,public global:GlobalProvider, public http:Http) {
     this.http.get('https://sum-finance-latest2.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
       console.log(data);
          this.items = data 
@@ -31,8 +33,33 @@ item_name:any;
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ExpensePage');
+    this.platform.registerBackButtonAction(() => {
+      // Catches the active view
+      let nav = this.app.getActiveNavs()[0];
+      let activeView = nav.getActive();                
+      // Checks if can go back before show up the alert
+
+      let activePortal = this.ionicApp._loadingPortal.getActive() ||
+      this.ionicApp._modalPortal.getActive() ||
+      this.ionicApp._toastPortal.getActive() ||
+      this.ionicApp._overlayPortal.getActive();
+
+    if (activePortal) {
+      activePortal.dismiss();
+    }
+    else {
+      if(activeView.name === 'ExpensePage') {
+        if (nav.canGoBack()){
+            nav.pop();
+        } else {
+      this.nav.setRoot('HomePage');
+      }
+    }
+  }  
+  });
   }
   addexpense(){
+    console.log(this.name)
     let loader = this.loadingCtrl.create({
       content:'Waiting...'
     });

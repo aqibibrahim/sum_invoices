@@ -44,7 +44,6 @@ import {BalanceSheetPage} from '../pages/balance-sheet/balance-sheet';
 import {ProfitLossPage} from '../pages/profit-loss/profit-loss';
 import {CashFlowStatementPage} from '../pages/cash-flow-statement/cash-flow-statement';
 import {SalesCustomerPage} from '../pages/sales-customer/sales-customer';
-import {SalesTeamPage} from '../pages/sales-team/sales-team';
 import {SaleSalePersonPage} from '../pages/sale-sale-person/sale-sale-person';
 import {CustomerBalancePage} from '../pages/customer-balance/customer-balance';
 import {AgingSummaryPage} from '../pages/aging-summary/aging-summary';
@@ -63,8 +62,14 @@ import { GlobalProvider } from '../providers/global/global';
 import { SignupProvider } from '../providers/signup/signup';
 import {CreateYourCompanyPage} from '../pages/create-your-company/create-your-company';
 import {CompanytaxPage} from '../pages/companytax/companytax';
-
-
+import {SalesbycustomerreportPage} from '../pages/salesbycustomerreport/salesbycustomerreport';
+import {SalesItemPage} from '../pages/sales-item/sales-item';
+import {SalebyitemreportPage} from '../pages/salebyitemreport/salebyitemreport';
+import {ExpensebycategoryreportPage} from '../pages/expensebycategoryreport/expensebycategoryreport';
+import {CreateTaxPage} from '../pages/create-tax/create-tax';
+import {EditTaxPage} from '../pages/edit-tax/edit-tax';
+import {EditProfilePage} from '../pages/edit-profile/edit-profile';
+import {ReceivablePage} from '../pages/receivable/receivable';
 @NgModule({
   declarations: [
     MyApp,
@@ -82,7 +87,6 @@ import {CompanytaxPage} from '../pages/companytax/companytax';
     ProfitLossPage,
     CashFlowStatementPage,
     SalesCustomerPage,
-    SalesTeamPage,
     SaleSalePersonPage,
     CustomerBalancePage,
     AgingSummaryPage,
@@ -105,7 +109,15 @@ import {CompanytaxPage} from '../pages/companytax/companytax';
     ProfitLossReportPage,
     ForgotpasswordPage,
     CreateYourCompanyPage,
-    CompanytaxPage
+    CompanytaxPage,
+    SalesbycustomerreportPage,
+    SalesItemPage,
+    SalebyitemreportPage,
+    ExpensebycategoryreportPage,
+    CreateTaxPage,
+    EditTaxPage,
+    EditProfilePage,
+    ReceivablePage
   ],
   imports: [ 
     FormsModule, 
@@ -134,7 +146,6 @@ import {CompanytaxPage} from '../pages/companytax/companytax';
     ProfitLossPage,
     CashFlowStatementPage,
     SalesCustomerPage,
-    SalesTeamPage,
     SaleSalePersonPage,
     CustomerBalancePage,
     AgingSummaryPage,
@@ -157,7 +168,15 @@ import {CompanytaxPage} from '../pages/companytax/companytax';
     ProfitLossReportPage,
     ForgotpasswordPage ,
     CreateYourCompanyPage,
-    CompanytaxPage
+    CompanytaxPage,
+    SalesbycustomerreportPage,
+    SalesItemPage,
+    SalebyitemreportPage,
+    ExpensebycategoryreportPage,
+    CreateTaxPage,
+    EditTaxPage,
+    EditProfilePage,
+    ReceivablePage
   ],
   providers: [
     

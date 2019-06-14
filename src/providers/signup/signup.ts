@@ -15,16 +15,18 @@ export class SignupProvider {
   userid:any;
   countryname:any;
   user_name:any;
+  user_email:any;
   constructor(public http: Http,public loadingCtrl: LoadingController, public app: App,public tostctrl: ToastController, public alrtctrl:AlertController) {
     console.log('Hello SignupProvider Provider');
   }
 signup(email,password,companyname,fullname,country){
+  console.log(country.name);
  let data = {
     email:email,
     password: password,
     company_name: companyname,
     user_name:fullname,
-    country:country
+    country:country.name
 };
   let loader = this.loadingCtrl.create({
       content:'Waiting...'
@@ -39,23 +41,21 @@ signup(email,password,companyname,fullname,country){
     this.userid = data._id;
     this.countryname = data.country;
     this.user_name = data.user_name;
-   
-    this.app.getActiveNav().push(CreateYourCompanyPage,{companyname:this.company_name,userid:this.userid,country:this.countryname,uname:this.user_name});
-    let toast = this.tostctrl.create({
+    this.user_email = data.email;
+   let toast = this.tostctrl.create({
           message:'Signup Successfully',
           duration:2000
         });
+        this.app.getActiveNav().push(CreateYourCompanyPage,{companyname:this.company_name,userid:this.userid,country:this.countryname,uname:this.user_name});
         loader.dismiss();
         toast.present();
   }, error => {
-    
     let toast = this.tostctrl.create({
-      message:'User already esist',
+      message:'User already exist',
       duration:2000
     });
     loader.dismiss();
     toast.present();
-  
   });
 }
 }

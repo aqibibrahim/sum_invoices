@@ -33,10 +33,15 @@
               <ion-input type="text" placeholder="First name" [(ngModel)]="postal" name="username" ></ion-input>
           </ion-item>
           <ion-item>
+            <ion-label stacked style="color:grey;font-size: larger">Business Email*</ion-label>
+            <ion-input type="text" [(ngModel)]="business_email" name="businessemail"></ion-input>
+        </ion-item>
+          <ion-item>
               <ion-label stacked style="color:grey;font-size: larger">Business Location</ion-label>
               <ion-input type="text" [(ngModel)]="businesslocation" name="businesslocation" value={{this.country}} [readonly]="isReadonly()"></ion-input>
           </ion-item>
             
+         
           <ion-item style="border-bottom: 0.3px solid">
               <ion-label color="lightblue">Language</ion-label>  
               <ion-select [(ngModel)]="language" interface="popover">
@@ -66,18 +71,18 @@
                 <ion-item style="border-bottom: 0.3px solid">
                     <ion-label color="lightblue">Fiscal Year Start </ion-label>  
                     <ion-select [(ngModel)]="fiscal" interface="popover">
-                        <ion-option value="dr">January</ion-option>
-                        <ion-option value="n64">Feburary</ion-option>
-                        <ion-option value="ps">March</ion-option>
-                        <ion-option value="genesis">Apiril</ion-option>
-                        <ion-option value="saturn">May</ion-option>
-                        <ion-option value="saturn">June</ion-option>
-                        <ion-option value="saturn">July</ion-option>
-                        <ion-option value="saturn">August</ion-option>
-                        <ion-option value="saturn">September</ion-option>
-                        <ion-option value="saturn">October</ion-option>
-                        <ion-option value="saturn">November</ion-option>
-                        <ion-option value="saturn">December</ion-option>
+                        <ion-option value="jan">January</ion-option>
+                        <ion-option value="feb">Feburary</ion-option>
+                        <ion-option value="march">March</ion-option>
+                        <ion-option value="apiril">Apiril</ion-option>
+                        <ion-option value="may">May</ion-option>
+                        <ion-option value="june">June</ion-option>
+                        <ion-option value="july">July</ion-option>
+                        <ion-option value="august">August</ion-option>
+                        <ion-option value="september">September</ion-option>
+                        <ion-option value="october">October</ion-option>
+                        <ion-option value="november">November</ion-option>
+                        <ion-option value="december">December</ion-option>
                       </ion-select>
                     </ion-item>
                 <ion-item style="border-bottom: 0.3px solid">

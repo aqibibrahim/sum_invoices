@@ -29,13 +29,13 @@
       <ion-card-content class="my-content">
           <img src="assets/imgs/final-sum-logo-05.png" alt="logo"/>
           <ion-item style="border-bottom: 0.3px solid; margin-top: 12%">
-              <ion-input type="text" placeholder="Email" [(ngModel)]="email"></ion-input>
+              <ion-input type="email" placeholder="Email" [(ngModel)]="email"></ion-input>
           </ion-item>
     
           <ion-item style="border-bottom: 0.3px solid; margin-top: 5%">
               <ion-input type="password" placeholder="Password" [(ngModel)]="password"></ion-input>
           </ion-item>
-          <button ion-button color="lightblue" clear style="margin-top: 5%" class="center" (click)="forgot()">Forgot Password?</button>
+          <button ion-button color="lightblue" clear style="margin-top: 5% ;background-color: transparent !important;" class="center" (click)="forgot()">Forgot Password?</button>
           <!-- <button ion-button color="lightblue" clear class="center">Sign in with Google or other IDPs</button> -->
           <!-- <re-captcha (resolved)="captchaResolved($event)" siteKey="6LdKZKEUAAAAAIGfBwt54B9UUc1QTaywW7tfeeLA"></re-captcha> -->
           <button color="lightblue" ion-button large  (click)="login()" class="center" style="width:70%; border-radius: 10px;">Sign In</button>

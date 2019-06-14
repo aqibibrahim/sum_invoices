@@ -14,7 +14,7 @@
     
   <ion-card>
     <ion-card-content class="my-content">
-      <form [formGroup]="myForm" (ngSubmit)="submit()" novalidate>
+      <form [formGroup]="myForm" novalidate>
           
         <ion-item no-padding [class.invalid]="(!myForm.controls.name.valid) && isName" style="border-bottom-color: #D1D3D3">
             <!-- <ion-label stacked style="color:grey;font-size: larger">Company Name</ion-label> -->
@@ -50,23 +50,26 @@
           <span style="color: red" ion-text *ngIf="myForm.get('password').hasError('required')">Field is required, </span>
           <span style="color: red" ion-text *ngIf="myForm.get('password').hasError('minlength')">minimum 6 characters require</span>
         </p>
-    
-        <ion-item no-padding [class.invalid]="(!myForm.controls.country.valid) && iscountry" style="border-bottom-color: #D1D3D3">
-          <!-- <ion-label color="dark" stacked style="color:grey;font-size: large">Choose Country</ion-label> -->
-        <ion-input type="text" (keyup)="validate('country')" formControlName="country" [(ngModel)]="country" placeholder="Country"></ion-input>
-      </ion-item>
-      <p *ngIf="myForm.get('country').errors && myForm.get('country').dirty" >
-        <span style="color: red" ion-text *ngIf="myForm.get('country').hasError('required')">Field is required </span>
-      </p>
+      </form>
+      <ion-list>
+          <ion-item>
+              <ion-label>Choose Country</ion-label>
+              <ion-select [(ngModel)]="country" ionCancel="onCancel()" okText="Ok" >
+                <ion-option *ngFor="let name of country1" [value] = "name" >{{name.name}}</ion-option>
+              </ion-select>
+            </ion-item>
+    </ion-list>
+      
       <ion-item style="color:grey;" class="borderremove">
           <ion-label text-wrap style="color:grey">I agree to <a href="https://sumbusinesssolutions.com/">Term of Service</a>  and <a href="term of service">Privacy Policy</a> </ion-label>
           <ion-radio color="lightblue" value="agree" item-left style="margin-right: 5% !important"></ion-radio>
       </ion-item>
         <!-- <button ion-button block round style="margin-top: 15px;" type="submit" [disabled]="myForm.invalid" color="lightblue"> -->
-          <button color="lightblue" ion-button large  (click)="submit()" class="center" style="width:70%; border-radius: 10px;" type="submit" [disabled]="myForm.invalid">
+            <form [formGroup]="myForm" novalidate>
+          <button color="lightblue" ion-button large  (click)="submit()" class="center" style="width:70%; border-radius: 10px;" [disabled]="myForm.invalid">
             Create Account
         </button>
-      </form>
+     </form>
     </ion-card-content>
   </ion-card>
 </ion-content>

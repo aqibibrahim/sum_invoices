@@ -19,6 +19,7 @@ import {CompanytaxPage} from '../companytax/companytax';
 })
 export class CreateYourCompanyPage {
 companyname:any;
+business_email:any;
 userid:any;
 country:any;
 username:any;
@@ -42,45 +43,51 @@ address:any;
   }
 
   taxpage(){
-    let loader = this.loadingCtrl.create({
-      content:'Waiting...'
-    });
-    loader.present();
-    //this.afd.list('Books/Books').push({name:this.name});
-    let data = {
-      user_id:this.userid,
-      user_name : this.username,
-      user_country:this.country,
-      user_url: this.postal,
-      bussiness_location:this.country,
-      user_language:this.language,
-      time_zone:this.timezone,
-      date_format:this.formatt,
-      fical_year_start:this.fiscal,
-      address:this.address
+    if(this.business_email == undefined){
+      alert("Please Add Business Email");
+}
+    else{
+      let loader = this.loadingCtrl.create({
+        content:'Waiting...'
+      });
+      loader.present();
+      //this.afd.list('Books/Books').push({name:this.name});
+      let data = {
+        user_id:this.userid,
+        user_name : this.username,
+        user_country:this.country,
+        user_url: this.postal,
+        bussiness_location:this.country,
+        user_language:this.language,
+        time_zone:this.timezone,
+        date_format:this.formatt,
+        fical_year_start:this.fiscal,
+        address:this.address,
+        user_email:this.business_email
+  
+      };
+      //console.log(this.data.username);
+      this.http.post('https://sum-finance-latest2.herokuapp.com/comp/create', data)
+          .subscribe(response => {
+            console.log('POST Response:', response);
+            loader.dismiss();
+            let toast = this.tostctrl.create({
+              message:'Company Created',
+              duration:2000
+            });
+            toast.present();
+            this.navCtrl.push(CompanytaxPage);
+          }, error => {
+            loader.dismiss();
+            let toast = this.tostctrl.create({
+              message:'Data not Save',
+              duration:2000
+            });
+            toast.present();
+           console.log("Oooops!");
+          });
       
-
-    };
-    //console.log(this.data.username);
-    this.http.post('https://sum-finance-latest2.herokuapp.com/comp/create', data)
-        .subscribe(response => {
-          console.log('POST Response:', response);
-          loader.dismiss();
-          let toast = this.tostctrl.create({
-            message:'Company Created',
-            duration:2000
-          });
-          toast.present();
-          this.navCtrl.push(CompanytaxPage);
-        }, error => {
-          loader.dismiss();
-          let toast = this.tostctrl.create({
-            message:'Data not Save',
-            duration:2000
-          });
-          toast.present();
-         console.log("Oooops!");
-        });
+    }
     
   }
   isReadonly() {

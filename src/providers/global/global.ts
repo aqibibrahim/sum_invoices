@@ -13,6 +13,8 @@ import { IonicPage, Nav, NavParams,LoadingController, ToastController,App, Alert
 export class GlobalProvider {
   //@ViewChild(Nav) nav: Nav;
 company_name:any;
+user_email:any;
+user_name:any;
 userid:any;
   constructor(public http: Http,public loadingCtrl: LoadingController, public app: App,public tostctrl: ToastController, public alrtctrl:AlertController) {
     console.log('Hello GlobalProvider Provider');
@@ -32,9 +34,11 @@ login(email,password){
   this.http.post('https://sum-finance-latest2.herokuapp.com/user/login', data).map(response => response.json())
         .subscribe(data => {
           console.log(data);
-          console.log(data[0].company_name);
-          this.company_name = data[0].company_name;
-          this.userid = data[0]._id;
+          // console.log(data[0].company_name);
+           this.company_name = data.company_name;
+           this.user_email = data.email;
+           this.user_name = data.user_name;
+          this.userid = data._id;
           this.app.getActiveNav().push(HomePage,{companyname:this.company_name,userid:this.userid});
           let toast = this.tostctrl.create({
                 message:'Login Successfully',

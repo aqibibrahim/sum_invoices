@@ -1,0 +1,118 @@
+<!--
+  Generated template for the SalebyitemreportPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+ <ion-navbar  color="lightblue">
+    <ion-title>Sales By Item Report</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="my-class" > 
+    <ion-card >
+        <ion-card-content >
+          <ion-row>
+              <ion-item>
+                  <ion-label style="text-align: center;font-family: fantasy;font-size: larger;">Item Name : {{this.item_name}}</ion-label>
+                  <!-- <ion-input type="text" value={{this.item_name}} text-wrap [readonly]="isReadonly()"></ion-input> -->
+                </ion-item>
+          </ion-row>
+          <ion-row>
+           
+                <ion-item>
+                    <ion-input type="Date" value={{this.s_date}}  [readonly]="isReadonly()"> </ion-input> 
+                    <ion-input type="Date" value={{this.e_date}} [readonly]="isReadonly()"></ion-input>
+                  </ion-item>
+           
+          </ion-row>
+          
+         
+            <!-- <ion-item style="text-align: center;background-color:#D1D3D3; color: black;">
+                {{name.date | date: 'yyyy/MM/dd'}}
+            </ion-item> -->
+      </ion-card-content>
+        </ion-card >
+        <ion-card *ngFor="let name of datarecord">
+            <ion-card-content >
+                <ion-row  style="background-color:#D1D3D3; color: black; font-size: large;">
+                    <ion-col style="text-align: center;">
+                       
+                       Date 
+                       
+                    </ion-col>
+                    <ion-col style="text-align: center;">
+                        {{name.date | date: 'yyyy/MM/dd'}}
+                    </ion-col>
+        </ion-row>
+        
+                <ion-row>
+                    <ion-col>
+                        <ion-item style="text-align: center;">
+                            <ion-label>Customer Name</ion-label>
+                          </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item style="text-align: center;">
+                            <ion-label>{{name.name}}</ion-label>
+                          </ion-item>
+                    </ion-col>
+                </ion-row>
+                
+                <ion-row>
+                    <ion-col >
+                        <ion-item style="text-align: center;">
+                            <ion-label>Item Quantity</ion-label>
+                          </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item style="text-align: center;">
+                            <ion-label>{{name.quantity}}</ion-label>
+                          </ion-item>
+                    </ion-col>
+                </ion-row>
+                
+                <ion-row>
+                    <ion-col >
+                        <ion-item style="text-align: center;">
+                            <ion-label>Total Amount</ion-label>
+                          </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item style="text-align: center;">
+                            <ion-label>{{name.amount}}</ion-label>
+                          </ion-item>
+                    </ion-col>
+                  
+                </ion-row>
+                
+                <ion-row>
+                    <ion-col >
+                        <ion-item style="text-align: center;">
+                            <ion-label>Sale Rate</ion-label>
+                          </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item style="text-align: center;">
+                            <ion-label>{{name.Salerate}}</ion-label>
+                          </ion-item>
+                    </ion-col>
+                </ion-row>
+                
+                <ion-row>
+                    <ion-col >
+                        <ion-item style="text-align: center;">
+                            <ion-label>Purchase Rate</ion-label>
+                          </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item style="text-align: center;">
+                            <ion-label>{{name.Purchaserate}}</ion-label>
+                          </ion-item>
+                    </ion-col>
+                </ion-row>
+              </ion-card-content>
+              </ion-card>
+        
+</ion-content>

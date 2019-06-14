@@ -12,11 +12,11 @@
               </button>
         </ion-buttons>
       <ion-title>New Contact</ion-title>
-      <!-- <ion-buttons end>
+      <ion-buttons end>
           <button ion-button (click)="opencontact()">
             <ion-icon name="book"></ion-icon>
         </button>
-        </ion-buttons> -->
+        </ion-buttons>
       <ion-buttons end>
           <button ion-button (click)="savedata()" [disabled]="companyname?.length > 15 || !companyname || !email ||phone?.length > 7 || !phone ||mobile?.length > 11 || !mobile">
           Save
@@ -71,13 +71,17 @@
 
                       <ion-item style="border-bottom: 0.3px solid">
                   
-                          <ion-input type="email" placeholder="Contact Email" [(ngModel)]="email"></ion-input>
+                          <ion-input type="email" placeholder="Contact Email" [(ngModel)]="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"></ion-input>
                         </ion-item>
                         
                         <p style="color:red" *ngIf="!email">
                           required
                         </p>
-                        <ion-row>
+                        <!-- <p style="color:red" *ngIf="!email?.pattern">
+                          
+                          Invalid pattern
+                        </p> -->
+                             <ion-row>
                             <ion-col>
                                 <ion-item style="border-bottom: 0.3px solid">
                                     <ion-input type="number" placeholder="Work Phone." [(ngModel)]="phone"></ion-input>
@@ -93,7 +97,7 @@
                               <ion-item style="border-bottom: 0.3px solid">
                                 <ion-input type="number" placeholder="Mobile" [(ngModel)]="mobile"></ion-input>
                               </ion-item>
-                              <p style="color:red" *ngIf="mobile?.length > 11">
+                              <p style="color:red" *ngIf="mobile?.length == 11">
                                 11 digit Mobile number
                               </p>
                               <p style="color:red" *ngIf="!mobile">

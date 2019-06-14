@@ -1,5 +1,5 @@
 import { Component,ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform ,AlertController,Nav,LoadingController, ToastController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform ,AlertController,Nav,LoadingController, ToastController,IonicApp} from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {InvoicedeatilsPage} from '../invoicedeatils/invoicedeatils';
 import { Storage } from '@ionic/storage';
@@ -18,6 +18,8 @@ import { NativeStorage } from '@ionic-native/native-storage';
 import { ConditionalExpr } from '@angular/compiler';
 import {HomePage} from '../home/home';
 import { App } from 'ionic-angular';
+import { CreateContactPage } from '../create-contact/create-contact';
+import { CreateItemsPage } from '../create-items/create-items';
 /**
  * Generated class for the CreateInvoicesPage page.
  *
@@ -51,7 +53,7 @@ export class CreateInvoicesPage {
   dst:any;
   shp:any;
   adj:any;
-
+  customer_id:any;
   email:any;
   invoice:any;
   order:any;
@@ -64,18 +66,56 @@ export class CreateInvoicesPage {
   taxtotal:any;
   x:any;
   items:any;
+  items1:any;
   amount:any;
   data=false;
   customer_notes:any;
   terms_condition:any;
   gamingname:any;
   namesList:any;
+  paymentoption:any;
+  salesperson:any;
 
   nativeindate:any
   nativeduedate:any;
   nativeinvoice:any;
   nativeorder:any;
   nativeval:any;
+
+        /**  Add Item Variables */
+        description:string;
+        quantity:any;
+        rate:string;
+        
+        itemname1:string;
+        
+        taxvalue:any;
+        taxinput:any;
+        key:string;
+        value_item:any;
+        value_rate:any;
+        value_desc:any;
+        taxrate:any;
+        finalrate:any;
+        itemquantity:any;
+        xyz:any;
+        quanitytnillrate:any;
+        value_tax:any;
+        taxfixedvalue:any;
+        
+        qtyinhands:any;
+        purchase_rate1:any;
+        value_key_rate:any;
+        item_type:any;
+        purchase_account:any;
+        purchase_desc:any;
+        sale_Account:any;
+        sale_desc:any;
+        sale_rate1:any;
+        unit:any;
+        value_rate1:any
+
+        /**  Add Item Variables */
 
   billing_address:any;
   shipping_address:any;
@@ -93,7 +133,7 @@ export class CreateInvoicesPage {
   Isshowing =false;
   pdfObj = null;
   pdfnumber =2;
-  constructor(public navCtrl: NavController,public platform: Platform,public alertCtrl:AlertController, public app: App,private nativeStorage: NativeStorage, public global:GlobalProvider,private sms: SMS,public http:Http,public loadingCtrl: LoadingController, public tostctrl: ToastController, private storage: Storage,public navParams: NavParams,public emailComposer: EmailComposer, private plt: Platform, private file: File, private fileOpener: FileOpener) {
+  constructor(public navCtrl: NavController,private ionicApp: IonicApp,public platform: Platform,public alertCtrl:AlertController, public app: App,private nativeStorage: NativeStorage, public global:GlobalProvider,private sms: SMS,public http:Http,public loadingCtrl: LoadingController, public tostctrl: ToastController, private storage: Storage,public navParams: NavParams,public emailComposer: EmailComposer, private plt: Platform, private file: File, private fileOpener: FileOpener) {
     // this.value=navParams.get('item_name');
     // console.log(this.value);
     this.registrationForm = new FormGroup({
@@ -118,17 +158,17 @@ export class CreateInvoicesPage {
     this.taxtotal = this.navParams.get('taxtotal');
     this.amount_total = this.qty*this.rat;
     
-    if(this.taxtotal !== undefined){
-      this.subamounttotall = +this.taxtotal;
-    }
-    else{
-      this.subamounttotall = 0;
-    }
-    this.subtotal = (this.qty*this.rat)+this.subamounttotall;
-    if(this.subtotal == undefined){
+    // if(this.taxtotal !== undefined){
+    //   this.subamounttotall = +this.taxtotal;
+    // }
+    // else{
+    //   this.subamounttotall = 0;
+    // }
+    // this.subtotal = (this.qty*this.rat)+this.subamounttotall;
+    if(this.value_rate == undefined){
       this.total = 0
     }else{
-      this.total = this.subtotal;
+      this.total = this.value_rate;
     }
     this.http.get('https://sum-finance-latest2.herokuapp.com/finance/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
      console.log(data);
@@ -136,6 +176,14 @@ export class CreateInvoicesPage {
         this.namesList = data 
 
       });
+      this.http.get('https://sum-finance-latest2.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+      console.log(data);
+         this.items1 = data
+       });
+       this.http.get('https://sum-finance.herokuapp.com/tax/get-all').map(res => res.json()).subscribe(data => {
+        console.log(data);
+           this.taxvalue = data 
+         });
     
   }
    
@@ -145,30 +193,44 @@ export class CreateInvoicesPage {
       let nav = this.app.getActiveNavs()[0];
       let activeView = nav.getActive();                
       // Checks if can go back before show up the alert
+
+      let activePortal = this.ionicApp._loadingPortal.getActive() ||
+      this.ionicApp._modalPortal.getActive() ||
+      this.ionicApp._toastPortal.getActive() ||
+      this.ionicApp._overlayPortal.getActive();
+
+    if (activePortal) {
+      activePortal.dismiss();
+    }
+    else {
       if(activeView.name === 'CreateInvoicesPage') {
-          if (nav.canGoBack()){
-              nav.pop();
-          } else {
-              const alert = this.alertCtrl.create({
-                  title: 'Exit',
-                  message: 'Want to Exit App?',
-                  buttons: [{
-                      text: 'Cancel',
-                      role: 'cancel',
-                      handler: () => {
-                        this.nav.setRoot('HomePage');
-                      }
-                  },{
-                      text: 'OK',
-                      handler: () => {
-                        
-                        this.platform.exitApp();
-                      }
-                  }]
-              });
-              alert.present();
-          }
+        if (nav.canGoBack()){
+            nav.pop();
+        } else {
+            const alert = this.alertCtrl.create({
+                title: 'Exit',
+                message: 'Want to Exit App?',
+                buttons: [{
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: () => {
+                      this.nav.setRoot('HomePage');
+                    }
+                },{
+                    text: 'OK',
+                    handler: () => {
+                      
+                      this.platform.exitApp();
+                    }
+                }]
+            });
+            alert.present();
+        }
+    }else {
+      this.nav.setRoot('HomePage');
       }
+    }
+      
   });
     console.log('ionViewDidLoad CreateInvoicesPage');
     console.log(this.input_name);
@@ -195,19 +257,78 @@ export class CreateInvoicesPage {
     }
   }
   ionViewWillEnter(){
-  
+    this.http.get('https://sum-finance-latest2.herokuapp.com/finance/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+      console.log(data);
+         //this.posts = data.json();
+         this.namesList = data 
+ 
+       });
+       this.http.get('https://sum-finance-latest2.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+      console.log(data);
+         this.items1 = data
+       });
   this.nativeinvoice = this.navParams.get('add_inno');
   this.nativeorder = this.navParams.get('add_orno');
   this.nativeindate = this.navParams.get('add_indate');
   this.nativeduedate = this.navParams.get('add_dudate');
     this.nativeval = this.navParams.get('valuesel');
   console.log(this.nativeindate,this.nativeduedate)
+  this.platform.registerBackButtonAction(() => {
+    // Catches the active view
+    let nav = this.app.getActiveNavs()[0];
+    let activeView = nav.getActive();                
+    // Checks if can go back before show up the alert
+
+    let activePortal = this.ionicApp._loadingPortal.getActive() ||
+    this.ionicApp._modalPortal.getActive() ||
+    this.ionicApp._toastPortal.getActive() ||
+    this.ionicApp._overlayPortal.getActive();
+
+  if (activePortal) {
+    activePortal.dismiss();
+  }
+  else {
+    if(activeView.name === 'CreateInvoicesPage') {
+      if (nav.canGoBack()){
+          nav.pop();
+      } else {
+          const alert = this.alertCtrl.create({
+              title: 'Exit',
+              message: 'Want to Exit App?',
+              buttons: [{
+                  text: 'Cancel',
+                  role: 'cancel',
+                  handler: () => {
+                    this.nav.setRoot('HomePage');
+                  }
+              },{
+                  text: 'OK',
+                  handler: () => {
+                    
+                    this.platform.exitApp();
+                  }
+              }]
+          });
+          alert.present();
+      }
+  }else {
+    this.nav.setRoot('HomePage');
+    }
+  }
+    
+});
+  }
+  opencontact(){
+    this.navCtrl.push(CreateContactPage);
   }
   onContactChange(){
     console.log(this.gaming);
     console.log(this.gaming.email)
     console.log(this.gaming.billing_address);
     console.log(this.gaming.shipping_address);
+    var key_id = Object.keys(this.gaming)[0];
+    this.customer_id = this.gaming[key_id];
+    console.log(this.customer_id);
     this.billing_address = this.gaming.billing_address;
     this.shipping_address = this.gaming.shipping_address;
     this.gamingname = this.gaming.first_name;
@@ -218,40 +339,43 @@ export class CreateInvoicesPage {
     this.dst = +this.discountprice;
     //this.total = this.dst + this.subtotal;  
     if(this.shp !== undefined && this.dst !== undefined){
-      this.total = this.shp + this.subtotal - this.dst;  
+      this.total = this.shp + this.value_rate - this.dst;  
     } 
    else if(this.adj !== undefined && this.shp !== undefined) {
-      this.total =  this.shp + this.subtotal + this.adj - this.dst;  
+      this.total =  this.shp + this.value_rate + this.adj - this.dst;  
     }
     else{
-      this.total =  this.subtotal -this.dst; 
+      this.total =  this.value_rate -this.dst; 
     }
   }
   onShipping(data) : void {
     console.log("onChangeTime to time: " + this.shippingprice + ". Event data: " + data); 
     this.shp = +this.shippingprice
     if(this.dst!== undefined && this.shp == undefined){
-      this.total = this.subtotal - this.dst;      
+      this.total = this.value_rate - this.dst;      
     }else{
-      this.total = this.shp +this.subtotal - this.dst;    
+      this.total = this.shp +this.value_rate - this.dst;    
     }
+    
   }
   onAdjustment(data) : void {
     console.log("onChangeTime to time: " + this.adjustmentprice + ". Event data: " + data);
 
     this.adj = +this.adjustmentprice
     if(this.dst!== undefined && this.shp!==undefined && this.adj!==undefined){
-      this.total = this.adj +this.shp+ this.subtotal -this.dst;   
-    }else if(this.dst==undefined && this.shp !== undefined && this.adj !== undefined){
-      this.total = this.adj +this.subtotal + this.shp; 
+      this.total = (this.adj +this.shp+ this.value_rate) - this.dst;   
+    }
+    else if(this.dst==undefined && this.shp !== undefined && this.adj !== undefined){
+      this.total = this.adj +this.value_rate + this.shp; 
     }
     else if(this.dst !== undefined && this.shp == undefined && this.adj !== undefined){
-      this.total = this.adj+this.subtotal-this.dst
+      this.total = (this.adj+this.value_rate)-this.dst
     }
     else if(this.dst !== undefined && this.shp !== undefined && this.adj == undefined){
-      this.total = this.subtotal+this.shp-this.dst
-    }else{
-      this.total = this.adj+this.subtotal
+      this.total = (this.value_rate+this.shp)-this.dst
+    }
+    else{
+      this.total = this.adj+this.value_rate
     }
   }
   showpicker()
@@ -402,14 +526,36 @@ export class CreateInvoicesPage {
    }
    /////////Open invoice detail page/////////////////////
    invoicedetails(){
-     console.log(this.invoicedate,this.duedate)
+    var key = Object.keys(this.gaming)[1];
+    var value = this.gaming[key];
+    if(this.gaming == undefined){
+      alert("Please choose Item First");
+    }
+    else if(this.quantity == 0){
+       alert("Please choose quantity more than 0");
+     }
+    else{
+      console.log("key = ", key) // bar
+      console.log("value = ", value) // baz
+      console.log(this.taxinput);
+     
+      if(this.quantity > this.itemquantity){
+      alert ("Given Quantity is more than actual quantity");
+      }
+      else{
+        this.qtyinhands = this.itemquantity - this.quantity;
+        
+        //console.log(this.data.username);
+      }
+     }
+     
      
     if(this.invoicedate > this.duedate)
     {
-        alert ("Due Date must be greater than Invoice Date")
+        alert ("Due Date must be greater than Invoice Date");
     }
 
-    if(this.email == undefined || this.invoice == undefined || this.order == undefined || this.invoicedate == undefined || this.duedate == undefined){
+    else if(this.email == undefined || this.invoice == undefined || this.order == undefined || this.invoicedate == undefined || this.duedate == undefined){
       alert ("Please fill all Manadatory fields");
     }
     else
@@ -419,24 +565,39 @@ export class CreateInvoicesPage {
        content:'Waiting...'
      });
      loader.present();
+     let data1  = {
+      item_quantity:this.qtyinhands
+    };
+    this.http.post('https://sum-finance-latest2.herokuapp.com/item/update/'+this.item_id+'', data1)
+            .subscribe(response => {
+              console.log('POST Response:', response);
+              //this.navCtrl.push(ItemPage);
+            }, error => {
+            console.log("Oooops!");
+            });
+
      let data = {
        customer:this.gamingname,
        order_no:this.order,
        invoice_number:this.invoice,
        invoice_date:this.invoicedate,
        Due_date:this.duedate,
-       sales_person:"Aqib",
+       sales_person:this.salesperson,
        customer_note:this.customer_notes,
        terms_and_conditions:this.terms_condition,
-       item_quantity:this.qty,
+       item_quantity:this.quantity,
        item_discount:this.discountprice,
+       shipping_charges:this.shippingprice,
+       adjustment:this.adjustmentprice,
        total_cost:this.total,
        userId:this.global.userid,
-       item_name:this.input_name,
+       item_name:this.value_item,
        item_id:this.item_id,
-       sale_rate:this.sale_rate,
-       purchase_rate:this.purchase_rate,
-       status:"Pending"
+       sale_rate:this.value_rate1,
+       purchase_rate:this.purchase_rate1,
+       status:"Pending",
+      //  payment_option: this.paymentoption,
+       cont_id:this.customer_id
      }
      this.http.post('https://sum-finance-latest2.herokuapp.com/invoice/create', data)
      .subscribe(response => {
@@ -449,7 +610,7 @@ export class CreateInvoicesPage {
        toast.present();
    //    this.navCtrl.push(InvoicesPage);
        this.navCtrl.push(InvoicedeatilsPage,{'customername':this.gamingname,'invoice':this.invoice,'balance':this.total,'invoicedate':this.invoicedate,'duedate':this.duedate,'description':this.desc,
-     'item_name':this.input_name,'subtotal':this.subtotal,'discount':this.discountprice,'shipping':this.shippingprice,'adjustment':this.adjustmentprice,'quantity':this.qty,'rate':this.rat,
+     'item_name':this.value_item,'subtotal':this.value_rate,'discount':this.discountprice,'shipping':this.shippingprice,'adjustment':this.adjustmentprice,'quantity':this.quantity,'rate':this.value_rate1,
    'email':this.email,'order':this.order,'status':"Pending",'billingaddress':this.billing_address,'shippingaddress':this.shipping_address});
     
      }, error => {
@@ -461,25 +622,16 @@ export class CreateInvoicesPage {
        toast.present();
      console.log("Oooops!");
      });
+
     }
-    //this.sms.send(this.namesList., 'Hello world!');
-
-    // firstName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-    // lastName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-
-     
   }
      
    onCancel(){
-     alert("Ha g");
+     //alert("Ha g");
      console.log(this.gaming);
    }
    adlineitem(){
-    // this.storage.set('name', this.gamingname);
-    // this.storage.set('email', this.email);
-    // this.storage.set('invoiceno', this.invoice);
-    // this.storage.set('orderno',this.order);
-    
+   
     this.navCtrl.push(AddLineItemPage,{invoicenumber:this.invoice,ordernumber:this.order,invoiced:this.invoicedate,dued:this.duedate,selectedvalue:this.gaming});
    }
    goTo(){
@@ -488,5 +640,73 @@ export class CreateInvoicesPage {
     }
   Add(){
     this.anArray.push({'value':this.value});
+    }
+    openitem(){
+      this.navCtrl.push(CreateItemsPage);
+    }
+    onItemChange(){
+   
+      console.log(this.itemname1);
+      
+      var key = Object.keys(this.itemname1)[1];
+       this.value_item = this.itemname1[key];
+      
+      var key_id = Object.keys(this.itemname1)[0];
+      this.item_id = this.itemname1[key_id];
+      var key_id3 = Object.keys(this.itemname1)[6];
+      
+      var key_id4 = Object.keys(this.itemname1)[7];
+      var key_id5 = Object.keys(this.itemname1)[2];
+      var key_id6 = Object.keys(this.itemname1)[3];
+      var key_id7 = Object.keys(this.itemname1)[8];
+      var key_id8 = Object.keys(this.itemname1)[9];
+      var key_id9 = Object.keys(this.itemname1)[10];
+  
+      var key_desc = Object.keys(this.itemname1)[5];
+      this.itemquantity = this.itemname1[key_id8];
+      this.value_desc = this.itemname1[key_id9];
+      var key_item_quantity =Object.keys(this.itemname1)[5];
+      var key_rate = Object.keys(this.itemname1)[4];
+      this.purchase_rate1 = this.itemname1[key_id3];
+      this.quanitytnillrate = this.itemname1[key_rate];
+      this.value_key_rate = this.itemname1[key_rate];
+      this.value_rate1 = this.itemname1[key_rate];
+      this.value_rate = this.value_rate1;
+      this.total = this.value_rate;
+      
+        console.log("key = ", key, "Key_Desc=",key_desc, "key_rate = ",key_rate,key_id,key_id3,key_id4,key_id5,key_id6,key_id7,key_id8,key_id9) // bar
+  console.log("value = ", this.value_item,"value_Des = ", this.value_desc,"value_rate = ", this.value_rate,this.itemquantity,this.purchase_rate, this.item_id) // baz
+    }
+    quantitychange(){
+      console.log(this.quantity);
+     
+      this.itemquantity = this.quantity;
+      this.xyz = +this.value_rate;
+      if(this.itemquantity == ""){
+        this.value_rate = this.quanitytnillrate * this.itemquantity;
+        
+      }
+  
+      this.value_rate = this.quanitytnillrate * this.itemquantity;
+      this.total = this.value_rate;
+    }
+    onSelectChange(tax){
+
+      console.log(tax);
+      console.log(this.value_rate);
+      var key = Object.keys(tax)[2];
+      this.value_tax = tax[key];
+       
+        console.log("key = ", key) // bar
+        console.log("value = ", this.value_tax) // baz
+  
+      console.log(this.value_rate/100);
+      this.taxrate = (this.value_rate/100)*this.value_tax;
+      this.taxfixedvalue = this.taxrate.toFixed(2);
+      console.log(this.taxfixedvalue);
+      var y = +this.value_rate;
+      this.finalrate = this.taxrate+y;  
+      console.log(this.finalrate);
+      //this.value_rate=this.finalrate;
     }
 }
