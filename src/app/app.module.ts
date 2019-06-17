@@ -70,6 +70,8 @@ import {CreateTaxPage} from '../pages/create-tax/create-tax';
 import {EditTaxPage} from '../pages/edit-tax/edit-tax';
 import {EditProfilePage} from '../pages/edit-profile/edit-profile';
 import {ReceivablePage} from '../pages/receivable/receivable';
+import { CheckemailProvider } from '../providers/checkemail/checkemail';
+import {PayablePage} from '../pages/payable/payable';
 @NgModule({
   declarations: [
     MyApp,
@@ -117,7 +119,8 @@ import {ReceivablePage} from '../pages/receivable/receivable';
     CreateTaxPage,
     EditTaxPage,
     EditProfilePage,
-    ReceivablePage
+    ReceivablePage,
+    PayablePage
   ],
   imports: [ 
     FormsModule, 
@@ -176,7 +179,8 @@ import {ReceivablePage} from '../pages/receivable/receivable';
     CreateTaxPage,
     EditTaxPage,
     EditProfilePage,
-    ReceivablePage
+    ReceivablePage,
+    PayablePage
   ],
   providers: [
     
@@ -195,7 +199,8 @@ import {ReceivablePage} from '../pages/receivable/receivable';
     AndroidPermissions,
     GlobalProvider,
     NativeStorage,
-    SignupProvider 
+    SignupProvider,
+    CheckemailProvider 
     ]
 })
 export class AppModule {}

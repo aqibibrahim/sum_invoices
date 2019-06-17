@@ -75,6 +75,8 @@ export class CreateInvoicesPage {
   namesList:any;
   paymentoption:any;
   salesperson:any;
+  other_user_id:any;
+
 
   nativeindate:any
   nativeduedate:any;
@@ -324,6 +326,7 @@ export class CreateInvoicesPage {
   onContactChange(){
     console.log(this.gaming);
     console.log(this.gaming.email)
+    console.log(this.gaming.other_user_id);
     console.log(this.gaming.billing_address);
     console.log(this.gaming.shipping_address);
     var key_id = Object.keys(this.gaming)[0];
@@ -333,6 +336,7 @@ export class CreateInvoicesPage {
     this.shipping_address = this.gaming.shipping_address;
     this.gamingname = this.gaming.first_name;
     this.email = this.gaming.email;
+    this.other_user_id = this.gaming.other_user_id;
   }
   onInputTime(data) : void {
     console.log("onChangeTime to time: " + this.discountprice + ". Event data: " + data);  
@@ -544,85 +548,82 @@ export class CreateInvoicesPage {
       }
       else{
         this.qtyinhands = this.itemquantity - this.quantity;
+        if(this.invoicedate > this.duedate)
+        {
+            alert ("Due Date must be greater than Invoice Date");
+        }
+    
+        else if(this.email == undefined || this.invoice == undefined || this.order == undefined || this.invoicedate == undefined || this.duedate == undefined){
+          alert ("Please fill all Manadatory fields");
+        }
+        else
+        {
+          console.log(this.invoicedate);
+          let loader = this.loadingCtrl.create({
+           content:'Waiting...'
+         });
+         loader.present();
+         let data1  = {
+          item_quantity:this.qtyinhands
+        };
+        this.http.post('https://sum-finance-latest2.herokuapp.com/item/update/'+this.item_id+'', data1)
+                .subscribe(response => {
+                  console.log('POST Response:', response);
+                  //this.navCtrl.push(ItemPage);
+                }, error => {
+                console.log("Oooops!");
+                });
+    
+         let data = {
+           customer:this.gamingname,
+           order_no:this.order,
+           invoice_number:this.invoice,
+           invoice_date:this.invoicedate,
+           Due_date:this.duedate,
+           sales_person:this.salesperson,
+           customer_note:this.customer_notes,
+           terms_and_conditions:this.terms_condition,
+           item_quantity:this.quantity,
+           item_discount:this.discountprice,
+           shipping_charges:this.shippingprice,
+           adjustment:this.adjustmentprice,
+           total_cost:this.total,
+           userId:this.global.userid,
+           item_name:this.value_item,
+           item_id:this.item_id,
+           sale_rate:this.value_rate1,
+           purchase_rate:this.purchase_rate1,
+           status:"Pending",
+          //  payment_option: this.paymentoption,
+           cont_id:this.customer_id,
+           other_user_id:this.other_user_id
+         }
+         this.http.post('https://sum-finance-latest2.herokuapp.com/invoice/create', data)
+         .subscribe(response => {
+           console.log('POST Response:', response);
+           loader.dismiss();
+           let toast = this.tostctrl.create({
+             message:'Data Save',
+             duration:2000
+           });
+           toast.present();
+       //    this.navCtrl.push(InvoicesPage);
+           this.navCtrl.push(InvoicedeatilsPage,{'customername':this.gamingname,'invoice':this.invoice,'balance':this.total,'invoicedate':this.invoicedate,'duedate':this.duedate,'description':this.desc,
+         'item_name':this.value_item,'subtotal':this.value_rate,'discount':this.discountprice,'shipping':this.shippingprice,'adjustment':this.adjustmentprice,'quantity':this.quantity,'rate':this.value_rate1,
+       'email':this.email,'order':this.order,'status':"Pending",'billingaddress':this.billing_address,'shippingaddress':this.shipping_address});
         
-        //console.log(this.data.username);
+         }, error => {
+           loader.dismiss();
+           let toast = this.tostctrl.create({
+             message:'Data not Save',
+             duration:2000
+           });
+           toast.present();
+         console.log("Oooops!");
+         });
+    
       }
      }
-     
-     
-    if(this.invoicedate > this.duedate)
-    {
-        alert ("Due Date must be greater than Invoice Date");
-    }
-
-    else if(this.email == undefined || this.invoice == undefined || this.order == undefined || this.invoicedate == undefined || this.duedate == undefined){
-      alert ("Please fill all Manadatory fields");
-    }
-    else
-    {
-      console.log(this.invoicedate);
-      let loader = this.loadingCtrl.create({
-       content:'Waiting...'
-     });
-     loader.present();
-     let data1  = {
-      item_quantity:this.qtyinhands
-    };
-    this.http.post('https://sum-finance-latest2.herokuapp.com/item/update/'+this.item_id+'', data1)
-            .subscribe(response => {
-              console.log('POST Response:', response);
-              //this.navCtrl.push(ItemPage);
-            }, error => {
-            console.log("Oooops!");
-            });
-
-     let data = {
-       customer:this.gamingname,
-       order_no:this.order,
-       invoice_number:this.invoice,
-       invoice_date:this.invoicedate,
-       Due_date:this.duedate,
-       sales_person:this.salesperson,
-       customer_note:this.customer_notes,
-       terms_and_conditions:this.terms_condition,
-       item_quantity:this.quantity,
-       item_discount:this.discountprice,
-       shipping_charges:this.shippingprice,
-       adjustment:this.adjustmentprice,
-       total_cost:this.total,
-       userId:this.global.userid,
-       item_name:this.value_item,
-       item_id:this.item_id,
-       sale_rate:this.value_rate1,
-       purchase_rate:this.purchase_rate1,
-       status:"Pending",
-      //  payment_option: this.paymentoption,
-       cont_id:this.customer_id
-     }
-     this.http.post('https://sum-finance-latest2.herokuapp.com/invoice/create', data)
-     .subscribe(response => {
-       console.log('POST Response:', response);
-       loader.dismiss();
-       let toast = this.tostctrl.create({
-         message:'Data Save',
-         duration:2000
-       });
-       toast.present();
-   //    this.navCtrl.push(InvoicesPage);
-       this.navCtrl.push(InvoicedeatilsPage,{'customername':this.gamingname,'invoice':this.invoice,'balance':this.total,'invoicedate':this.invoicedate,'duedate':this.duedate,'description':this.desc,
-     'item_name':this.value_item,'subtotal':this.value_rate,'discount':this.discountprice,'shipping':this.shippingprice,'adjustment':this.adjustmentprice,'quantity':this.quantity,'rate':this.value_rate1,
-   'email':this.email,'order':this.order,'status':"Pending",'billingaddress':this.billing_address,'shippingaddress':this.shipping_address});
-    
-     }, error => {
-       loader.dismiss();
-       let toast = this.tostctrl.create({
-         message:'Data not Save',
-         duration:2000
-       });
-       toast.present();
-     console.log("Oooops!");
-     });
-
     }
   }
      

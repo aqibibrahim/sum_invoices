@@ -17,6 +17,7 @@ import { CreateInvoicePaymentPage } from '../pages/create-invoice-payment/create
 import { App } from 'ionic-angular';
 // import { CreateItemsPage } from '../pages/create-items/create-items';
 import { ContactsPage } from '../pages/contacts/contacts';
+import {PayablePage} from '../pages/payable/payable';
 import {LoginPage} from '../pages/login/login';
 
 @Component({
@@ -41,7 +42,7 @@ export class MyApp {
       // { title: 'Estimates', component: CreateEstimatePage },
       { title: 'Invoices', component: InvoicesPage },
       {title:'Receivable' ,component: ReceivablePage},
-      {title:'Payable' ,component: TaxPage},
+      {title:'Payable' ,component: PayablePage},
       // {title: 'Bills', component: BillsPage },
       {title:'Tax' ,component: TaxPage},
       

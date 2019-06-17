@@ -22,7 +22,7 @@ userid:any;
   }
 login(email,password){
     console.log(email,password);
-    let data = {
+    let data1 = {
       email:email,
       password:password
   };
@@ -31,10 +31,10 @@ login(email,password){
     
   });
   loader.present();
-  this.http.post('https://sum-finance-latest2.herokuapp.com/user/login', data).map(response => response.json())
+  this.http.post('https://sum-finance-latest2.herokuapp.com/user/login', data1).map(response => response.json())
         .subscribe(data => {
-          console.log(data);
-          // console.log(data[0].company_name);
+          console.log(data[0].length);
+           //console.log(data[0].company_name);
            this.company_name = data.company_name;
            this.user_email = data.email;
            this.user_name = data.user_name;
