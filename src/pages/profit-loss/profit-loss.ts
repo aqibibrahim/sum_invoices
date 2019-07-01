@@ -58,7 +58,7 @@ import {ReportsPage} from '../reports/reports';
           activePortal.dismiss();
         }
         else {
-          if(activeView.name === 'CreateInvoicesPage') {
+          if(activeView.name === 'ProfitLossPage') {
             if (nav.canGoBack()){
                 nav.pop();
             } else {

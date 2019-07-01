@@ -301,7 +301,7 @@ export class CreateInvoicesPage {
                   text: 'Cancel',
                   role: 'cancel',
                   handler: () => {
-                    this.nav.setRoot('HomePage');
+                    //this.nav.setRoot('HomePage');
                   }
               },{
                   text: 'OK',
@@ -543,11 +543,14 @@ export class CreateInvoicesPage {
       console.log("value = ", value) // baz
       console.log(this.taxinput);
      
-      if(this.quantity > this.itemquantity){
+      var qutyvalue = +this.quantity;
+      var dbqtyvalue= +this.itemquantity;
+
+      if(qutyvalue >  dbqtyvalue){
       alert ("Given Quantity is more than actual quantity");
       }
       else{
-        this.qtyinhands = this.itemquantity - this.quantity;
+        this.qtyinhands =  dbqtyvalue - qutyvalue;
         if(this.invoicedate > this.duedate)
         {
             alert ("Due Date must be greater than Invoice Date");
@@ -596,7 +599,8 @@ export class CreateInvoicesPage {
            status:"Pending",
           //  payment_option: this.paymentoption,
            cont_id:this.customer_id,
-           other_user_id:this.other_user_id
+           other_user_id:this.other_user_id,
+           user_name:this.global.user_name
          }
          this.http.post('https://sum-finance-latest2.herokuapp.com/invoice/create', data)
          .subscribe(response => {
@@ -681,15 +685,17 @@ export class CreateInvoicesPage {
     quantitychange(){
       console.log(this.quantity);
      
-      this.itemquantity = this.quantity;
+      //this.itemquantity = this.quantity;
       this.xyz = +this.value_rate;
-      if(this.itemquantity == ""){
-        this.value_rate = this.quanitytnillrate * this.itemquantity;
+      if(this.quantity == ""){
+        this.value_rate = this.quanitytnillrate * this.quantity;
         
+      }else{
+        this.value_rate = this.quanitytnillrate * this.quantity;
+        this.total = this.value_rate;
       }
   
-      this.value_rate = this.quanitytnillrate * this.itemquantity;
-      this.total = this.value_rate;
+      
     }
     onSelectChange(tax){
 

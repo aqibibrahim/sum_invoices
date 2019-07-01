@@ -78,41 +78,56 @@ export class ContactsPage {
   createcontact(){
     this.navCtrl.push(CreateContactPage);
   }
-  // contactdetails(name,phone,mobile,email){
-  //   this.navCtrl.push(ContactdetailsPage, {last_name:name,phone:phone,mobile:mobile,email:email});
-  // }
+ 
   contactdetails(post):void {
     //console.log(item.title);
     console.log(post._id);
     this.navCtrl.push(ContactdetailsPage,{id:post._id})
 }
   removeItem(post):void{
-    let loader = this.loadingCtrl.create({
-      content:'Waiting...'
-    });
-    loader.present();
-    let data={
-      id:post._id
-    }
-    this.http.post('https://sum-finance-latest2.herokuapp.com/finance/delete/'+post._id+'', data)
-    .subscribe(res => {
-      console.log(res);
-      loader.dismiss();
-          let toast = this.tostctrl.create({
-            message:'Contact Delete',
-            duration:2000
-          });
-          toast.present();
-      this.ionViewDidEnter();
-    }, err => {
-      loader.dismiss();
-          let toast = this.tostctrl.create({
-            message:'Contact not Delete',
-            duration:2000
-          });
-          toast.present();
-      //console.log(err);
-    });
+
+    const alert = this.alertCtrl.create({
+      title: 'Contact Delete',
+      message: 'Do you Want to Delete this Contact',
+      buttons: [{
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+                              }
+      },{
+          text: 'OK',
+          handler: () => {
+            let loader = this.loadingCtrl.create({
+              content:'Waiting...'
+            });
+            loader.present();
+            let data={
+              id:post._id
+            }
+            this.http.post('https://sum-finance-latest2.herokuapp.com/finance/delete/'+post._id+'', data)
+            .subscribe(res => {
+              console.log(res);
+              loader.dismiss();
+                  let toast = this.tostctrl.create({
+                    message:'Contact Delete',
+                    duration:2000
+                  });
+                  toast.present();
+              this.ionViewDidEnter();
+            }, err => {
+              loader.dismiss();
+                  let toast = this.tostctrl.create({
+                    message:'Contact not Delete',
+                    duration:2000
+                  });
+                  toast.present();
+              //console.log(err);
+            });
+          }
+      }]
+  });
+  alert.present();
   }
   
 }

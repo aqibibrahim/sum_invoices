@@ -1,5 +1,5 @@
 import { Component ,ViewChild} from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController,Platform ,Navbar } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController,Platform ,Navbar,IonicApp,AlertController,Nav } from 'ionic-angular';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { EmailComposer } from '@ionic-native/email-composer';
@@ -13,6 +13,7 @@ import { isRightSide } from 'ionic-angular/umd/util/util';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import {InvoicesPage} from '../invoices/invoices';
 import {GlobalProvider} from '../../providers/global/global';
+import { App } from 'ionic-angular';
 /**
  * Generated class for the InvoicedeatilsPage page.
  *
@@ -27,6 +28,7 @@ import {GlobalProvider} from '../../providers/global/global';
 })
 export class InvoicedeatilsPage {
   @ViewChild(Navbar) navBar: Navbar;
+  @ViewChild(Nav) nav: Nav;
   invoice_date:any;
   due_date:any;
   customer_name:any;
@@ -54,7 +56,7 @@ export class InvoicedeatilsPage {
     from: '',
     text: ''
   }
-  constructor(public navCtrl: NavController, public global:GlobalProvider ,public navParams: NavParams, public platform: Platform, private socialSharing: SocialSharing,public emailComposer: EmailComposer,private plt: Platform, private file: File, private fileOpener: FileOpener,private actionSheet: ActionSheet,public actionSheetCtrl: ActionSheetController) {
+  constructor(public navCtrl: NavController, private ionicApp: IonicApp,public alertCtrl:AlertController,public app: App,public global:GlobalProvider ,public navParams: NavParams, public platform: Platform, private socialSharing: SocialSharing,public emailComposer: EmailComposer,private plt: Platform, private file: File, private fileOpener: FileOpener,private actionSheet: ActionSheet,public actionSheetCtrl: ActionSheetController) {
   
     // Getting Parameter Value from cREATE iNVOICE pAGE
       this.customer_name = this.navParams.get('customername');
@@ -102,14 +104,48 @@ export class InvoicedeatilsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad InvoicedeatilsPage');
-    this.setBackButtonAction()
-  }
-  setBackButtonAction(){
-    this.navBar.backButtonClick = () => {
-    //alert("Where you want to go");
-    this.navCtrl.push(InvoicesPage);
-     //this.navCtrl.pop()
+    //this.setBackButtonAction()
+    this.platform.registerBackButtonAction(() => {
+      // Catches the active view
+      let nav = this.app.getActiveNavs()[0];
+      let activeView = nav.getActive();  
+      let activePortal = this.ionicApp._loadingPortal.getActive() ||
+      this.ionicApp._modalPortal.getActive() ||
+      this.ionicApp._toastPortal.getActive() ||
+      this.ionicApp._overlayPortal.getActive();
+
+    if (activePortal) {
+      activePortal.dismiss();
     }
+    else {
+      if(activeView.name === 'InvoicedeatilsPage') {
+        if (nav.canGoBack()){
+            nav.pop();
+        } else {
+            const alert = this.alertCtrl.create({
+                title: 'Exit',
+                message: 'Want to Exit App?',
+                buttons: [{
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: () => {
+                      this.nav.setRoot('HomePage');
+                    }
+                },{
+                    text: 'OK',
+                    handler: () => {
+                      this.platform.exitApp();
+                    }
+                }]
+            });
+            //alert.present();
+        }
+    } else {
+      this.nav.setRoot('HomePage');
+      }
+    }
+     
+  });
   }
   presentActionSheet() {
     {

@@ -1,4 +1,4 @@
-import { Component,NgModule,ViewChild  } from '@angular/core';
+import { Component,NgModule,ViewChild, OnInit  } from '@angular/core';
 import { IonicPage, NavController, NavParams,AlertController,Nav, Item,LoadingController, ToastController,Navbar,Platform  } from 'ionic-angular';
 import {CreateItemsPage} from '../create-items/create-items';
 import {EdititemPage} from '../edititem/edititem';
@@ -22,8 +22,10 @@ import { App } from 'ionic-angular';
 })
 export class ItemPage {
   @ViewChild(Nav) nav: Nav;
+  @ViewChild("cc") cardContent : any;
   selectedItem: any;
   items: any;
+  accordianExpanded = false;
   
   constructor(public navCtrl: NavController, public global:GlobalProvider,public app: App,public platform:Platform,public navParams: NavParams, private alertCtrl: AlertController,public http: Http, public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     this.selectedItem = navParams.get('item');
@@ -32,6 +34,9 @@ export class ItemPage {
       console.log(data);
          this.items = data
        });
+}
+ngOnInit(){
+  console.log(this.cardContent);
 }
 ionViewDidEnter() {
   this.http.get('https://sum-finance-latest2.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
@@ -80,32 +85,51 @@ ionViewDidEnter() {
     this.navCtrl.push(EdititemPage,{id:item._id})
 }
 removeItem(item):void{
-  let loader = this.loadingCtrl.create({
-    content:'Waiting...'
-  });
-  loader.present();
-  let data={
-    id:item._id
-  }
-  this.http.post('https://sum-finance-latest2.herokuapp.com/item/delete/'+item._id+'', data)
-  .subscribe(res => {
-    
-    loader.dismiss();
-          let toast = this.tostctrl.create({
-            message:'Item Delete Successfully',
-            duration:2000
+  const alert = this.alertCtrl.create({
+    title: 'Items Delete',
+    message: 'Do you Want to Delete this Item',
+    buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+                            }
+    },{
+        text: 'OK',
+        handler: () => {
+          let loader = this.loadingCtrl.create({
+            content:'Waiting...'
           });
-          toast.present();
-    this.ionViewDidEnter();
-  }, err => {
-    loader.dismiss();
-          let toast = this.tostctrl.create({
-            message:'Item not Delete',
-            duration:2000
+          loader.present();
+          let data={
+            id:item._id
+          }
+          this.http.post('https://sum-finance-latest2.herokuapp.com/item/delete/'+item._id+'', data)
+          .subscribe(res => {
+            
+            loader.dismiss();
+                  let toast = this.tostctrl.create({
+                    message:'Item Delete Successfully',
+                    duration:2000
+                  });
+                  toast.present();
+            this.ionViewDidEnter();
+          }, err => {
+            loader.dismiss();
+                  let toast = this.tostctrl.create({
+                    message:'Item not Delete',
+                    duration:2000
+                  });
+                  toast.present();
+           
           });
-          toast.present();
-   
-  });
+        }
+    }]
+});
+alert.present();
 }
+toggleAccordian(){
 
 }
+}
+

@@ -42,19 +42,19 @@
           <span style="color: red" ion-text *ngIf="myForm.get('email').hasError('email')">It is not an email</span>
         </p>
       </form>
-      <ion-list>
+      <!-- <ion-list>
           <ion-item>
               <ion-label>Choose Country</ion-label>
               <ion-select [(ngModel)]="country" ionCancel="onCancel()" okText="Ok" >
                 <ion-option *ngFor="let name of country1" [value] = "name" >{{name.name}}</ion-option>
               </ion-select>
             </ion-item>
-    </ion-list>
+    </ion-list> -->
       
    
         <!-- <button ion-button block round style="margin-top: 15px;" type="submit" [disabled]="myForm.invalid" color="lightblue"> -->
             <form [formGroup]="myForm" novalidate>
-          <button color="lightblue" ion-button large  (click)="submit()" class="center" style="width:70%; border-radius: 10px;" [disabled]="myForm.invalid">
+          <button color="lightblue" ion-button meduim  (click)="updateprofile()" class="center" style="width:45%; border-radius: 10px;" [disabled]="myForm.invalid">
             Update
         </button>
      </form>

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams,LoadingController, Nav,ToastControl
 import {Http ,Response} from '@angular/http';
 import {GlobalProvider} from '../../providers/global/global';
 import { App } from 'ionic-angular';
+import { HomePage } from '../home/home';
 /**
  * Generated class for the ExpensePage page.
  *
@@ -81,7 +82,7 @@ item_name:any;
         duration:2000
       });
       toast.present();
-  //    this.navCtrl.push(InvoicesPage);
+      this.navCtrl.push(HomePage);
     }, error => {
       loader.dismiss();
       let toast = this.tostctrl.create({

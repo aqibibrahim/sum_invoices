@@ -1,0 +1,37 @@
+contactlist {
+    .nomargin {
+        margin: 0 !important;
+    }
+
+    .accordion-header {
+        color: white;
+
+        .item-inner {
+            margin-left: 0 !important;
+        }
+}
+
+    // .active ion-icon {
+    //     transform: rotate(90deg);
+    // }
+
+    .accordion-content {
+        transition: 0.3s ease-in-out;
+        &.active {
+            padding: .75rem;
+        }
+    }
+
+    .label {
+        margin: 0px;
+        color: #747474;
+    }
+    .ionicicons {
+        transition: all .25s ease-in;
+        transform: rotate(0);
+        color: #747474;
+    }
+    .active  .ionicicons {
+        transform: rotate(90deg);
+    }
+}

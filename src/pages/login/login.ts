@@ -36,23 +36,6 @@ export class LoginPage {
     console.log(this.email,this.password);
     
     this.global.login(this.email, this.password);
-    
-    //console.log(this.global.userid);
-    // if(this.global.userid == undefined){
-    //   let toast = this.tostctrl.create({
-    //     message:'Login Fail',
-    //     duration:2000
-    //   });
-    //   toast.present();
-    // }
-    // else{
-    //   let toast = this.tostctrl.create({
-    //     message:'Login Successfully',
-    //     duration:2000
-    //   });
-    //   toast.present();
-    //    this.navCtrl.push(HomePage,{companyname:this.global.company_name,userid:this.global.userid});
-    // }
   }
   signup(){
     alert("Please Create your account")

@@ -21,8 +21,47 @@
 
 <ion-content padding class="my-class">
 
+    <contactlist *ngFor="let post of posts; let index = index"
+    [title]="post.first_name"
+    textColor="#747474"
+    hasMargin="false"
+    headerColor="#F53D3D"
+    [expanded]="index === 0">
+    <ion-row>
+        <ion-col style="font-size: large; color: black" col-6>
+         {{post.cont_type}} 
+        </ion-col>
+        <ion-col style="font-size: large; color: black" col-4>
+            {{post.comp_name}}
+        </ion-col>
+      </ion-row>
+      <ion-row style="border-bottom: 1px solid;">
+          <ion-col style="color:#747474">
+              {{post.email}} <!--INV no:  {{invoice.item_quantity}} -->
+          </ion-col>
+          <!-- <ion-col style="color:#747474" class="ion-text-end">
+           {{item.item_type | uppercase}}
+          </ion-col> -->
+        </ion-row>
+        <ion-row>
+            <ion-col style="text-align: center">
+            <button ion-button item-end  (click)="removeItem(post)" color="editbutton" style="border-radius: 10px; width: -webkit-fill-available;"><ion-icon name="trash" style="
+              margin-right: 11%;
+          "></ion-icon>Delete</button>
+            </ion-col>
+            <ion-col style="text-align: center">
+                <button ion-button item-end (click)="contactdetails(post)" color="editbutton" style="border-radius: 10px; width: -webkit-fill-available;"><ion-icon name="create" style="
+                  margin-right: 11%;
+              "></ion-icon>Edit</button>
+            </ion-col>
+          </ion-row>
+    
+    </contactlist>
+    
 
-    <ion-card *ngFor="let post of posts" style="
+
+
+    <!-- <ion-card *ngFor="let post of posts" style="
     border-radius: 7px;">
         <ion-card-content>
           <ion-row>
@@ -35,10 +74,10 @@
           </ion-row>
           <ion-row style="border-bottom: 1px solid;">
             <ion-col style="color:#747474" col-5>
-              {{post.comp_name}}<!-- INV no:  {{invoice.order_no}} -->
+              {{post.comp_name}} INV no:  {{invoice.order_no}} 
             </ion-col >
             <ion-col style="color:#747474; text-align: end" col-5>
-             Payable
+                {{post.email}}
             </ion-col>
           </ion-row>
               <ion-row>
@@ -54,7 +93,7 @@
                 </ion-col>
               </ion-row>
         </ion-card-content>
-    </ion-card>
+    </ion-card> -->
    
   <ion-fab bottom right>
         <button ion-fab color="primary" (click)="createcontact()" color="lightblue"><ion-icon name="add" ></ion-icon></button>

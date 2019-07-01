@@ -127,15 +127,15 @@ export class ReportsPage {
   }
   //Financial Reports
   balance_sheet(){
-    alert("Report is Under construction")
-    //this.navCtrl.push(BalanceSheetPage);
+   // alert("Report is Under construction")
+    this.navCtrl.push(BalanceSheetPage);
   }
   profit_and_loss(){
     this.navCtrl.push(ProfitLossPage);
   }
   cash_flow_statement(){
-    alert("Report is Under construction")
-    //this.navCtrl.push(CashFlowStatementPage);
+    
+    this.navCtrl.push(CashFlowStatementPage);
   }
 //Sales report
   sales_by_customer(){

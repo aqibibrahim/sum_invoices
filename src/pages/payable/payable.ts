@@ -25,6 +25,7 @@ import { App } from 'ionic-angular';
   templateUrl: 'payable.html',
 })
 export class PayablePage {
+  @ViewChild(Navbar) navBar: Navbar;
   invoices:any;
   constructor(public navCtrl: NavController, public navParams: NavParams,public app: App,public alertCtrl:AlertController,public global:GlobalProvider,private plt: Platform, public http: Http,private file: File, private fileOpener: FileOpener,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     console.log(this.global.userid);
@@ -39,6 +40,28 @@ export class PayablePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PayablePage');
+    this.plt.registerBackButtonAction(() => {
+      // Catches the active view
+      let nav = this.app.getActiveNavs()[0];
+      let activeView = nav.getActive();                
+      // Checks if can go back before show up the alert
+      if(activeView.name === 'PayablePage') {
+          if (nav.canGoBack()){
+              nav.pop();
+          } else {
+              this.navCtrl.push(HomePage);
+              
+          }
+      }
+  });
+  this.setBackButtonAction();
+  }
+  setBackButtonAction(){
+    this.navBar.backButtonClick = () => {
+    //alert("Where you want to go");
+    this.navCtrl.push(HomePage);
+     //this.navCtrl.pop()
+    }
   }
 
 }

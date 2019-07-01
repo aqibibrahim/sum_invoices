@@ -101,32 +101,50 @@ export class InvoicesPage {
   });
 }
  removeItem(invoice):void{
-  let loader = this.loadingCtrl.create({
-    content:'Waiting...'
-  });
-  loader.present();
-  let data={
-    id:invoice._id
-  }
-  this.http.post(' https://sum-finance-latest2.herokuapp.com/invoice/delete/'+invoice._id+'', data)
-  .subscribe(res => {
-    
-    loader.dismiss();
-          let toast = this.tostctrl.create({
-            message:'Item Delete Successfully',
-            duration:2000
+
+
+  const alert = this.alertCtrl.create({
+    title: 'Invoice Delete',
+    message: 'Do you Want to Delete this Invoice',
+    buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+                            }
+    },{
+        text: 'OK',
+        handler: () => {
+          let loader = this.loadingCtrl.create({
+            content:'Waiting...'
           });
-          toast.present();
-    this.ionViewDidEnter();
-  }, err => {
-    loader.dismiss();
-          let toast = this.tostctrl.create({
-            message:'Item not Delete',
-            duration:2000
+          loader.present();
+          let data={
+            id:invoice._id
+          }
+          this.http.post(' https://sum-finance-latest2.herokuapp.com/invoice/delete/'+invoice._id+'', data)
+          .subscribe(res => {
+            
+            loader.dismiss();
+                  let toast = this.tostctrl.create({
+                    message:'Item Delete Successfully',
+                    duration:2000
+                  });
+                  toast.present();
+            this.ionViewDidEnter();
+          }, err => {
+            loader.dismiss();
+                  let toast = this.tostctrl.create({
+                    message:'Item not Delete',
+                    duration:2000
+                  });
+                  toast.present();
+           
           });
-          toast.present();
-   
-  });
+        }
+    }]
+});
+alert.present();
 }
 edititems(invoice){
 this.navCtrl.push(EditinvoicePage,{id:invoice._id});

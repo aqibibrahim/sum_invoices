@@ -72,6 +72,10 @@ import {EditProfilePage} from '../pages/edit-profile/edit-profile';
 import {ReceivablePage} from '../pages/receivable/receivable';
 import { CheckemailProvider } from '../providers/checkemail/checkemail';
 import {PayablePage} from '../pages/payable/payable';
+import {BalanceSheetReportPage} from '../pages/balance-sheet-report/balance-sheet-report';
+import {CashFlowReportPage} from '../pages/cash-flow-report/cash-flow-report';
+import {ItemslistComponent} from '../components/itemslist/itemslist';
+import {ContactlistComponent} from '../components/contactlist/contactlist';
 @NgModule({
   declarations: [
     MyApp,
@@ -120,7 +124,11 @@ import {PayablePage} from '../pages/payable/payable';
     EditTaxPage,
     EditProfilePage,
     ReceivablePage,
-    PayablePage
+    PayablePage,
+    BalanceSheetReportPage,
+    CashFlowReportPage,
+    ItemslistComponent,
+    ContactlistComponent
   ],
   imports: [ 
     FormsModule, 
@@ -180,7 +188,9 @@ import {PayablePage} from '../pages/payable/payable';
     EditTaxPage,
     EditProfilePage,
     ReceivablePage,
-    PayablePage
+    PayablePage,
+    BalanceSheetReportPage,
+    CashFlowReportPage
   ],
   providers: [
     

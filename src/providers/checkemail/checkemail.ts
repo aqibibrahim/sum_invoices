@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable,ViewChild } from '@angular/core';
 import {Http ,Response} from '@angular/http';
-import { IonicPage, Nav, NavParams,LoadingController, ToastController, AlertController} from 'ionic-angular';
+import { IonicPage, Nav, NavParams,LoadingController, ToastController, AlertController,Platform} from 'ionic-angular';
 import {CreateContactPage} from '../../pages/create-contact/create-contact';
 import {GlobalProvider} from '../global/global';
 import {ContactsPage} from '../../pages/contacts/contacts';
 import {NavController,App} from "ionic-angular/index";
+import { HomePage } from '../../pages/home/home';
 
 /*
   Generated class for the CheckemailProvider provider.
@@ -17,12 +18,12 @@ import {NavController,App} from "ionic-angular/index";
 @Injectable()
 
 export class CheckemailProvider {
-  
+  @ViewChild(Nav) nav: Nav;
   other_user_id:any;
   mainresponse:any;
 
   private navCtrl:NavController;
-  constructor(public http: Http, public global:GlobalProvider,public loadingCtrl: LoadingController, public tostctrl: ToastController, public app:App) {
+  constructor(public http: Http, public platform: Platform,public global:GlobalProvider,public loadingCtrl: LoadingController, public tostctrl: ToastController, public app:App,public alertCtrl:AlertController) {
     console.log('Hello CheckemailProvider Provider');
 
   }
@@ -34,10 +35,13 @@ checkemail(email,gaming,firstname,lastname,companyname,contactdisplay,phone,mobi
   this.http.get('https://sum-finance-latest2.herokuapp.com/user/searchuser/'+email+'').map(res => res.json()).subscribe(data => {
     
     console.log(data);
-    this.mainresponse = data;  
+
+    this.mainresponse = data; 
+    console.log(this.mainresponse.length); 
     //loader.dismiss();
-    if(this.mainresponse.length == 0){
-      alert("There is no User Exist");
+    if(this.mainresponse == "No data found"){
+      
+      //alert("There is no User Exist");
       //this.other_user_id = null;
       let data1 = {
         cont_saln:gaming,
@@ -63,14 +67,39 @@ checkemail(email,gaming,firstname,lastname,companyname,contactdisplay,phone,mobi
             console.log('POST Response:', response);
             loader.dismiss();
             let toast = this.tostctrl.create({
-              message:'Data Save',
+              message:'User does not exist in Database, New Record Save',
               duration:2000
             });
-            let nav = this.app.getActiveNav();
-            // let nav = this.app.getActiveNavs()[0];
-            // let activeView = nav.getActive();  
+            let nav = this.app.getActiveNavs()[0];
+            let activeView = nav.getActive();   
+            if(activeView.name === 'CreateContactPage') {
+              if (nav.canGoBack()){
+                  nav.pop();
+              }else{
+                const alert = this.alertCtrl.create({
+                  title: 'Exit',
+                  message: 'Want to Exit App?',
+                  buttons: [{
+                      text: 'Cancel',
+                      role: 'cancel',
+                      handler: () => {
+                        this.nav.setRoot('HomePage');
+                      }
+                  },{
+                      text: 'OK',
+                      handler: () => {
+                        this.platform.exitApp();
+                      }
+                  }]
+              });
+              alert.present();
+              }
+            } else {
+            this.nav.setRoot('ItemPage');
+            }
+            toast.present();
            // this.navCtrl.push(ContactsPage);
-            nav.push(ContactsPage);
+            //nav.push(ContactsPage);
           }, error => {
             loader.dismiss();
             let toast = this.tostctrl.create({
@@ -111,11 +140,36 @@ checkemail(email,gaming,firstname,lastname,companyname,contactdisplay,phone,mobi
               message:'Data Save',
               duration:2000
             });
-            let nav = this.app.getActiveNav();
-            // let nav = this.app.getActiveNavs()[0];
-            // let activeView = nav.getActive();  
-           // this.navCtrl.push(ContactsPage);
-            nav.push(ContactsPage);
+            let nav = this.app.getActiveNavs()[0];
+            let activeView = nav.getActive();   
+            if(activeView.name === 'CreateContactPage') {
+              if (nav.canGoBack()){
+                  nav.pop();
+              }else{
+                const alert = this.alertCtrl.create({
+                  title: 'Exit',
+                  message: 'Want to Exit App?',
+                  buttons: [{
+                      text: 'Cancel',
+                      role: 'cancel',
+                      handler: () => {
+                        this.navCtrl.push(HomePage);
+                        //this.nav.setRoot('HomePage');
+                      }
+                  },{
+                      text: 'OK',
+                      handler: () => {
+                        this.platform.exitApp();
+                      }
+                  }]
+              });
+              alert.present();
+              }
+            } else {
+              this.navCtrl.push(ContactsPage);
+            //this.nav.setRoot('ContactsPage');
+            }
+            toast.present();
           }, error => {
             loader.dismiss();
             let toast = this.tostctrl.create({

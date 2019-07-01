@@ -19,7 +19,7 @@
     <ion-card>
         <ion-card-content>
             <ion-item style="border-bottom: 1px solid grey">
-                <ion-label floating>Date</ion-label>
+                <ion-label >Date</ion-label>
                 <!-- <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="invoicedate"></ion-input> -->
                 <ion-datetime displayFormat="DD MMM YYYY" (ionChange)="fecha()" pickerFormat="DD MMM YYYY"  [(ngModel)]="expensedate" cancelText ="Cancelar" doneText="Ok" ></ion-datetime>
               </ion-item>
@@ -33,7 +33,7 @@
                     </ion-item>
             </ion-list>
             <ion-item style="border-bottom: 1px solid grey">
-                <ion-label floating>Amount</ion-label>
+                <ion-label >Amount</ion-label>
                 <ion-input type="number" value="1" name="amount" [(ngModel)]="amount"></ion-input>
               </ion-item>
 

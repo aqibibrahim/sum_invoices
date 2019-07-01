@@ -19,7 +19,7 @@
 <ion-content padding>
   <ion-card color="lightblue">
     <ion-card-header>
-      <h1 style="font-weight: bold;">{{this.value_contact_saln}}{{this.value_first_name}}</h1>
+      <h1 style="font-weight: bold;">{{this.value_contact_saln || uppercase}}.{{this.value_first_name}}</h1>
     </ion-card-header>
     <!-- <ion-card-content>
       The British use the term "header", but the American term "head-shot" the English simply refuse to adopt.
@@ -27,30 +27,24 @@
     <ion-grid>
       <ion-row>
         <ion-col col-6>
-          <h3>Outstanding</h3>
-          <h4 style="font-size: large;font-weight: bold;">PKR0.00</h4>
-        </ion-col>
-        <ion-col col-6>
-            <h3>Credits</h3>
-            <h4 style="font-size: large;font-weight: bold;">PKR0.00</h4>
+          <h3>Contact Type</h3>
+          <h4 style="font-size: large;font-weight: bold;">{{this.value_contact_type}}</h4>
         </ion-col>
       </ion-row>
     </ion-grid>
     
   </ion-card>
-  <!-- <button ion-button full round (click)="onButtonClick()">Click</button> -->
-
-<!-- <ion-input *ngIf="buttonClicked" type="text" value=""></ion-input> -->
+ 
 <ion-card>
 
     <div>
 
         <ion-row>
             <ion-col col-6>
-                <button ion-button  block (click)="onButtonClick1()">Overview</button>
+                <button ion-button  block (click)="onButtonClick1()" color="lightblue">Overview</button>
             </ion-col>
             <ion-col col-6>
-                <button ion-button  block (click)="onButtonClick2()">Recent Activity</button>
+                <button ion-button  block (click)="onButtonClick2()" color="lightblue">Recent Activity</button>
             </ion-col>
           </ion-row>
     </div>
@@ -59,7 +53,7 @@
         <ion-row>
           <ion-col col-6>
             <h3>Name</h3>
-            <h4 style="font-size: large;font-weight: bold;" >{{this.value_contact_saln}}{{this.value_first_name}}</h4>
+            <h4 style="font-size: large;font-weight: bold;" >{{this.value_contact_saln || uppercase}}.{{this.value_first_name}}</h4>
           </ion-col>
           <ion-col col-6>
               <h3>Company Name</h3>
@@ -93,7 +87,7 @@
       <ion-list *ngIf="buttonClicked2">
               <ion-item>
                   <h3 style="color: black">Contact Created</h3>
-                  <p>{{this.value_company_name}}}</p>
+                  <p>{{this.value_company_name}}</p>
                   {{mydate | date: 'dd/MM/yyyy'}}
                 </ion-item>
               <!-- <ion-item *ngFor="let post of posts" (click)="contactdetails()"> -->

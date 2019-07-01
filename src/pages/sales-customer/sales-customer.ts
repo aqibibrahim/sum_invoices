@@ -50,9 +50,9 @@ export class SalesCustomerPage {
   
   ionViewDidLoad() {
     console.log('ionViewDidLoad SalesCustomerPage');
+  
   }
-
-  presentActionSheet() {
+presentActionSheet() {
      {
       let actionSheet = this.actionSheetCtrl.create({
         buttons: [

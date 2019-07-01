@@ -12,15 +12,15 @@
 
 <ion-content padding>
 
-    <ion-item style="border-bottom: 1px solid grey">
+    <ion-item >
         <ion-label floating color="lightblue">From</ion-label>
         <!-- <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="invoicedate"></ion-input> -->
-        <ion-datetime displayFormat="DD MMM YYYY"  pickerFormat="DD MMM YYYY"  [(ngModel)]="fromdate" cancelText ="Cancelar" doneText="Ok" ></ion-datetime>
+        <ion-datetime displayFormat="DD MMM YYYY"  pickerFormat="DD MMM YYYY"  [(ngModel)]="fromdate" cancelText ="Cancel" doneText="Ok" ></ion-datetime>
       </ion-item>
       <ion-item style="border-bottom: 1px solid grey">
           <ion-label floating color="lightblue">To</ion-label>
           <!-- <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="invoicedate"></ion-input> -->
-          <ion-datetime displayFormat="DD MMM YYYY"  pickerFormat="DD MMM YYYY"  [(ngModel)]="todate" cancelText ="Cancelar" doneText="Ok" ></ion-datetime>
+          <ion-datetime displayFormat="DD MMM YYYY"  pickerFormat="DD MMM YYYY"  [(ngModel)]="todate" cancelText ="Cancel" doneText="Ok" ></ion-datetime>
         </ion-item>
 
         <ion-list >
@@ -31,5 +31,5 @@
                 </ion-select>
               </ion-item>
       </ion-list>
-      <button color="lightblue" ion-button large  (click)="run_report_profit_loss()" class="center" style="width:70%; border-radius: 10px;">Run Report</button>
+      <button color="lightblue" ion-button large  (click)="run_report_profit_loss()" class="center" style="width:50%; border-radius: 10px;margin-top: 5%">Run Report</button>
 </ion-content>

@@ -53,13 +53,13 @@ export class CreateContactPage {
   constructor(public navCtrl: NavController, public checkemail:CheckemailProvider,private ionicApp: IonicApp,public platform: Platform,public app: App,public global:GlobalProvider,public navParams: NavParams, private sms: SMS,private alertCtrl: AlertController,private contacts: Contacts,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     //this.data.username = '';
     
-    this.contacts.find(['*'])
-    .then((contacts)=>{
-        alert(JSON.stringify(contacts));
-    })
-    .catch((err) => {
-        alert('Error ' + err.message);
-});
+//     this.contacts.find(['*'])
+//     .then((contacts)=>{
+//         alert(JSON.stringify(contacts));
+//     })
+//     .catch((err) => {
+//         alert('Error ' + err.message);
+// });
   }
 
   ionViewDidLoad() {
@@ -97,18 +97,13 @@ export class CreateContactPage {
                     }
                 }]
             });
-            alert.present();
+            //alert.present();
         }
     } else {
       this.nav.setRoot('HomePage');
       }
     }
-        
-    
-     
-      // let activeView = nav.getActive();                
-      // // Checks if can go back before show up the alert
-      
+   
   });
   }
   ionViewWillEnter(){
@@ -137,7 +132,7 @@ export class CreateContactPage {
                     text: 'Cancel',
                     role: 'cancel',
                     handler: () => {
-                      this.nav.setRoot('HomePage');
+                      //this.nav.setRoot('HomePage');
                     }
                 },{
                     text: 'OK',
@@ -146,10 +141,10 @@ export class CreateContactPage {
                     }
                 }]
             });
-            alert.present();
+            //alert.present();
         }
     } else {
-      this.nav.setRoot('HomePage');
+      this.navCtrl.push(HomePage);
       }
     }
         
@@ -170,33 +165,7 @@ export class CreateContactPage {
     this.contacts.find(['displayName','phoneNumbers'], {filter: "", multiple: true})
     .then(data => {
       console.log(data);
-      // this.allContacts = data
-      // //this.listItems.push(this.allContacts.displayName)
-      // console.log(this.allContacts.length);
-      // for(var i=0;i<this.allContacts.length;i++){
-      //   //console.log(this.allContacts[i].displayName);
-      //   this.listItems.push(this.allContacts[i].displayName)
-      // }
-      // console.log(this.listItems);
     });
-    // let alert = this.alertCtrl.create();
-    // alert.setTitle('Select Contact');
-
-    // alert.addInput({
-    //   type: 'radio',
-    //     label: this.allContacts[1].displayName,
-    //     value: this.listItems[1],
-    //   checked: true
-    // });
-    // alert.addButton('Cancel');
-    // alert.addButton({
-    //   text: 'OK',
-    //   handler: data => {
-    //     this.testRadioOpen = false;
-    //     this.testRadioResult = data;
-    //   }
-    // });
-    // alert.present();
   }
   savedata(){
     if(this.sexe == undefined){

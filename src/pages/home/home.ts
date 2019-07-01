@@ -38,13 +38,14 @@ export class HomePage {
     // this.books = afDB.list('/Books/Books').valueChanges();
     
     this.companyname = this.global.company_name;
-    this.storage.set('customername', this.companyname);
+    //this.storage.set('customername', this.companyname);
     this.userid = this.global.userid;
     console.log(this.companyname, "User ID" +this.userid);
     console.log("User ID : "+ this.global.userid);
 }
  
  ionViewDidLoad() {
+  this.nativename = this.global.company_name;
   console.log('ionViewDidLoad DashboardPage');
   this.plt.registerBackButtonAction(() => {
     // Catches the active view
@@ -72,12 +73,14 @@ export class HomePage {
         
     }
 });
+
  }
  ionViewWillEnter(){
   // this.storage.get('customername').then((val1) => {
   //   console.log('Your name is', val1);
     
   // })
+  this.nativename = this.global.company_name;
   this.plt.registerBackButtonAction(() => {
     // Catches the active view
     let nav = this.app.getActiveNavs()[0];
@@ -104,7 +107,7 @@ export class HomePage {
         
     }
 });
-  this.nativename = this.global.company_name;
+ 
 }
 getcontacts(){
 this.contacts.find(['displayName', 'name', 'phoneNumbers', 'emails'], {filter: "", multiple: true})

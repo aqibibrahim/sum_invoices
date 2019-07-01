@@ -20,110 +20,120 @@
     <ion-card>
         <ion-card-content>
           <ion-list>
-              <ion-item>
-                  <ion-label>Contact</ion-label>
-                  <ion-input type="text" [(ngModel)]="name"  value="{{this.value_customer}}" [readonly]="isReadonly()"></ion-input>
+
+              <ion-row style="color: black; font-size: larger">
+                  <ion-col >
+                    <ion-label  style="color: grey">
+                        Contact:
+                    </ion-label>
+                      
+                  </ion-col>
                  
-                </ion-item>
-        </ion-list>
-          <!-- <ion-item>
-            <ion-label fixed>Invoice #</ion-label>
-            <ion-input type="number" [(ngModel)]="invoice" value="{{this.value_invoice_number}}" [readonly]="isReadonly()"></ion-input>
-          </ion-item> -->
-          <ion-item>
-            <ion-label fixed>Order Number</ion-label>
-            <ion-input type="number" [(ngModel)]="order" value="{{this.value_order_no}}" [readonly]="isReadonly()"></ion-input>
-          </ion-item>
-          <ion-item>
-              <ion-label fixed>Item Name</ion-label>
-              <ion-input type="text" [(ngModel)]="itemname" value="{{this.value_item_name}}" [readonly]="isReadonly()"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label fixed>Total Bill</ion-label>
-                <ion-input type="text" [(ngModel)]="bill" value="{{this.value_total_cost}}" [readonly]="isReadonly()"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label style="color: #747474">
-                    Invoice Date:
-                </ion-label>
-                <ion-label>
-                    {{this.value_invoice_date | date: 'yyyy/MM/dd'}}
-                 </ion-label>
-                </ion-item>  
-                <ion-item>
-                  <ion-label style="color: #747474">
-                      Due Date: 
-                  </ion-label>
-                   <ion-label>
-                      {{this.value_due_date | date: 'yyyy/MM/dd'}}
-                   </ion-label>  
-                   </ion-item> 
-                   <ion-item>
-                      <ion-label style="color: #747474">
-                          Status: 
-                      </ion-label>
+                  <ion-col style="text-align: right;font-size: large">
                       <ion-label>
-                          {{this.value_status | uppercase}}
-                       </ion-label>
-                    <!-- <ion-input type="text"  [(ngModel)]="statusvalue" value="" [readonly]="isReadonly()"></ion-input> -->
-                 </ion-item>
+                          {{this.value_customer}}
+                      </ion-label>
+                      
+                  </ion-col>
+                </ion-row>
+
+              
+        </ion-list>
+          
+<ion-row style="color: black; font-size: larger">
+              <ion-col >
+                <ion-label style="color: grey">
+                    Order Number
+                </ion-label>
+                  
+              </ion-col>
+              <ion-col style="text-align: right;font-size: large">
+                  <ion-label>
+                      {{this.value_order_no}}
+                  </ion-label>
+              </ion-col>
+            </ion-row>
+
+            <ion-row style="color: black; font-size: larger">
+                <ion-col >
+                  <ion-label  style="color: grey">
+                      Item Name
+                  </ion-label>
+                    
+                </ion-col>
+                <ion-col style="text-align: right;font-size: large">
+                    <ion-label>
+                        {{this.value_item_name}}
+                    </ion-label>
+                    
+                </ion-col>
+              </ion-row>
+
+              <ion-row style="color: black; font-size: larger">
+                  <ion-col >
+                    <ion-label  style="color: grey">
+                        Total Bill
+                    </ion-label>
+                      
+                  </ion-col>
+                  <ion-col style="text-align: right;font-size: large">
+                      <ion-label>
+                          {{this.value_total_cost}}
+                      </ion-label>
+                      
+                  </ion-col>
+                </ion-row>
+  
+                <ion-row style="color: black; font-size: larger">
+                    <ion-col >
+                      <ion-label  style="color: grey">
+                          Invoice Date:
+                      </ion-label>
+                        
+                    </ion-col>
+                    <ion-col style="text-align: right;font-size: large">
+                        <ion-label>
+                            {{this.value_invoice_date | date: 'yyyy/MM/dd'}}
+                        </ion-label>
+                        
+                        <!-- <ion-input type="text" [(ngModel)]="invoicedate" value="{{this.value_invoice_date | date: 'yyyy/MM/dd'}}" [readonly]="isReadonly()"></ion-input> -->
+                    </ion-col>
+                  </ion-row>
+
+                  <ion-row style="color: black; font-size: larger">
+                      <ion-col >
+                        <ion-label  style="color: grey">
+                            Due Date: 
+                        </ion-label>
+                          
+                      </ion-col>
+                      <ion-col style="text-align: right;font-size: large">
+                          <ion-label>
+                              {{this.value_due_date | date: 'yyyy/MM/dd'}}
+                          </ion-label>
+                         
+                      </ion-col>
+                    </ion-row>
+           
+                    <ion-row style="color: black; font-size: larger">
+                        <ion-col >
+                          <ion-label  style="color: grey">
+                              Status:
+                          </ion-label>
+                            
+                        </ion-col>
+                        <ion-col style="text-align: right;font-size: large">
+                            <ion-label>
+                                {{this.value_status | uppercase}}
+                            </ion-label>
+                            
+                        </ion-col>
+                      </ion-row>
+             
           </ion-card-content>
         
         </ion-card>
-<!--       
-        <ion-card>
-            <ion-card-content>
-                
-              <ion-row style="border-bottom: 1px solid grey">
-                  <ion-col >
-                      <ion-item style="border-bottom: 1px solid grey">
-                          <ion-label floating>Date</ion-label> -->
-                          <!-- <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="invoicedate"></ion-input> -->
-                          <!-- <ion-datetime displayFormat="DD MMM YYYY" (ionChange)="fecha()" pickerFormat="DD MMM YYYY"  [(ngModel)]="invoicedate" cancelText ="Cancelar" doneText="Ok" ></ion-datetime>
-                        </ion-item>
-                  </ion-col>
-                  <ion-col>
-                      <ion-item style="border-bottom: 1px solid grey">
-                          <ion-label floating>Due</ion-label>
-                          <ion-datetime displayFormat="DD MMM YYYY" (ionChange)="fecha()" pickerFormat="DD MMM YYYY"  [(ngModel)]="duedate" cancelText ="Cancelar" doneText="Ok" ></ion-datetime> -->
-                          <!-- <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="duedate"></ion-input> -->
-                        <!-- </ion-item>
-                  </ion-col>
-                </ion-row> -->
-      
-                <!-- <ion-list>
-                    <ion-item>
-                      <ion-label color="lightblue">Terms</ion-label>
-                      <ion-select [(ngModel)]="terms" interface="popover">
-                        <ion-option value="noterms">Due on Recipt</ion-option>
-                        <ion-option value="dueonreceipt">Nert 15</ion-option>
-                        <ion-option value="net15">Net 30</ion-option>
-                        <ion-option value="net15">Net 45</ion-option>
-                        <ion-option value="net15">Net 60</ion-option>
-                        <ion-option value="net15">Due end of the Month</ion-option>
-                      </ion-select>
-                    </ion-item>
-                  </ion-list>
-                </ion-card-content>
-            
-      
-            </ion-card> -->
-      
-            <!-- <ion-card>
-              <ion-card-content>
-                  <ion-list>
-                      <ion-item>
-                        <ion-label color="lightblue">Sales Person</ion-label>
-                        <ion-select [(ngModel)]="terms" interface="popover">
-                          <ion-option value="noterms" selected>None</ion-option>
-                          <ion-option value="dueonreceipt">Include in amounts</ion-option>
-                          <ion-option value="net15">Not Applicable</ion-option>
-                        </ion-select>
-                      </ion-item>
-                    </ion-list>
-                  </ion-card-content>
-              </ion-card>
-       -->
+
        <ion-card>
         <ion-card-content>
             <ion-list>

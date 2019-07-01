@@ -29,11 +29,11 @@
     
   <ion-card>
   <ion-card-content>
-    <ion-row>
+    <ion-row style="border-bottom: 1px solid grey">
       <ion-col col-10>
           <ion-list>
-              <ion-item>
-                  <ion-label>Contact*</ion-label>
+              <ion-item >
+                  <ion-label>Contact<span class="required">*</span></ion-label>
                   <ion-select interface="popover" [(ngModel)]="gaming" ionCancel="onCancel()" okText="Ok" (ionChange)="onContactChange()">
                     <ion-option *ngFor="let name of namesList" [value] = "name">{{name.first_name}}</ion-option>
                   </ion-select>
@@ -42,22 +42,22 @@
         </ion-list>
       </ion-col>
       <ion-col col-2>
-          <button ion-button icon-only (click)="opencontact()" style="background-color: coral;">
-              <ion-icon ios="ios-add-circle" md="md-add-circle" ></ion-icon>
+          <button ion-button icon-only clear (click)="opencontact()" >
+              <ion-icon ios="ios-add-circle" md="md-add-circle" style="color: coral;"></ion-icon>
             </button>
       </ion-col>
     </ion-row>
     
     <ion-item>
-<ion-label fixed>Email*</ion-label>
+        <ion-label>Email<span class="required">*</span></ion-label>
       <!-- <ion-input type="email" value="" [(ngModel)]="email"></ion-input> -->
       <ion-input type="email" [(ngModel)]="email"  name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" value="{{this.email}}" required [readonly]="isReadonly()"></ion-input>
 </ion-item>
-    <ion-item>
-      <ion-label fixed>Invoice #*</ion-label>
+    <ion-item style="border-bottom: 1px solid grey">
+      <ion-label fixed>Invoice #<span class="required">*</span></ion-label>
       <ion-input type="number" value="{{this.nativeinvoice}}" [(ngModel)]="invoice"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item style="border-bottom: 1px solid grey"> 
       <ion-label fixed>Order Number</ion-label>
       <ion-input type="number" value="{{this.nativeorder}}" [(ngModel)]="order"></ion-input>
     </ion-item>
@@ -71,15 +71,15 @@
         <ion-row style="border-bottom: 1px solid grey">
             <ion-col >
                 <ion-item style="border-bottom: 1px solid grey">
-                    <ion-label floating>Invoice Date*</ion-label>
+                    <ion-label floating>Invoice Date<span class="required">*</span></ion-label>
                     <!-- <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="invoicedate"></ion-input> -->
-                    <ion-datetime displayFormat="DD MMM YYYY" (ionChange)="fecha()" pickerFormat="DD MMM YYYY"  [(ngModel)]="invoicedate" cancelText ="Cancelar" doneText="Ok" ></ion-datetime>
+                    <ion-datetime displayFormat="DD MMM YYYY" (ionChange)="fecha()" pickerFormat="DD MMM YYYY"  [(ngModel)]="invoicedate" cancelText ="Cancel" doneText="Ok" ></ion-datetime>
                   </ion-item>
             </ion-col>
             <ion-col>
                 <ion-item style="border-bottom: 1px solid grey">
-                    <ion-label floating>Due Date*</ion-label>
-                    <ion-datetime displayFormat="DD MMM YYYY" (ionChange)="fecha()" pickerFormat="DD MMM YYYY"  [(ngModel)]="duedate" cancelText ="Cancelar" doneText="Ok" ></ion-datetime>
+                    <ion-label floating>Due Date<span class="required">*</span></ion-label>
+                    <ion-datetime displayFormat="DD MMM YYYY" (ionChange)="fecha()" pickerFormat="DD MMM YYYY"  [(ngModel)]="duedate" cancelText ="Cancel" doneText="Ok" ></ion-datetime>
                     <!-- <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="duedate"></ion-input> -->
                   </ion-item>
             </ion-col>
@@ -117,31 +117,14 @@
               </ion-list>
             </ion-card-content>
         </ion-card>
-        <!-- <ion-card>
-            <ion-card-content>
-                <ion-list>
-                    <ion-item>
-                      <ion-label color="lightblue">Payment Options</ion-label>
-                      <ion-select [(ngModel)]="paymentoption" interface="popover">
-                        <ion-option value="none" selected>None</ion-option>
-                        <ion-option value="banktransfer">Bank Transfer</ion-option>
-                        <ion-option value="cash">Cash</ion-option>
-                        <ion-option value="paypal">Paypal</ion-option>
-                        <ion-option value="stripe">Stripe</ion-option>
-                        <ion-option value="creditcard">Credit Card</ion-option>
-                      </ion-select>
-                    </ion-item>
-                  </ion-list>
-                </ion-card-content>
-            </ion-card> -->
-
+        
         <ion-card>
           <ion-card-content>
             <ion-row>
               <ion-col col-10>
                   <ion-list>
                       <ion-item >
-                          <ion-label>Item *</ion-label>
+                          <ion-label>Item<span class="required">*</span></ion-label>
                           <ion-select #S interface="popover" class="selector" [(ngModel)]="itemname1" ionCancel="onCancel()" okText="Ok" (ionChange)="onItemChange(S.value)" >
                             <ion-option *ngFor="let name of items1" [value] = "name" class="option" text-wrap>{{name.item_name}}</ion-option>
                           </ion-select>
@@ -150,7 +133,7 @@
               </ion-col>
               <ion-col col-2>
                   <button ion-button icon-only clear (click)="openitem()">
-                      <ion-icon ios="ios-add-circle" md="md-add-circle" ></ion-icon>
+                      <ion-icon ios="ios-add-circle" md="md-add-circle" style="color: coral;"></ion-icon>
                     </button>
               </ion-col>
             </ion-row>
@@ -190,37 +173,6 @@
                             </ion-item>
                       </ion-col>
                     </ion-row>
-
-                    <!-- <ion-row>
-                      <ion-col>
-                          <ion-item >
-                              <ion-label>Tax</ion-label>
-                              <ion-select #S [(ngModel)]="taxinput" ionCancel="onCancel()" okText="Ok" (ionChange)="onSelectChange(S.value)">
-                                <ion-option *ngFor="let tax of taxvalue" [value] = "tax" >{{tax.tax_name}}</ion-option>
-                              </ion-select>
-                            </ion-item>
-                      </ion-col> -->
-                      <!-- <ion-col col-5>
-                      <ion-item>
-                              <ion-input type="number" placeholder="Tax" [(ngModel)]="taxtotal" [readonly]="isReadonly()" style="text-align: right"></ion-input>
-                            </ion-item>
-                      </ion-col> -->
-                      
-                    <!-- </ion-row> -->
-                    <!-- <ion-row>
-                <ion-col col-7>
-                      <ion-item >
-                        <h3 >Subtotal</h3>
-                        </ion-item>
-                </ion-col>
-                <ion-col col-5>
-                <ion-item>
-                        <ion-input type="number" placeholder="Customer Notes" [(ngModel)]="subtotal" [readonly]="isReadonly()" style="text-align: right"></ion-input>
-                      </ion-item>
-                </ion-col>
-                
-              </ion-row> -->
-
               <ion-row>
                   <ion-col col-6>
                         <ion-item >

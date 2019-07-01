@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,LoadingController,ToastController } from 'ionic-angular';
+import { Component,ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, AlertController,Nav,LoadingController, ToastController, Toast,Platform,IonicApp } from 'ionic-angular';
 import {SignupProvider}  from '../../providers/signup/signup';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Http ,Response } from '@angular/http';
 import {GlobalProvider} from '../../providers/global/global';
+import { HomePage } from '../home/home';
+import { App } from 'ionic-angular';
 /**
  * Generated class for the EditProfilePage page.
  *
@@ -17,6 +19,7 @@ import {GlobalProvider} from '../../providers/global/global';
   templateUrl: 'edit-profile.html',
 })
 export class EditProfilePage {
+  @ViewChild(Nav) nav: Nav;
   myForm: FormGroup;
   pattern: string;
 
@@ -31,7 +34,7 @@ export class EditProfilePage {
   password:any;
   country:any;
   country1:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public fb: FormBuilder,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController, public global:GlobalProvider) {
+  constructor(public navCtrl: NavController, public platform: Platform,private ionicApp: IonicApp,public alertCtrl:AlertController, public app: App,public navParams: NavParams,public fb: FormBuilder,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController, public global:GlobalProvider) {
     this.myForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern("[a-zA-Z ]*")]],
       fullname:['',[Validators.required,Validators.pattern("[a-zA-Z ]*")]],
@@ -67,6 +70,66 @@ export class EditProfilePage {
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditProfilePage');
-  }
+    this.platform.registerBackButtonAction(() => {
+      // Catches the active view
+      let nav = this.app.getActiveNavs()[0];
+      let activeView = nav.getActive();  
+      let activePortal = this.ionicApp._loadingPortal.getActive() ||
+      this.ionicApp._modalPortal.getActive() ||
+      this.ionicApp._toastPortal.getActive() ||
+      this.ionicApp._overlayPortal.getActive();
 
+    if (activePortal) {
+      activePortal.dismiss();
+    }
+    else {
+      if(activeView.name === 'EditProfilePage') {
+        if (nav.canGoBack()){
+            nav.pop();
+        } else {
+            const alert = this.alertCtrl.create({
+                title: 'Exit',
+                message: 'Want to Exit App?',
+                buttons: [{
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: () => {
+                      this.nav.setRoot('HomePage');
+                    }
+                },{
+                    text: 'OK',
+                    handler: () => {
+                      this.platform.exitApp();
+                    }
+                }]
+            });
+            //alert.present();
+        }
+    } else {
+      this.nav.setRoot('HomePage');
+      }
+    }
+  });
+  }
+updateprofile(){
+  let loader = this.loadingCtrl.create({
+    content:'Waiting...'
+  });
+  loader.present();
+  let data = {
+    company_name:this.compname,
+    user_name : this.fullname,
+    email:this.email
+    // country: this.country,
+  };
+  //console.log(this.data.username);
+  this.http.post('https://sum-finance-latest2.herokuapp.com/user/updateprofile/'+this.global.userid+'', data)
+      .subscribe(response => {
+        console.log('POST Response:', response);
+        loader.dismiss();
+        this.navCtrl.push(HomePage);
+      }, error => {
+      console.log("Oooops!");
+      });
+}
 }

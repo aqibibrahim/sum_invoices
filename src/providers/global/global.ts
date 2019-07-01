@@ -33,17 +33,18 @@ login(email,password){
   loader.present();
   this.http.post('https://sum-finance-latest2.herokuapp.com/user/login', data1).map(response => response.json())
         .subscribe(data => {
-          console.log(data[0].length);
+          console.log(data[0]._id);
            //console.log(data[0].company_name);
-           this.company_name = data.company_name;
-           this.user_email = data.email;
-           this.user_name = data.user_name;
-          this.userid = data._id;
-          this.app.getActiveNav().push(HomePage,{companyname:this.company_name,userid:this.userid});
+           this.company_name = data[0].company_name;
+           this.user_email = data[0].email;
+           this.user_name = data[0].user_name;
+          this.userid = data[0]._id;
+          
           let toast = this.tostctrl.create({
                 message:'Login Successfully',
                 duration:2000
               });
+              this.app.getActiveNav().push(HomePage,{companyname:this.company_name,userid:this.userid});
               loader.dismiss();
               toast.present();
         }, error => {

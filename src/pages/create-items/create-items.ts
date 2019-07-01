@@ -1,5 +1,5 @@
 import { Component,ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController,Nav,LoadingController, ToastController, Toast,Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController,Nav,LoadingController, ToastController, Toast,Platform,IonicApp } from 'ionic-angular';
 import {Http ,Response} from '@angular/http';
 import {ItemPage} from '../item/item';
 import {GlobalProvider} from '../../providers/global/global';
@@ -35,7 +35,7 @@ export class CreateItemsPage {
   qty:any;
   public saleinformation:boolean=false;
   public purchaseinformation:boolean=false;
-  constructor(public navCtrl: NavController,public platform: Platform,public alertCtrl:AlertController, public app: App,public formbuilder:FormBuilder ,public global:GlobalProvider,public navParams: NavParams, public http:Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+  constructor(public navCtrl: NavController,public platform: Platform,private ionicApp: IonicApp,public alertCtrl:AlertController, public app: App,public formbuilder:FormBuilder ,public global:GlobalProvider,public navParams: NavParams, public http:Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
  console.log(this.global.userid);
  this.formgroup = formbuilder.group({
    name:['',Validators.required],
@@ -47,66 +47,88 @@ export class CreateItemsPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad CreateItemsPage');
     this.platform.registerBackButtonAction(() => {
-          // Catches the active view
-          let nav = this.app.getActiveNavs()[0];
-          let activeView = nav.getActive();                
-          // Checks if can go back before show up the alert
-          if(activeView.name === 'CreateItemsPage') {
-              if (nav.canGoBack()){
-                  nav.pop();
-              } else {
-                  const alert = this.alertCtrl.create({
-                      title: 'Exit',
-                      message: 'Want to Exit App?',
-                      buttons: [{
-                          text: 'Cancel',
-                          role: 'cancel',
-                          handler: () => {
-                            this.nav.setRoot('HomePage');
-                          }
-                      },{
-                          text: 'OK',
-                          handler: () => {
-                            
-                            this.platform.exitApp();
-                          }
-                      }]
-                  });
-                  alert.present();
-              }
-          }
-      });
+      // Catches the active view
+      let nav = this.app.getActiveNavs()[0];
+      let activeView = nav.getActive();  
+      let activePortal = this.ionicApp._loadingPortal.getActive() ||
+      this.ionicApp._modalPortal.getActive() ||
+      this.ionicApp._toastPortal.getActive() ||
+      this.ionicApp._overlayPortal.getActive();
+
+    if (activePortal) {
+      activePortal.dismiss();
+    }
+    else {
+      if(activeView.name === 'CreateItemsPage') {
+        if (nav.canGoBack()){
+            nav.pop();
+        } else {
+            const alert = this.alertCtrl.create({
+                title: 'Exit',
+                message: 'Want to Exit App?',
+                buttons: [{
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: () => {
+                      //this.nav.setRoot('HomePage');
+                    }
+                },{
+                    text: 'OK',
+                    handler: () => {
+                      this.platform.exitApp();
+                    }
+                }]
+            });
+            //alert.present();
+        }
+    } else {
+      this.navCtrl.push(HomePage);
+      }
+    }
+   
+  });
   }
   ionViewDidEnter(){
+    console.log('ionViewDidLoad CreateContactPage');
     this.platform.registerBackButtonAction(() => {
       // Catches the active view
       let nav = this.app.getActiveNavs()[0];
-      let activeView = nav.getActive();                
-      // Checks if can go back before show up the alert
+      let activeView = nav.getActive();  
+      let activePortal = this.ionicApp._loadingPortal.getActive() ||
+      this.ionicApp._modalPortal.getActive() ||
+      this.ionicApp._toastPortal.getActive() ||
+      this.ionicApp._overlayPortal.getActive();
+
+    if (activePortal) {
+      activePortal.dismiss();
+    }
+    else {
       if(activeView.name === 'CreateItemsPage') {
-          if (nav.canGoBack()){
-              nav.pop();
-          } else {
-              const alert = this.alertCtrl.create({
-                  title: 'Exit',
-                  message: 'Want to Exit App?',
-                  buttons: [{
-                      text: 'Cancel',
-                      role: 'cancel',
-                      handler: () => {
-                        this.nav.setRoot('HomePage');
-                      }
-                  },{
-                      text: 'OK',
-                      handler: () => {
-                        
-                        this.platform.exitApp();
-                      }
-                  }]
-              });
-              alert.present();
-          }
+        if (nav.canGoBack()){
+            nav.pop();
+        } else {
+            const alert = this.alertCtrl.create({
+                title: 'Exit',
+                message: 'Want to Exit App?',
+                buttons: [{
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: () => {
+                      this.nav.setRoot('HomePage');
+                    }
+                },{
+                    text: 'OK',
+                    handler: () => {
+                      this.platform.exitApp();
+                    }
+                }]
+            });
+            //alert.present();
+        }
+    } else {
+      this.nav.setRoot('HomePage');
       }
+    }
   });
   }
   

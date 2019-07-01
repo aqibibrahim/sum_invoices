@@ -19,43 +19,44 @@
 </ion-header>
 
 <ion-content padding class="my-class">
-    <!-- <ion-list> -->
+<itemslist *ngFor="let item of items; let index = index"
+[title]="item.item_name"
+textColor="#747474"
+hasMargin="false"
+headerColor="#F53D3D"
+[expanded]="index === 0"
+class="titleheader">
+<ion-row>
+    <ion-col style="font-size: large; color: black" col-6>
+      P.R : {{item.purchase_rate}}  
+    </ion-col>
+    <ion-col style="font-size: large; color: black" col-4>
+      S.R : {{item.sale_rate}}
+    </ion-col>
+  </ion-row>
+  <ion-row style="border-bottom: 1px solid;">
+      <ion-col style="color:#747474">
+        QTY: {{item.item_quantity}} <!--INV no:  {{invoice.item_quantity}} -->
+      </ion-col>
+      <ion-col style="color:#747474" class="ion-text-end">
+       {{item.item_type | uppercase}}
+      </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col style="text-align: center">
+        <button ion-button item-end  (click)="removeItem(item)" color="editbutton" style="border-radius: 10px; width: -webkit-fill-available;"><ion-icon name="trash" style="
+          margin-right: 11%;
+      "></ion-icon>Delete</button>
+        </ion-col>
+        <ion-col style="text-align: center">
+            <button ion-button item-end (click)="edititems(item)" color="editbutton" style="border-radius: 10px; width: -webkit-fill-available;"><ion-icon name="create" style="
+              margin-right: 11%;
+          "></ion-icon>Edit</button>
+        </ion-col>
+      </ion-row>
 
-        <ion-card *ngFor="let item of items" style="
-        border-radius: 7px;">
-            <ion-card-content>
-              <ion-row>
-                <ion-col style="font-size: large; color: black" col-6>
-                    {{item.item_name}}
-                </ion-col>
-                <ion-col style="font-size: large; color: black" col-4>
-                  PKR {{item.sale_rate}}
-                </ion-col>
-              </ion-row>
-              <ion-row style="border-bottom: 1px solid;">
-                <ion-col style="color:#747474">
-                  QTY: {{item.item_quantity}}<!-- INV no:  {{invoice.item_quantity}} -->
-                </ion-col>
-                <ion-col style="color:#747474" class="ion-text-end">
-                 {{item.item_type | uppercase}}
-                </ion-col>
-              </ion-row>
-                  <ion-row>
-                    <ion-col style="text-align: center">
-                    <button ion-button item-end  (click)="removeItem(item)" color="editbutton" style="border-radius: 10px; width: -webkit-fill-available;"><ion-icon name="trash" style="
-                      margin-right: 11%;
-                  "></ion-icon>Delete</button>
-                    </ion-col>
-                    <ion-col style="text-align: center">
-                        <button ion-button item-end (click)="edititems(item)" color="editbutton" style="border-radius: 10px; width: -webkit-fill-available;"><ion-icon name="create" style="
-                          margin-right: 11%;
-                      "></ion-icon>Edit</button>
-                    </ion-col>
-                  </ion-row>
-            </ion-card-content>
-        </ion-card>
-  <ion-fab bottom right >
-    <button ion-fab (click)="createcitems()" color="lightblue"><ion-icon name="add" ></ion-icon></button>
-  </ion-fab>
+</itemslist>
 </ion-content>
-
+<ion-fab bottom right >
+    <button ion-fab (click)="createcitems()" color="lightblue"><ion-icon name="add" ></ion-icon></button>
+    </ion-fab>

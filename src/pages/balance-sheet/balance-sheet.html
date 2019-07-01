@@ -6,10 +6,15 @@
 -->
 <ion-header>
   <ion-navbar  color="lightblue">
-    <ion-title>balance_sheet</ion-title>
+    <ion-title>Balance Sheet</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-
+  <ion-item >
+    <ion-label floating color="lightblue">Date</ion-label>
+    <!-- <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="invoicedate"></ion-input> -->
+    <ion-datetime displayFormat="DD MMM YYYY"  pickerFormat="DD MMM YYYY"  [(ngModel)]="fromdate" cancelText ="Cancel" doneText="Ok" ></ion-datetime>
+  </ion-item>
+  <button color="lightblue" ion-button large  (click)="run_report_balance_sheet()" class="center" style="width:50%; border-radius: 10px;margin-top: 5%">Run Report</button>
 </ion-content>

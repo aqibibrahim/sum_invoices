@@ -6,10 +6,20 @@
 -->
 <ion-header>
   <ion-navbar  color="lightblue">
-    <ion-title>cash-flow-statement</ion-title>
+    <ion-title>Cash Flow Statement</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-
+  <ion-item >
+    <ion-label floating color="lightblue">From</ion-label>
+    <!-- <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="invoicedate"></ion-input> -->
+    <ion-datetime displayFormat="DD MMM YYYY"  pickerFormat="DD MMM YYYY"  [(ngModel)]="fromdate" cancelText ="Cancel" doneText="Ok" ></ion-datetime>
+  </ion-item>
+  <ion-item >
+      <ion-label floating color="lightblue">To</ion-label>
+      <!-- <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="invoicedate"></ion-input> -->
+      <ion-datetime displayFormat="DD MMM YYYY"  pickerFormat="DD MMM YYYY"  [(ngModel)]="todate" cancelText ="Cancel" doneText="Ok" ></ion-datetime>
+    </ion-item>
+<button color="lightblue" ion-button large  (click)="run_report_cash_flow()" class="center" style="width:50%; border-radius: 10px;">Run Report</button>
 </ion-content>
