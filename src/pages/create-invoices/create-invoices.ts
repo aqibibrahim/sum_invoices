@@ -159,14 +159,7 @@ export class CreateInvoicesPage {
     this.amount = 'Amount';
     this.taxtotal = this.navParams.get('taxtotal');
     this.amount_total = this.qty*this.rat;
-    
-    // if(this.taxtotal !== undefined){
-    //   this.subamounttotall = +this.taxtotal;
-    // }
-    // else{
-    //   this.subamounttotall = 0;
-    // }
-    // this.subtotal = (this.qty*this.rat)+this.subamounttotall;
+   
     if(this.value_rate == undefined){
       this.total = 0
     }else{
@@ -330,8 +323,9 @@ export class CreateInvoicesPage {
     console.log(this.gaming.billing_address);
     console.log(this.gaming.shipping_address);
     var key_id = Object.keys(this.gaming)[0];
+    var key_id1 = Object.keys(this.gaming)[1];
     this.customer_id = this.gaming[key_id];
-    console.log(this.customer_id);
+    console.log(key_id1);
     this.billing_address = this.gaming.billing_address;
     this.shipping_address = this.gaming.shipping_address;
     this.gamingname = this.gaming.first_name;
@@ -417,117 +411,139 @@ export class CreateInvoicesPage {
 
    craetepdf(){
     
-     this.pdfnumber ++;
-     console.log(this.gaming);
-     
-     //public anArray:any=[];
-      //var items :any= [this.input_name, this.qty, this.rat]
-     var docDefinition = {
+    var docDefinition = {
 
 
-      content: [
-        { text: 'INVOICE#'+ this.invoice, style: 'header'},
-        { text: new Date().toTimeString(), alignment: 'right'},
+     content: [
+       { text: 'INVOICE#'+ this.invoice, style: 'header'},
+       { text: 'Status:'+ "Pending", style: 'header'},
+       { text: new Date().toTimeString(), alignment: 'right'},
 
-        { text: 'From', style: 'subheader'},
-        "Zekab",
-        "Bahria Town",
-        "IT Company",        
+       { text: 'From', style: 'subheader'},
+       this.global.company_name,
+       "this.shipping_address",
+               
 
-        { text: 'To', style: 'subheader'},
-        this.gaming,
-        this.email,
-        this.order,  
+       { text: 'To', style: 'subheader' },
+       this.gamingname,
+       this.email,
+        
+       { text: 'Invoice Date:', style: 'inoices', alignment: 'right' },
+       {text:this.invoicedate, alignment:'right'},
+       { text: 'Due Date:', style: 'inoices', alignment: 'right' },
+       {text:this.duedate, alignment:'right'},
+       { text: 'P.O #: '+this.order+'', style: 'inoices', alignment: 'right' },
+      //  {text:this.order_number, alignment:'right'},
+       
 
-        { text: 'Items', style: 'subheader'},
-        {
-            style: 'itemsTable',
-            table: {
-                widths: ['*', 75, 75],
-                body: [
-                    [ 
-                        { text: 'Description', style: 'itemsTableHeader' },
-                        
-                        { text: 'Quantity', style: 'itemsTableHeader' },
-                        
-                        { text: 'Price', style: 'itemsTableHeader' },
-                        
-                    ],
-                    [this.input_name,this.qty,this.rat]
-                ]
-            }
-        },
-        {
-            style: 'totalsTable',
-            table: {
-                widths: ['*', 75, 75],
-                body: [
-                    [
-                        '',
-                        'Subtotal',
-                        this.total,
-                    ],
-                    [
-                        '',
-                        'Shipping',
-                        "Bahria Town"
-                    ],
-                    [
-                        '',
-                        'Total',
-                        this.total
-                    ]
-                ]
-            },
-            layout: 'noBorders'
-        },
-    ],
-      styles: {
-        header: {
-            fontSize: 20,
-            bold: true,
-            margin: [0, 0, 0, 10],
-            alignment: 'right'
-        },
-        subheader: {
-            fontSize: 16,
-            bold: true,
-            margin: [0, 20, 0, 5]
-        },
-        itemsTable: {
-            margin: [0, 5, 0, 15]
-        },
-        itemsTableHeader: {
-            bold: true,
-            fontSize: 13,
-            color: 'black'
-        },
-        totalsTable: {
-            bold: true,
-            margin: [0, 30, 0, 0]
-        }
-    }
-     
-    }
-    this.pdfObj = pdfMake.createPdf(docDefinition);
-
-    if (this.plt.is('cordova')) {
-      this.pdfObj.getBuffer((buffer) => {
-        var blob = new Blob([buffer], { type: 'application/pdf' });
-      //let filepath = this.file.externalDataDirectory;
-      //let filename = Invoice'+this.invoice+'.pdf';
-        // Save the PDF to the data Directory of our App
-        this.file.writeFile(this.file.externalDataDirectory, 'Invoice'+this.invoice+'.pdf', blob, { replace: true }).then(fileEntry => {
-          this.fileOpener.open(this.file.externalDataDirectory +'Invoice'+this.invoice+'.pdf', 'application/pdf')
-  .then(() => console.log('File is opened'))
-  .catch(e => console.log('Error opening file', e));
-        })
-      });
-    } else {
-      // On a browser simply use download!
-      this.pdfObj.download();
-    }
+       { text: 'Items', style: 'subheader'},
+       {
+           style: 'itemsTable',
+           table: {
+               widths: ['*', 75, 75,75],
+               body: [
+                   [ 
+                       { text: 'Item&Description', style: 'itemsTableHeader' },
+                       
+                       { text: 'Quantity', style: 'itemsTableHeader' },
+                       
+                       { text: 'Rate', style: 'itemsTableHeader' },
+                       { text: 'Amount', style: 'itemsTableHeader' },
+                       
+                   ],
+                   [this.itemname1,this.quantity,this.rate, this.total]
+               ]
+           }
+       },
+       {
+           style: 'totalsTable',
+           table: {
+               widths: ['*', 75,75,75,75],
+               body: [
+                   [
+                       'Subtotal',
+                       this.amount_total,
+                      
+                   ],
+                   [
+                       'Shipping',
+                       this.shippingprice,
+                   ],
+                   [
+                       'Adjustment',
+                       this.adjustmentprice
+                   ],
+                   [
+                     'Total',
+                      this.total
+                   ],
+                   [
+                     'Balance Due',
+                      this.total
+                   ]
+               ]
+           },
+           
+           layout: 'noBorders'
+       },
+       { text: 'Notes:', style: 'subheader'},
+       { text: 'Thanks for Your Business', style: 'subheader'},
+   ],
+     styles: {
+       header: {
+           fontSize: 20,
+           bold: true,
+           margin: [0, 0, 0, 10],
+           alignment: 'right'
+       },
+       subheader: {
+           fontSize: 16,
+           bold: true,
+           margin: [0, 20, 0, 5]
+       },
+       inoices: {
+        fontSize: 16,
+        bold: true,
+        margin: [0, 20, 0, 5]
+    },
+       
+       itemsTable: {
+           margin: [0, 5, 0, 15]
+       },
+       itemsTableHeader: {
+           bold: true,
+           fontSize: 13,
+           color: 'black',
+           
+       },
+       totalsTable: {
+          //margin: 2%,
+        
+           bold: true,
+           margin: [0, 0, 0, 0],
+           alignment:'right'
+           
+       }
    }
+     
+   }
+   this.pdfObj = pdfMake.createPdf(docDefinition);
+
+   if (this.plt.is('cordova')) {
+     this.pdfObj.getBuffer((buffer) => {
+       var blob = new Blob([buffer], { type: 'application/pdf' });
+       this.file.writeFile(this.file.externalDataDirectory, 'Invoice'+this.invoice+'.pdf', blob, { replace: true }).then(fileEntry => {
+         this.fileOpener.open(this.file.externalDataDirectory +'Invoice'+this.invoice+'.pdf', 'application/pdf')
+ .then(() => console.log('File is opened'))
+ .catch(e => console.log('Error opening file', e));
+       })
+     });
+   } else {
+     // On a browser simply use download!
+     this.pdfObj.download();
+   }
+  }
+
    /////////Open invoice detail page/////////////////////
    invoicedetails(){
     var key = Object.keys(this.gaming)[1];
@@ -583,7 +599,7 @@ export class CreateInvoicesPage {
            invoice_number:this.invoice,
            invoice_date:this.invoicedate,
            Due_date:this.duedate,
-           sales_person:this.salesperson,
+           //sales_person:this.salesperson,
            customer_note:this.customer_notes,
            terms_and_conditions:this.terms_condition,
            item_quantity:this.quantity,
@@ -611,6 +627,7 @@ export class CreateInvoicesPage {
              duration:2000
            });
            toast.present();
+           
        //    this.navCtrl.push(InvoicesPage);
            this.navCtrl.push(InvoicedeatilsPage,{'customername':this.gamingname,'invoice':this.invoice,'balance':this.total,'invoicedate':this.invoicedate,'duedate':this.duedate,'description':this.desc,
          'item_name':this.value_item,'subtotal':this.value_rate,'discount':this.discountprice,'shipping':this.shippingprice,'adjustment':this.adjustmentprice,'quantity':this.quantity,'rate':this.value_rate1,

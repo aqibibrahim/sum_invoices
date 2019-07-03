@@ -56,6 +56,7 @@ export class InvoicedeatilsPage {
     from: '',
     text: ''
   }
+
   constructor(public navCtrl: NavController, private ionicApp: IonicApp,public alertCtrl:AlertController,public app: App,public global:GlobalProvider ,public navParams: NavParams, public platform: Platform, private socialSharing: SocialSharing,public emailComposer: EmailComposer,private plt: Platform, private file: File, private fileOpener: FileOpener,private actionSheet: ActionSheet,public actionSheetCtrl: ActionSheetController) {
   
     // Getting Parameter Value from cREATE iNVOICE pAGE
@@ -100,10 +101,12 @@ export class InvoicedeatilsPage {
       this.adjustment = this.adjustment;
     }
 
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad InvoicedeatilsPage');
+    this.craetepdf();
     //this.setBackButtonAction()
     this.platform.registerBackButtonAction(() => {
       // Catches the active view
@@ -350,9 +353,7 @@ export class InvoicedeatilsPage {
      this.pdfObj.getBuffer((buffer) => {
        var blob = new Blob([buffer], { type: 'application/pdf' });
        this.file.writeFile(this.file.externalDataDirectory, 'Invoice'+this.invoice_number+'.pdf', blob, { replace: true }).then(fileEntry => {
-         this.fileOpener.open(this.file.externalDataDirectory +'Invoice'+this.invoice_number+'.pdf', 'application/pdf')
- .then(() => console.log('File is opened'))
- .catch(e => console.log('Error opening file', e));
+        console.log("Pdf save in Phone directory")
        })
      });
    } else {
@@ -363,5 +364,9 @@ export class InvoicedeatilsPage {
   saveinvoice(){
     
   }
-
+  viewpdf(){
+    this.fileOpener.open(this.file.externalDataDirectory +'Invoice'+this.invoice_number+'.pdf', 'application/pdf')
+    .then(() => console.log('File is opened'))
+    .catch(e => console.log('Error opening file', e));
+  }
 }

@@ -52,7 +52,7 @@
               <ion-label color="lightblue">Quantity</ion-label>  
           </ion-item>
           <ion-item>
-              <ion-input type="number" placeholder="Quantity" [(ngModel)]="qty"></ion-input>
+              <ion-input type="number" placeholder="Quantity" value={{this.oldqty}} [(ngModel)]="qty"></ion-input>
           </ion-item>
           </div>
         </ion-card-content>
@@ -67,7 +67,7 @@
               
               <div>
                       <ion-label color="red">Rate</ion-label>
-                      <ion-input type="number" placeholder="Enter Rate" [(ngModel)]="sale_rate"> </ion-input>
+                      <ion-input type="number" placeholder="Enter Rate" value={{this.old_sale_rate}} [(ngModel)]="sale_rate"> </ion-input>
                   
                       <ion-label color="red">Account</ion-label>
                       <ion-input type="text" placeholder="Select Account" value={{this.sale_account}} [(ngModel)]="sale_account"></ion-input>
@@ -93,7 +93,7 @@
                 
                 <div >
                         <ion-label color="red">Purchase Rate</ion-label>
-                        <ion-input type="number" placeholder="Enter Rate" [(ngModel)]="purchase_rate"></ion-input>
+                        <ion-input type="number" placeholder="Enter Rate" value={{this.old_purchase_rate}} [(ngModel)]="purchase_rate"></ion-input>
                     
                         <ion-label color="red">Account</ion-label>
                         <ion-input type="text" placeholder="Select Account" value={{this.value_purchase_desc}} [(ngModel)]="purchase_account">{{this.value_purchase_desc}}</ion-input>

@@ -11,6 +11,8 @@ import { FileOpener } from '@ionic-native/file-opener';
 import {GlobalProvider} from '../../providers/global/global';
 import {HomePage} from '../home/home';
 import { App } from 'ionic-angular';
+import { SocialSharing } from '@ionic-native/social-sharing';
+
 
 /**
  * Generated class for the InvoicesPage page.
@@ -29,6 +31,7 @@ export class InvoicesPage {
   @ViewChild(Navbar) navBar: Navbar;
   dateinput:any;
   output:any;
+  invoicenumber:any;
   letterObj = {
     to: '',
     from: '',
@@ -38,7 +41,7 @@ export class InvoicesPage {
   duedate=[];
   //selectcity = [];
   pdfObj = null;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public app: App,public alertCtrl:AlertController,public global:GlobalProvider,private plt: Platform, public http: Http,private file: File, private fileOpener: FileOpener,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private socialSharing: SocialSharing,public app: App,public alertCtrl:AlertController,public global:GlobalProvider,private plt: Platform, public http: Http,private file: File, private fileOpener: FileOpener,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     console.log(this.global.userid);
     this.http.get('https://sum-finance-latest2.herokuapp.com/invoice/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
     console.log(data);  
@@ -46,6 +49,7 @@ export class InvoicesPage {
       alert("There is no invoice genrated by this user");
     }
       this.invoices = data 
+
        });
   }
 
@@ -74,7 +78,17 @@ export class InvoicesPage {
      //this.navCtrl.pop()
     }
   }
+  sharelink(invoice){
+    //Common sharing event will open all available application to share
+    this.socialSharing.share("Message","Subject", this.file.externalDataDirectory +'Invoice'+invoice.invoice_number+'.pdf', invoice.invoice_number)
+      .then((entries) => {
+        console.log('success ' + JSON.stringify(entries));
+      })
+      .catch((error) => {
+        alert('error ' + JSON.stringify(error));
+      });
  
+}
   createinvoice(){
 
     this.navCtrl.push(CreateInvoicesPage);
@@ -147,6 +161,7 @@ export class InvoicesPage {
 alert.present();
 }
 edititems(invoice){
+
 this.navCtrl.push(EditinvoicePage,{id:invoice._id});
 }
 }

@@ -1,5 +1,5 @@
 import { Component,ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams,LoadingController, ToastController,Nav,AlertController,Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,LoadingController, ToastController,Nav,AlertController,Platform,IonicApp } from 'ionic-angular';
 import {Http ,Response} from '@angular/http';
 import {InvoicesPage} from '../invoices/invoices';
 import { App } from 'ionic-angular';
@@ -39,7 +39,7 @@ status:any;
   value_item_name:any;
   paymentoption:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public app: App,public platform:Platform,public alertCtrl:AlertController,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+  constructor(public navCtrl: NavController, private ionicApp: IonicApp,public navParams: NavParams,public app: App,public platform:Platform,public alertCtrl:AlertController,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     this.id= this.navParams.get('id');
     this.http.get('https://sum-finance-latest2.herokuapp.com/invoice/get/'+this.id+'').map(res => res.json()).subscribe(data => {
       console.log(data);
@@ -69,32 +69,87 @@ console.log( this.value_invoice_number);
     this.platform.registerBackButtonAction(() => {
       // Catches the active view
       let nav = this.app.getActiveNavs()[0];
-      let activeView = nav.getActive();                
-      // Checks if can go back before show up the alert
+      let activeView = nav.getActive();  
+      let activePortal = this.ionicApp._loadingPortal.getActive() ||
+      this.ionicApp._modalPortal.getActive() ||
+      this.ionicApp._toastPortal.getActive() ||
+      this.ionicApp._overlayPortal.getActive();
+
+    if (activePortal) {
+      activePortal.dismiss();
+    }
+    else {
       if(activeView.name === 'EditinvoicePage') {
-          if (nav.canGoBack()){
-              nav.pop();
-          } else {
-            this.navCtrl.push(InvoicesPage);
-          }
+        if (nav.canGoBack()){
+            nav.pop();
+        } else {
+            const alert = this.alertCtrl.create({
+                title: 'Exit',
+                message: 'Want to Exit App?',
+                buttons: [{
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: () => {
+                      //this.nav.setRoot('HomePage');
+                    }
+                },{
+                    text: 'OK',
+                    handler: () => {
+                      this.platform.exitApp();
+                    }
+                }]
+            });
+            //alert.present();
+        }
+    } else {
+      this.navCtrl.push(InvoicesPage);
       }
+    }
+   
   });
   }
   ionViewDidEnter() {
-    
     this.platform.registerBackButtonAction(() => {
-     // Catches the active view
-     let nav = this.app.getActiveNavs()[0];
-     let activeView = nav.getActive();                
-     // Checks if can go back before show up the alert
-     if(activeView.name === 'EditinvoicePage') {
-         if (nav.canGoBack()){
-           this.navCtrl.push(InvoicesPage);
-         } else {
-           this.navCtrl.push(InvoicesPage);
-         }
-     }
- });
+      // Catches the active view
+      let nav = this.app.getActiveNavs()[0];
+      let activeView = nav.getActive();  
+      let activePortal = this.ionicApp._loadingPortal.getActive() ||
+      this.ionicApp._modalPortal.getActive() ||
+      this.ionicApp._toastPortal.getActive() ||
+      this.ionicApp._overlayPortal.getActive();
+
+    if (activePortal) {
+      activePortal.dismiss();
+    }
+    else {
+      if(activeView.name === 'EditinvoicePage') {
+        if (nav.canGoBack()){
+            nav.pop();
+        } else {
+            const alert = this.alertCtrl.create({
+                title: 'Exit',
+                message: 'Want to Exit App?',
+                buttons: [{
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: () => {
+                      //this.nav.setRoot('HomePage');
+                    }
+                },{
+                    text: 'OK',
+                    handler: () => {
+                      this.platform.exitApp();
+                    }
+                }]
+            });
+            //alert.present();
+        }
+    } else {
+      this.navCtrl.push(InvoicesPage);
+      }
+    }
+   
+  });
     
 }
   updateinvoice(){
@@ -128,5 +183,49 @@ console.log( this.value_invoice_number);
   }
   isReadonly() {
     return this.isReadonly;   //return true/false 
+  }
+  deleteinvoice(){
+    const alert = this.alertCtrl.create({
+      title: 'Invoice Delete',
+      message: 'Do you Want to Delete this Invoice',
+      buttons: [{
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+                              }
+      },{
+          text: 'OK',
+          handler: () => {
+            let loader = this.loadingCtrl.create({
+              content:'Waiting...'
+            });
+            loader.present();
+            let data={
+              id:this.id
+            }
+            this.http.post(' https://sum-finance-latest2.herokuapp.com/invoice/delete/'+this.id+'', data)
+            .subscribe(res => {
+              
+              loader.dismiss();
+                    let toast = this.tostctrl.create({
+                      message:'Item Delete Successfully',
+                      duration:2000
+                    });
+                    toast.present();
+              this.navCtrl.push(InvoicesPage);
+            }, err => {
+              loader.dismiss();
+                    let toast = this.tostctrl.create({
+                      message:'Item not Delete',
+                      duration:2000
+                    });
+                    toast.present();
+             
+            });
+          }
+      }]
+  });
+  alert.present();
   }
 }

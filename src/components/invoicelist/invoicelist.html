@@ -1,17 +1,18 @@
-<ion-list class="itemslist">
+<ion-list class="invoicelist">
     <ion-list-header no-lines no-padding>
       <button ion-item detail-none
               [style.background]="contentColor"
               (click)="toggleAccordion()"
               class="accordion-header"
               [class.active]="expanded">
+              <label item-right class="statuscolor">{{ status }}</label>  
           <ion-icon
             item-right
             name="ios-arrow-forward"
             class="ionicicons">
           </ion-icon>
           {{ title }}
-          
+       
       </button>
       <section #accordionContent
                [style.background]="contentColor"

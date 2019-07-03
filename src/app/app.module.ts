@@ -76,6 +76,7 @@ import {BalanceSheetReportPage} from '../pages/balance-sheet-report/balance-shee
 import {CashFlowReportPage} from '../pages/cash-flow-report/cash-flow-report';
 import {ItemslistComponent} from '../components/itemslist/itemslist';
 import {ContactlistComponent} from '../components/contactlist/contactlist';
+import {InvoicelistComponent} from '../components/invoicelist/invoicelist';
 @NgModule({
   declarations: [
     MyApp,
@@ -128,7 +129,8 @@ import {ContactlistComponent} from '../components/contactlist/contactlist';
     BalanceSheetReportPage,
     CashFlowReportPage,
     ItemslistComponent,
-    ContactlistComponent
+    ContactlistComponent,
+    InvoicelistComponent
   ],
   imports: [ 
     FormsModule, 

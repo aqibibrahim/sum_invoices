@@ -40,7 +40,7 @@
           <p>Invoice# {{invoice_number}}</p>
           <h3 style="
           text-decoration-line: underline;
-          ">{{customer_name}}</h3>
+          ">Mr. {{customer_name}}</h3>
           <h2>PKR : {{balance}}</h2>
           <p style="text-transform: uppercase;font-family: fantasy;font-size: large;color: greenyellow;font-weight: bold;">Status: {{this.status}}</p>
 
@@ -201,5 +201,7 @@
           <p style="color: coral">Attachment</p>
           <p style="color:grey"> Attachment List is Empty</p>   
           </ion-item>
-
+          <button ion-button item-end  (click)="viewpdf()" color="editbutton" style="border-radius: 10px; width: -webkit-fill-available;"><ion-icon  name="folder-open" style="
+            margin-right: 11%;
+        "></ion-icon>View Pdf</button>
           </ion-content>

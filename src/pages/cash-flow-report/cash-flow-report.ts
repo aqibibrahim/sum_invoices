@@ -31,6 +31,31 @@ export class CashFlowReportPage {
   prepayment:any;
   outgoing:any;
 
+  fixedprecash:any;
+  fixedpayment:any;
+  fixedpreexpense:any;
+  fixedcash:any;
+  fixedexpense:any;
+  fixedopening:any;
+  fixedcompanyname:any;
+  fixedendingcash:any;
+  fixedprepayment:any;
+  fixedoutgoing:any;
+
+  stringprecash:any;
+  stringpayment:any;
+  stringpreexpense:any;
+  stringcash:any;
+  stringexpense:any;
+  stringopening:any;
+  stringcompanyname:any;
+  stringendingcash:any;
+  stringprepayment:any;
+  stringoutgoing:any;
+    
+
+
+
   constructor(public navCtrl: NavController, public navParams: NavParams,public loadingCtrl:LoadingController, public http:Http,public global:GlobalProvider) {
     this.user_id = this.navParams.get('userid');
     this.s_date = this.navParams.get('startdate');
@@ -63,6 +88,13 @@ export class CashFlowReportPage {
         this.preexpense = this.datarecord[0].PreExpense;
         this.prepayment = this.datarecord[0].PrePayment;
 
+        this.fixedpayment = this.payment.toFixed(2);
+        this.fixedcash = this.cash.toFixed(2);
+        this.fixedexpense = this.expense.toFixed(2);
+        this.fixedprecash = this.precash.toFixed(2);
+        this.fixedpreexpense = this.preexpense.toFixed(2);
+        this.fixedprepayment = this.prepayment.toFixed(2);
+
         if(this.precash == undefined){
           this.precash =0;
         }
@@ -82,19 +114,34 @@ export class CashFlowReportPage {
           this.expense = 0;
         }
         this.opening = this.precash-(this.prepayment-this.preexpense);
+        this.fixedopening = this.opening.toFixed(2);
+
         if(this.opening == NaN){
           this.opening = 0;
         }
         this.outgoing = this.expense+this.payment;
+        this.fixedoutgoing = this.outgoing.toFixed(2);
         if(this.outgoing == NaN){
           this.outgoing = 0;
         }
 
         this.endingcash = (this.opening + this.cash)-this.outgoing;
+        this.fixedendingcash = this.endingcash.toFixed(2);
         loader.dismiss();
       }, error => {
       console.log("Oooops!");
        });
+
+       this.stringpayment = this.fixedpayment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+       this.stringcash = this.fixedcash.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+       this.stringexpense = this.fixedexpense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+       this.stringprecash = this.fixedprecash.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+       this.stringpreexpense = this.fixedpreexpense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+       this.stringprepayment = this.fixedprepayment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+       this.stringopening = this.fixedopening.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+       this.stringoutgoing = this.fixedoutgoing.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+       this.stringendingcash = this.fixedendingcash.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+
 
   }
 

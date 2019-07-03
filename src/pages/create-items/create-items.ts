@@ -133,8 +133,8 @@ export class CreateItemsPage {
   }
   
   createitem(){
-    if(this.sexe == "" || this.name == undefined || this.units == undefined || this.qty == undefined || this.sale_rate == undefined || this.sale_account == undefined || this.sale_desc == undefined
-    || this.purchase_rate == undefined || this.purchase_account == undefined || this.purchase_desc == undefined){
+    if(this.sexe == "" || this.name == undefined || this.units == undefined || this.qty == undefined || this.sale_rate == undefined || this.sale_desc == undefined
+    || this.purchase_rate == undefined || this.purchase_desc == undefined){
       alert ("Please fill all the fields");
     }
     else{
@@ -152,11 +152,11 @@ export class CreateItemsPage {
       sale_tax:this.sale_tax,
       sale_desc:this.sale_desc,
       purchase_rate:this.purchase_rate,
-      purchase_account:this.purchase_account,
+      //purchase_account:this.purchase_account,
       purchase_desc:this.purchase_desc,
       item_quantity:this.qty,
-      userId:this.global.userid, 
-      sale_account:this.sale_account
+      userId:this.global.userid
+      //sale_account:this.sale_account
 
     };
     //console.log(this.data.username);
@@ -181,7 +181,7 @@ export class CreateItemsPage {
                       text: 'Cancel',
                       role: 'cancel',
                       handler: () => {
-                        this.nav.setRoot('HomePage');
+                        this.nav.setRoot('ItemPage');
                       }
                   },{
                       text: 'OK',

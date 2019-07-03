@@ -36,59 +36,67 @@
 
       <ion-row style="border-bottom: gray 1px solid; font-size: medium;text-align: left">
           <ion-col>
-              <ion-item style="min-height: fit-content;">
+              <ion-item style="min-height: fit-content; padding-left: initial">
                   <ion-label style="margin: 0px 0px 0px 0px">Cash</ion-label>
                 </ion-item>
           </ion-col>
-
+          <ion-col style="padding-right: initial">
+            <ion-item style="text-align: right;min-height: fit-content;">
+                <ion-label style="margin: 0px 0px 0px 0px">{{this.stringcash}}</ion-label>
+              </ion-item>
+        </ion-col>
         </ion-row>
-        <ion-row>
+        <!-- <ion-row>
           <ion-col>
               <ion-item style="text-align: right;min-height: fit-content;">
-                  <ion-label style="margin: 0px 0px 0px 0px">{{this.cash}}</ion-label>
+                  <ion-label style="margin: 0px 0px 0px 0px">{{this.stringcash}}</ion-label>
                 </ion-item>
           </ion-col>
-        </ion-row>
+        </ion-row> -->
   
-        
       <ion-row style="border-bottom: gray 1px solid;font-size: medium;text-align: left">
         <ion-col>
-            <ion-item style="min-height: fit-content;">
+            <ion-item style="min-height: fit-content; padding-left: initial">
                 <ion-label style="margin: 0px 0px 0px 0px">Recievable</ion-label>
               </ion-item>
         </ion-col>
+        <ion-col style="padding-right: initial">
+          <ion-item style="text-align: right; min-height: fit-content;">
+              <ion-label style="margin: 0px 0px 0px 0px">{{this.stringrecievable}}</ion-label>
+            </ion-item>
+      </ion-col>
       </ion-row>
-      <ion-row>
+     
+ <ion-row style="border-bottom: gray 1px solid;font-size: medium;text-align: left">
         <ion-col>
-            <ion-item style="text-align: right; min-height: fit-content;">
-                <ion-label style="margin: 0px 0px 0px 0px">{{this.recievable}}</ion-label>
-              </ion-item>
-        </ion-col>
-      </ion-row>
-
-      <ion-row style="border-bottom: gray 1px solid;font-size: medium;text-align: left">
-        <ion-col>
-            <ion-item style="min-height: fit-content;">
+            <ion-item style="min-height: fit-content; padding-left: initial">
                 <ion-label style="margin: 0px 0px 0px 0px">Inventory</ion-label>
               </ion-item>
         </ion-col>
+        <ion-col style="padding-right: initial">
+          <ion-item style="text-align: right;min-height: fit-content;">
+              <ion-label style="margin: 0px 0px 0px 0px">{{this.stringinventory}}</ion-label>
+            </ion-item>
+      </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col>
-            <ion-item style="text-align: right;min-height: fit-content;">
-                <ion-label style="margin: 0px 0px 0px 0px">{{this.inventory}}</ion-label>
-              </ion-item>
+     
+      <ion-row style="background-color: #D1D3D3; color: black; font-size: medium; font-weight: bold">
+        <ion-col >
+            Total 
+        </ion-col>
+        <ion-col style="text-align: right;color: coral; font-size: medium">
+          {{this.stringtotalassets}}
         </ion-col>
       </ion-row>
 
-        <ion-row style="background-color:#D1D3D3; color: black;font-size: larger;">
+        <!-- <ion-row style="background-color:#D1D3D3; color: black;font-size: meduim; font-weight: bold">
         <ion-col>
             Total 
         </ion-col>
-        <ion-col style="text-align: right;color: coral; font-size: larger">
-            {{this.totalassets}}
+        <ion-col style="text-align: right;color: coral; font-size: meduim">
+            {{this.stringtotalassets}}
         </ion-col>
-      </ion-row>
+      </ion-row> -->
 
       
       
@@ -104,54 +112,51 @@
         </ion-row>
     
       <ion-row style="border-bottom: gray 1px solid;font-size: medium;text-align: left">
-        <ion-col>
-            <ion-item style="min-height: fit-content;">
-                <ion-label style="margin: 0px 0px 0px 0px">Capital</ion-label>
+        <ion-col >
+            <ion-item style="min-height: fit-content; padding-left: initial">
+                <ion-label style="margin: 0px 0px 0px 0px;">Capital</ion-label>
               </ion-item>
         </ion-col>
+        <ion-col style="padding-right: initial">
+          <ion-item style="text-align: right;min-height: fit-content;">
+              <ion-label style="margin: 0px 0px 0px 0px">{{this.stringpayable}}</ion-label>
+            </ion-item>
+      </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col>
-            <ion-item style="text-align: right;min-height: fit-content;">
-                <ion-label style="margin: 0px 0px 0px 0px">{{this.payable}}</ion-label>
-              </ion-item>
-        </ion-col>
-      </ion-row>
+   
       <ion-row style="border-bottom: gray 1px solid;font-size: medium;text-align: left">
           <ion-col >
-              <ion-item style="min-height: fit-content;">
+              <ion-item style="min-height: fit-content; padding-left: initial">
                   <ion-label style="margin: 0px 0px 0px 0px">Profit</ion-label>
                 </ion-item>
           </ion-col>
+          <ion-col style="padding-right: initial">
+            <ion-item style="text-align: right;min-height: fit-content;">
+                <ion-label style="margin: 0px 0px 0px 0px">{{this.stringprofit}}</ion-label>
+              </ion-item>
+        </ion-col>
       </ion-row>
-      <ion-row>
-          <ion-col>
-              <ion-item style="text-align: right;min-height: fit-content;">
-                  <ion-label style="margin: 0px 0px 0px 0px">{{this.profit}}</ion-label>
-                </ion-item>
-          </ion-col>
-        </ion-row>
+    
 
         <ion-row style="border-bottom: gray 1px solid;font-size: medium;text-align: left">
             <ion-col >
-                <ion-item style="min-height: fit-content;">
+                <ion-item style="min-height: fit-content; padding-left: initial">
                     <ion-label style="margin: 0px 0px 0px 0px">Payable</ion-label>
                   </ion-item>
             </ion-col>
+            <ion-col style="padding-right: initial">
+              <ion-item style="text-align: right;min-height: fit-content;">
+                  <ion-label style="margin: 0px 0px 0px 0px">{{this.stringpayable}}</ion-label>
+                </ion-item>
+          </ion-col>
         </ion-row>
-        <ion-row>
-            <ion-col>
-                <ion-item style="text-align: right;min-height: fit-content;">
-                    <ion-label style="margin: 0px 0px 0px 0px">{{this.payable}}</ion-label>
-                  </ion-item>
-            </ion-col>
-          </ion-row>
-     <ion-row style="background-color: #D1D3D3; color: black; font-size: larger">
+     
+     <ion-row style="background-color: #D1D3D3; color: black; font-size: medium; font-weight: bold">
         <ion-col >
             Total 
         </ion-col>
-        <ion-col style="text-align: right;color: coral; font-size: larger">
-       {{this.liablity}}
+        <ion-col style="text-align: right;color: coral; font-size: medium">
+       {{this.stringliablity}}
         </ion-col>
       </ion-row>
   </ion-card-content>
