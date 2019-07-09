@@ -48,8 +48,21 @@ export class InvoicesPage {
     if(data.length == 0){
       alert("There is no invoice genrated by this user");
     }
-      this.invoices = data 
 
+    data.sort(function (a, b) {
+      var key1 = a.invoice_date;
+      var key2 = b.invoice_date;
+  
+      if (key1 < key2) {
+          return -1;
+      } else if (key1 == key2) {
+          return 0;
+      } else {
+          return 1;
+      }
+  });
+      this.invoices = data 
+      console.log(this.invoices)
        });
   }
 
@@ -80,14 +93,16 @@ export class InvoicesPage {
   }
   sharelink(invoice){
     //Common sharing event will open all available application to share
-    this.socialSharing.share("Message","Subject", this.file.externalDataDirectory +'Invoice'+invoice.invoice_number+'.pdf', invoice.invoice_number)
-      .then((entries) => {
-        console.log('success ' + JSON.stringify(entries));
-      })
-      .catch((error) => {
-        alert('error ' + JSON.stringify(error));
-      });
- 
+    // this.socialSharing.share("Message","Subject", this.file.externalDataDirectory +'Invoice'+invoice.invoice_number+'.pdf', invoice.invoice_number)
+    //   .then((entries) => {
+    //     console.log('success ' + JSON.stringify(entries));
+    //   })
+    //   .catch((error) => {
+    //     alert('error ' + JSON.stringify(error));
+    //   });
+      this.fileOpener.open(this.file.externalDataDirectory +'Invoice'+invoice.invoice_number+'.pdf', 'application/pdf')
+      .then(() => console.log('File is opened'))
+      .catch(e => console.log('Error opening file', e));
 }
   createinvoice(){
 
@@ -97,7 +112,20 @@ export class InvoicesPage {
   this.http.get('https://sum-finance-latest2.herokuapp.com/invoice/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
     console.log(data);
        //this.posts = data.json();
-       this.invoices = data 
+       data.sort(function (a, b) {
+        var key1 = a.invoice_date;
+        var key2 = b.invoice_date;
+    
+        if (key1 < key2) {
+            return -1;
+        } else if (key1 == key2) {
+            return 0;
+        } else {
+            return 1;
+        }
+    });
+        this.invoices = data 
+        console.log(this.invoices)
             });
 
            this.plt.registerBackButtonAction(() => {

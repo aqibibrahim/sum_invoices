@@ -1,11 +1,11 @@
 <ion-list class="invoicelist">
-    <ion-list-header no-lines no-padding>
+    <ion-list-header no-lines no-padding style="border-radius: 5px">
       <button ion-item detail-none
-              [style.background]="contentColor"
+              [style.background]="textColor"
               (click)="toggleAccordion()"
               class="accordion-header"
               [class.active]="expanded">
-              <label item-right class="statuscolor">{{ status }}</label>  
+              <label item-right class="statuscolor">{{ status  | date: 'yyyy/MM/dd' }}</label>  
           <ion-icon
             item-right
             name="ios-arrow-forward"

@@ -16,7 +16,7 @@ invoicelist {
     // }
 
     .accordion-content {
-        transition: 0.3s ease-in-out;
+        // transition: 0.3s ease-in-out;
         &.active {
             padding: .75rem;
         }
@@ -24,19 +24,19 @@ invoicelist {
 
     .label {
         margin: 0px;
-        color: #747474;
+        color: lightgray;
        
     }
     .ionicicons {
         transition: all .25s ease-in;
         transform: rotate(0);
-        color: #747474;
+        color: white;
     }
     .active  .ionicicons {
         transform: rotate(90deg);
     }
     .statuscolor{
-        color: green;
+        color: white;
         margin-right: 15% !important;
     }
 }

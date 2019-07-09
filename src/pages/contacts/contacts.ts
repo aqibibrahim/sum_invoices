@@ -32,10 +32,13 @@ export class ContactsPage {
     
     this.http.get('https://sum-finance-latest2.herokuapp.com/finance/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
      console.log(data);
+    
      if(data.length == 0){
       alert("There is no Contact added");
     }
-        this.posts = data 
+    data.sort((a, b) => a.first_name.localeCompare(b.first_name))
+    console.log(data);
+       this.posts = data;
       });
       this.platform.registerBackButtonAction(() => {
           // Catches the active view
@@ -56,7 +59,9 @@ export class ContactsPage {
       this.http.get('https://sum-finance-latest2.herokuapp.com/finance/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
         console.log(data);
            //this.posts = data.json();
-           this.posts = data 
+           data.sort((a, b) => a.first_name.localeCompare(b.first_name))
+      console.log(data);
+         this.posts = data;
            
          });
          this.platform.registerBackButtonAction(() => {

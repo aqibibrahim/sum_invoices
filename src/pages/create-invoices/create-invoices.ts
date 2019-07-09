@@ -20,6 +20,7 @@ import {HomePage} from '../home/home';
 import { App } from 'ionic-angular';
 import { CreateContactPage } from '../create-contact/create-contact';
 import { CreateItemsPage } from '../create-items/create-items';
+
 /**
  * Generated class for the CreateInvoicesPage page.
  *
@@ -49,6 +50,7 @@ export class CreateInvoicesPage {
   purchase_rate:any;
   sale_rate:any;
   item_id:any;
+  status = "Pending"
   //tax:any;
   dst:any;
   shp:any;
@@ -121,11 +123,15 @@ export class CreateInvoicesPage {
 
   billing_address:any;
   shipping_address:any;
+  discamount:any;
+  fixeddistamount:any;
+  gentotal:any;
 
   gaming:any;
   invoicedate:any;
   duedate:any;
   userid:any;
+  contact_sal:any;
 
   letterObj = {
     to: '',
@@ -162,8 +168,10 @@ export class CreateInvoicesPage {
    
     if(this.value_rate == undefined){
       this.total = 0
+      this.gentotal =this.total.toFixed(2);
     }else{
       this.total = this.value_rate;
+      this.gentotal =this.total.toFixed(2);
     }
     this.http.get('https://sum-finance-latest2.herokuapp.com/finance/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
      console.log(data);
@@ -325,7 +333,8 @@ export class CreateInvoicesPage {
     var key_id = Object.keys(this.gaming)[0];
     var key_id1 = Object.keys(this.gaming)[1];
     this.customer_id = this.gaming[key_id];
-    console.log(key_id1);
+    this.contact_sal = this.gaming.cont_saln;
+    console.log(this.gaming.cont_saln);
     this.billing_address = this.gaming.billing_address;
     this.shipping_address = this.gaming.shipping_address;
     this.gamingname = this.gaming.first_name;
@@ -335,46 +344,59 @@ export class CreateInvoicesPage {
   onInputTime(data) : void {
     console.log("onChangeTime to time: " + this.discountprice + ". Event data: " + data);  
     this.dst = +this.discountprice;
+    this.discamount = (this.total/100)*this.dst;
+    this.fixeddistamount=this.discamount.toFixed(2);
     //this.total = this.dst + this.subtotal;  
     if(this.shp !== undefined && this.dst !== undefined){
-      this.total = this.shp + this.value_rate - this.dst;  
+      this.total = this.shp + this.value_rate - this.fixeddistamount;  
+      
     } 
    else if(this.adj !== undefined && this.shp !== undefined) {
-      this.total =  this.shp + this.value_rate + this.adj - this.dst;  
+      this.total =  this.shp + this.value_rate + this.adj - this.fixeddistamount;  
+      
     }
     else{
-      this.total =  this.value_rate -this.dst; 
+      this.total =  this.value_rate -this.fixeddistamount; 
     }
+    
   }
   onShipping(data) : void {
     console.log("onChangeTime to time: " + this.shippingprice + ". Event data: " + data); 
     this.shp = +this.shippingprice
     if(this.dst!== undefined && this.shp == undefined){
-      this.total = this.value_rate - this.dst;      
+      this.total = this.value_rate - this.fixeddistamount; 
+     
     }else{
-      this.total = this.shp +this.value_rate - this.dst;    
+      this.total = this.shp +this.value_rate - this.fixeddistamount;   
+      
     }
-    
+    this.gentotal =this.total.toFixed(2);
   }
   onAdjustment(data) : void {
     console.log("onChangeTime to time: " + this.adjustmentprice + ". Event data: " + data);
 
     this.adj = +this.adjustmentprice
     if(this.dst!== undefined && this.shp!==undefined && this.adj!==undefined){
-      this.total = (this.adj +this.shp+ this.value_rate) - this.dst;   
+      this.total = (this.adj +this.shp+ this.value_rate) - this.fixeddistamount; 
+     
     }
     else if(this.dst==undefined && this.shp !== undefined && this.adj !== undefined){
       this.total = this.adj +this.value_rate + this.shp; 
+      
     }
     else if(this.dst !== undefined && this.shp == undefined && this.adj !== undefined){
-      this.total = (this.adj+this.value_rate)-this.dst
+      this.total = (this.adj+this.value_rate)-this.fixeddistamount
+      
     }
     else if(this.dst !== undefined && this.shp !== undefined && this.adj == undefined){
-      this.total = (this.value_rate+this.shp)-this.dst
+      this.total = (this.value_rate+this.shp)-this.fixeddistamount
+     
     }
     else{
       this.total = this.adj+this.value_rate
+      
     }
+    
   }
   showpicker()
   {
@@ -416,8 +438,7 @@ export class CreateInvoicesPage {
 
      content: [
        { text: 'INVOICE#'+ this.invoice, style: 'header'},
-       { text: 'Status:'+ "Pending", style: 'header'},
-       { text: new Date().toTimeString(), alignment: 'right'},
+       { text: 'Date' + this.invoicedate, alignment: 'right'},
 
        { text: 'From', style: 'subheader'},
        this.global.company_name,
@@ -612,7 +633,7 @@ export class CreateInvoicesPage {
            item_id:this.item_id,
            sale_rate:this.value_rate1,
            purchase_rate:this.purchase_rate1,
-           status:"Pending",
+           status:this.status,
           //  payment_option: this.paymentoption,
            cont_id:this.customer_id,
            other_user_id:this.other_user_id,
@@ -631,7 +652,7 @@ export class CreateInvoicesPage {
        //    this.navCtrl.push(InvoicesPage);
            this.navCtrl.push(InvoicedeatilsPage,{'customername':this.gamingname,'invoice':this.invoice,'balance':this.total,'invoicedate':this.invoicedate,'duedate':this.duedate,'description':this.desc,
          'item_name':this.value_item,'subtotal':this.value_rate,'discount':this.discountprice,'shipping':this.shippingprice,'adjustment':this.adjustmentprice,'quantity':this.quantity,'rate':this.value_rate1,
-       'email':this.email,'order':this.order,'status':"Pending",'billingaddress':this.billing_address,'shippingaddress':this.shipping_address});
+       'email':this.email,'order':this.order,'status':"Pending",'billingaddress':this.billing_address,'shippingaddress':this.shipping_address,contactsaln:this.contact_sal});
         
          }, error => {
            loader.dismiss();
@@ -695,7 +716,7 @@ export class CreateInvoicesPage {
       this.value_rate1 = this.itemname1[key_rate];
       this.value_rate = this.value_rate1;
       this.total = this.value_rate;
-      
+      this.gentotal = this.total.toFixed(2);
         console.log("key = ", key, "Key_Desc=",key_desc, "key_rate = ",key_rate,key_id,key_id3,key_id4,key_id5,key_id6,key_id7,key_id8,key_id9) // bar
   console.log("value = ", this.value_item,"value_Des = ", this.value_desc,"value_rate = ", this.value_rate,this.itemquantity,this.purchase_rate, this.item_id) // baz
     }

@@ -45,7 +45,7 @@ export class InvoicedeatilsPage {
   email:any;
   order_number:any;
   status:any;
-  
+  cont_title:any;
 
   billing_address:any;
   shipping_address:any;
@@ -78,6 +78,7 @@ export class InvoicedeatilsPage {
       this.status = this.navParams.get('status');
       this.billing_address = this.navParams.get('billingaddress');
       this.shipping_address = this.navParams.get('shippingaddress');
+      this.cont_title = this.navParams.get('contactsaln');
       
   console.log("Customer Name:"+this.customer_name,"Email:"+this.email);
   
@@ -164,7 +165,7 @@ export class InvoicedeatilsPage {
          },
          
          {
-           text: 'Share Link',
+           text: 'Send Invoice',
            role: 'share',
            handler: () => {
              console.log('Cancel clicked');
@@ -236,8 +237,8 @@ export class InvoicedeatilsPage {
 
      content: [
        { text: 'INVOICE#'+ this.invoice_number, style: 'header'},
-       { text: 'Status:'+ this.invoice_number, style: 'header'},
-       { text: new Date().toTimeString(), alignment: 'right'},
+       { text: 'Status:'+ this.status, style: 'header'},
+       { text: 'Date' + this.invoice_date, alignment: 'right'},
 
        { text: 'From', style: 'subheader'},
        this.global.company_name,

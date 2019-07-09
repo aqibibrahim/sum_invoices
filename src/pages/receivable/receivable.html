@@ -22,25 +22,25 @@
               {{invoice.customer}}
           </ion-col>
           <ion-col style="font-size: large; color: black" col-4>
-              PKR {{invoice.total_cost}}
+              {{invoice.total_cost | number : fractionSize}}
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col style="color:#747474">
-            INV no:  {{invoice.invoice_number}}
+              Due: {{invoice.Due_date | date: 'yyyy/MM/dd'}}
           </ion-col>
           <ion-col style="color:#747474" class="ion-text-end">
             {{invoice.item_name}}
           </ion-col>
         </ion-row>
-        <ion-row  class="datelabel">
+        <!-- <ion-row  class="datelabel">
           <ion-col style="color:#747474">
               Due: {{invoice.Due_date | date: 'yyyy/MM/dd'}}
           </ion-col>
           <ion-col style="color:green" class="ion-text-end">
             {{invoice.status}}
             </ion-col>
-        </ion-row>
+        </ion-row> -->
             <!-- <ion-row>
               <ion-col style="text-align: center">
               <button ion-button item-end  (click)="removeItem(invoice)" color="editbutton" style="border-radius: 10px; width: -webkit-fill-available;"><ion-icon name="trash" style="

@@ -1,7 +1,7 @@
 <ion-list class="itemslist">
-    <ion-list-header no-lines no-padding>
+    <ion-list-header no-lines no-padding style="border-radius: 5px">
       <button ion-item detail-none
-              [style.background]="contentColor"
+              [style.background]="textColor"
               (click)="toggleAccordion()"
               class="accordion-header"
               [class.active]="expanded">
@@ -11,7 +11,6 @@
             class="ionicicons">
           </ion-icon>
           {{ title }}
-          
       </button>
       <section #accordionContent
                [style.background]="contentColor"

@@ -17,11 +17,11 @@
     
     <invoicelist *ngFor="let invoice of invoices; let index = index"
     [title]="invoice.customer"
-    [status]="invoice.status"
+    [status]="invoice.invoice_date"
     textColor="#747474"
     hasMargin="false"
     headerColor="#F53D3D"
-    [expanded]="index === 0">
+    >
 
    <ion-row>
        <ion-col style="color: black">
@@ -45,7 +45,7 @@
               <ion-col style="text-align: center">
               <button ion-button item-end  (click)="sharelink(invoice)" color="editbutton" style="border-radius: 10px; width: -webkit-fill-available;"><ion-icon  name="share" style="
                 margin-right: 11%;
-            "></ion-icon>Share</button>
+            "></ion-icon>View Invoice</button>
               </ion-col>
               <ion-col style="text-align: center">
                   <button ion-button item-end (click)="edititems(invoice)" color="editbutton" style="border-radius: 10px; width: -webkit-fill-available;"><ion-icon name="create" style="

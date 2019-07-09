@@ -11,109 +11,113 @@
 </ion-header>
 
 <ion-content padding  class="my-class">
+
+    <ion-card>
+        <ion-card-content>
+          <ion-row style="border-radius: 5px">
+              <ion-item style="min-height: 2.4rem !important;">
+                  <ion-label style="text-align: center;font-family: fantasy;font-size: larger; margin: 0px 8px 0px 0 !important;min-height: 2.4rem !; font-weight: bold">{{this.item_name}}</ion-label>
+                  
+                </ion-item>
+                <ion-item style="min-height: 2.4rem !important;">
+                <ion-label style="text-align: center;font-family: fantasy;font-size: meduim; margin: 0px 8px 0px 0 !important;">Profit and Loss</ion-label>
+                
+              </ion-item>
+              <ion-item style="min-height: 2.4rem !important;">
+              <ion-label style="text-align: center;font-family: fantasy;font-size: meduim; margin: 0px 8px 0px 0 !important; color: grey">From {{this.s_date}} To {{this.e_date}}</ion-label>
+            </ion-item>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
   <ion-card>
     <ion-card-content>
-      <ion-row>
-          <ion-item>
-              <ion-label style="text-align: center;font-family: fantasy;font-size: larger;">Item Name : {{this.item_name}}</ion-label>
-              <!-- <ion-input type="text" value={{this.item_name}} text-wrap [readonly]="isReadonly()"></ion-input> -->
-            </ion-item>
-      </ion-row>
-      <ion-row>
-       
-            <ion-item>
-                <ion-input type="Date" value={{this.s_date}}  [readonly]="isReadonly()"> </ion-input> <ion-input type="Date" value={{this.e_date}} [readonly]="isReadonly()"></ion-input>
-              </ion-item>
-       
-      </ion-row>
-      
-      <ion-row style="background-color:#D1D3D3; color: black;">
-        <ion-col style="text-align: center;">
+      <ion-row style="background-color:#D1D3D3; color: black;font-size: medium;text-align: left;border-radius: 3px">
+        <ion-col>
             Account
         </ion-col>
-        <ion-col style="text-align: center;">
+        <ion-col style="text-align: right">
               Total
         </ion-col>
       </ion-row>
 
-      <ion-row>
+      <ion-row style="font-size: medium;">
         <ion-col >
-            <ion-item style="text-align: center;">
+            <ion-item style="padding-left: initial;">
                 <ion-label>Sale Rate</ion-label>
               </ion-item>
         </ion-col>
         <ion-col>
-            <ion-item style="text-align: center;">
-                <ion-label>{{this.s_rate}}</ion-label>
+            <ion-item style="text-align: right;">
+                <ion-label style="margin: 0px 0px 0px 0px;">{{this.strings_rate}}</ion-label>
               </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <ion-row style="font-size: medium;">
         <ion-col >
-            <ion-item style="text-align: center;">
+            <ion-item style="padding-left: initial;">
                 <ion-label>Quantity</ion-label>
               </ion-item>
         </ion-col>
         <ion-col>
-            <ion-item style="text-align: center;">
-                <ion-label>{{this.quantity}}</ion-label>
+            <ion-item style="text-align: right;">
+                <ion-label style="margin: 0px 0px 0px 0px;">{{this.stringquantity}}</ion-label>
                 <!-- <ion-input type="number" value="{{this.value_rate}}" name="rate" [readonly]="isReadonly()" [(ngModel)]="rate" ></ion-input> -->
                 <!-- <ion-input type="number" value="{{this.p_rate}}" name="rate"  [readonly]="isReadonly()"></ion-input> -->
               </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row style="background-color: #D1D3D3; color: black;">
-        <ion-col style="text-align: center;">
+      <ion-row style="background-color: #D1D3D3; color: black;font-size: medium; border-radius: 3px">
+        <ion-col style="text-align: left;">
             Total Sale Rate
         </ion-col>
-        <ion-col style="text-align: center;">
-         {{this.sale_cost}} 
+        <ion-col style="text-align: right;">
+         {{this.stringsale_cost}} 
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col >
-            <ion-item style="text-align: center;">
+            <ion-item style="padding-left: initial;">
                 <ion-label>Purchase Rate</ion-label>
               </ion-item>
         </ion-col>
         <ion-col>
-            <ion-item style="text-align: center;">
-                <ion-label>{{this.p_rate}}</ion-label>
+            <ion-item style="text-align: right;">
+                <ion-label style="margin: 0px 0px 0px 0px;">{{this.stringp_rate}}</ion-label>
               </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col >
-            <ion-item style="text-align: center;">
+            <ion-item style="padding-left: initial;;">
                 <ion-label>Quantity</ion-label>
               </ion-item>
         </ion-col>
         <ion-col>
-            <ion-item style="text-align: center;">
-                <ion-label>{{this.quantity}}</ion-label>
+            <ion-item style="text-align: right;">
+                <ion-label style="margin: 0px 0px 0px 0px;">{{this.stringquantity}}</ion-label>
               </ion-item>
         </ion-col>
       </ion-row>
 
-      <ion-row style="background-color: #D1D3D3; color: black;">
-        <ion-col style="text-align: center;">
+      <ion-row style="background-color: #D1D3D3; color: black;font-size: medium; border-radius: 3px">
+        <ion-col style="text-align: left;">
             Total Purchase Rate
         </ion-col>
-        <ion-col style="text-align: center;">
-         {{this.purchase_cost1}} 
+        <ion-col style="text-align: right;">
+         {{this.stringpurchase_cost1}} 
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col >
-            <ion-item style="text-align: center;">
+            <ion-item style="padding-left: initial;">
                 <ion-label>Total Expense</ion-label>
               </ion-item>
         </ion-col>
         <ion-col>
-            <ion-item style="text-align: center;">
-                <ion-label>{{this.expense}}</ion-label>
+            <ion-item style="text-align: right;">
+                <ion-label style="margin: 0px 0px 0px 0px;">{{this.stringexpense}}</ion-label>
               </ion-item>
         </ion-col>
       </ion-row>
@@ -122,12 +126,12 @@
         <ion-label fixed>Total Expense</ion-label>
         <ion-input type="text" value={{this.expense}} text-wrap  [readonly]="isReadonly()" style="border-bottom: 1px solid grey">Fruit</ion-input>
       </ion-item> -->
-      <ion-row style="background-color: #D1D3D3; color: black;">
-        <ion-col style="text-align: center;">
+      <ion-row style="background-color: #D1D3D3; color: black;font-size: medium; border-radius: 3px">
+        <ion-col style="text-align: left;">
             Total Profit/Loss
         </ion-col>
-        <ion-col style="text-align: center;color: red;">
-         {{this.pandr1}} 
+        <ion-col style="text-align: right;color: red;">
+         {{this.stringpandr1}} 
         </ion-col>
       </ion-row>
   </ion-card-content>

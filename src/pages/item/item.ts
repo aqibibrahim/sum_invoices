@@ -25,6 +25,7 @@ export class ItemPage {
   @ViewChild("cc") cardContent : any;
   selectedItem: any;
   items: any;
+  itemssort:any;
   accordianExpanded = false;
   
   constructor(public navCtrl: NavController, public global:GlobalProvider,public app: App,public platform:Platform,public navParams: NavParams, private alertCtrl: AlertController,public http: Http, public loadingCtrl: LoadingController, public tostctrl: ToastController) {
@@ -32,7 +33,20 @@ export class ItemPage {
     console.log(this.global.userid);
     this.http.get('https://sum-finance-latest2.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
       console.log(data);
-         this.items = data
+
+      data.sort((a, b) => a.item_name.localeCompare(b.item_name))
+      console.log(data);
+         this.items = data;
+
+         
+
+      //    users.sort(function(a, b){
+      //     if(a.firstname < b.firstname) { return -1; }
+      //     if(a.firstname > b.firstname) { return 1; }
+      //     return 0;
+      // })
+         console.log(this.items);
+        //this.itemssort = this.items.
        });
 }
 ngOnInit(){
@@ -42,7 +56,9 @@ ionViewDidEnter() {
   this.http.get('https://sum-finance-latest2.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
     console.log(data);
       
-       this.items = data 
+    data.sort((a, b) => a.item_name.localeCompare(b.item_name))
+    console.log(data);
+       this.items = data;
        
      });
      this.platform.registerBackButtonAction(() => {

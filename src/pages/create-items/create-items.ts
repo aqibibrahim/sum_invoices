@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController,Nav,LoadingControl
 import {Http ,Response} from '@angular/http';
 import {ItemPage} from '../item/item';
 import {GlobalProvider} from '../../providers/global/global';
-import {FormBuilder,FormGroup,Validators,AbstractControl} from '@angular/forms';
+// import {FormBuilder,FormGroup,Validators,AbstractControl} from '@angular/forms';
 import { HomePage } from '../home/home';
 import { App } from 'ionic-angular';
 /**
@@ -20,11 +20,11 @@ import { App } from 'ionic-angular';
 })
 export class CreateItemsPage {
   @ViewChild(Nav) nav: Nav;
-  formgroup:FormGroup;
+  // formgroup:FormGroup;
 
-  name:AbstractControl;
+   name:any;
   sexe: string;
-  units:AbstractControl;
+  units:any;
   sale_rate:any;
   sale_account:any;
   sale_tax:any;
@@ -35,12 +35,12 @@ export class CreateItemsPage {
   qty:any;
   public saleinformation:boolean=false;
   public purchaseinformation:boolean=false;
-  constructor(public navCtrl: NavController,public platform: Platform,private ionicApp: IonicApp,public alertCtrl:AlertController, public app: App,public formbuilder:FormBuilder ,public global:GlobalProvider,public navParams: NavParams, public http:Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+  constructor(public navCtrl: NavController,public platform: Platform,private ionicApp: IonicApp,public alertCtrl:AlertController, public app: App,public global:GlobalProvider,public navParams: NavParams, public http:Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
  console.log(this.global.userid);
- this.formgroup = formbuilder.group({
-   name:['',Validators.required],
-   units:['',Validators.required]
- });
+//  this.formgroup = formbuilder.group({
+//    name:['',Validators.required],
+//    units:['',Validators.required]
+//  });
  
   }
 

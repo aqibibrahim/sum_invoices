@@ -5,9 +5,9 @@ import { Component, ElementRef, Input, Renderer, ViewChild } from '@angular/core
   templateUrl: 'itemslist.html'
 })
 export class ItemslistComponent {
-  @Input() headerColor: string = '#F53D3D';
+  @Input() headerColor: string = '#d3d3d3';
   @Input() textColor: string = '#747474';
-  @Input() contentColor: string = '#F9F9F9';
+  @Input() contentColor: string = '#ffffff';
   @Input() title: string;
   @Input() hasMargin: boolean = true;
   @Input() expanded: boolean;

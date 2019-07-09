@@ -21,61 +21,63 @@
           </ion-navbar>
           </ion-header>
 
-          <ion-content padding>
+          <ion-content padding class="my-class">
           <!-- Header of Invoice detail pge -->
-          <div style="
-          background-color: #646666;
-          width: -webkit-fill-available; 
-          position: relative;
-          z-index: 1;
-          height: fit-content;
-          min-width: 1000px;
-          max-width: 1500px;
-          margin: -30px auto;
-          padding-top: 16%;
-          margin-left: -16px;
-          padding-left: 38px;
-          color:white;
-          ">
-          <p>Invoice# {{invoice_number}}</p>
-          <h3 style="
-          text-decoration-line: underline;
-          ">Mr. {{customer_name}}</h3>
-          <h2>PKR : {{balance}}</h2>
-          <p style="text-transform: uppercase;font-family: fantasy;font-size: large;color: greenyellow;font-weight: bold;">Status: {{this.status}}</p>
 
-          </div>
-          <!-- Sub Information of Invoice -->
-          <div style="
-          margin-top: inherit;
-          ">
-          <ion-row>
-          <ion-col>
-          <ion-item>
-          <p>{{invoice_date}}</p>
-          <p style="color:coral">Invoice Date</p>
-          </ion-item>
-          </ion-col>
-          <ion-col>
-          <ion-item>
-          <p>{{due_date}}</p>
-          <p style="color:coral">Due Date</p>
-          </ion-item>
-          </ion-col>
-          </ion-row>
-          </div>
+          <ion-card style="border-radius: 5px">
+              <ion-card-content>
+                <ion-row >
+                    <ion-item style="min-height: 2.4rem !important;">
+                        <ion-label style="text-align: center;font-weight: bold;font-family: fantasy;font-size: larger; margin: 0px 8px 0px 0 !important;min-height: 2.4rem !;">Invoice# {{invoice_number}}</ion-label>
+                        <!-- <ion-input type="text" value={{this.item_name}} text-wrap [readonly]="isReadonly()"></ion-input> -->
+                      </ion-item>
+                      <ion-item style="min-height: 2.4rem !important;">
+                      <ion-label style="text-align: center;font-family: fantasy;font-size: meduim; margin: 0px 8px 0px 0 !important; color: grey">{{cont_title}}.{{customer_name}}</ion-label>
+                      <!-- <ion-input type="text" value={{this.item_name}} text-wrap [readonly]="isReadonly()"></ion-input> -->
+                    </ion-item>
+                    <ion-item style="min-height: 2.4rem !important;">
+                    <ion-label style="text-align: center;font-family: fantasy;font-size: meduim; margin: 0px 8px 0px 0 !important; color: grey">Status: {{this.status}}</ion-label>
+                    <!-- <ion-input type="text" value={{this.item_name}} text-wrap [readonly]="isReadonly()"></ion-input> -->
+                  </ion-item>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+          <ion-card>
+            <ion-card-content>
 
-          <!-- Add Reference Number -->
-          <ion-item style="border-bottom: lightgrey">
-          <p style="color:coral">
-          Reference#
-          </p>
-          <p>1</p>
-          </ion-item>
+            
+                <ion-row style="background-color: #D1D3D3; color: black; font-size: medium; font-weight: bold;border-radius: 3px">
+                    <ion-col>
+                        
+                            <ion-label style="margin: 0px 0px 0px 0px; padding-left: initial">Invoice Date</ion-label>
+                        
+                    </ion-col>
+                    <ion-col style="text-align: right;">
+                    
+                          <ion-label style="margin: 0px 0px 0px 0px">Due Date</ion-label>
+                    
+                  </ion-col>
+                  </ion-row>
+
+                  <ion-row style="font-size: medium;text-align: left">
+                      <ion-col>
+                          <ion-item style="min-height: fit-content; padding-left: initial">
+                              <ion-label style="margin: 0px 0px 0px 0px">{{invoice_date}}</ion-label>
+                            </ion-item>
+                      </ion-col>
+                      <ion-col style="padding-right: initial">
+                        <ion-item style="text-align: right;min-height: fit-content;">
+                            <ion-label style="margin: 0px 0px 0px 0px">{{due_date}}</ion-label>
+                          </ion-item>
+                    </ion-col>
+                    </ion-row>
+
+
+    
 
           <!-- Billing Address -->
-          <ion-item style="border-bottom: lightgrey">
-          <p style="color:coral">
+          <ion-item style="border-bottom: lightgrey;padding-left: initial;">
+          <p style="color:coral;font-weight: bold">
           Shipping Address
           </p>
           <p>
@@ -83,78 +85,112 @@
           </p>
           </ion-item>
 
-          <ion-toolbar style="/* background-color: #646666; */width: 110%;margin-left: -5%;margin-top: -1%;/* color: blue; */">
-          <ion-grid>
           <ion-row >
-            <ion-col>
-              <div class="ion-text-left">
-                <p style="color:coral">Items</p>
-                
-              </div>
+            <ion-col style="padding-left: initial;">
+              <ion-item style="padding-left: initial; min-height: fit-content;">
+                <ion-label style="color:coral; font-weight: bold">
+                    Items
+                </ion-label>
+              </ion-item>
             </ion-col>
-            <ion-col col-3>
-              <div class="ion-float-right">
-                <p style="color: coral;">Amount</p>
-              </div>
+            <ion-col style="padding-right: initial;">
+              <ion-item style="text-align: right;">
+                <ion-label style="margin: 0px 0px 0px 0px; color:coral; font-weight: bold">
+                    Amount (PKR)
+                </ion-label>
+              </ion-item>
+             
             </ion-col>
           </ion-row>
-          </ion-grid>
-          </ion-toolbar>
+          
 
           <ion-row style="border-bottom: 1px solid lightgray;">
-          <ion-col col-9 class="ion-text-end">
+          <ion-col style="padding-left: initial;">
 
-          <p style="
+            <ion-item style="padding-left: initial;">
+              <ion-label style="font-weight: bold">
+                {{item_name}}
+              </ion-label>
+            </ion-item>
+          <!-- <p style="
           margin-top: 3px;
-          color:grey;font-weight: bold;">{{item_name}}</p>
-          <p>{{quantity}} X PKR{{rate}}</p>
-          <p>{{description}}</p>
+          color:grey;font-weight: bold;"></p>
+
+          <p>{{quantity}} X {{rate}}</p>
+          <p>{{description}}</p> -->
 
           </ion-col>
-          <ion-col col-3>
-          <h4 style="margin-top: 3px;color:grey;">PKR {{subtotal}}</h4>
+        </ion-row >
+        <ion-row style="border-bottom: 1px solid lightgray;">
+
+          <ion-col style="padding-left: initial;">
+           <ion-item style="padding-left: initial;">
+             <ion-label style="color:coral;">Qty</ion-label><ion-label style="color:coral;">X</ion-label><ion-label style="color:coral;">Price</ion-label>
+           </ion-item> 
+          </ion-col>
+          <ion-col style="padding-right: initial;">
+            <ion-item style="color:coral;">
+              <ion-label style="text-align: right;">
+                  Subtotal
+              </ion-label>
+            </ion-item>
           </ion-col>
           </ion-row>
 
+          <ion-row style="border-bottom: 1px solid lightgray;">
+
+              <ion-col style="padding-left: initial;">
+               <ion-item style="padding-left: initial;">
+                 <ion-label>{{quantity}}</ion-label><ion-label>X</ion-label><ion-label>{{rate}}</ion-label>
+               </ion-item> 
+              </ion-col>
+              <ion-col style="padding-right: initial;">
+                <ion-item>
+                  <ion-label style="text-align: right;">
+                      {{subtotal | number : fractionSize}}
+                  </ion-label>
+                </ion-item>
+              </ion-col>
+              </ion-row>
+      
           <!-- Sub Total -->
           <ion-row style="border-bottom: 1px solid lightgray;">
           <ion-col col-8 text-end style="color:coral; margin-top: 5%">
           Sub Total
           </ion-col>
-          <ion-col text-end style="margin-top: 5%">
-          PKR {{subtotal}}
+          <ion-col text-end style="margin-top: 5%; color: grey">
+          {{subtotal | number : fractionSize}}
           </ion-col>
           </ion-row>
 
           <!-- Discount Price -->
           <ion-row >
           <ion-col col-8 text-end style="color:coral; margin-top: 5%">
-          Discount Price
+          Discount %
           </ion-col>
           <ion-col text-end style="margin-top: 4%; color: red">
-             
-              (-) PKR {{discount}}
+             {{discount}}
              <!-- {{discount}} -->
           </ion-col>
           </ion-row>
 
           <!-- Adjustment -->
-          <ion-row >
+          <!-- <ion-row >
           <ion-col col-8 text-end style="color:coral; margin-top: 5%">
           Adjustment
           </ion-col>
           <ion-col text-end style="margin-top: 5%">
-            PKR {{adjustment}}
+            {{adjustment}}
           </ion-col>
-          </ion-row>
+          </ion-row> -->
 
           <!-- Shipping Charges -->
           <ion-row >
           <ion-col col-8 text-end style="color:coral; margin-top: 5%">
             Shipping Charges
           </ion-col >
-          <ion-col text-end style="margin-top: 5%">
-              PKR {{shipping}}
+          <ion-col text-end style="margin-top: 5%; color: grey">
+             {{shipping}}
           </ion-col>
           </ion-row>
 
@@ -165,31 +201,17 @@
           <ion-col col-8 text-end style="color:coral; margin-top: 5%">
             Total
           </ion-col>
-          <ion-col text-end style="margin-top: 5%">
-              PKR {{balance}}
+          <ion-col text-end style="margin-top: 5%; color: grey">
+              {{balance | number : fractionSize}}
           </ion-col>
           </ion-row>
 
-          <!-- Payment Made -->
-         
-            
-          <!-- Credits Applies     -->
-          <!-- <ion-row >
-          <ion-col col-8 text-end style="color:coral; margin-top: 5%">
-            Credit Appllied
-          </ion-col>
-          <ion-col text-end style="margin-top: 5%; color: red">
-              (-) PKR 0.00 
-          </ion-col>
-          </ion-row> -->
-
-          <!-- Balance Due -->
           <ion-row >
             <ion-col col-8 text-end style="color:coral; margin-top: 5%">
               Balance Due
             </ion-col>
-            <ion-col text-end style="margin-top: 5%">
-                PKR {{balance}}
+            <ion-col text-end style="margin-top: 5%; color: grey">
+                {{balance | number : fractionSize}}
             </ion-col>
           </ion-row>
 
@@ -204,4 +226,6 @@
           <button ion-button item-end  (click)="viewpdf()" color="editbutton" style="border-radius: 10px; width: -webkit-fill-available;"><ion-icon  name="folder-open" style="
             margin-right: 11%;
         "></ion-icon>View Pdf</button>
+        </ion-card-content>
+      </ion-card>
           </ion-content>

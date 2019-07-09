@@ -58,7 +58,7 @@
       <ion-input type="number" value="{{this.nativeinvoice}}" [(ngModel)]="invoice"></ion-input>
     </ion-item>
     <ion-item style="border-bottom: 1px solid grey"> 
-      <ion-label fixed>Order Number</ion-label>
+      <ion-label fixed>Order #</ion-label>
       <ion-input type="number" value="{{this.nativeorder}}" [(ngModel)]="order"></ion-input>
     </ion-item>
     </ion-card-content>
@@ -176,7 +176,7 @@
               <ion-row>
                   <ion-col col-6>
                         <ion-item >
-                          <h4>Discount</h4>
+                          <h4>Discount %</h4>
                          
                           </ion-item>
                   </ion-col>
@@ -203,7 +203,7 @@
                     
                   </ion-row>
 
-                  <ion-row>
+                  <!-- <ion-row>
                       <ion-col col-6>
                             <ion-item >
                               <h4>Adjustment</h4>
@@ -216,7 +216,7 @@
                             </ion-item>
                       </ion-col>
                       
-                    </ion-row>
+                    </ion-row> -->
 
                     <ion-row>
                         <ion-col col-6>
@@ -227,7 +227,7 @@
                         </ion-col>
                         <ion-col col-6>
                         <ion-item>
-                                <ion-input type="text" value="{{this.total}}" [(ngModel)]="total" style="text-align: right" [readonly]="isReadonly()"></ion-input>
+                                <ion-input type="number" value="{{this.gentotal}}" [(ngModel)]="total" style="text-align: right" [readonly]="isReadonly()"></ion-input>
                               </ion-item>
                         </ion-col>
                         

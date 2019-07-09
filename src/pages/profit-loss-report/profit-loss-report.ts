@@ -27,6 +27,24 @@ export class ProfitLossReportPage {
   purchase_cost1:any;
   purchase_cost2:any;
   sale_cost:any;
+
+  fixedp_rate:any;
+  fixeds_rate:any;
+  fixedexpense:any;
+  fixedquantity:any;
+  fixedsale_cost:any;
+  
+
+  stringp_rate:any;
+  strings_rate:any;
+  stringexpense:any;
+  stringquantity:any;
+  stringpurchase_cost1:any;
+  stringsale_cost:any;
+  stringpandr1:any;
+
+
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     console.log(this.navParams.get('expenseamount'),this.navParams.get('purchaserate'),this.navParams.get('salerate'),this.navParams.get('quantity'),this.navParams.get('startdate'),this.navParams.get('enddate'));
     this.s_date = this.navParams.get('startdate');
@@ -43,6 +61,21 @@ export class ProfitLossReportPage {
     this.sale_cost = this.s_rate*this.quantity;
     this.pandr = this.sale_cost - (this.purchase_cost2+this.expense);
     this.pandr1 = this.pandr.toFixed(2);
+    this.fixedp_rate = this.p_rate.toFixed(2);
+    this.fixeds_rate = this.p_rate.toFixed(2);
+    this.fixedexpense = this.expense.toFixed(2);
+    this.fixedquantity = this.quantity.toFixed(2);
+    this.fixedsale_cost = this.sale_cost.toFixed(2);
+
+
+    this.stringp_rate = this.fixedp_rate.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    this.strings_rate = this.fixeds_rate.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    this.stringexpense = this.fixedexpense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    this.stringquantity = this.fixedquantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    this.stringpurchase_cost1 = this.purchase_cost1.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    this.stringsale_cost = this.fixedsale_cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    this.stringpandr1 = this.pandr1.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    
     console.log("Purchase Cost"+this.purchase_cost,"Sale Cost"+this.sale_cost,"Progit and Loss"+this.pandr.toFixed(2));
   }
 

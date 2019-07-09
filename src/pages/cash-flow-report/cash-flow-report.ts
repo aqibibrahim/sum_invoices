@@ -91,18 +91,21 @@ export class CashFlowReportPage {
         this.fixedpayment = this.payment.toFixed(2);
         this.fixedcash = this.cash.toFixed(2);
         this.fixedexpense = this.expense.toFixed(2);
-        this.fixedprecash = this.precash.toFixed(2);
-        this.fixedpreexpense = this.preexpense.toFixed(2);
-        this.fixedprepayment = this.prepayment.toFixed(2);
+        
+        
+        
 
         if(this.precash == undefined){
           this.precash =0;
+          this.fixedprecash = 0.00;
         }
         if(this.preexpense ==  undefined){
           this.preexpense =0;
+          this.fixedpreexpense = 0.00;
         }
         if(this.prepayment == undefined){
           this.prepayment =0;
+          this.fixedprepayment = 0.00;
         }
         if(this.payment == undefined){
           this.payment =0;
@@ -128,11 +131,10 @@ export class CashFlowReportPage {
         this.endingcash = (this.opening + this.cash)-this.outgoing;
         this.fixedendingcash = this.endingcash.toFixed(2);
         loader.dismiss();
-      }, error => {
-      console.log("Oooops!");
-       });
-
-       this.stringpayment = this.fixedpayment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        this.fixedprecash = this.precash.toFixed(2);
+        this.fixedpreexpense = this.preexpense.toFixed(2);
+        this.fixedprepayment = this.prepayment.toFixed(2);
+        this.stringpayment = this.fixedpayment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
        this.stringcash = this.fixedcash.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
        this.stringexpense = this.fixedexpense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
        this.stringprecash = this.fixedprecash.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
@@ -141,6 +143,11 @@ export class CashFlowReportPage {
        this.stringopening = this.fixedopening.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
        this.stringoutgoing = this.fixedoutgoing.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
        this.stringendingcash = this.fixedendingcash.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+      }, error => {
+      console.log("Oooops!");
+       });
+
+       
 
 
   }

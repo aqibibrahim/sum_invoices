@@ -11,30 +11,35 @@
 </ion-header>
 
 <ion-content padding  class="my-class">
-  <ion-card>
+  <ion-card style="border-radius: 5px">
     <ion-card-content>
-      <ion-row style="border-bottom: gray 1px solid">
+      <ion-row >
           <ion-item style="min-height: 2.4rem !important;">
-              <ion-label style="text-align: center;font-family: fantasy;font-size: larger; margin: 0px 8px 0px 0 !important;min-height: 2.4rem !;">{{this.user_name}}</ion-label>
+              <ion-label style="text-align: center;font-weight: bold;font-family: fantasy;font-size: larger; margin: 0px 8px 0px 0 !important;min-height: 2.4rem !;">{{this.user_name}}</ion-label>
               <!-- <ion-input type="text" value={{this.item_name}} text-wrap [readonly]="isReadonly()"></ion-input> -->
             </ion-item>
             <ion-item style="min-height: 2.4rem !important;">
-            <ion-label style="text-align: center;font-family: fantasy;font-size: meduim; margin: 0px 8px 0px 0 !important;">Balance Sheet</ion-label>
+            <ion-label style="text-align: center;font-family: fantasy;font-size: meduim; margin: 0px 8px 0px 0 !important; color: grey">Balance Sheet</ion-label>
             <!-- <ion-input type="text" value={{this.item_name}} text-wrap [readonly]="isReadonly()"></ion-input> -->
           </ion-item>
           <ion-item style="min-height: 2.4rem !important;">
-          <ion-label style="text-align: center;font-family: fantasy;font-size: meduim; margin: 0px 8px 0px 0 !important;">As of {{this.date}}</ion-label>
+          <ion-label style="text-align: center;font-family: fantasy;font-size: meduim; margin: 0px 8px 0px 0 !important; color: grey">As of {{this.date}}</ion-label>
           <!-- <ion-input type="text" value={{this.item_name}} text-wrap [readonly]="isReadonly()"></ion-input> -->
         </ion-item>
       </ion-row>
+    </ion-card-content>
+  </ion-card>
 
-      <ion-row style="color:#D1D3D3; color: coral; font-size: large;">
+
+  <ion-card style="border-radius: 5px">
+    <ion-card-content>
+      <ion-row style="background-color: #D1D3D3; color: black; font-size: medium; font-weight: bold;text-align: center; border-radius: 3px">
         <ion-col>
           Current Assets
       </ion-col>
       </ion-row>
 
-      <ion-row style="border-bottom: gray 1px solid; font-size: medium;text-align: left">
+      <ion-row style="font-size: medium;text-align: left">
           <ion-col>
               <ion-item style="min-height: fit-content; padding-left: initial">
                   <ion-label style="margin: 0px 0px 0px 0px">Cash</ion-label>
@@ -54,7 +59,7 @@
           </ion-col>
         </ion-row> -->
   
-      <ion-row style="border-bottom: gray 1px solid;font-size: medium;text-align: left">
+      <ion-row style="font-size: medium;text-align: left">
         <ion-col>
             <ion-item style="min-height: fit-content; padding-left: initial">
                 <ion-label style="margin: 0px 0px 0px 0px">Recievable</ion-label>
@@ -67,7 +72,7 @@
       </ion-col>
       </ion-row>
      
- <ion-row style="border-bottom: gray 1px solid;font-size: medium;text-align: left">
+ <ion-row style="font-size: medium;text-align: left; border-bottom: 1px solid grey">
         <ion-col>
             <ion-item style="min-height: fit-content; padding-left: initial">
                 <ion-label style="margin: 0px 0px 0px 0px">Inventory</ion-label>
@@ -80,7 +85,7 @@
       </ion-col>
       </ion-row>
      
-      <ion-row style="background-color: #D1D3D3; color: black; font-size: medium; font-weight: bold">
+      <ion-row style="color: black; font-size: medium; font-weight: bold">
         <ion-col >
             Total 
         </ion-col>
@@ -88,7 +93,8 @@
           {{this.stringtotalassets}}
         </ion-col>
       </ion-row>
-
+    </ion-card-content>
+  </ion-card>
         <!-- <ion-row style="background-color:#D1D3D3; color: black;font-size: meduim; font-weight: bold">
         <ion-col>
             Total 
@@ -103,15 +109,16 @@
       
       <!-- Total Liablities/Equity -->
 
+ <ion-card style="border-radius: 5px">
+    <ion-card-content>
 
-
-      <ion-row style="color:#D1D3D3; color: coral; font-size: large;">
+      <ion-row style="background-color: #D1D3D3; color: black; font-size: medium; font-weight: bold;text-align: center;border-radius: 3px">
           <ion-col>
           Liablities & Equity
         </ion-col>
         </ion-row>
     
-      <ion-row style="border-bottom: gray 1px solid;font-size: medium;text-align: left">
+      <ion-row style="font-size: medium;text-align: left">
         <ion-col >
             <ion-item style="min-height: fit-content; padding-left: initial">
                 <ion-label style="margin: 0px 0px 0px 0px;">Capital</ion-label>
@@ -124,7 +131,7 @@
       </ion-col>
       </ion-row>
    
-      <ion-row style="border-bottom: gray 1px solid;font-size: medium;text-align: left">
+      <ion-row style="font-size: medium;text-align: left">
           <ion-col >
               <ion-item style="min-height: fit-content; padding-left: initial">
                   <ion-label style="margin: 0px 0px 0px 0px">Profit</ion-label>
@@ -138,7 +145,7 @@
       </ion-row>
     
 
-        <ion-row style="border-bottom: gray 1px solid;font-size: medium;text-align: left">
+        <ion-row style="font-size: medium;text-align: left;border-bottom: 1px solid grey">
             <ion-col >
                 <ion-item style="min-height: fit-content; padding-left: initial">
                     <ion-label style="margin: 0px 0px 0px 0px">Payable</ion-label>
@@ -151,7 +158,7 @@
           </ion-col>
         </ion-row>
      
-     <ion-row style="background-color: #D1D3D3; color: black; font-size: medium; font-weight: bold">
+     <ion-row style="color: black; font-size: medium; font-weight: bold">
         <ion-col >
             Total 
         </ion-col>
