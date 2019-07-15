@@ -18,35 +18,72 @@
 <ion-content padding class="my-class">
     <ion-card>
         <ion-card-content>
+            <ion-list>
+                <ion-item>
+                  <ion-label color="lightblue">Expense Name</ion-label>
+                  <ion-select [(ngModel)]="name" interface="popover">
+                    <ion-option value="advancetax">Advance Tax</ion-option>
+                    <ion-option value="travelacharges">Travel Charges</ion-option>
+                    <ion-option value="automobile">Automobile</ion-option>
+                    <ion-option value="advertising&marketing">Advertising And Marketing</ion-option>
+                    <ion-option value="baddebt">Bad Debt</ion-option>
+                    <ion-option value="bankfees&charges">Bank Fees And Charges</ion-option>
+                    <ion-option value="consultantexpense">Consultant Expense</ion-option>
+                    <ion-option value="c.o.g">Cost Of Goods Sold</ion-option>
+                    <ion-option value="creditcardcharges">Credit Card Charges</ion-option>
+                    <ion-option value="depreciationexpense">Depreciation Expense</ion-option>
+                    <ion-option value="employeeadvance">Employee Advance</ion-option>
+                    <ion-option value="employeereimbursements">Employee Reimbursements</ion-option>
+                    <ion-option value="exchangegainorloss">Exchange Gain Or Loss</ion-option>
+                    <ion-option value="furniture&equipment">Furniture And Equipment</ion-option>
+                    <ion-option value="it&internetexpense">IT And Internet Expenses</ion-option>
+                    <ion-option value="janitorialexpense">Janitorial Expense </ion-option>
+                    <ion-option value="lodging">Lodging</ion-option>
+                    <ion-option value="meals&entertainment">Meals And Entertainment</ion-option>
+                    <ion-option value="officesupplies">Office Supplies</ion-option>
+                    <ion-option value="otherexpenses">Other Expenses</ion-option>
+                    <ion-option value="postage">Postage</ion-option>
+                    <ion-option value="Printing&Stationary">Printing And Stationary</ion-option>
+                    <ion-option value="RentExpense">Rent Expense</ion-option>
+                    <ion-option value="Maintenance">Repair And Maintenance</ion-option>
+                    <ion-option value="Saleries">Saleries And Employee Wages</ion-option>
+                    <ion-option value="TaxPayable">Tax Payable</ion-option>
+                    <ion-option value="TelephoneExpense">Telephone Expense</ion-option>
+                    <ion-option value="Others">Others</ion-option>
+                    
+                  </ion-select>
+                </ion-item>
+              </ion-list>
+
             <ion-item style="border-bottom: 1px solid grey">
                 <ion-label >Date</ion-label>
                 <!-- <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="invoicedate"></ion-input> -->
                 <ion-datetime displayFormat="DD MMM YYYY" (ionChange)="fecha()" pickerFormat="DD MMM YYYY"  [(ngModel)]="expensedate" cancelText ="Cancelar" doneText="Ok" ></ion-datetime>
               </ion-item>
 
-              <ion-list >
-                  <ion-item >
-                      <ion-label>Item Name</ion-label>
-                      <ion-select #S interface="popover" class="selector" [(ngModel)]="itemname" placeholder="Item Name" ionCancel="onCancel()" okText="Ok" (ionChange)="onItemChange(S.value)">
-                        <ion-option *ngFor="let name of items" [value] = "name" class="option" text-wrap>{{name.item_name}}</ion-option>
-                      </ion-select>
-                    </ion-item>
-            </ion-list>
-            <ion-item style="border-bottom: 1px solid grey">
+             <ion-item style="border-bottom: 1px solid grey">
                 <ion-label >Amount</ion-label>
-                <ion-input type="number" value="1" name="amount" [(ngModel)]="amount"></ion-input>
+                <ion-input type="number" value="0" name="amount" [(ngModel)]="amount"></ion-input>
               </ion-item>
 
-              <ion-list>
-                  <ion-item>
-                    <ion-label color="lightblue">Expense Name</ion-label>
-                    <ion-select [(ngModel)]="name" interface="popover">
-                      <ion-option value="advancetax">Advance Tax</ion-option>
-                      <ion-option value="travelacharges">Travel Charges</ion-option>
-                      <ion-option value="automobile">Automobile</ion-option>
-                    </ion-select>
-                  </ion-item>
-                </ion-list>
+             
+                <ion-item>
+                    <ion-label>Item Name</ion-label>  
+                    <ion-toggle [(ngModel)]="itemexpense"></ion-toggle>
+                </ion-item>
+                <div *ngIf="itemexpense">
+
+                    <ion-list >
+                        <ion-item >
+                            <ion-label>Item Name</ion-label>  
+                            <ion-select #S interface="popover" class="selector" [(ngModel)]="itemname" placeholder="Item Name" ionCancel="onCancel()" okText="Ok" (ionChange)="onItemChange(S.value)">
+                              <ion-option *ngFor="let name of items" [value] = "name" class="option" text-wrap>{{name.item_name}}</ion-option>
+                            </ion-select>
+                          </ion-item>
+                  </ion-list>
+                          
+                      
+                    </div>
           </ion-card-content>
           </ion-card>
   

@@ -15,7 +15,7 @@ export class InvoicelistComponent {
   @Input() textColor: string = '#747474';
   @Input() contentColor: string = '#F9F9F9';
   @Input() title: string;
-  @Input() status: string;
+  @Input() date: string;
   @Input() hasMargin: boolean = true;
   @Input() expanded: boolean;
 

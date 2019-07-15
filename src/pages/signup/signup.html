@@ -42,7 +42,7 @@
           <span style="color: red" ion-text *ngIf="myForm.get('email').hasError('email')">It is not an email</span>
         </p>
     
-        <ion-item no-padding [class.invalid]="(!myForm.controls.password.valid) && isPassword" style="border-bottom-color: #D1D3D3">
+        <ion-item no-padding [class.invalid]="(!myForm.controls.password.valid) && isPassword" style="border-bottom-color: #D1D3D3; border-bottom: 0.3px solid">
             <!-- <ion-label color="dark" stacked style="color:grey;font-size: large">Password</ion-label> -->
           <ion-input type="password" (keyup)="validate('password')" formControlName="password" [(ngModel)]="password" placeholder="Password"></ion-input>
         </ion-item>
@@ -53,8 +53,11 @@
       </form>
       <ion-list>
           <ion-item>
+            
               <ion-label>Choose Country</ion-label>
+              <!-- <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="setFilteredItems()"></ion-searchbar> -->
               <ion-select [(ngModel)]="country" ionCancel="onCancel()" okText="Ok" >
+                 
                 <ion-option *ngFor="let name of country1" [value] = "name" >{{name.name}}</ion-option>
               </ion-select>
             </ion-item>

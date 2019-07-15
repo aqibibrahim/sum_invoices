@@ -20,8 +20,10 @@ import { App } from 'ionic-angular';
 export class ReceivablePage {
   @ViewChild(Nav) nav: Nav;
   @ViewChild(Navbar) navBar: Navbar;
+  public sum : number = 0;
   invoices:any;
-
+  fixedamount:any;
+  fixedamountarray = [];
   constructor(public navCtrl: NavController, public navParams: NavParams,public app: App,public alertCtrl:AlertController,public global:GlobalProvider,private plt: Platform, public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
 
     let loader = this.loadingCtrl.create({
@@ -34,6 +36,17 @@ export class ReceivablePage {
         alert("There is no invoice genrated by this user");
       }
         this.invoices = data 
+        this.sum = 0;
+      for(var i=0;i<this.invoices.length;i++){
+        this.fixedamount = this.invoices[i].total_cost;
+        this.fixedamountarray.push(this.fixedamount);
+        
+      }
+      for(let i = 0; i<this.fixedamountarray.length; i++){
+        //this.sum = this.sum + this.fixedamountarray[i];    
+        this.sum += Number(this.fixedamountarray[i]);
+      }
+      console.log(this.sum);
         loader.dismiss();
          });
   

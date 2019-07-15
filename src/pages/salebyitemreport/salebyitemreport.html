@@ -30,87 +30,23 @@
               </ion-card>
 
 
-        <!-- <ion-card *ngFor="let name of datarecord">
-            <ion-card-content >
-                <ion-row  style="background-color:#D1D3D3; color: black; font-size: large;">
-                    <ion-col style="text-align: center;">
-                       
-                       Date 
-                       
-                    </ion-col>
-                    <ion-col style="text-align: center;">
-                        {{name.date | date: 'yyyy/MM/dd'}}
-                    </ion-col>
-        </ion-row>
-         -->
-                <!-- <ion-row>
+       
+              <ion-card>
+                <ion-card-content>
+                  <ion-row>
                     <ion-col>
-                        <ion-item style="text-align: center;">
-                            <ion-label>Customer Name</ion-label>
-                          </ion-item>
-                    </ion-col>
-                    <ion-col>
-                        <ion-item style="text-align: center;">
-                            <ion-label>{{name.name}}</ion-label>
-                          </ion-item>
-                    </ion-col>
-                </ion-row>
-                
-                <ion-row>
-                    <ion-col >
-                        <ion-item style="text-align: center;">
-                            <ion-label>Item Quantity</ion-label>
-                          </ion-item>
-                    </ion-col>
-                    <ion-col>
-                        <ion-item style="text-align: center;">
-                            <ion-label>{{name.quantity}}</ion-label>
-                          </ion-item>
-                    </ion-col>
-                </ion-row>
-                
-                <ion-row>
-                    <ion-col >
-                        <ion-item style="text-align: center;">
+                        <ion-item style="padding-left: initial; font-weight: bold">
                             <ion-label>Total Amount</ion-label>
                           </ion-item>
                     </ion-col>
                     <ion-col>
-                        <ion-item style="text-align: center;">
-                            <ion-label>{{name.amount}}</ion-label>
+                        <ion-item style="text-align: right; font-weight: bold">
+                            <ion-label style="margin: 0px 0px 0px 0px;">{{this.sum | number : fractionSize}}</ion-label>
                           </ion-item>
                     </ion-col>
-                  
-                </ion-row>
-                
-                <ion-row>
-                    <ion-col >
-                        <ion-item style="text-align: center;">
-                            <ion-label>Sale Rate</ion-label>
-                          </ion-item>
-                    </ion-col>
-                    <ion-col>
-                        <ion-item style="text-align: center;">
-                            <ion-label>{{name.Salerate}}</ion-label>
-                          </ion-item>
-                    </ion-col>
-                </ion-row>
-                
-                <ion-row>
-                    <ion-col >
-                        <ion-item style="text-align: center;">
-                            <ion-label>Purchase Rate</ion-label>
-                          </ion-item>
-                    </ion-col>
-                    <ion-col>
-                        <ion-item style="text-align: center;">
-                            <ion-label>{{name.Purchaserate}}</ion-label>
-                          </ion-item>
-                    </ion-col>
-                </ion-row>
-              </ion-card-content>
-              </ion-card> -->
-        
+                    </ion-row>
+                </ion-card-content>
+              </ion-card>
 
               <ion-card *ngFor="let name of datarecord">
                     <ion-card-content>
@@ -187,21 +123,6 @@
                     </ion-card-content>
                   </ion-card>
             
-                  <ion-card>
-                        <ion-card-content>
-                          <ion-row>
-                            <ion-col>
-                                <ion-item style="padding-left: initial; font-weight: bold">
-                                    <ion-label>Total Amount</ion-label>
-                                  </ion-item>
-                            </ion-col>
-                            <ion-col>
-                                <ion-item style="text-align: right; font-weight: bold">
-                                    <ion-label style="margin: 0px 0px 0px 0px;">{{this.sum | number : fractionSize}}</ion-label>
-                                  </ion-item>
-                            </ion-col>
-                            </ion-row>
-                        </ion-card-content>
-                      </ion-card>
+                 
                      
 </ion-content>

@@ -6,6 +6,7 @@ import {LoginPage} from '../login/login';
 import * as Inputmask from 'inputmask';
 import { Directive, Attribute } from '@angular/core';
 import {SignupProvider}  from '../../providers/signup/signup';
+import { IonicSelectableModule } from 'ionic-selectable';
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html'
@@ -47,7 +48,11 @@ export class SignupPage {
        
      });
   }
-  
+  filterItems(searchTerm){
+    return this.country1.filter((item) => {
+         return item.name.toLowerCase().includes(searchTerm.toLowerCase());
+     });
+ }
   validate(data){
     if(data == 'name'){
       this.isName = true;

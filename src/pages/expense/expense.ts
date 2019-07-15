@@ -25,6 +25,7 @@ amount:any;
 name:any;
 item_id:any;
 item_name:any;
+public itemexpense:boolean=false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public ionicApp:IonicApp,public app:App,public platform:Platform,public loadingCtrl: LoadingController, public tostctrl: ToastController,public global:GlobalProvider, public http:Http) {
     this.http.get('https://sum-finance-latest2.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
       console.log(data);

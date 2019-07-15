@@ -17,6 +17,8 @@
 
 <ion-content padding  class="my-class">
 
+  
+ 
     <ion-card>
         <ion-card-content>
           <ion-row style="border-radius: 5px">
@@ -32,6 +34,22 @@
               <ion-label style="text-align: center;font-family: fantasy;font-size: meduim; margin: 0px 8px 0px 0 !important; color: grey">From {{this.s_date}} To {{this.e_date}}</ion-label>
             </ion-item>
           </ion-row>
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <ion-card-content>
+          <ion-row>
+            <ion-col>
+                <ion-item style="padding-left: initial; font-weight: bold">
+                    <ion-label>Total Amount</ion-label>
+                  </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item style="text-align: right; font-weight: bold">
+                    <ion-label style="margin: 0px 0px 0px 0px;">{{this.sum | number : fractionSize}}</ion-label>
+                  </ion-item>
+            </ion-col>
+            </ion-row>
         </ion-card-content>
       </ion-card>
  <ion-card *ngFor="let name of datarecord">
@@ -85,21 +103,5 @@
         </ion-card-content>
       </ion-card>
 
-      <ion-card>
-        <ion-card-content>
-          <ion-row>
-            <ion-col>
-                <ion-item style="padding-left: initial; font-weight: bold">
-                    <ion-label>Total Amount</ion-label>
-                  </ion-item>
-            </ion-col>
-            <ion-col>
-                <ion-item style="text-align: right; font-weight: bold">
-                    <ion-label style="margin: 0px 0px 0px 0px;">{{this.sum | number : fractionSize}}</ion-label>
-                  </ion-item>
-            </ion-col>
-            </ion-row>
-        </ion-card-content>
-      </ion-card>
      
 </ion-content>

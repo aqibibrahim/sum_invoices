@@ -19,7 +19,7 @@ import { App } from 'ionic-angular';
 import { ContactsPage } from '../pages/contacts/contacts';
 import {PayablePage} from '../pages/payable/payable';
 import {LoginPage} from '../pages/login/login';
-
+import Parse from 'parse';
 @Component({
   templateUrl: 'app.html'
 })

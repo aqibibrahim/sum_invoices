@@ -5,13 +5,13 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="lightblue">
     <ion-title>Cash Flow Report</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-content padding  class="my-class">
+<ion-content padding class="my-class">
+  
     <ion-card>
       <ion-card-content>
         <ion-row style="border-radius: 5px">
@@ -55,7 +55,7 @@
           </ion-row>
           <ion-row style="color:#D1D3D3; color: black; font-size: medium; font-weight: bold">
             <ion-col>
-            Incoming
+            Cash In Flows
           </ion-col>
           </ion-row>
           
@@ -65,7 +65,7 @@
                   <ion-label style="margin: 0px 0px 0px 0px">Cash</ion-label>
                 </ion-item>
           </ion-col>
-          <ion-col>
+          <ion-col style="padding-right: inherit;">
             <ion-item style="text-align: right; min-height: fit-content;">
                 <ion-label style="margin: 0px 0px 0px 0px">{{this.stringcash}}</ion-label>
               </ion-item>
@@ -84,7 +84,7 @@
         </ion-row> 
         <ion-row style="background-color: #D1D3D3; color: black; font-size: medium; font-weight: bold;text-align: center;border-radius: 3px">
           <ion-col>
-          Outgoing
+              Cash Out Flows
         </ion-col>
         </ion-row>
         <ion-row style="font-size: medium;text-align: left">
@@ -93,7 +93,7 @@
                   <ion-label style="margin: 0px 0px 0px 0px">Payment</ion-label>
                 </ion-item>
           </ion-col>
-          <ion-col>
+          <ion-col style="padding-right: inherit;">
             <ion-item style="text-align: right;min-height: fit-content;">
                 <ion-label style="margin: 0px 0px 0px 0px">{{this.stringpayment}}</ion-label>
               </ion-item>
@@ -106,7 +106,7 @@
                   <ion-label style="margin: 0px 0px 0px 0px">Expense</ion-label>
                 </ion-item>
           </ion-col>
-          <ion-col>
+          <ion-col style="padding-right: inherit;">
             <ion-item style="text-align: right;min-height: fit-content;">
                 <ion-label style="margin: 0px 0px 0px 0px">{{this.stringexpense}}</ion-label>
               </ion-item>
@@ -135,5 +135,5 @@
     </ion-card-content>
       </ion-card>
     
-  </ion-content>
+ 
 </ion-content>

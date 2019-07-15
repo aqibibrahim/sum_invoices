@@ -62,7 +62,7 @@ export class ProfitLossReportPage {
     this.pandr = this.sale_cost - (this.purchase_cost2+this.expense);
     this.pandr1 = this.pandr.toFixed(2);
     this.fixedp_rate = this.p_rate.toFixed(2);
-    this.fixeds_rate = this.p_rate.toFixed(2);
+    this.fixeds_rate = this.s_rate.toFixed(2);
     this.fixedexpense = this.expense.toFixed(2);
     this.fixedquantity = this.quantity.toFixed(2);
     this.fixedsale_cost = this.sale_cost.toFixed(2);

@@ -25,8 +25,11 @@
   
     <ion-card>
       <ion-card-content>
+        <ion-item>
+          <ion-label color="lightblue">Type<span class="required">*</span></ion-label>
+      </ion-item>
 
-          <ion-label color="lightblue">Type<span class="required">*</span></ion-label>     
+               
                       <ion-row radio-group [(ngModel)]="sexe">
                           <ion-col>
                             <ion-item style="border-bottom: 0.3px solid">
@@ -42,24 +45,24 @@
                           </ion-col>
                         </ion-row>
 
-          <ion-item >
-              <ion-label color="red" >Item Name<span class="required">*</span></ion-label>
+          <ion-item>
+              <ion-label color="lightblue" >Item Name<span class="required">*</span></ion-label>
           </ion-item>
           <ion-item style="border-bottom: 0.3px solid">
-              <ion-input type="text" placeholder="Name" [(ngModel)]="name"></ion-input>
+              <ion-input type="text" placeholder=" Item Name" [(ngModel)]="name"></ion-input>
           </ion-item>
 
           <ion-item >
               <ion-label color="lightblue">Unit</ion-label>  
           </ion-item>
           <ion-item style="border-bottom: 0.3px solid">
-              <ion-input type="text" [(ngModel)]="units"></ion-input>
+              <ion-input type="text" [(ngModel)]="units" placeholder=" Units (Optional)"></ion-input>
           </ion-item>
           <ion-item >
             <ion-label color="lightblue">Quantity<span class="required">*</span></ion-label>  
         </ion-item>
           <ion-item style="border-bottom: 0.3px solid">
-            <ion-input type="number" [(ngModel)]="qty"></ion-input>
+            <ion-input type="number" [(ngModel)]="qty" placeholder="Quantity"></ion-input>
         </ion-item>
       </ion-card-content>
       </ion-card>
@@ -73,7 +76,10 @@
             
             <div *ngIf="saleinformation">
 
-                    <ion-label color="red">Sale Rate<span class="required">*</span></ion-label>
+              <ion-item>
+                <ion-label color="lightblue">Selling Price<span class="required">*</span></ion-label>
+            </ion-item>
+                   
                     <ion-item style="border-bottom: 0.3px solid">
                         <ion-input type="number" placeholder="Enter Rate" [(ngModel)]="sale_rate"></ion-input>
                     </ion-item>
@@ -88,7 +94,10 @@
                         <ion-input type="number" placeholder="None" [(ngModel)]="sale_tax"></ion-input>
                     </ion-item> -->
                 
-                    <ion-label color="lightblue">Description</ion-label>
+                    <ion-item>
+                      <ion-label color="lightblue">Description</ion-label>
+                  </ion-item>
+                    
                     <ion-item style="border-bottom: 0.3px solid">
                         <ion-input type="text" placeholder="Description" [(ngModel)]="sale_desc"></ion-input>
                     </ion-item>
@@ -106,7 +115,11 @@
             </ion-item>
               
               <div *ngIf="purchaseinformation">
-                      <ion-label color="red">Purchase Rate<span class="required">*</span></ion-label>
+
+                  <ion-item>
+                      <ion-label color="lightblue">Cost Per Item<span class="required">*</span></ion-label>
+                  </ion-item>
+                      
                       <ion-item style="border-bottom: 0.3px solid">
                           <ion-input type="number" placeholder="Enter Rate" [(ngModel)]="purchase_rate"></ion-input>
                       </ion-item>
@@ -116,8 +129,10 @@
                           <ion-input type="text" placeholder="Select Account" [(ngModel)]="purchase_account"></ion-input>
                       </ion-item> -->
                       
-                  
-                      <ion-label color="lightblue">Description</ion-label>
+                      <ion-item>
+                          <ion-label color="lightblue">Description</ion-label>
+                      </ion-item>
+                      
                       <ion-item style="border-bottom: 0.3px solid">
                           <ion-input type="text" placeholder="Description" [(ngModel)]="purchase_desc"></ion-input>
                       </ion-item>

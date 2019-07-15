@@ -32,9 +32,12 @@
   <ion-card>
     <ion-card-content>
       <ion-row style="background-color:#D1D3D3; color: black;font-size: medium;text-align: left;border-radius: 3px">
-        <ion-col>
-            Account
+        <ion-col> 
+            Description
         </ion-col>
+        <!-- <ion-col style="text-align: right">
+          Unit Rate
+        </ion-col> -->
         <ion-col style="text-align: right">
               Total
         </ion-col>
@@ -43,7 +46,7 @@
       <ion-row style="font-size: medium;">
         <ion-col >
             <ion-item style="padding-left: initial;">
-                <ion-label>Sale Rate</ion-label>
+                <ion-label>Selling Price</ion-label>
               </ion-item>
         </ion-col>
         <ion-col>
@@ -68,7 +71,7 @@
       </ion-row>
       <ion-row style="background-color: #D1D3D3; color: black;font-size: medium; border-radius: 3px">
         <ion-col style="text-align: left;">
-            Total Sale Rate
+            Total
         </ion-col>
         <ion-col style="text-align: right;">
          {{this.stringsale_cost}} 
@@ -78,7 +81,7 @@
       <ion-row>
         <ion-col >
             <ion-item style="padding-left: initial;">
-                <ion-label>Purchase Rate</ion-label>
+                <ion-label>Cost Per Item</ion-label>
               </ion-item>
         </ion-col>
         <ion-col>
@@ -102,7 +105,7 @@
 
       <ion-row style="background-color: #D1D3D3; color: black;font-size: medium; border-radius: 3px">
         <ion-col style="text-align: left;">
-            Total Purchase Rate
+            Total
         </ion-col>
         <ion-col style="text-align: right;">
          {{this.stringpurchase_cost1}} 

@@ -53,10 +53,10 @@
       <!-- <ion-input type="email" value="" [(ngModel)]="email"></ion-input> -->
       <ion-input type="email" [(ngModel)]="email"  name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" value="{{this.email}}" required [readonly]="isReadonly()"></ion-input>
 </ion-item>
-    <ion-item style="border-bottom: 1px solid grey">
+    <!-- <ion-item style="border-bottom: 1px solid grey">
       <ion-label fixed>Invoice #<span class="required">*</span></ion-label>
       <ion-input type="number" value="{{this.nativeinvoice}}" [(ngModel)]="invoice"></ion-input>
-    </ion-item>
+    </ion-item> -->
     <ion-item style="border-bottom: 1px solid grey"> 
       <ion-label fixed>Order #</ion-label>
       <ion-input type="number" value="{{this.nativeorder}}" [(ngModel)]="order"></ion-input>
@@ -68,7 +68,7 @@
   <ion-card>
       <ion-card-content>
           
-        <ion-row style="border-bottom: 1px solid grey">
+        <ion-row >
             <ion-col >
                 <ion-item style="border-bottom: 1px solid grey">
                     <ion-label floating>Invoice Date<span class="required">*</span></ion-label>
@@ -85,7 +85,7 @@
             </ion-col>
           </ion-row>
 
-          <ion-list>
+          <!-- <ion-list>
               <ion-item>
                 <ion-label color="lightblue">Terms</ion-label>
                 <ion-select [(ngModel)]="terms" interface="popover">
@@ -97,7 +97,7 @@
                   <ion-option value="net15">Due end of the Month</ion-option>
                 </ion-select>
               </ion-item>
-            </ion-list>
+            </ion-list> -->
           </ion-card-content>
       
 

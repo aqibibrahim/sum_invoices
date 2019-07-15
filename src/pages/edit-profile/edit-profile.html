@@ -12,13 +12,13 @@
 
 <ion-content padding class="my-class">
 
-  <ion-card>
+  <ion-card style="border-radius: 5px">
     <ion-card-content class="my-content">
       <form [formGroup]="myForm" novalidate>
           
         <ion-item no-padding [class.invalid]="(!myForm.controls.name.valid) && isName" style="border-bottom-color: #D1D3D3">
             <!-- <ion-label stacked style="color:grey;font-size: larger">Company Name</ion-label> -->
-          <ion-input type="text" (keyup)="validate('name')" formControlName="name" value="{{this.compname}}" [(ngModel)]="compname" placeholder="Company Name"></ion-input>
+          <ion-input type="text" (keyup)="validate('name')" formControlName="name" value="{{this.compname}}" [(ngModel)]="compname" placeholder="Company Name" style="border-bottom: 1px solid lightgrey;"></ion-input>
         </ion-item>
         <p *ngIf="myForm.get('name').errors && myForm.get('name').dirty" >
           <span style="color: red" ion-text *ngIf="myForm.get('name').hasError('required')">Field is required</span>
@@ -26,7 +26,7 @@
 
         <ion-item no-padding [class.invalid]="(!myForm.controls.fullname.valid) && isfullname" style="border-bottom-color: #D1D3D3">
           <!-- <ion-label color="dark" stacked style="color:grey;font-size: large">Full Name</ion-label> -->
-        <ion-input type="text" (keyup)="validate('fullname')" formControlName="fullname" value="{{this.fullname}}" [(ngModel)]="fullname" placeholder="Full Name"></ion-input>
+        <ion-input type="text" (keyup)="validate('fullname')" formControlName="fullname" value="{{this.fullname}}" [(ngModel)]="fullname" placeholder="Full Name" style="border-bottom: 1px solid lightgrey;"></ion-input>
       </ion-item>
       <p *ngIf="myForm.get('fullname').errors && myForm.get('fullname').dirty" >
         <span style="color: red" ion-text *ngIf="myForm.get('fullname').hasError('required')">Field is required, </span>
@@ -35,7 +35,7 @@
 
         <ion-item no-padding [class.invalid]="(!myForm.controls.email.valid) && isEmail" style="border-bottom-color: #D1D3D3">
             <!-- <ion-label color="dark" stacked style="color:grey;font-size: large">Email</ion-label> -->
-          <ion-input type="email" (keyup)="validate('email')" formControlName="email" value="{{this.email}}" [(ngModel)]="email" placeholder="Email"></ion-input>
+          <ion-input type="email" (keyup)="validate('email')" formControlName="email" value="{{this.email}}" [(ngModel)]="email" placeholder="Email" style="border-bottom: 1px solid lightgrey;"></ion-input>
         </ion-item>
         <p *ngIf="myForm.get('email').errors && myForm.get('email').dirty" >
           <span style="color: red" ion-text *ngIf="myForm.get('email').hasError('required')">Field is required</span>

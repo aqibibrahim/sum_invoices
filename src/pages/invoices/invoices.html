@@ -17,7 +17,7 @@
     
     <invoicelist *ngFor="let invoice of invoices; let index = index"
     [title]="invoice.customer"
-    [status]="invoice.invoice_date"
+    [date]="invoice.invoice_date"
     textColor="#747474"
     hasMargin="false"
     headerColor="#F53D3D"
@@ -28,7 +28,7 @@
           Due: {{invoice.Due_date | date: 'yyyy/MM/dd'}}
             </ion-col>
         <ion-col style="color: black; text-align: end">
-               Amount: PKR {{invoice.total_cost}}
+               Amount:{{invoice.total_cost | currency : 'PKR'}}
         </ion-col>
           </ion-row>
 

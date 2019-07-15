@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,LoadingController, ToastController } from 'ionic-angular';
 import {Http ,Response } from '@angular/http';
 import {HomePage} from '../home/home';
+import {GlobalProvider} from '../../providers/global/global'
 /**
  * Generated class for the TaxPage page.
  *
@@ -17,7 +18,7 @@ import {HomePage} from '../home/home';
 export class CreateTaxPage {
   taxname: string;
   taxvalue: string;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+  constructor(public navCtrl: NavController,private global: GlobalProvider, public navParams: NavParams,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
   }
 
   ionViewDidLoad() {
@@ -31,6 +32,7 @@ export class CreateTaxPage {
     let data = {
       tax_name:this.taxname,
       tax_precentage: this.taxvalue,
+      userId:this.global.userid
   };
     //console.log(this.data.username);
     this.http.post('https://sum-finance-latest2.herokuapp.com/tax/create', data)

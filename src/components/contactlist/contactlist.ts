@@ -15,6 +15,7 @@ export class ContactlistComponent {
   @Input() textColor: string = '#747474';
   @Input() contentColor: string = '#F9F9F9';
   @Input() title: string;
+  @Input() id: string;
   @Input() hasMargin: boolean = true;
   @Input() expanded: boolean;
 

@@ -77,6 +77,7 @@ import {CashFlowReportPage} from '../pages/cash-flow-report/cash-flow-report';
 import {ItemslistComponent} from '../components/itemslist/itemslist';
 import {ContactlistComponent} from '../components/contactlist/contactlist';
 import {InvoicelistComponent} from '../components/invoicelist/invoicelist';
+import { IonicSelectableModule } from 'ionic-selectable';
 @NgModule({
   declarations: [
     MyApp,
@@ -134,7 +135,7 @@ import {InvoicelistComponent} from '../components/invoicelist/invoicelist';
   ],
   imports: [ 
     FormsModule, 
-   
+    IonicSelectableModule,
     //MbscModule,
     BrowserModule,
     HttpModule,

@@ -18,7 +18,7 @@
         </button>
         </ion-buttons>
       <ion-buttons end>
-          <button ion-button (click)="savedata()" [disabled]="companyname?.length > 15 || !companyname || !email ||phone?.length > 7 || !phone ||mobile?.length > 11 || !mobile">
+          <button ion-button (click)="savedata()" [disabled]="companyname?.length > 15 || !companyname || !email ||phone?.length > 11 || !phone ||mobile?.length > 15 || !mobile || !billingaddress || !shippingaddress">
           Save
         </button>
         </ion-buttons>
@@ -55,7 +55,7 @@
                   </ion-item>
                   <ion-item style="border-bottom: 0.3px solid">
                       
-                      <ion-input type="text" placeholder="Company name" [(ngModel)]="companyname"></ion-input>
+                      <ion-input type="text" placeholder="Company name" [(ngModel)]="companyname"><span class="required">*</span></ion-input>
                     </ion-item>
                    
                     <p style="color:red" *ngIf="companyname?.length > 15">
@@ -86,8 +86,8 @@
                                 <ion-item style="border-bottom: 0.3px solid">
                                     <ion-input type="number" placeholder="Work Phone." [(ngModel)]="phone"></ion-input>
                               </ion-item>
-                              <p style="color:red" *ngIf="phone?.length > 7">
-                                7 digit Phone number
+                              <p style="color:red" *ngIf="phone?.length > 11">
+                                Max 11 digit Number
                               </p>
                               <p style="color:red" *ngIf="!phone">
                                 required
@@ -97,8 +97,8 @@
                               <ion-item style="border-bottom: 0.3px solid">
                                 <ion-input type="number" placeholder="Mobile" [(ngModel)]="mobile"></ion-input>
                               </ion-item>
-                              <p style="color:red" *ngIf="mobile?.length == 11">
-                                11 digit Mobile number
+                              <p style="color:red" *ngIf="mobile?.length == 15">
+                                Max 15 digit Number
                               </p>
                               <p style="color:red" *ngIf="!mobile">
                                 required
@@ -111,10 +111,14 @@
     </ion-card>
     <ion-card>
         <ion-card-header color="lightblue">
-            General Info
+            General Info<span class="required">*</span>
           </ion-card-header>
         <ion-card-content >
-                 <ion-label>Contact Type</ion-label>     
+          
+            <ion-item>
+                <ion-label color="lightblue">Contact Type</ion-label>
+            </ion-item>
+                 
                       <ion-row radio-group [(ngModel)]="sexe" >
                           <ion-col style="padding: 0px !important"> 
                             <ion-item style="border-bottom: 0.3px solid">
@@ -129,7 +133,7 @@
                             </ion-item>
                           </ion-col>
                         </ion-row>
-                        <ion-item style="border-bottom: 0.3px solid">
+                        <!-- <ion-item style="border-bottom: 0.3px solid">
                         <ion-label color="lightblue">Currency</ion-label>  
                         <ion-select [(ngModel)]="currency" interface="popover">
                             <ion-option value="usd">USD</ion-option>
@@ -146,8 +150,8 @@
                             <ion-option value="aed">AED</ion-option>
                             
                           </ion-select> 
-                        </ion-item>
-                          <ion-item style="border-bottom: 0.3px solid">
+                        </ion-item> -->
+                          <!-- <ion-item style="border-bottom: 0.3px solid">
                           <ion-label color="lightblue">Payment Terms</ion-label>  
                         <ion-select [(ngModel)]="payment" interface="popover">
                             <ion-option value="net15">Net 15</ion-option>
@@ -158,32 +162,38 @@
                             <ion-option value="eonm">Due END OF Next Month</ion-option>
                             <ion-option value="dor">Due on</ion-option>
                           </ion-select> 
-                        </ion-item>
+                        </ion-item> -->
 
-                        <ion-item style="border-bottom: 0.3px solid">
+                        <!-- <ion-item style="border-bottom: 0.3px solid">
                             <ion-label>Enable Portal Access</ion-label>
                             <ion-toggle disabled="false"></ion-toggle>
-                          </ion-item>
+                          </ion-item> -->
 
-                          <ion-item style="border-bottom: 0.3px solid">
+                          <!-- <ion-item style="border-bottom: 0.3px solid">
                               <ion-label color="lightblue">Portal Language</ion-label>  
                             <ion-select [(ngModel)]="language" interface="popover">
                                 <ion-option value="english">English</ion-option>
                               </ion-select> 
-                            </ion-item>
+                            </ion-item> -->
         </ion-card-content>
       </ion-card>
          <ion-card>
           <ion-card-header color="lightblue">
-              Address Info
+              Address Info<span class="required">*</span>
             </ion-card-header>
           <ion-card-content >
           <ion-item>
             <ion-textarea clearOnEdit="true" placeholder="Billing Address" [(ngModel)]="billingaddress" style="border-bottom: 1px solid grey;"></ion-textarea> 
+            <p style="color:red" *ngIf="!billingaddress">
+                required
+              </p>
           </ion-item>
           
           <ion-item>
             <ion-textarea clearOnEdit="true" placeholder="Shipping Address" [(ngModel)]="shippingaddress" style="border-bottom: 1px solid grey;"></ion-textarea> 
+            <p style="color:red" *ngIf="!shippingaddress">
+                required
+              </p>
           </ion-item>
 
           <ion-item>

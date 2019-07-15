@@ -34,15 +34,23 @@
           </ion-item>
           <ion-item>
             <ion-label stacked style="color:grey;font-size: larger">Business Email*</ion-label>
-            <ion-input type="text" [(ngModel)]="business_email" name="businessemail"></ion-input>
+            <ion-input type="email" [(ngModel)]="business_email" name="businessemail"></ion-input>
         </ion-item>
           <ion-item>
               <ion-label stacked style="color:grey;font-size: larger">Business Location</ion-label>
               <ion-input type="text" [(ngModel)]="businesslocation" name="businesslocation" value={{this.country}} [readonly]="isReadonly()"></ion-input>
           </ion-item>
             
-         
-          <ion-item style="border-bottom: 0.3px solid">
+          <!-- <ion-item>
+            <ion-label stacked style="color:grey;font-size: larger">Address</ion-label>
+            <ion-input type="text" [(ngModel)]="address" name="address"></ion-input>
+        </ion-item> -->
+
+        <ion-item>
+          <ion-label style="color:grey;font-size: larger">Address</ion-label>
+          <ion-textarea rows="3" cols="20" placeholder="Enter Address here..." [(ngModel)]="address"></ion-textarea>
+        </ion-item>
+          <!-- <ion-item style="border-bottom: 0.3px solid">
               <ion-label color="lightblue">Language</ion-label>  
               <ion-select [(ngModel)]="language" interface="popover">
                   <ion-option value="dr">English</ion-option>
@@ -51,11 +59,11 @@
                   <ion-option value="genesis">Arabic</ion-option>
                   <ion-option value="saturn">Urdu</ion-option>
                 </ion-select>
-              </ion-item>
+              </ion-item> -->
           </ion-card-content>
           </ion-card>
     
-          <ion-card>
+          <!-- <ion-card>
               
               <ion-card-content>
                   <ion-item style="border-bottom: 0.3px solid">
@@ -104,7 +112,7 @@
                 </ion-card-content>
 
               
-                </ion-card>
+                </ion-card> -->
 </ion-content>
 <ion-footer>
   

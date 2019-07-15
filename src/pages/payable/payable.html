@@ -15,25 +15,53 @@
 
 <ion-content padding class="my-class">
  
-    <ion-card *ngFor="let invoice of invoices" style="
-    border-radius: 7px;">
+
+    <ion-card>
         <ion-card-content>
           <ion-row>
-            <ion-col style="font-size: large; color: black" col-6>
-                {{invoice.user_name}}
+            <ion-col>
+                <ion-item style="padding-left: initial; font-weight: bold">
+                    <ion-label>Total Amount</ion-label>
+                  </ion-item>
             </ion-col>
-            <ion-col style="font-size: large; color: black" col-4>
-                {{invoice.total_cost}}
+            <ion-col>
+                <ion-item style="text-align: right; font-weight: bold">
+                    <ion-label style="margin: 0px 0px 0px 0px;">{{this.sum | number : fractionSize}}</ion-label>
+                  </ion-item>
+            </ion-col>
+            </ion-row>
+        </ion-card-content>
+      </ion-card>
+    <ion-card *ngFor="let invoice of invoices" style="border-radius: 7px;">
+        <ion-card-content>
+          <ion-row>
+            <ion-col >
+                <ion-item style="padding-left: initial;">
+                    <ion-label>{{invoice.user_name}}</ion-label>
+                  </ion-item>
+                
+            </ion-col>
+            <ion-col>
+                <ion-item style="text-align: right;">
+                    <ion-label style="margin: 0px 0px 0px 0px;"> {{invoice.total_cost | number : fractionSize}}</ion-label>
+                  </ion-item>
+               
             </ion-col>
           </ion-row>
           <ion-row>
-            <ion-col style="color:#747474">
-                Due: {{invoice.Due_date | date: 'yyyy/MM/dd'}}
-            </ion-col>
-            <ion-col style="color:#747474" class="ion-text-end">
-              {{invoice.item_name}}
-            </ion-col>
+              <ion-col >
+              
+                  <ion-label style="margin: 0px 0px 0px 0px; padding-left: initial; color:#747474"> Due: {{invoice.Due_date | date: 'yyyy/MM/dd'}}</ion-label>
+              
+             
+          </ion-col>
+          <ion-col >
+              
+                  <ion-label style="margin: 0px 0px 0px 0px; text-align: right; color:#747474"> {{invoice.item_name}}</ion-label>
+              
+          </ion-col>
           </ion-row>
+
           <!-- <ion-row  class="datelabel">
             <ion-col style="color:#747474">
                 Due: {{invoice.Due_date | date: 'yyyy/MM/dd'}}
@@ -56,4 +84,5 @@
               </ion-row> -->
         </ion-card-content>
     </ion-card>
+
 </ion-content>

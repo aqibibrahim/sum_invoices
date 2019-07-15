@@ -593,7 +593,7 @@ export class CreateInvoicesPage {
             alert ("Due Date must be greater than Invoice Date");
         }
     
-        else if(this.email == undefined || this.invoice == undefined || this.order == undefined || this.invoicedate == undefined || this.duedate == undefined){
+        else if(this.email == undefined || this.order == undefined || this.invoicedate == undefined || this.duedate == undefined){
           alert ("Please fill all Manadatory fields");
         }
         else
@@ -617,7 +617,7 @@ export class CreateInvoicesPage {
          let data = {
            customer:this.gamingname,
            order_no:this.order,
-           invoice_number:this.invoice,
+          //  invoice_number:this.invoice,
            invoice_date:this.invoicedate,
            Due_date:this.duedate,
            //sales_person:this.salesperson,
@@ -642,6 +642,7 @@ export class CreateInvoicesPage {
          this.http.post('https://sum-finance-latest2.herokuapp.com/invoice/create', data)
          .subscribe(response => {
            console.log('POST Response:', response);
+           //console.log('POST Response:', response._body);
            loader.dismiss();
            let toast = this.tostctrl.create({
              message:'Data Save',

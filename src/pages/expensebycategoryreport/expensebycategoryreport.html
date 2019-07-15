@@ -11,63 +11,74 @@
 </ion-header>
 
 <ion-content padding class="my-class">
-    <ion-card text-wrap>
-        <ion-card-content >
-          <ion-row>
-              <ion-item>
-                  <ion-label style="text-align: center;font-family: fantasy;font-size: larger;">Expense Name : {{this.expense_name | uppercase}}</ion-label>
-                  <!-- <ion-input type="text" value={{this.item_name}} text-wrap [readonly]="isReadonly()"></ion-input> -->
+
+    <ion-card>
+        <ion-card-content>
+          <ion-row style="border-radius: 5px">
+              <ion-item style="min-height: 2.4rem !important;">
+                  <ion-label style="text-align: center;font-family: fantasy;font-size: larger; margin: 0px 8px 0px 0 !important;min-height: 2.4rem !; font-weight: bold">{{this.expense_name | titlecase}}</ion-label>
+                  
                 </ion-item>
+                <ion-item style="min-height: 2.4rem !important;">
+                <ion-label style="text-align: center;font-family: fantasy;font-size: meduim; margin: 0px 8px 0px 0 !important;">Expense By Category</ion-label>
+                
+              </ion-item>
+              <ion-item style="min-height: 2.4rem !important;">
+              <ion-label style="text-align: center;font-family: fantasy;font-size: meduim; margin: 0px 8px 0px 0 !important; color: grey">From {{this.s_date}} To {{this.e_date}}</ion-label>
+            </ion-item>
           </ion-row>
-          <ion-row>
-           
-                <ion-item>
-                    <ion-input type="Date" value={{this.s_date}}  [readonly]="isReadonly()"> </ion-input> 
-                    <ion-input type="Date" value={{this.e_date}} [readonly]="isReadonly()"></ion-input>
-                  </ion-item>
-           
-          </ion-row>
-          
-         
-            <!-- <ion-item style="text-align: center;background-color:#D1D3D3; color: black;">
-                {{name.date | date: 'yyyy/MM/dd'}}
-            </ion-item> -->
-      </ion-card-content>
-        </ion-card >
+        </ion-card-content>
+      </ion-card>
+    
+      <ion-card color="lightblue">
+          <ion-card-content>
+            <ion-row >
+              <ion-col>
+                  <ion-item style="padding-left: initial; font-weight: bold">
+                      <ion-label>Total Expense</ion-label>
+                    </ion-item>
+              </ion-col>
+              <ion-col>
+                  <ion-item style="text-align: right; font-weight: bold">
+                      <ion-label style="margin: 0px 0px 0px 0px;">{{this.sum | number : fractionSize}}</ion-label>
+                    </ion-item>
+              </ion-col>
+              </ion-row>
+          </ion-card-content>
+        </ion-card>
+
         <ion-card *ngFor="let name of datarecord">
             <ion-card-content >
-                <ion-row  style="background-color:#D1D3D3; color: black;font-size: large;" >
-                    <ion-col style="text-align: center;">
-                       
+                <ion-row  style="background-color:#D1D3D3; color: black; font-size: meduin;font-weight: bold;border-radius: 3px">
+                    <ion-col style="text-align: left;">
                        Date 
-                       
                     </ion-col>
-                    <ion-col style="text-align: center;">
+                    <ion-col style="text-align: right;">
                         {{name.date | date: 'yyyy/MM/dd'}}
                     </ion-col>
-        </ion-row>
+      </ion-row>
         
-                <ion-row>
+                <ion-row *ngIf="name.itemname">
                     <ion-col>
-                        <ion-item style="text-align: center;">
+                        <ion-item style="padding-left: initial;">
                             <ion-label>Item Name</ion-label>
                           </ion-item>
                     </ion-col>
                     <ion-col>
-                        <ion-item style="text-align: center;">
-                            <ion-label>{{name.itemname}}</ion-label>
+                        <ion-item style="text-align: right;">
+                            <ion-label style="margin: 0px 0px 0px 0px;">{{name.itemname}}</ion-label>
                           </ion-item>
                     </ion-col>
                 </ion-row>
                 <ion-row>
                     <ion-col >
-                        <ion-item style="text-align: center;">
+                        <ion-item style="padding-left: initial;">
                             <ion-label>Total Amount</ion-label>
                           </ion-item>
                     </ion-col>
                     <ion-col>
-                        <ion-item style="text-align: center;">
-                            <ion-label>{{name.amount}}</ion-label>
+                        <ion-item style="text-align: right;">
+                            <ion-label style="margin: 0px 0px 0px 0px;">{{name.amount}}</ion-label>
                           </ion-item>
                     </ion-col>
                   
