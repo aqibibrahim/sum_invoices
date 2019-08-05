@@ -21,11 +21,13 @@ import { FileOpener } from '@ionic-native/file-opener';
 import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts';
 import { App } from 'ionic-angular';
 import {EditProfilePage} from '../edit-profile/edit-profile';
- 
+import { ModalController } from 'ionic-angular';
+import {Http ,Response} from '@angular/http';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
+
 export class HomePage {
   @ViewChild(Nav) nav: Nav;
   public prolfies: any;
@@ -34,10 +36,11 @@ export class HomePage {
   userid:any;
   nativename:any;
   // books: Observable<any[]>;
-   constructor(public navCtrl: NavController, private navparm:NavParams,public app:App,public alertCtrl:AlertController,public signuppro:SignupProvider,public global:GlobalProvider,private plt: Platform, private file: File, private fileOpener: FileOpener, private storage: Storage,private contacts: Contacts) {
+   constructor(public navCtrl: NavController, public http:Http ,public modalCtrl: ModalController,private navparm:NavParams,public app:App,public alertCtrl:AlertController,public signuppro:SignupProvider,public global:GlobalProvider,private plt: Platform, private file: File, private fileOpener: FileOpener, private storage: Storage,private contacts: Contacts) {
     // this.books = afDB.list('/Books/Books').valueChanges();
     
     this.companyname = this.global.company_name;
+    console.log(this.signuppro.mailstatus);
     //this.storage.set('customername', this.companyname);
     this.userid = this.global.userid;
     console.log(this.companyname, "User ID" +this.userid);
@@ -45,6 +48,11 @@ export class HomePage {
 }
  
  ionViewDidLoad() {
+   if(this.global.mailstatus == false){
+     alert("Please verify your email address")
+   }
+
+   
   this.nativename = this.global.company_name;
   console.log('ionViewDidLoad DashboardPage');
   this.plt.registerBackButtonAction(() => {
@@ -74,12 +82,15 @@ export class HomePage {
     }
 });
 
+//http://localhost:3000/user/userdata/5d1512f52b7d6f0017908263
  }
  ionViewWillEnter(){
-  // this.storage.get('customername').then((val1) => {
-  //   console.log('Your name is', val1);
-    
-  // })
+  console.log(this.global.userid);
+  this.http.get('https://sum-finance-latest2.herokuapp.com/user/userdata/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+    console.log(data);
+    this.nativename = data[0].company_name;
+     });
+
   this.nativename = this.global.company_name;
   this.plt.registerBackButtonAction(() => {
     // Catches the active view

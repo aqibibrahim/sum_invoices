@@ -79,6 +79,7 @@ export class CreateInvoicesPage {
   salesperson:any;
   other_user_id:any;
 
+  responsedate:any;
 
   nativeindate:any
   nativeduedate:any;
@@ -351,14 +352,10 @@ export class CreateInvoicesPage {
       this.total = this.shp + this.value_rate - this.fixeddistamount;  
       
     } 
-   else if(this.adj !== undefined && this.shp !== undefined) {
-      this.total =  this.shp + this.value_rate + this.adj - this.fixeddistamount;  
-      
-    }
     else{
       this.total =  this.value_rate -this.fixeddistamount; 
     }
-    
+    this.gentotal = this.total.toFixed(2);
   }
   onShipping(data) : void {
     console.log("onChangeTime to time: " + this.shippingprice + ". Event data: " + data); 
@@ -370,7 +367,7 @@ export class CreateInvoicesPage {
       this.total = this.shp +this.value_rate - this.fixeddistamount;   
       
     }
-    this.gentotal =this.total.toFixed(2);
+    this.gentotal = this.total.toFixed(2);
   }
   onAdjustment(data) : void {
     console.log("onChangeTime to time: " + this.adjustmentprice + ". Event data: " + data);
@@ -443,8 +440,6 @@ export class CreateInvoicesPage {
        { text: 'From', style: 'subheader'},
        this.global.company_name,
        "this.shipping_address",
-               
-
        { text: 'To', style: 'subheader' },
        this.gamingname,
        this.email,
@@ -641,8 +636,10 @@ export class CreateInvoicesPage {
          }
          this.http.post('https://sum-finance-latest2.herokuapp.com/invoice/create', data)
          .subscribe(response => {
-           console.log('POST Response:', response);
-           //console.log('POST Response:', response._body);
+          console.log('API Response : ', response.json());
+          this.responsedate = response.json();
+          //resolve(response.json());
+           console.log('POST Response:', this.responsedate.invoice_number);
            loader.dismiss();
            let toast = this.tostctrl.create({
              message:'Data Save',
@@ -651,7 +648,7 @@ export class CreateInvoicesPage {
            toast.present();
            
        //    this.navCtrl.push(InvoicesPage);
-           this.navCtrl.push(InvoicedeatilsPage,{'customername':this.gamingname,'invoice':this.invoice,'balance':this.total,'invoicedate':this.invoicedate,'duedate':this.duedate,'description':this.desc,
+           this.navCtrl.push(InvoicedeatilsPage,{'customername':this.gamingname,'invoice':this.responsedate.invoice_number,'balance':this.total,'invoicedate':this.invoicedate,'duedate':this.duedate,'description':this.desc,
          'item_name':this.value_item,'subtotal':this.value_rate,'discount':this.discountprice,'shipping':this.shippingprice,'adjustment':this.adjustmentprice,'quantity':this.quantity,'rate':this.value_rate1,
        'email':this.email,'order':this.order,'status':"Pending",'billingaddress':this.billing_address,'shippingaddress':this.shipping_address,contactsaln:this.contact_sal});
         

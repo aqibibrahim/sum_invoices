@@ -27,6 +27,19 @@ export class ContactdetailsPage {
    email:any;
    mydate:any; 
    displayname:any;
+   billingaddress:any;
+   shippingaddress:any;
+  firstname: string;
+   lastname: string;
+   companyname: string;
+   gaming:string;
+   sexe:string;
+   contactdisplay:any;
+   conttype:any;
+   
+   
+
+   
 
    value_company_name:any;
    value_contact_saln:any;
@@ -58,6 +71,8 @@ export class ContactdetailsPage {
           this.value_last_name = data[0].last_name;
           this.value_mobile = data[0].mobile;
           this.value_phone =data[0].phone;
+          this.shippingaddress = data[0].shipping_address;
+          this.billingaddress = data[0].billing_address;
 });
 }
 
@@ -110,9 +125,17 @@ updatecontact(){
   });
   loader.present();
   let data = {
-    email:this.email,
-    phone:this.phone,
-    mobile:this.mobile
+        cont_saln:this.gaming,
+        first_name: this.firstname,
+        last_name:this.lastname,
+        comp_name:this.companyname,
+        display_name:this.contactdisplay,
+        email:this.email,
+        phone:this.phone,
+        mobile:this.mobile,
+        cont_type:this.sexe,
+        billing_address:this.billingaddress,
+        shipping_address:this.shippingaddress,
   };
   //console.log(this.data.username);
   this.http.post('https://sum-finance-latest2.herokuapp.com/finance/update/'+this.id+'', data)

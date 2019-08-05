@@ -88,14 +88,7 @@ export class CashFlowReportPage {
         this.preexpense = this.datarecord[0].PreExpense;
         this.prepayment = this.datarecord[0].PrePayment;
 
-        this.fixedpayment = this.payment.toFixed(2);
-        this.fixedcash = this.cash.toFixed(2);
-        this.fixedexpense = this.expense.toFixed(2);
-        
-        
-        
-
-        if(this.precash == undefined){
+       if(this.precash == undefined){
           this.precash =0;
           this.fixedprecash = 0.00;
         }
@@ -127,7 +120,10 @@ export class CashFlowReportPage {
         if(this.outgoing == NaN){
           this.outgoing = 0;
         }
-
+        this.fixedpayment = this.payment.toFixed(2);
+        this.fixedcash = this.cash.toFixed(2);
+        this.fixedexpense = this.expense.toFixed(2);
+        
         this.endingcash = (this.opening + this.cash)-this.outgoing;
         this.fixedendingcash = this.endingcash.toFixed(2);
         loader.dismiss();

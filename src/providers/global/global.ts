@@ -16,11 +16,13 @@ company_name:any;
 user_email:any;
 user_name:any;
 userid:any;
+mailstatus:any;
   constructor(public http: Http,public loadingCtrl: LoadingController, public app: App,public tostctrl: ToastController, public alrtctrl:AlertController) {
     console.log('Hello GlobalProvider Provider');
 
   }
-login(email,password){
+login(email,password,status){
+  this.mailstatus = status;
     console.log(email,password);
     let data1 = {
       email:email,
@@ -38,7 +40,7 @@ login(email,password){
            this.company_name = data[0].company_name;
            this.user_email = data[0].email;
            this.user_name = data[0].user_name;
-          this.userid = data[0]._id;
+           this.userid = data[0]._id;
           
           let toast = this.tostctrl.create({
                 message:'Login Successfully',

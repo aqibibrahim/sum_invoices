@@ -25,20 +25,20 @@
         </ion-card-header>
         <ion-card-content>
           <ion-item>
-              <ion-label stacked style="color:grey;font-size: larger">Organization Name</ion-label>
-              <ion-input type="text" placeholder="First name" [(ngModel)]="companyname" name="username" value={{this.companyname}} [readonly]="isReadonly()"></ion-input>
+              <ion-label stacked style="color:grey;font-size: medium">Organization Name</ion-label>
+              <ion-input type="text" placeholder="First name" [(ngModel)]="companyname" name="username" value={{this.companyname}} [readonly]="isReadonly()" style="border-bottom: 1px solid lightgray"></ion-input>
           </ion-item>
           <ion-item>
-              <ion-label stacked style="color:grey;font-size: larger">Portal Url</ion-label>
-              <ion-input type="text" placeholder="First name" [(ngModel)]="postal" name="username" ></ion-input>
+              <ion-label stacked style="color:grey;font-size: medium">Portal Url</ion-label>
+              <ion-input type="text" placeholder="First name" [(ngModel)]="postal" name="username" style="border-bottom: 1px solid lightgray"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label stacked style="color:grey;font-size: larger">Business Email*</ion-label>
-            <ion-input type="email" [(ngModel)]="business_email" name="businessemail"></ion-input>
+            <ion-label stacked style="color:grey;font-size: medium">Business Email*</ion-label>
+            <ion-input type="email" [(ngModel)]="business_email" name="businessemail" style="border-bottom: 1px solid lightgray"></ion-input>
         </ion-item>
           <ion-item>
-              <ion-label stacked style="color:grey;font-size: larger">Business Location</ion-label>
-              <ion-input type="text" [(ngModel)]="businesslocation" name="businesslocation" value={{this.country}} [readonly]="isReadonly()"></ion-input>
+              <ion-label stacked style="color:grey;font-size: medium">Business Location</ion-label>
+              <ion-input type="text" [(ngModel)]="businesslocation" name="businesslocation" value={{this.country}} [readonly]="isReadonly()" style="border-bottom: 1px solid lightgray"></ion-input>
           </ion-item>
             
           <!-- <ion-item>
@@ -47,8 +47,8 @@
         </ion-item> -->
 
         <ion-item>
-          <ion-label style="color:grey;font-size: larger">Address</ion-label>
-          <ion-textarea rows="3" cols="20" placeholder="Enter Address here..." [(ngModel)]="address"></ion-textarea>
+          <ion-label style="color:grey;font-size: medium">Address</ion-label>
+          <ion-textarea rows="3" cols="20" placeholder="Enter Address here..." [(ngModel)]="address" style="border-bottom: 1px solid lightgray"></ion-textarea>
         </ion-item>
           <!-- <ion-item style="border-bottom: 0.3px solid">
               <ion-label color="lightblue">Language</ion-label>  

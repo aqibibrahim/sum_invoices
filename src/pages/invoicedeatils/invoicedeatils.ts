@@ -234,29 +234,16 @@ export class InvoicedeatilsPage {
     
     var docDefinition = {
 
-
      content: [
-       { text: 'INVOICE#'+ this.invoice_number, style: 'header'},
+      { text:  this.global.company_name, style: 'compheader'},
+       { text: 'INVOICE#'+ this.invoice_number, style: 'invoiceheader'},
        { text: 'Status:'+ this.status, style: 'header'},
        { text: 'Date' + this.invoice_date, alignment: 'right'},
-
-       { text: 'From', style: 'subheader'},
-       this.global.company_name,
-       this.shipping_address,
-               
+   
 
        { text: 'To', style: 'subheader' },
        this.customer_name,
-       this.email,
-        
-       { text: 'Invoice Date:', style: 'inoices', alignment: 'right' },
-       {text:this.invoice_date, alignment:'right'},
-       { text: 'Due Date:', style: 'inoices', alignment: 'right' },
-       {text:this.due_date, alignment:'right'},
-       { text: 'P.O #: '+this.order_number+'', style: 'inoices', alignment: 'right' },
-      //  {text:this.order_number, alignment:'right'},
-       
-
+      
        { text: 'Items', style: 'subheader'},
        {
            style: 'itemsTable',
@@ -272,51 +259,73 @@ export class InvoicedeatilsPage {
                        { text: 'Amount', style: 'itemsTableHeader' },
                        
                    ],
-                   [this.item_name,this.quantity,this.rate, this.subtotal]
+                  
+                   [this.item_name,this.quantity,this.rate, this.subtotal],
+                   ['Shipping Charges','','',this.shipping],
+                   ['Discount Price','','',this.discount],
+                   ['','','Total',this.balance]
                ]
            }
        },
-       {
-           style: 'totalsTable',
-           table: {
-               widths: ['*', 75,75,75,75],
-               body: [
-                   [
-                       'Subtotal',
-                       this.subtotal,
-                      
-                   ],
-                   [
-                       'Shipping',
-                       this.shipping,
-                   ],
-                   [
-                       'Adjustment',
-                       this.adjustment
-                   ],
-                   [
-                     'Total',
-                      this.balance
-                   ],
-                   [
-                     'Balance Due',
-                      this.balance
-                   ]
-               ]
-           },
+      //  {
            
-           layout: 'noBorders'
-       },
+      //      table: {
+               
+      //          //widths: ['*', 75,75,75,75],
+      //          body: [
+      //              [
+      //                  'Subtotal',
+      //                  this.subtotal,
+                      
+      //              ],
+      //              [
+      //                  'Shipping',
+      //                  this.shipping,
+      //              ],
+      //              [
+      //                  'Adjustment',
+      //                  this.adjustment
+      //              ],
+      //              [
+      //                'Total',
+      //                 this.balance
+      //              ],
+      //              [
+      //                'Balance Due',
+      //                 this.balance
+      //              ]
+      //          ],
+      //          style: 'totalsTable'
+      //      },
+           
+      //       layout: 'noBorders'
+      //  },
        { text: 'Notes:', style: 'subheader'},
        { text: 'Thanks for Your Business', style: 'subheader'},
+       
    ],
      styles: {
        header: {
-           fontSize: 20,
-           bold: true,
+           fontSize: 10,
            margin: [0, 0, 0, 10],
            alignment: 'right'
        },
+       invoiceheader: {
+        fontSize: 20,
+        bold: true,
+        margin: [0, 0, 0, 10],
+        alignment: 'center',
+        decoration: 'underline'
+    },
+
+       compheader: {
+        fontSize: 30,
+        bold: true,
+        margin: [0, 0, 0, 10],
+
+        alignment: 'left'
+    },
+
        subheader: {
            fontSize: 16,
            bold: true,
@@ -342,12 +351,41 @@ export class InvoicedeatilsPage {
         
            bold: true,
            margin: [0, 0, 0, 0],
-           alignment:'right'
+           alignment:'center'
            
        }
    }
-     
-   }
+  //  footer: {
+  //  columns: [
+  //       {
+  //           table: {
+  //               widths: [ '70%','30%'],
+
+  //               body: [
+  //                   [
+  //                       { text: this.email,
+
+  //                       alignment:'left',
+  //                       fontSize: 20,
+
+  //                       },
+
+  //                       { text: '',
+
+                          
+  //                           alignment:'right',
+  //                           fontSize: 20,
+  //                           fillColor: 'gray'}
+  //                   ]
+  //               ]
+  //           },
+  //           layout: 'noBorders'
+  //       }
+
+  //   ],
+  //   margin: [0, 0, 0, 0]
+  // }
+}
    this.pdfObj = pdfMake.createPdf(docDefinition);
 
    if (this.plt.is('cordova')) {
@@ -358,7 +396,6 @@ export class InvoicedeatilsPage {
        })
      });
    } else {
-     // On a browser simply use download!
      this.pdfObj.download();
    }
   }

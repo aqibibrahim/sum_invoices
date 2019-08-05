@@ -48,12 +48,22 @@ export class EditProfilePage {
        this.country1 = data 
        
      });
-
+      
       this.compname = this.global.company_name;
       this.fullname = this.global.user_name;
       this.email = this.global.user_email;
       console.log(this.compname, this.fullname, this.email);
   }
+  ionViewWillEnter(){
+    console.log(this.global.userid);
+    this.http.get('https://sum-finance-latest2.herokuapp.com/user/userdata/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+      console.log( data);
+      this.compname = data[0].company_name;
+      this.fullname = data[0].user_name;
+      this.email = data[0].email;
+
+       });
+      }
   validate(data){
     if(data == 'name'){
       this.isName = true;
@@ -67,6 +77,9 @@ export class EditProfilePage {
     else if(data == 'fullname'){
       this.isfullname = true;
     }
+  }
+  isReadonly() {
+    return this.isReadonly;   //return true/false 
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditProfilePage');

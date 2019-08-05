@@ -41,3 +41,8 @@ page-login {
         font-size: 22px;
         text-align: -webkit-center;
       }
+      .custom-alert-danger {
+           // if you don't use .md, .ios, .mp initially, you'd have to use !important here.
+          color: coral;
+          margin-bottom: 10px;
+        }

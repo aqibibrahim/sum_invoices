@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,LoadingController, ToastController,App, AlertController  } from 'ionic-angular';
-import {SignupProvider } from '../../providers/signup/signup';
+import {SignupProvider} from '../../providers/signup/signup'
+
 import {TaxPage} from '../tax/tax';
 import {Http ,Response} from '@angular/http';
 import {CompanytaxPage} from '../companytax/companytax';
@@ -29,19 +30,53 @@ timezone:any;
 fiscal:any;
 formatt:any;
 address:any;
-
-  constructor(public http: Http,public navCtrl: NavController, public navParams: NavParams,public loadingCtrl: LoadingController,public tostctrl: ToastController, public alrtctrl:AlertController) {
+emailstatus:any;
+  constructor(public http: Http,public navCtrl: NavController,public navParams: NavParams,public loadingCtrl: LoadingController,public tostctrl: ToastController, public alrtctrl:AlertController) {
     this.companyname = this.navParams.get('companyname');
     this.userid = this.navParams.get('userid');
     this.country = this.navParams.get('country');
-    this.username = this.navParams.get('uname');   
-    console.log(this.companyname,this.userid,this.country,this.username); 
+    this.username = this.navParams.get('uname');  
+    this.emailstatus = this.navParams.get('status');
+    console.log(this.companyname,this.userid,this.country,this.username, this.emailstatus); 
+    
+    
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CreateYourCompanyPage');
+    // if(this.emailstatus == false){
+    //   const alert = this.alrtctrl.create({
+    //     title: 'Verify Email Address',
+    //     message: 'Check your email and verify',
+    //     buttons: [{
+    //         text: 'OK',
+    //         handler: () => {
+    //           this.checkemail();
+    //         }
+    //     }]
+    // });
+    // alert.present();
+    // }
   }
-
+checkemail(){
+  if(this.emailstatus == true){
+    this.ionViewDidLoad();
+  }
+  else{
+    const alert = this.alrtctrl.create({
+      title: 'Verify Email Address',
+      message: 'Check your email and verify',
+      buttons: [{
+          text: 'OK',
+          handler: () => {
+            this.checkemail();
+          }
+      }]
+  });
+  alert.present();
+  
+  }
+}
   taxpage(){
     if(this.business_email == undefined){
       alert("Please Add Business Email");

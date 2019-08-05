@@ -52,21 +52,34 @@
         </p>
       </form>
       <ion-list>
-          <ion-item>
+          <ion-item style="padding-left: inherit">
             
               <ion-label>Choose Country</ion-label>
               <!-- <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="setFilteredItems()"></ion-searchbar> -->
               <ion-select [(ngModel)]="country" ionCancel="onCancel()" okText="Ok" >
-                 
+                <ion-option>Pakistan</ion-option> 
                 <ion-option *ngFor="let name of country1" [value] = "name" >{{name.name}}</ion-option>
               </ion-select>
             </ion-item>
     </ion-list>
-      
-      <ion-item style="color:grey;" class="borderremove">
-          <ion-label text-wrap style="color:grey">I agree to <a href="https://sumbusinesssolutions.com/">Term of Service</a>  and <a href="term of service">Privacy Policy</a> </ion-label>
+    <ion-item text-wrap style="color: gray;font-size: 16px; padding-left: initial" >
+      <ion-row>
+         <ion-col col-2 no-padding no-margin>
+           <ion-item no-padding no-margin no-lines>
+             <ion-checkbox></ion-checkbox>
+           </ion-item>
+         </ion-col>
+         <ion-col col-10 no-padding no-margin>
+           <ion-item no-padding no-margin>
+             Agree to <a target="_blank" href="https://sumbusinesssolutions.com/terms/">Terms of Service</a> and <a target="_blank" href="http://sumbusinesssolutions.com/privacy/">Privacy Policy</a>.
+           </ion-item>
+         </ion-col>
+       </ion-row>
+     </ion-item>
+      <!-- <ion-item style="color:grey;" class="borderremove">
+          <ion-label text-wrap style="color:grey">I agree to <a href="https://sumbusinesssolutions.com/terms/">Term of Service</a>  and <a href="http://sumbusinesssolutions.com/privacy/">Privacy Policy</a> </ion-label>
           <ion-radio color="lightblue" value="agree" item-left style="margin-right: 5% !important"></ion-radio>
-      </ion-item>
+      </ion-item> -->
         <!-- <button ion-button block round style="margin-top: 15px;" type="submit" [disabled]="myForm.invalid" color="lightblue"> -->
             <form [formGroup]="myForm" novalidate>
           <button color="lightblue" ion-button large  (click)="submit()" class="center" style="width:70%; border-radius: 10px;" [disabled]="myForm.invalid">

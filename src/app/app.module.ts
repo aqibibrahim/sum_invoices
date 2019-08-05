@@ -78,6 +78,23 @@ import {ItemslistComponent} from '../components/itemslist/itemslist';
 import {ContactlistComponent} from '../components/contactlist/contactlist';
 import {InvoicelistComponent} from '../components/invoicelist/invoicelist';
 import { IonicSelectableModule } from 'ionic-selectable';
+import {AppDashboardPage} from '../pages/app-dashboard/app-dashboard';
+import { ReportsProvider } from '../providers/reports/reports';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule }from 'angularfire2/auth'; 
+import { environment } from '../environment/environment';
+import { Device } from '@ionic-native/device';
+import { AppAvailability } from '@ionic-native/app-availability';
+const firebaseConfig = {
+  apiKey: "AIzaSyBDowWJg2HFOlYivSbA6oReSq4U7AEsZp4",
+  authDomain: "sum-invoice.firebaseapp.com",
+  databaseURL: "https://sum-invoice.firebaseio.com",
+  projectId: "sum-invoice",
+  storageBucket: "",
+  messagingSenderId: "277357172965",
+  appId: "1:277357172965:web:d4605976be325698"
+}
+firebase.initializeApp(firebaseConfig);
 @NgModule({
   declarations: [
     MyApp,
@@ -131,7 +148,8 @@ import { IonicSelectableModule } from 'ionic-selectable';
     CashFlowReportPage,
     ItemslistComponent,
     ContactlistComponent,
-    InvoicelistComponent
+    InvoicelistComponent,
+    AppDashboardPage
   ],
   imports: [ 
     FormsModule, 
@@ -141,7 +159,9 @@ import { IonicSelectableModule } from 'ionic-selectable';
     HttpModule,
     IonicModule.forRoot(MyApp),
     RecaptchaModule.forRoot(),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -193,7 +213,8 @@ import { IonicSelectableModule } from 'ionic-selectable';
     ReceivablePage,
     PayablePage,
     BalanceSheetReportPage,
-    CashFlowReportPage
+    CashFlowReportPage,
+    AppDashboardPage
   ],
   providers: [
     
@@ -213,7 +234,10 @@ import { IonicSelectableModule } from 'ionic-selectable';
     GlobalProvider,
     NativeStorage,
     SignupProvider,
-    CheckemailProvider 
+    CheckemailProvider,
+    ReportsProvider,
+    Device,
+    AppAvailability 
     ]
 })
 export class AppModule {}

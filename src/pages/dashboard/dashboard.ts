@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { createHostBinding } from '@angular/compiler/src/core';
 import {LoginPage} from '../login/login';
 import {SignupPage} from '../signup/signup';
+//import {LoginPage} from '../login1/login';
 /**
  * Generated class for the DashboardPage page.
  *

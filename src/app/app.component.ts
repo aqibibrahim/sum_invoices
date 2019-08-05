@@ -20,6 +20,7 @@ import { ContactsPage } from '../pages/contacts/contacts';
 import {PayablePage} from '../pages/payable/payable';
 import {LoginPage} from '../pages/login/login';
 import Parse from 'parse';
+import {AppDashboardPage} from '../pages/app-dashboard/app-dashboard';
 @Component({
   templateUrl: 'app.html'
 })
@@ -35,7 +36,8 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Dashboard', component: HomePage },
+      { title: 'Home', component: HomePage },
+      { title: 'Dashboard', component: AppDashboardPage },
       { title: 'Reports', component: ReportsPage },
       { title: 'Contacts', component: ContactsPage },
       { title: 'Items', component: ItemPage },

@@ -90,7 +90,7 @@ public itemexpense:boolean=false;
         message:'Data not Save',
         duration:2000
       });
-      toast.present();
+      toast.present(); 
     console.log("Oooops!");
     });
   }

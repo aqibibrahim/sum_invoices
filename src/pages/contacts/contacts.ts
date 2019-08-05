@@ -109,7 +109,7 @@ export class ContactsPage {
             loader.present();
             let data={
               id:post._id
-            }
+              }
             this.http.post('https://sum-finance-latest2.herokuapp.com/finance/delete/'+post._id+'', data)
             .subscribe(res => {
               console.log(res);

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,LoadingController } from 'ionic-angular';
 import {Http ,Response} from '@angular/http';
+import {GlobalProvider} from '../../providers/global/global';
 /**
  * Generated class for the ExpensebycategoryreportPage page.
  *
@@ -21,7 +22,7 @@ export class ExpensebycategoryreportPage {
   datarecord:any;
   fixedamount:any;
   fixedamountarray = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams,public loadingCtrl:LoadingController, public http:Http) {
+  constructor(public navCtrl: NavController, public global:GlobalProvider,public navParams: NavParams,public loadingCtrl:LoadingController, public http:Http) {
     this.s_date = this.navParams.get('startdate');
     this.e_date = this.navParams.get('enddate');
     this.expense_name = this.navParams.get('expensename');
@@ -33,7 +34,8 @@ export class ExpensebycategoryreportPage {
     let data = {
       startDate:this.s_date,
       endDate:this.e_date,
-      expensename:this.expense_name
+      expensename:this.expense_name,
+      userid:this.global.userid
     }
     console.log(data);
     this.http.post('https://sum-finance-latest2.herokuapp.com/expense/catgoryexpense', data).map(response => response.json())

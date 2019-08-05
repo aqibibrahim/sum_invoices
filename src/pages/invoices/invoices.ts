@@ -92,6 +92,7 @@ export class InvoicesPage {
     }
   }
   sharelink(invoice){
+    console.log(invoice);
     //Common sharing event will open all available application to share
     // this.socialSharing.share("Message","Subject", this.file.externalDataDirectory +'Invoice'+invoice.invoice_number+'.pdf', invoice.invoice_number)
     //   .then((entries) => {

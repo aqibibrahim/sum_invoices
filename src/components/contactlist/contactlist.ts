@@ -12,7 +12,7 @@ import { Component, ElementRef, Input, Renderer, ViewChild } from '@angular/core
 })
 export class ContactlistComponent {
   @Input() headerColor: string = '#F53D3D';
-  @Input() textColor: string = '#747474';
+  @Input() textColor: string = '#f2efef';
   @Input() contentColor: string = '#F9F9F9';
   @Input() title: string;
   @Input() id: string;

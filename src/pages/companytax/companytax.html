@@ -38,12 +38,14 @@
                 <ion-input type="number" placeholder="Tax Value in %" [(ngModel)]="taxvalue"></ion-input>
                 
               </ion-item>
+              <ion-row>
+                <ion-col>
+                  <button ion-button color="lightblue" style="border-radius: 5px; width: -webkit-fill-available;" (click)="login()">Skip</button>
+                </ion-col>
+                <ion-col>
+                  <button ion-button color="lightblue" style="border-radius: 5px; width: -webkit-fill-available;" (click)="homepage()">Next</button>
+                </ion-col>
+              </ion-row>
     </ion-card-content>
 </ion-card>
 </ion-content>
-<ion-footer>
-  
-  <button ion-button color="lightblue" style="border-radius: 5px; width: -webkit-fill-available;" (click)="login()">Skip</button>
-  <button ion-button color="lightblue" style="border-radius: 5px; width: -webkit-fill-available;" (click)="homepage()">Next</button>
-
-</ion-footer>

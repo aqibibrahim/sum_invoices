@@ -4,7 +4,7 @@ contactlist {
     }
 
     .accordion-header {
-        color: white;
+        color: black;
 
         .item-inner {
             margin-left: 0 !important;
@@ -24,12 +24,12 @@ contactlist {
 
     .label {
         margin: 0px;
-        color: lightgray;
+        color: black;
     }
     .ionicicons {
         transition: all .25s ease-in;
         transform: rotate(0);
-        color: white;
+        color: black;
     }
     .active  .ionicicons {
         transform: rotate(90deg);
