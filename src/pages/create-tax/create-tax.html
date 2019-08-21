@@ -10,11 +10,6 @@
           <ion-icon name="menu"></ion-icon>
         </button>
     <ion-title>Tax</ion-title> 
-    <ion-buttons end>
-      <button ion-button (click)="savedata()">
-      Save
-    </button>
-    </ion-buttons>
     <!-- <ion-buttons end>
         <button ion-button (click)="createcitems()">
         <ion-icon name="add"></ion-icon>
@@ -38,6 +33,15 @@
                   <ion-input type="number" placeholder="Tax Value in %" [(ngModel)]="taxvalue"></ion-input>
                   
                 </ion-item>
+
+                <ion-row>
+                  <ion-col>
+                    <button ion-button color="lightblue" style="border-radius: 5px; width: -webkit-fill-available;" (click)="login()">Skip</button>
+                  </ion-col>
+                  <ion-col>
+                    <button ion-button color="lightblue" style="border-radius: 5px; width: -webkit-fill-available;" (click)="savedata()">Next</button>
+                  </ion-col>
+                </ion-row>
       </ion-card-content>
   </ion-card>
   </ion-content>

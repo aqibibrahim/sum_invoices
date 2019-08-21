@@ -37,11 +37,12 @@ status:any;
   value_total_cost:any;
   value_status:any;
   value_item_name:any;
+  value_payment_option:any;
   paymentoption:any;
 
   constructor(public navCtrl: NavController, private ionicApp: IonicApp,public navParams: NavParams,public app: App,public platform:Platform,public alertCtrl:AlertController,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     this.id= this.navParams.get('id');
-    this.http.get('https://sum-finance-latest2.herokuapp.com/invoice/get/'+this.id+'').map(res => res.json()).subscribe(data => {
+    this.http.get('https://sum-invoice-app.herokuapp.com/invoice/get/'+this.id+'').map(res => res.json()).subscribe(data => {
       console.log(data);
          this.invoice = data
         
@@ -58,6 +59,7 @@ status:any;
           this.value_customer = data[0].customer;
           this.value_email = data[0].email;
           this.value_item_name = data[0].item_name;
+          this.value_payment_option = data[0].payment_option;
 
 console.log( this.value_invoice_number);
 
@@ -71,6 +73,7 @@ console.log( this.value_invoice_number);
       let nav = this.app.getActiveNavs()[0];
       let activeView = nav.getActive();  
       let activePortal = this.ionicApp._loadingPortal.getActive() ||
+      //let activePortal = this.ionicApp._loadingPortal.getActive() ||
       this.ionicApp._modalPortal.getActive() ||
       this.ionicApp._toastPortal.getActive() ||
       this.ionicApp._overlayPortal.getActive();
@@ -83,22 +86,23 @@ console.log( this.value_invoice_number);
         if (nav.canGoBack()){
             nav.pop();
         } else {
-            const alert = this.alertCtrl.create({
-                title: 'Exit',
-                message: 'Want to Exit App?',
-                buttons: [{
-                    text: 'Cancel',
-                    role: 'cancel',
-                    handler: () => {
-                      //this.nav.setRoot('HomePage');
-                    }
-                },{
-                    text: 'OK',
-                    handler: () => {
-                      this.platform.exitApp();
-                    }
-                }]
-            });
+          console.log("Back Pressed")
+            // const alert = this.alertCtrl.create({
+            //     title: 'Exit',
+            //     message: 'Want to Exit App?',
+            //     buttons: [{
+            //         text: 'Cancel',
+            //         role: 'cancel',
+            //         handler: () => {
+            //           //this.nav.setRoot('HomePage');
+            //         }
+            //     },{
+            //         text: 'OK',
+            //         handler: () => {
+            //           this.platform.exitApp();
+            //         }
+            //     }]
+            // });
             //alert.present();
         }
     } else {
@@ -123,32 +127,12 @@ console.log( this.value_invoice_number);
     }
     else {
       if(activeView.name === 'EditinvoicePage') {
-        if (nav.canGoBack()){
+       nav.canGoBack()
             nav.pop();
         } else {
-            const alert = this.alertCtrl.create({
-                title: 'Exit',
-                message: 'Want to Exit App?',
-                buttons: [{
-                    text: 'Cancel',
-                    role: 'cancel',
-                    handler: () => {
-                      //this.nav.setRoot('HomePage');
-                    }
-                },{
-                    text: 'OK',
-                    handler: () => {
-                      this.platform.exitApp();
-                    }
-                }]
-            });
-            //alert.present();
+          this.navCtrl.push(InvoicesPage);      
         }
-    } else {
-      this.navCtrl.push(InvoicesPage);
-      }
-    }
-   
+    } 
   });
     
 }
@@ -162,11 +146,11 @@ console.log( this.value_invoice_number);
       payment_option:this.paymentoption
     };
     //console.log(this.data.username);
-    this.http.post('https://sum-finance-latest2.herokuapp.com/invoice/update/'+this.id+'', data)
+    this.http.post('https://sum-invoice-app.herokuapp.com/invoice/update/'+this.id+'', data)
         .subscribe(response => {
           loader.dismiss();
             let toast = this.tostctrl.create({
-              message:'Data Save',
+              message:'Update Invoice Status Successfully',
               duration:2000
             });
             toast.present();
@@ -204,7 +188,7 @@ console.log( this.value_invoice_number);
             let data={
               id:this.id
             }
-            this.http.post(' https://sum-finance-latest2.herokuapp.com/invoice/delete/'+this.id+'', data)
+            this.http.post('https://sum-invoice-app.herokuapp.com/invoice/delete/'+this.id+'', data)
             .subscribe(res => {
               
               loader.dismiss();

@@ -20,7 +20,8 @@ import {HomePage} from '../home/home';
 import { App } from 'ionic-angular';
 import { CreateContactPage } from '../create-contact/create-contact';
 import { CreateItemsPage } from '../create-items/create-items';
-
+import { CreateTaxPage } from '../create-tax/create-tax';
+import {CompanytaxPage} from '../companytax/companytax';
 /**
  * Generated class for the CreateInvoicesPage page.
  *
@@ -88,6 +89,8 @@ export class CreateInvoicesPage {
   nativeval:any;
 
         /**  Add Item Variables */
+
+        itemarray=[];
         description:string;
         quantity:any;
         rate:string;
@@ -122,6 +125,16 @@ export class CreateInvoicesPage {
 
         /**  Add Item Variables */
 
+      /**Tax Values Variables
+       * 
+       
+       */
+      taxpercentage:any;
+      tax_name:any;
+      tax_perc:any;
+
+
+  taxname:any;
   billing_address:any;
   shipping_address:any;
   discamount:any;
@@ -133,7 +146,7 @@ export class CreateInvoicesPage {
   duedate:any;
   userid:any;
   contact_sal:any;
-
+  tax_precentage:any;
   letterObj = {
     to: '',
     from: '',
@@ -174,20 +187,65 @@ export class CreateInvoicesPage {
       this.total = this.value_rate;
       this.gentotal =this.total.toFixed(2);
     }
-    this.http.get('https://sum-finance-latest2.herokuapp.com/finance/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+    this.http.get('https://sum-invoice-app.herokuapp.com/finance/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
      console.log(data);
         //this.posts = data.json();
         this.namesList = data 
 
       });
-      this.http.get('https://sum-finance-latest2.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+      this.http.get('https://sum-invoice-app.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
       console.log(data);
          this.items1 = data
        });
-       this.http.get('https://sum-finance.herokuapp.com/tax/get-all').map(res => res.json()).subscribe(data => {
+       this.http.get('https://sum-invoice-app.herokuapp.com/tax/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
         console.log(data);
            this.taxvalue = data 
          });
+         this.platform.registerBackButtonAction(() => {
+          // Catches the active view
+          let nav = this.app.getActiveNavs()[0];
+          let activeView = nav.getActive();                
+          // Checks if can go back before show up the alert
+    
+          let activePortal = this.ionicApp._loadingPortal.getActive() ||
+          this.ionicApp._modalPortal.getActive() ||
+          this.ionicApp._toastPortal.getActive() ||
+          this.ionicApp._overlayPortal.getActive();
+    
+        if (activePortal) {
+          activePortal.dismiss();
+          return;
+        }
+        else {
+          if(activeView.name === 'CreateInvoicesPage') {
+            if (nav.canGoBack()){
+                nav.pop();
+            } else {
+                const alert = this.alertCtrl.create({
+                    title: 'Exit',
+                    message: 'Want to Exit App?',
+                    buttons: [{
+                        text: 'Cancel',
+                        role: 'cancel',
+                        handler: () => {
+                          this.nav.setRoot('HomePage');
+                        }
+                    },{
+                        text: 'OK',
+                        handler: () => {
+                          
+                          this.platform.exitApp();
+                        }
+                    }]
+                });
+                alert.present();
+            }
+        }else {
+          this.nav.setRoot('HomePage');
+          }
+        }
+          
+      });
     
   }
    
@@ -261,13 +319,13 @@ export class CreateInvoicesPage {
     }
   }
   ionViewWillEnter(){
-    this.http.get('https://sum-finance-latest2.herokuapp.com/finance/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+    this.http.get('https://sum-invoice-app.herokuapp.com/finance/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
       console.log(data);
          //this.posts = data.json();
          this.namesList = data 
  
        });
-       this.http.get('https://sum-finance-latest2.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+       this.http.get('https://sum-invoice-app.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
       console.log(data);
          this.items1 = data
        });
@@ -331,6 +389,7 @@ export class CreateInvoicesPage {
     console.log(this.gaming.other_user_id);
     console.log(this.gaming.billing_address);
     console.log(this.gaming.shipping_address);
+    console.log(this.gaming.comp_name);
     var key_id = Object.keys(this.gaming)[0];
     var key_id1 = Object.keys(this.gaming)[1];
     this.customer_id = this.gaming[key_id];
@@ -342,10 +401,26 @@ export class CreateInvoicesPage {
     this.email = this.gaming.email;
     this.other_user_id = this.gaming.other_user_id;
   }
+  ontaxChange(){
+    console.log(this.taxname);
+    console.log(this.taxname.tax_precentage);
+    this.tax_perc = this.taxname.tax_precentage;
+    this.tax_name = this.taxname.tax_name;
+    this.taxpercentage = this.taxname.tax_precentage/100
+    var totalper = this.taxpercentage*this.amount_total;
+    var intpervalue = +this.amount_total;
+
+    this.gentotal = intpervalue + totalper;
+
+}
+  opentax(){
+    this.navCtrl.push(CompanytaxPage)
+  }
   onInputTime(data) : void {
     console.log("onChangeTime to time: " + this.discountprice + ". Event data: " + data);  
     this.dst = +this.discountprice;
     this.discamount = (this.total/100)*this.dst;
+
     this.fixeddistamount=this.discamount.toFixed(2);
     //this.total = this.dst + this.subtotal;  
     if(this.shp !== undefined && this.dst !== undefined){
@@ -353,7 +428,7 @@ export class CreateInvoicesPage {
       
     } 
     else{
-      this.total =  this.value_rate -this.fixeddistamount; 
+      this.total =  this.total -this.fixeddistamount; 
     }
     this.gentotal = this.total.toFixed(2);
   }
@@ -365,7 +440,6 @@ export class CreateInvoicesPage {
      
     }else{
       this.total = this.shp +this.value_rate - this.fixeddistamount;   
-      
     }
     this.gentotal = this.total.toFixed(2);
   }
@@ -378,7 +452,7 @@ export class CreateInvoicesPage {
      
     }
     else if(this.dst==undefined && this.shp !== undefined && this.adj !== undefined){
-      this.total = this.adj +this.value_rate + this.shp; 
+      this.total = this.adj + this.value_rate + this.shp; 
       
     }
     else if(this.dst !== undefined && this.shp == undefined && this.adj !== undefined){
@@ -562,21 +636,22 @@ export class CreateInvoicesPage {
 
    /////////Open invoice detail page/////////////////////
    invoicedetails(){
-    var key = Object.keys(this.gaming)[1];
-    var value = this.gaming[key];
-    if(this.gaming == undefined){
-      alert("Please choose Item First");
+    // var key = Object.keys(this.gaming)[1];
+    // var value = this.gaming[key];
+   
+   if(this.gaming == undefined){
+      alert("Please choose Contact First");
     }
-    else if(this.quantity == 0){
+   if(this.quantity == 0){
        alert("Please choose quantity more than 0");
      }
     else{
-      console.log("key = ", key) // bar
-      console.log("value = ", value) // baz
-      console.log(this.taxinput);
+      // console.log("key = ", key) // bar
+      // console.log("value = ", value) // baz
+      // console.log(this.taxinput);
      
-      var qutyvalue = +this.quantity;
-      var dbqtyvalue= +this.itemquantity;
+      var qutyvalue = + this.quantity;
+      var dbqtyvalue= + this.itemquantity;
 
       if(qutyvalue >  dbqtyvalue){
       alert ("Given Quantity is more than actual quantity");
@@ -601,7 +676,7 @@ export class CreateInvoicesPage {
          let data1  = {
           item_quantity:this.qtyinhands
         };
-        this.http.post('https://sum-finance-latest2.herokuapp.com/item/update/'+this.item_id+'', data1)
+        this.http.post('https://sum-invoice-app.herokuapp.com/item/update/'+this.item_id+'', data1)
                 .subscribe(response => {
                   console.log('POST Response:', response);
                   //this.navCtrl.push(ItemPage);
@@ -632,9 +707,10 @@ export class CreateInvoicesPage {
           //  payment_option: this.paymentoption,
            cont_id:this.customer_id,
            other_user_id:this.other_user_id,
+           tax:this.tax_perc,
            user_name:this.global.user_name
          }
-         this.http.post('https://sum-finance-latest2.herokuapp.com/invoice/create', data)
+         this.http.post('https://sum-invoice-app.herokuapp.com/invoice/create', data)
          .subscribe(response => {
           console.log('API Response : ', response.json());
           this.responsedate = response.json();
@@ -642,7 +718,7 @@ export class CreateInvoicesPage {
            console.log('POST Response:', this.responsedate.invoice_number);
            loader.dismiss();
            let toast = this.tostctrl.create({
-             message:'Data Save',
+             message:'Invoice Create Succesfully',
              duration:2000
            });
            toast.present();
@@ -650,7 +726,7 @@ export class CreateInvoicesPage {
        //    this.navCtrl.push(InvoicesPage);
            this.navCtrl.push(InvoicedeatilsPage,{'customername':this.gamingname,'invoice':this.responsedate.invoice_number,'balance':this.total,'invoicedate':this.invoicedate,'duedate':this.duedate,'description':this.desc,
          'item_name':this.value_item,'subtotal':this.value_rate,'discount':this.discountprice,'shipping':this.shippingprice,'adjustment':this.adjustmentprice,'quantity':this.quantity,'rate':this.value_rate1,
-       'email':this.email,'order':this.order,'status':"Pending",'billingaddress':this.billing_address,'shippingaddress':this.shipping_address,contactsaln:this.contact_sal});
+       'email':this.email,'order':this.order,'status':"Pending",'billingaddress':this.billing_address,'shippingaddress':this.shipping_address,contactsaln:this.contact_sal,companyname:this.gaming.comp_name,'taxname':this.tax_name,'taxper':this.tax_perc});
         
          }, error => {
            loader.dismiss();
@@ -688,7 +764,19 @@ export class CreateInvoicesPage {
     onItemChange(){
    
       console.log(this.itemname1);
-      
+        const arr = Object.keys(this.itemname1).map((key) => [key, this.itemname1[key]]);
+
+        console.log(arr);
+        for(var i=0;i<arr.length;i++){
+            console.log(arr[i][1]);
+            this.itemarray.push(arr[i][0])
+        }
+      // for(var i in myobj)
+      //   this.itemarray.push([i,myobj[i]]);
+      //   console.log(this.itemarray);
+    //   Object.keys(this.itemname1).forEach(function(key) {
+    //     this.push(values[key]);
+    //  });
       var key = Object.keys(this.itemname1)[1];
        this.value_item = this.itemname1[key];
       
@@ -704,7 +792,7 @@ export class CreateInvoicesPage {
       var key_id9 = Object.keys(this.itemname1)[10];
   
       var key_desc = Object.keys(this.itemname1)[5];
-      this.itemquantity = this.itemname1[key_id8];
+      this.itemquantity = this.itemname1[key_id7];
       this.value_desc = this.itemname1[key_id9];
       var key_item_quantity =Object.keys(this.itemname1)[5];
       var key_rate = Object.keys(this.itemname1)[4];
@@ -715,7 +803,7 @@ export class CreateInvoicesPage {
       this.value_rate = this.value_rate1;
       this.total = this.value_rate;
       this.gentotal = this.total.toFixed(2);
-        console.log("key = ", key, "Key_Desc=",key_desc, "key_rate = ",key_rate,key_id,key_id3,key_id4,key_id5,key_id6,key_id7,key_id8,key_id9) // bar
+  console.log("key = ", key, "Key_Desc=",key_desc, "key_rate = ",key_rate,key_id,key_id3,key_id4,key_id5,key_id6,key_id7,key_id8,key_id9) // bar
   console.log("value = ", this.value_item,"value_Des = ", this.value_desc,"value_rate = ", this.value_rate,this.itemquantity,this.purchase_rate, this.item_id) // baz
     }
     quantitychange(){

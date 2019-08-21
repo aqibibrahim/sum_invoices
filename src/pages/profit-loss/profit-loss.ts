@@ -35,7 +35,7 @@ import {ReportsPage} from '../reports/reports';
     purchase_rate:any;
     quatity:any;
       constructor(public navCtrl: NavController,public global:GlobalProvider,public alertCtrl:AlertController,public platform:Platform,public app:App,public ionicApp:IonicApp,public loadingCtrl: LoadingController, public tostctrl: ToastController, public navParams: NavParams, public http:Http) {
-        this.http.get('https://sum-finance-latest2.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+        this.http.get('https://sum-invoice-app.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
           console.log(data.name);
              this.items = data 
            });
@@ -114,7 +114,7 @@ import {ReportsPage} from '../reports/reports';
         itemId:this.item_id
       }
       console.log(data);
-      this.http.post('https://sum-finance-latest2.herokuapp.com/expense/expensedate', data).map(response => response.json())
+      this.http.post('https://sum-invoice-app.herokuapp.com/expense/expensedate', data).map(response => response.json())
         .subscribe(data => {
           //response = jQuery.parseJSON(response);
           console.log(data);

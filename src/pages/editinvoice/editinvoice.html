@@ -78,7 +78,7 @@
                   </ion-col>
                   <ion-col style="text-align: right;font-size: large">
                       <ion-label>
-                          {{this.value_total_cost}}
+                          {{this.value_total_cost | number : fractionSize}}
                       </ion-label>
                       
                   </ion-col>
@@ -124,22 +124,24 @@
                         </ion-col>
                         <ion-col style="text-align: right;font-size: large">
                             <ion-label>
-                                {{this.value_status | uppercase}}
+                                {{this.value_status | uppercase}} {{this.value_payment_option}}
                             </ion-label>
                             
                         </ion-col>
                       </ion-row>
+                      
+
              
           </ion-card-content>
         
         </ion-card>
 
-       <ion-card>
+       <ion-card *ngIf="this.value_payment_option == undefined"> 
         <ion-card-content>
             <ion-list>
                 <ion-item>
-                  <ion-label color="lightblue">Payment Made</ion-label>
-                  <ion-select [(ngModel)]="paymentoption" interface="popover">
+                  <ion-label color="lightblue" >Payment Made</ion-label>
+                  <ion-select [(ngModel)]="paymentoption" interface="popover" >
                     <ion-option value="none" selected>None</ion-option>
                     <ion-option value="banktransfer">Bank Transfer</ion-option>
                     <ion-option value="cash">Cash</ion-option>

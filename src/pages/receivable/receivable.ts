@@ -30,11 +30,22 @@ export class ReceivablePage {
       content:'Waiting...'
     });
     loader.present();
-    this.http.get('https://sum-finance-latest2.herokuapp.com/invoice/status/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+    this.http.get('https://sum-invoice-app.herokuapp.com/invoice/status/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
       console.log(data);  
       if(data.length == 0){
-        alert("There is no invoice genrated by this user");
-      }
+        const alert = this.alertCtrl.create({
+          title: 'Oh Snap!',
+          message: 'We do not have any Item for this company',
+          buttons: [{
+              text: 'OK',
+              handler: () => {
+               alert.dismiss();
+              }
+          }],
+          cssClass: 'alertDanger'
+      });
+      alert.present();
+    
         this.invoices = data 
         this.sum = 0;
       for(var i=0;i<this.invoices.length;i++){
@@ -48,8 +59,8 @@ export class ReceivablePage {
       }
       console.log(this.sum);
         loader.dismiss();
-         });
-  
+    }
+        });
   }
 
   ionViewDidLoad() {

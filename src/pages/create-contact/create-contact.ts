@@ -25,6 +25,7 @@ import { App } from 'ionic-angular';
 })
 export class CreateContactPage {
   @ViewChild(Nav) nav: Nav;
+  navigator:any; 
   data:any = {};
   firstname: string;
   lastname: string;
@@ -43,23 +44,63 @@ export class CreateContactPage {
   billingaddress:any;
   shippingaddress:any;
   other_user_id:any;
-
+  contactList: Contacts;
   listItems: Array<any> = [];
   testRadioOpen:boolean;
   testRadioResult:any;
   public allContacts: any
   contactsfound = []
+
+  contactdisplayname:any;
+  contactemail:any;
+  contactnumber:any;
+  contactcompany:any;
+  contactaddress:any;
   
   constructor(public navCtrl: NavController, public checkemail:CheckemailProvider,private ionicApp: IonicApp,public platform: Platform,public app: App,public global:GlobalProvider,public navParams: NavParams, private sms: SMS,private alertCtrl: AlertController,private contacts: Contacts,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     //this.data.username = '';
-    
-//     this.contacts.find(['*'])
-//     .then((contacts)=>{
-//         alert(JSON.stringify(contacts));
-//     })
-//     .catch((err) => {
-//         alert('Error ' + err.message);
-// });
+    this.contactList = contacts;
+    this.platform.registerBackButtonAction(() => {
+      // Catches the active view
+      let nav = this.app.getActiveNavs()[0];
+      let activeView = nav.getActive();  
+      let activePortal = this.ionicApp._loadingPortal.getActive() ||
+      this.ionicApp._modalPortal.getActive() ||
+      this.ionicApp._toastPortal.getActive() ||
+      this.ionicApp._overlayPortal.getActive();
+
+    if (activePortal) {
+      activePortal.dismiss();
+    }
+    else {
+      if(activeView.name === 'CreateContactPage') {
+        if (nav.canGoBack()){
+            nav.pop();
+        } else {
+            const alert = this.alertCtrl.create({
+                title: 'Exit',
+                message: 'Want to Exit App?',
+                buttons: [{
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: () => {
+                      this.nav.setRoot('HomePage');
+                    }
+                },{
+                    text: 'OK',
+                    handler: () => {
+                      this.platform.exitApp();
+                    }
+                }]
+            });
+            //alert.present();
+        }
+    } else {
+      this.nav.setRoot('HomePage');
+      }
+    }
+   
+  });
   }
 
   ionViewDidLoad() {
@@ -162,10 +203,30 @@ export class CreateContactPage {
     this.navCtrl.push(BillingPage);
   }
   opencontact() {
-    this.contacts.find(['displayName','phoneNumbers'], {filter: "", multiple: true})
-    .then(data => {
-      console.log(data);
-    });
+   
+  this.contactList.pickContact().then((contact)=>{
+    console.log(contact);
+   
+    this.contactdisplayname = contact.displayName;
+    this.contactemail = contact.emails;
+    if(contact.organizations[0].name == ""){
+      this.contactcompany == "";  
+    }
+    else{
+      this.contactcompany = contact.organizations[0].name;
+    }
+    if(contact.phoneNumbers[0].value == ""){
+      this.contactnumber == ""
+    }
+    else{
+      this.contactnumber = contact.phoneNumbers[0].value;
+    }
+    
+    this.contactaddress = contact.addresses;
+    
+}),(error) =>{
+    console.log(error);
+    }
   }
   savedata(){
     if(this.sexe == undefined){

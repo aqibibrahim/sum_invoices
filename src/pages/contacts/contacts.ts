@@ -30,11 +30,22 @@ export class ContactsPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ContactsPage');
     
-    this.http.get('https://sum-finance-latest2.herokuapp.com/finance/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+    this.http.get('https://sum-invoice-app.herokuapp.com/finance/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
      console.log(data);
     
      if(data.length == 0){
-      alert("There is no Contact added");
+      const alert = this.alertCtrl.create({
+        title: 'Oh Snap!',
+        message: 'We do not have any Contact for this company',
+        buttons: [{
+            text: 'Please first add your contact',
+            handler: () => {
+              this.navCtrl.push(CreateContactPage)
+            }
+        }],
+        cssClass: 'alertDanger'
+    });
+    alert.present();
     }
     data.sort((a, b) => a.first_name.localeCompare(b.first_name))
     console.log(data);
@@ -56,11 +67,11 @@ export class ContactsPage {
       });
     }
     ionViewDidEnter() {
-      this.http.get('https://sum-finance-latest2.herokuapp.com/finance/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+      this.http.get('https://sum-invoice-app.herokuapp.com/finance/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
         console.log(data);
            //this.posts = data.json();
            data.sort((a, b) => a.first_name.localeCompare(b.first_name))
-      console.log(data);
+           console.log(data);
          this.posts = data;
            
          });
@@ -110,7 +121,7 @@ export class ContactsPage {
             let data={
               id:post._id
               }
-            this.http.post('https://sum-finance-latest2.herokuapp.com/finance/delete/'+post._id+'', data)
+            this.http.post('https://sum-invoice-app.herokuapp.com/finance/delete/'+post._id+'', data)
             .subscribe(res => {
               console.log(res);
               loader.dismiss();

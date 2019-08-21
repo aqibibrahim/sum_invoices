@@ -38,7 +38,7 @@ export class SalebyitemreportPage {
       itemid:this.itemid
     }
     console.log(data);
-    this.http.post('https://sum-finance-latest2.herokuapp.com/invoice/searchitem', data).map(response => response.json())
+    this.http.post('https://sum-invoice-app.herokuapp.com/invoice/searchitem', data).map(response => response.json())
       .subscribe(data => {
         //response = jQuery.parseJSON(response);
         console.log(data);

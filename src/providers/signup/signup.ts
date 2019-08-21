@@ -24,22 +24,22 @@ export class SignupProvider {
     console.log('Hello SignupProvider Provider');
   }
   
-signup(email,password,companyname,fullname,country,status){
+signup(email,password,companyname,fullname,country){
 this.mailstatus = status;
-  console.log(country.name);
+  console.log(country);
  let data = {
     email:email,
     password: password,
     company_name: companyname,
     user_name:fullname,
-    country:country.name
+    country:country
 };
   let loader = this.loadingCtrl.create({
       content:'Waiting...'
     });
     loader.present();
     
-  this.http.post('https://sum-finance-latest2.herokuapp.com/user/signup', data).map(response => response.json())
+  this.http.post('https://sum-invoice-app.herokuapp.com/user/signup', data).map(response => response.json())
   .subscribe(data => {
     console.log('POST Response:', data);
     console.log(data.company_name)
@@ -52,26 +52,8 @@ this.mailstatus = status;
           message:'Signup Successfully',
           duration:2000
         });
-        // if(this.mailstatus == false){
-        //   //alert("")  
-        //   const alert = this.alrtctrl.create({
-        //     title: 'Verify Email Address',
-        //     message: 'Check your email and verify',
-        //     buttons: [{
-        //         text: 'OK',
-        //         handler: () => {
-        //           this.openInstagram();
-        //         }
-        //     }]
-        // });
-        // alert.present();
-        // }
-
-        // else{i
-          this.app.getActiveNav().push(CreateYourCompanyPage,{companyname:this.company_name,userid:this.userid,country:this.countryname,uname:this.user_name,status:this.mailstatus});
-       //}
-
-        
+       
+          this.app.getActiveNav().push(CreateYourCompanyPage,{companyname:this.company_name,userid:this.userid,country:country,uname:this.user_name,status:this.mailstatus});
         loader.dismiss();
         toast.present();
      

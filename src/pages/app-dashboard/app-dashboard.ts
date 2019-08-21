@@ -1,8 +1,10 @@
 import { Component,ViewChild  } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,Nav,Navbar,Platform, AlertController } from 'ionic-angular';
 import { Chart } from 'chart.js';
 import {Http ,Response} from '@angular/http';
 import {GlobalProvider} from '../../providers/global/global';
+import { App } from 'ionic-angular';
+import {HomePage} from '../home/home'
 /**
  * Generated class for the AppDashboardPage page.
  *
@@ -19,7 +21,8 @@ export class AppDashboardPage {
    @ViewChild('barCanvas') barCanvas;
    @ViewChild('doughnutCanvas') doughnutCanvas;
    @ViewChild('lineCanvas') lineCanvas;
- 
+   @ViewChild(Nav) nav: Nav;
+   @ViewChild(Navbar) navBar: Navbar;
   //////Dongut Chart Data(Payable)//////
   public sum : number = 0;
   invoices:any;
@@ -46,16 +49,30 @@ invoice_expense=[];
    labels=[];
    data1=[];
    datarecord:any;
-   constructor(public http:Http,public global:GlobalProvider) {
+   constructor(public http:Http,public global:GlobalProvider, public alertCtrl:AlertController, public navctrl:NavController,public plt:Platform,public app:App) {
     let data = {
       startDate:"2019-01-01",
       endDate:"2019-12-31",
       itemid:"5d316e2d6927210017448277"
     }
-    this.http.post('https://sum-finance-latest2.herokuapp.com/invoice/searchitem', data).map(response => response.json())
+    this.http.post('https://sum-invoice-app.herokuapp.com/invoice/searchitem', data).map(response => response.json())
     .subscribe(data => {
       //response = jQuery.parseJSON(response);
       console.log(data);
+      if(data.length == 0){
+        const alert = this.alertCtrl.create({
+          title: 'Oh Snap!',
+          message: 'We do not have any Item for this company',
+          buttons: [{
+              text: 'OK',
+              handler: () => {
+                alert.dismiss();
+              }
+          }],
+          cssClass: 'alertDanger'
+      });
+      alert.present();
+      }
       this.datarecord = data;
       for(var i=0;i<this.datarecord.length;i++){
           //this.labels.push(this.datarecord[i].Salerate);
@@ -68,14 +85,29 @@ invoice_expense=[];
     console.log("Oooops!");
      });
 
-    
-          
-   }
+     plt.registerBackButtonAction(() => {
+      this.navctrl.push(HomePage);
+      console.log("backPressed 1");
+    },1);
+ }
+ 
    ionViewDidLoad() {
-    this.http.get('https://sum-finance-latest2.herokuapp.com/invoice/payable/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+ 
+    this.http.get('https://sum-invoice-app.herokuapp.com/invoice/payable/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
       console.log(data);  
       if(data.length == 0){
-        console.log("There is no invoice genrated by this user");
+        const alert = this.alertCtrl.create({
+          title: 'Oh Snap!',
+          message: 'We do not have any Payable Invoices',
+          buttons: [{
+              text: 'OK',
+              handler: () => {
+                alert.dismiss();
+              }
+          }],
+          cssClass: 'alertDanger'
+      });
+      alert.present();
       }
         this.invoices = data 
         this.sum = 0;
@@ -93,10 +125,21 @@ invoice_expense=[];
          });
   
   
-         this.http.get('https://sum-finance-latest2.herokuapp.com/invoice/status/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+         this.http.get('https://sum-invoice-app.herokuapp.com/invoice/status/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
           console.log(data);  
           if(data.length == 0){
-            console.log("There is no invoice genrated by this user");
+            const alert = this.alertCtrl.create({
+              title: 'Oh Snap!',
+              message: 'We do not have any Recievable Invoices',
+              buttons: [{
+                  text: 'OK',
+                  handler: () => {
+                    alert.dismiss();
+                  }
+              }],
+              cssClass: 'alertDanger'
+          });
+          alert.present();
           }
             this.invoices_rec = data 
             this.sum_rec = 0;
@@ -113,8 +156,22 @@ invoice_expense=[];
           //this.barChart.update();
           //this.doughnutChart.update();
              });
-             this.http.get('https://sum-finance-latest2.herokuapp.com/expense/getexpensebyUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
-          console.log(data);  
+             this.http.get('https://sum-invoice-app.herokuapp.com/expense/getexpensebyUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+          console.log(data);
+          if(data.length == 0){
+            const alert = this.alertCtrl.create({
+              title: 'Oh Snap!',
+              message: 'We do not have any Expense for this company',
+              buttons: [{
+                  text: 'OK',
+                  handler: () => {
+                    alert.dismiss();
+                  }
+              }],
+              cssClass: 'alertDanger'
+          });
+          alert.present();
+          }
           this.expensevalue = data[0].totalExpense;
           this.invoice_expense.push(this.sum_rec,this.expensevalue);
 
@@ -125,6 +182,22 @@ invoice_expense=[];
             this.barChartMethod();
             this.doughnutChartMethod();
             this.lineChartMethod();
+}
+    ionViewWillEnter(){
+      this.plt.registerBackButtonAction(() => {
+        // Catches the active view
+        let nav = this.app.getActiveNavs()[0];
+        let activeView = nav.getActive();                
+        // Checks if can go back before show up the alert
+        if(activeView.name === 'InvoicesPage') {
+            if (nav.canGoBack()){
+                nav.pop();
+            } else {
+                this.navctrl.push(HomePage);
+                
+            }
+        }
+    });
     }
  
    barChartMethod() {

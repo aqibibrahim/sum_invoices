@@ -1,8 +1,13 @@
 import { NgModule } from '@angular/core';
 import { SortbynamePipe } from './sortbyname/sortbyname';
+import { ShortNumberPipe } from './short-number/short-number';
 @NgModule({
-	declarations: [SortbynamePipe],
+	declarations: [SortbynamePipe,
+
+    ShortNumberPipe],
 	imports: [],
-	exports: [SortbynamePipe]
+	exports: [SortbynamePipe,
+
+    ShortNumberPipe]
 })
 export class PipesModule {}

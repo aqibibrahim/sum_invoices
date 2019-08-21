@@ -133,9 +133,33 @@ export class CreateItemsPage {
   }
   
   createitem(){
-    if(this.sexe == "" || this.name == undefined || this.units == undefined || this.qty == undefined || this.sale_rate == undefined || this.sale_desc == undefined
-    || this.purchase_rate == undefined || this.purchase_desc == undefined){
-      alert ("Please fill all the fields");
+    if(this.sexe == "" || this.name == undefined || this.units == undefined || this.qty == undefined || this.sale_rate == undefined || this.purchase_rate == undefined){
+      const alert = this.alertCtrl.create({
+        title: 'Attention',
+        message: 'Please Input All Mandatory Fields',
+        buttons: [{
+            text: 'OK',
+            handler: () => {
+              console.log("Cancel")
+            }
+        }],
+        cssClass: 'alertDanger'
+    });
+    alert.present();
+    }
+    else if(this.sale_rate <= this.purchase_rate){
+      const alert = this.alertCtrl.create({
+        title: 'Attention',
+        message: 'Purchase Cost must be less than Sale Cost',
+        buttons: [{
+            text: 'OK',
+            handler: () => {
+              console.log("Cancel")
+            }
+        }],
+        cssClass: 'alertDanger'
+    });
+    alert.present();
     }
     else{
       console.log(this.sexe);
@@ -160,12 +184,12 @@ export class CreateItemsPage {
 
     };
     //console.log(this.data.username);
-    this.http.post('https://sum-finance-latest2.herokuapp.com/item/create', data)
+    this.http.post('https://sum-invoice-app.herokuapp.com/item/create', data)
         .subscribe(response => {
           console.log('POST Response:', response);
           loader.dismiss();
           let toast = this.tostctrl.create({
-            message:'Data Save',
+            message:'Item Add Successfully',
             duration:2000
           });
           let nav = this.app.getActiveNavs()[0];

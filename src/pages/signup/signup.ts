@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController,LoadingController, ToastController,AlertController } from 'ionic-angular';
+import { NavController,LoadingController, ToastController,AlertController  } from 'ionic-angular';
 import {Http ,Response } from '@angular/http';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {LoginPage} from '../login/login';
@@ -13,6 +13,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { Device } from '@ionic-native/device';
 import { AppAvailability } from '@ionic-native/app-availability';
 import { Platform } from 'ionic-angular';
+import { CompleteTestServiceProvider } from '../../providers/complete-test-service/complete-test-service';
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html'
@@ -35,11 +36,13 @@ export class SignupPage {
   country:any;
   country1:any;
 
+  countrypak:any;
+
   verifystatus:any;
   constructor(
-    
+    public platform:Platform,
     public navCtrl: NavController,public afAuth: AngularFireAuth,
-    public fb: FormBuilder, public device:Device , public appavail:AppAvailability , public http: Http,public loadingCtrl: LoadingController, public alrtctrl:AlertController, public tostctrl: ToastController, public signup:SignupProvider) {
+    public fb: FormBuilder, public device:Device , public signup:SignupProvider,public completeTestService: CompleteTestServiceProvider , public alertCtrl: AlertController,public appavail:AppAvailability , public http: Http,public loadingCtrl: LoadingController, public alrtctrl:AlertController, public tostctrl: ToastController) {
       
     this.myForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern("[a-zA-Z ]*")]],
@@ -49,12 +52,18 @@ export class SignupPage {
        //phone: ['',[Validators.required, Validators.maxLength(11), Validators.minLength(11)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
-    this.http.get('https://restcountries.eu/rest/v2/all').map(res => res.json()).subscribe(data => {
-    console.log(data);
+    // this.http.get('https://restcountries.eu/rest/v2/all').map(res => res.json()).subscribe(data => {
+    // console.log(data);
       
-       this.country1 = data 
+    //    this.country1 = data 
+    //   //  for(var i=0;i<data.length;i++){
+    //   //   console.log(data[i].name);
+    //   //   //this.countrypak = data[i].name=Pakistan
+    //   //  }
+    //   // this.countrypak = "Pakistan";
        
-     });
+    //  });
+    
   }
 
   filterItems(searchTerm){
@@ -101,7 +110,7 @@ export class SignupPage {
     }
   }
   submit(){
-    
+    console.log(this.country);
     return new Promise<any>((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
   .then(res => {
@@ -111,9 +120,18 @@ export class SignupPage {
         console.log(res.user.emailVerified);
         this.verifystatus = res.user.emailVerified;
         this.sendEmailVerification();
-        this.signup.signup(this.email,this.password,this.compname,this.fullname,this.country,this.verifystatus);
-      }, err => reject(err))
-    })
+        this.signup.signup(this.email,this.password,this.compname,this.fullname,this.country);
+      }, err => {
+        let alert = this.alertCtrl.create({
+          title: 'Please Try Again !',
+          cssClass: 'custom-alert-danger',
+          message:  err ,
+          buttons: ['OK']
+        });
+        alert.present();
+    });
+  }
+    )
       
   }
   sendEmailVerification() {

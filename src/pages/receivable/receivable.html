@@ -25,7 +25,7 @@
             </ion-col>
             <ion-col>
                 <ion-item style="text-align: right; font-weight: bold">
-                    <ion-label style="margin: 0px 0px 0px 0px;">{{this.sum | number : fractionSize}}</ion-label>
+                    <ion-label style="margin: 0px 0px 0px 0px;">{{this.sum | shortNumber}}</ion-label>
                   </ion-item>
             </ion-col>
             </ion-row>
@@ -44,7 +44,7 @@
           </ion-col>
           <ion-col >
               <ion-item style="text-align: right;">
-                  <ion-label style="margin: 0px 0px 0px 0px; "> {{invoice.total_cost | number : fractionSize}}</ion-label>
+                  <ion-label style="margin: 0px 0px 0px 0px; "> {{invoice.total_cost | shortNumber}}</ion-label>
                 </ion-item>
              
           </ion-col>

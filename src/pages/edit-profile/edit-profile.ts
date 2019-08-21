@@ -1,6 +1,6 @@
 import { Component,ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController,Nav,LoadingController, ToastController, Toast,Platform,IonicApp } from 'ionic-angular';
-import {SignupProvider}  from '../../providers/signup/signup';
+// import {SignupProvider}  from '../../providers/signup/signup';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Http ,Response } from '@angular/http';
 import {GlobalProvider} from '../../providers/global/global';
@@ -56,7 +56,7 @@ export class EditProfilePage {
   }
   ionViewWillEnter(){
     console.log(this.global.userid);
-    this.http.get('https://sum-finance-latest2.herokuapp.com/user/userdata/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+    this.http.get('https://sum-invoice-app.herokuapp.com/user/userdata/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
       console.log( data);
       this.compname = data[0].company_name;
       this.fullname = data[0].user_name;
@@ -136,7 +136,7 @@ updateprofile(){
     // country: this.country,
   };
   //console.log(this.data.username);
-  this.http.post('https://sum-finance-latest2.herokuapp.com/user/updateprofile/'+this.global.userid+'', data)
+  this.http.post('https://sum-invoice-app.herokuapp.com/user/updateprofile/'+this.global.userid+'', data)
       .subscribe(response => {
         console.log('POST Response:', response);
         loader.dismiss();

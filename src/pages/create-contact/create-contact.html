@@ -55,7 +55,7 @@
                   </ion-item>
                   <ion-item style="border-bottom: 0.3px solid">
                       
-                      <ion-input type="text" placeholder="Company name" [(ngModel)]="companyname"><span class="required">*</span></ion-input>
+                      <ion-input type="text" placeholder="Company name" [(ngModel)]="companyname" value="{{this.contactcompany}}"><span class="required">*</span></ion-input>
                     </ion-item>
                    
                     <p style="color:red" *ngIf="companyname?.length > 15">
@@ -66,12 +66,12 @@
                     </p>
                     <ion-item style="border-bottom: 0.3px solid">
                         
-                        <ion-input type="text" placeholder="Contact Display name" [(ngModel)]="contactdisplay"></ion-input>
+                        <ion-input type="text" placeholder="Contact Display name" [(ngModel)]="contactdisplay" value="{{this.contactdisplayname}}"></ion-input>
                       </ion-item>
 
                       <ion-item style="border-bottom: 0.3px solid">
                   
-                          <ion-input type="email" placeholder="Contact Email" [(ngModel)]="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"></ion-input>
+                          <ion-input type="email" placeholder="Contact Email" [(ngModel)]="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" value="{{this.contactemail}}"></ion-input>
                         </ion-item>
                         
                         <p style="color:red" *ngIf="!email">
@@ -84,7 +84,7 @@
                              <ion-row>
                             <ion-col>
                                 <ion-item style="border-bottom: 0.3px solid">
-                                    <ion-input type="number" placeholder="Work Phone." [(ngModel)]="phone"></ion-input>
+                                    <ion-input type="number" placeholder="Work Phone." [(ngModel)]="phone" value="{{this.contactnumber}}"></ion-input>
                               </ion-item>
                               <p style="color:red" *ngIf="phone?.length > 11">
                                 Max 11 digit Number
@@ -183,7 +183,7 @@
             </ion-card-header>
           <ion-card-content >
           <ion-item>
-            <ion-textarea clearOnEdit="true" placeholder="Billing Address" [(ngModel)]="billingaddress" style="border-bottom: 1px solid grey;"></ion-textarea> 
+            <ion-textarea clearOnEdit="true" placeholder="Billing Address" [(ngModel)]="billingaddress" style="border-bottom: 1px solid grey;" value="{{this.contactaddress}}"></ion-textarea> 
             <p style="color:red" *ngIf="!billingaddress">
                 required
               </p>

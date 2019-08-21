@@ -21,6 +21,7 @@ import {PayablePage} from '../pages/payable/payable';
 import {LoginPage} from '../pages/login/login';
 import Parse from 'parse';
 import {AppDashboardPage} from '../pages/app-dashboard/app-dashboard';
+import { Icon } from 'ionic-angular';
 @Component({
   templateUrl: 'app.html'
 })
@@ -29,26 +30,26 @@ export class MyApp {
 
   rootPage: any = DashboardPage;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{title: string, component: any, Icon:string}>;
 
   constructor(public platform: Platform,  private ionicApp: IonicApp,public statusBar: StatusBar, public splashScreen: SplashScreen,public app: App,public alertCtrl: AlertController) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'Dashboard', component: AppDashboardPage },
-      { title: 'Reports', component: ReportsPage },
-      { title: 'Contacts', component: ContactsPage },
-      { title: 'Items', component: ItemPage },
+      { title: 'Home', component: HomePage, Icon: 'ios-information-circle' },
+      { title: 'Dashboard', component: AppDashboardPage,Icon: 'ios-information-circle' },
+      { title: 'Reports', component: ReportsPage,Icon: 'ios-information-circle' },
+      { title: 'Contacts', component: ContactsPage,Icon: 'ios-information-circle' },
+      { title: 'Items', component: ItemPage,Icon: 'ios-information-circle' },
       // { title: 'Estimates', component: CreateEstimatePage },
-      { title: 'Invoices', component: InvoicesPage },
-      {title:'Receivable' ,component: ReceivablePage},
-      {title:'Payable' ,component: PayablePage},
+      { title: 'Invoices', component: InvoicesPage,Icon: 'ios-information-circle' },
+      {title:'Receivable' ,component: ReceivablePage,Icon: 'ios-information-circle'},
+      {title:'Payable' ,component: PayablePage,Icon: 'ios-information-circle'},
       // {title: 'Bills', component: BillsPage },
-      {title:'Tax' ,component: TaxPage},
+      {title:'Tax' ,component: TaxPage,Icon: 'ios-information-circle'},
       
-      {title:'Logout' ,component: DashboardPage}
+      {title:'Logout' ,component: DashboardPage,Icon: 'ios-information-circle'}
 
       // { title: 'Items', component: CreateEstimatePage }
     ];

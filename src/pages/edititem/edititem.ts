@@ -45,7 +45,7 @@ export class EdititemPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,public app: App,public platform:Platform,public http: Http,public alertCtrl:AlertController) {
     this.id= this.navParams.get('id');
     
-  this.http.get('https://sum-finance-latest2.herokuapp.com/item/get/'+this.id+'').map(res => res.json()).subscribe(data => {
+  this.http.get('https://sum-invoice-app.herokuapp.com/item/get/'+this.id+'').map(res => res.json()).subscribe(data => {
       console.log(data);
          this.oldqty = data[0].item_quantity;
          this.itemname = data[0].item_name;
@@ -122,13 +122,17 @@ export class EdititemPage {
       item_quantity:this.newqty
     };
     //console.log(this.data.username);
-    this.http.post('https://sum-finance-latest2.herokuapp.com/item/update/'+this.id+'', data)
+    this.http.post('https://sum-invoice-app.herokuapp.com/item/update/'+this.id+'', data)
         .subscribe(response => {
           console.log('POST Response:', response);
           this.navCtrl.push(ItemPage);
         }, error => {
         console.log("Oooops!");
         });
+        }
+        
+        isReadonly() {
+          return this.isReadonly;   //return true/false 
         }
   }
 

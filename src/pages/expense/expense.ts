@@ -27,7 +27,7 @@ item_id:any;
 item_name:any;
 public itemexpense:boolean=false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public ionicApp:IonicApp,public app:App,public platform:Platform,public loadingCtrl: LoadingController, public tostctrl: ToastController,public global:GlobalProvider, public http:Http) {
-    this.http.get('https://sum-finance-latest2.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+    this.http.get('https://sum-invoice-app.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
       console.log(data);
          this.items = data 
        });
@@ -74,12 +74,12 @@ public itemexpense:boolean=false;
       exp_amount:this.amount,
       userId:this.global.userid
     }
-    this.http.post('https://sum-finance-latest2.herokuapp.com/expense/create', data)
+    this.http.post('https://sum-invoice-app.herokuapp.com/expense/create', data)
     .subscribe(response => {
       console.log('POST Response:', response);
       loader.dismiss();
       let toast = this.tostctrl.create({
-        message:'Data Save',
+        message:'Expense Add Succesfully in your system',
         duration:2000
       });
       toast.present();
@@ -87,7 +87,7 @@ public itemexpense:boolean=false;
     }, error => {
       loader.dismiss();
       let toast = this.tostctrl.create({
-        message:'Data not Save',
+        message:'Expense not addedd succesfully',
         duration:2000
       });
       toast.present(); 

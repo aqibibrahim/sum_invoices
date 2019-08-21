@@ -77,6 +77,12 @@ export class BalanceSheetPage {
   });
   }
   run_report_balance_sheet(){
-this.navCtrl.push(BalanceSheetReportPage,{fromdate:this.fromdate,userid:this.global.userid});
+    if(this.fromdate ==  undefined){
+      alert("Please select date first")
+    }
+    else{
+      this.navCtrl.push(BalanceSheetReportPage,{fromdate:this.fromdate,userid:this.global.userid});
+    }
+
   }
 }

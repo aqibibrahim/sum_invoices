@@ -32,7 +32,7 @@ checkemail(email,gaming,firstname,lastname,companyname,contactdisplay,phone,mobi
     content:'Waiting...'
   });
   loader.present();
-  this.http.get('https://sum-finance-latest2.herokuapp.com/user/searchuser/'+email+'').map(res => res.json()).subscribe(data => {
+  this.http.get('https://sum-invoice-app.herokuapp.com/user/searchuser/'+email+'').map(res => res.json()).subscribe(data => {
     
     console.log(data);
 
@@ -62,7 +62,7 @@ checkemail(email,gaming,firstname,lastname,companyname,contactdisplay,phone,mobi
         other_user_id:null
     };
 
-      this.http.post('https://sum-finance-latest2.herokuapp.com/finance/create', data1)
+      this.http.post('https://sum-invoice-app.herokuapp.com/finance/create', data1)
           .subscribe(response => {
             console.log('POST Response:', response);
             loader.dismiss();
@@ -132,12 +132,12 @@ checkemail(email,gaming,firstname,lastname,companyname,contactdisplay,phone,mobi
         other_user_id:this.other_user_id
     };
 
-      this.http.post('https://sum-finance-latest2.herokuapp.com/finance/create', data1)
+      this.http.post('https://sum-invoice-app.herokuapp.com/finance/create', data1)
           .subscribe(response => {
             console.log('POST Response:', response);
             loader.dismiss();
             let toast = this.tostctrl.create({
-              message:'Data Save',
+              message:'Contact add successfully in you system',
               duration:2000
             });
             let nav = this.app.getActiveNavs()[0];

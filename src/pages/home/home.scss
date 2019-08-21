@@ -65,4 +65,44 @@ page-home {
         margin-top: -3%; 
         margin-left: -2.1rem;
     }
+    .alert-md .alert-button-group{
+        justify-content: space-between !important;
     }
+    .alert-md .alert-button{
+        color: coral !important;
+    }
+    .alert-md .alert-message {
+        margin-top: 18px !important;
+        text-align: center !important;
+        border-bottom: 0.5px solid gray !important;
+    }
+    .alert-md .alert-head{
+        border-bottom: 0.5px solid gray !important;
+    }
+    
+    }
+    .buttoncss{
+        color: coral !important;
+        justify-content: space-between !important;
+    }
+    .headcss{
+        border-bottom: 0.5px solid gray !important;
+    }
+    .alertCustomCss {
+        //color: white; // text color for basic alerts
+        button {
+            color: black !important;
+            //background-color: color($colors, secondary, base) !important;
+        }
+        .alert-message {
+            margin-top: 18px !important;
+            text-align: center !important;
+           
+        }
+        .alert-wrapper {
+            background-color: lightgray;
+        }
+        .alert-head{
+            border-bottom: 0.5px solid gray !important;
+        }
+      }

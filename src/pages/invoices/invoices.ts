@@ -30,6 +30,7 @@ export class InvoicesPage {
   @ViewChild(Nav) nav: Nav;
   @ViewChild(Navbar) navBar: Navbar;
   dateinput:any;
+  alert:any;
   output:any;
   invoicenumber:any;
   letterObj = {
@@ -43,10 +44,21 @@ export class InvoicesPage {
   pdfObj = null;
   constructor(public navCtrl: NavController, public navParams: NavParams,private socialSharing: SocialSharing,public app: App,public alertCtrl:AlertController,public global:GlobalProvider,private plt: Platform, public http: Http,private file: File, private fileOpener: FileOpener,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     console.log(this.global.userid);
-    this.http.get('https://sum-finance-latest2.herokuapp.com/invoice/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+    this.http.get('https://sum-invoice-app.herokuapp.com/invoice/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
     console.log(data);  
     if(data.length == 0){
-      alert("There is no invoice genrated by this user");
+       this.alert = this.alertCtrl.create({
+        title: 'Oh Snap!',
+        message: 'We do not have any Invoice for this company',
+        buttons: [{
+            text: 'Please first add your Invoice',
+            handler: () => {
+              this.navCtrl.push(CreateInvoicesPage);
+            }
+        }],
+        cssClass: 'alertDanger'
+    });
+    this.alert.present();
     }
 
     data.sort(function (a, b) {
@@ -64,18 +76,34 @@ export class InvoicesPage {
       this.invoices = data 
       console.log(this.invoices)
        });
+       this.plt.registerBackButtonAction(() => {
+        this.alert.dismiss();
+        // Catches the active view
+        let nav = this.app.getActiveNavs()[0];
+        let activeView = nav.getActive();                
+        // Checks if can go back before show up the alert
+        if(activeView.name === 'InvoicesPage') {
+            if (nav.canGoBack()){
+                nav.pop();
+            } else {
+                this.navCtrl.push(HomePage);
+                
+            }
+        }
+    });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad InvoicesPage');
     this.plt.registerBackButtonAction(() => {
+      this.alert.dismiss();
       // Catches the active view
       let nav = this.app.getActiveNavs()[0];
       let activeView = nav.getActive();                
       // Checks if can go back before show up the alert
       if(activeView.name === 'InvoicesPage') {
           if (nav.canGoBack()){
-              nav.pop();
+            this.navCtrl.push(HomePage);
           } else {
               this.navCtrl.push(HomePage);
               
@@ -94,23 +122,23 @@ export class InvoicesPage {
   sharelink(invoice){
     console.log(invoice);
     //Common sharing event will open all available application to share
-    // this.socialSharing.share("Message","Subject", this.file.externalDataDirectory +'Invoice'+invoice.invoice_number+'.pdf', invoice.invoice_number)
-    //   .then((entries) => {
-    //     console.log('success ' + JSON.stringify(entries));
-    //   })
-    //   .catch((error) => {
-    //     alert('error ' + JSON.stringify(error));
-    //   });
-      this.fileOpener.open(this.file.externalDataDirectory +'Invoice'+invoice.invoice_number+'.pdf', 'application/pdf')
-      .then(() => console.log('File is opened'))
-      .catch(e => console.log('Error opening file', e));
+    this.socialSharing.share("Message","Subject", this.file.externalDataDirectory +'Invoice'+invoice.invoice_number+'.pdf', invoice.invoice_number)
+      .then((entries) => {
+        console.log('success ' + JSON.stringify(entries));
+      })
+      .catch((error) => {
+        alert('error ' + JSON.stringify(error));
+      });
+      // this.fileOpener.open(this.file.externalDataDirectory +'Invoice'+invoice.invoice_number+'.pdf', 'application/pdf')
+      // .then(() => console.log('File is opened'))
+      // .catch(e => console.log('Error opening file', e));
 }
   createinvoice(){
 
     this.navCtrl.push(CreateInvoicesPage);
  }
  ionViewDidEnter() {
-  this.http.get('https://sum-finance-latest2.herokuapp.com/invoice/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+  this.http.get('https://sum-invoice-app.herokuapp.com/invoice/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
     console.log(data);
        //this.posts = data.json();
        data.sort(function (a, b) {
@@ -165,7 +193,7 @@ export class InvoicesPage {
           let data={
             id:invoice._id
           }
-          this.http.post(' https://sum-finance-latest2.herokuapp.com/invoice/delete/'+invoice._id+'', data)
+          this.http.post('https://sum-invoice-app.herokuapp.com/invoice/delete/'+invoice._id+'', data)
           .subscribe(res => {
             
             loader.dismiss();

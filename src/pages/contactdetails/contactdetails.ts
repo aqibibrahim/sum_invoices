@@ -58,7 +58,7 @@ export class ContactdetailsPage {
     this.mydate=new Date();
     this.id= this.navParams.get('id');
     
-    this.http.get('https://sum-finance-latest2.herokuapp.com/finance/get/'+this.id+'').map(res => res.json()).subscribe(data => {
+    this.http.get('https://sum-invoice-app.herokuapp.com/finance/get/'+this.id+'').map(res => res.json()).subscribe(data => {
       console.log(data);
          this.posts = data 
           this.value_company_name = data[0].comp_name;
@@ -138,7 +138,7 @@ updatecontact(){
         shipping_address:this.shippingaddress,
   };
   //console.log(this.data.username);
-  this.http.post('https://sum-finance-latest2.herokuapp.com/finance/update/'+this.id+'', data)
+  this.http.post('https://sum-invoice-app.herokuapp.com/finance/update/'+this.id+'', data)
       .subscribe(response => {
         loader.dismiss();
           let toast = this.tostctrl.create({

@@ -88,7 +88,7 @@ stringcashrec:any;
 
       //otherUserId:this.user_id
     }
-    this.http.post(' https://sum-finance-latest2.herokuapp.com/invoice/paidstatus', data).map(response => response.json())
+    this.http.post('https://sum-invoice-app.herokuapp.com/invoice/paidstatus', data).map(response => response.json())
       .subscribe(data => {
         //response = jQuery.parseJSON(response);
         console.log(data);

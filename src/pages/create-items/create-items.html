@@ -52,12 +52,26 @@
               <ion-input type="text" placeholder=" Item Name" [(ngModel)]="name"></ion-input>
           </ion-item>
 
-          <ion-item >
+          <!-- <ion-item >
               <ion-label color="lightblue">Unit</ion-label>  
-          </ion-item>
+          </ion-item> -->
+
           <ion-item style="border-bottom: 0.3px solid">
-              <ion-input type="text" [(ngModel)]="units" placeholder=" Units (Optional)"></ion-input>
-          </ion-item>
+            <ion-label color="lightblue">Units</ion-label>  
+            <ion-select [(ngModel)]="units" interface="popover">
+                <ion-option value="kg">KG</ion-option>
+                <ion-option value="gram">Grams</ion-option>
+                <ion-option value="packs">Packs</ion-option>
+                <ion-option value="liter">Ltr</ion-option>
+                <ion-option value="qty">Qty</ion-option>
+                <ion-option value="pieces">Pieces</ion-option>
+                <ion-option value="other">Other</ion-option>
+              </ion-select>
+            </ion-item>
+          <!-- <ion-item style="border-bottom: 0.3px solid">
+
+              <ion-input type="text" [(ngModel)]="units" placeholder=" Units"></ion-input>
+          </ion-item> -->
           <ion-item >
             <ion-label color="lightblue">Quantity<span class="required">*</span></ion-label>  
         </ion-item>
@@ -74,7 +88,8 @@
               <ion-toggle [(ngModel)]="saleinformation"></ion-toggle>
           </ion-item>
             
-            <div *ngIf="saleinformation">
+          <!-- <div *ngIf="saleinformation"></div> -->
+            <div>
 
               <ion-item>
                 <ion-label color="lightblue">Selling Price<span class="required">*</span></ion-label>
@@ -114,7 +129,8 @@
                 <ion-toggle [(ngModel)]="purchaseinformation"></ion-toggle>
             </ion-item>
               
-              <div *ngIf="purchaseinformation">
+            <!-- <div *ngIf="purchaseinformation"></div> -->
+              <div>
 
                   <ion-item>
                       <ion-label color="lightblue">Cost Per Item<span class="required">*</span></ion-label>

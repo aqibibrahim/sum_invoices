@@ -18,7 +18,7 @@
     <ion-title>New Invoice</ion-title>
     <ion-buttons end>
         <button ion-button (click)="invoicedetails()">
-        Save As Draft
+        Save
       </button>
       </ion-buttons>
   <!-- </ion-navbar> -->
@@ -48,7 +48,7 @@
       </ion-col>
     </ion-row>
     
-    <ion-item>
+    <ion-item style="border-bottom: 1px solid grey">
         <ion-label>Email<span class="required">*</span></ion-label>
       <!-- <ion-input type="email" value="" [(ngModel)]="email"></ion-input> -->
       <ion-input type="email" [(ngModel)]="email"  name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" value="{{this.email}}" required [readonly]="isReadonly()"></ion-input>
@@ -58,7 +58,7 @@
       <ion-input type="number" value="{{this.nativeinvoice}}" [(ngModel)]="invoice"></ion-input>
     </ion-item> -->
     <ion-item style="border-bottom: 1px solid grey"> 
-      <ion-label fixed>Order #</ion-label>
+      <ion-label fixed>Order #<span class="required">*</span></ion-label>
       <ion-input type="number" value="{{this.nativeorder}}" [(ngModel)]="order"></ion-input>
     </ion-item>
     </ion-card-content>
@@ -120,12 +120,12 @@
         
         <ion-card>
           <ion-card-content>
-            <ion-row>
+            <ion-row style="border-bottom: 1px solid lightgray">
               <ion-col col-10>
                   <ion-list>
                       <ion-item >
                           <ion-label>Item<span class="required">*</span></ion-label>
-                          <ion-select #S interface="popover" class="selector" [(ngModel)]="itemname1" ionCancel="onCancel()" okText="Ok" (ionChange)="onItemChange(S.value)" >
+                          <ion-select #S interface="popover" class="selector" [(ngModel)]="itemname1" ionCancel="onCancel()" okText="Ok" (ionChange)="onItemChange()" >
                             <ion-option *ngFor="let name of items1" [value] = "name" class="option" text-wrap>{{name.item_name}}</ion-option>
                           </ion-select>
                         </ion-item>
@@ -133,6 +133,23 @@
               </ion-col>
               <ion-col col-2>
                   <button ion-button icon-only clear (click)="openitem()">
+                      <ion-icon ios="ios-add-circle" md="md-add-circle" style="color: coral;"></ion-icon>
+                    </button>
+              </ion-col>
+            </ion-row>
+            <ion-row style="border-bottom: 1px solid lightgray">
+              <ion-col col-10>
+                  <ion-list>
+                      <ion-item >
+                          <ion-label>Tax</ion-label>
+                          <ion-select #S interface="popover" class="selector" [(ngModel)]="taxname" ionCancel="onCancel()" okText="Ok" (ionChange)="ontaxChange()" >
+                            <ion-option *ngFor="let tax of taxvalue" [value] = "tax" class="option" text-wrap>{{tax.tax_name}}</ion-option>
+                          </ion-select>
+                        </ion-item>
+                </ion-list>
+              </ion-col>
+              <ion-col col-2>
+                  <button ion-button icon-only clear (click)="opentax()">
                       <ion-icon ios="ios-add-circle" md="md-add-circle" style="color: coral;"></ion-icon>
                     </button>
               </ion-col>
@@ -152,6 +169,7 @@
                       </ion-item>
                 </ion-col>
               </ion-row> 
+              
                 <!-- <button ion-button icon-end clear full (click)='adlineitem()' style="background-color: transparent !important;">
                     Add Line Item
                     <ion-icon name="add"></ion-icon>
@@ -203,22 +221,8 @@
                     
                   </ion-row>
 
-                  <!-- <ion-row>
-                      <ion-col col-6>
-                            <ion-item >
-                              <h4>Adjustment</h4>
-                             
-                              </ion-item>
-                      </ion-col>
-                      <ion-col col-6>
-                      <ion-item style="border-bottom: 1px solid lightgrey">
-                              <ion-input type="number" placeholder="Adjustment" [(ngModel)]="adjustmentprice" style="text-align: right" (input)='onAdjustment($event.target.value)'></ion-input>
-                            </ion-item>
-                      </ion-col>
-                      
-                    </ion-row> -->
-
-                    <ion-row>
+                  
+               <ion-row>
                         <ion-col col-6>
                               <ion-item >
                                 <h3>Total</h3>
@@ -244,12 +248,12 @@
                 
               <ion-list>
 
-                <ion-item>
+                <ion-item style="border-bottom: 1px solid lightgrey">
                     <ion-textarea clearOnEdit="true" placeholder="Customer Notes" [(ngModel)]="customer_notes"></ion-textarea>
                   
                 </ion-item>
               
-                <ion-item>
+                <ion-item style="border-bottom: 1px solid lightgrey">
                     <ion-textarea clearOnEdit="true" placeholder="Terms & Conditions" [(ngModel)]="terms_condition"></ion-textarea>
                   
                 </ion-item>

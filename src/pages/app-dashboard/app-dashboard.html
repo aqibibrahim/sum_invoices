@@ -50,10 +50,10 @@
                       <ion-card-content>
                        <ion-row>
                          <ion-col>
-                          <ion-label style="font-weight: bold;text-align: left"><ion-icon name="stats" style="margin-right: inherit;font-size: 1.3em !important;color: mediumpurple;"></ion-icon>Total Payable</ion-label><ion-label style="text-align: left;font-weight: bold">PKR:{{this.sum}}</ion-label>
+                          <ion-label style="font-weight: bold;text-align: left"><ion-icon name="stats" style="margin-right: inherit;font-size: 1.3em !important;color: mediumpurple;"></ion-icon>Total Payable</ion-label><ion-label style="text-align: left;font-weight: bold">PKR:{{this.sum | shortNumber}}</ion-label>
                          </ion-col>
                          <ion-col>
-                            <ion-label style="font-weight: bold;text-align: left"><ion-icon name="stats"  style="margin-right: inherit;font-size: 1.3em !important; color: dodgerblue;"></ion-icon>Total Recievable</ion-label><ion-label style="text-align: left;font-weight: bold">PKR:{{this.sum_rec}}</ion-label>
+                            <ion-label style="font-weight: bold;text-align: left"><ion-icon name="stats"  style="margin-right: inherit;font-size: 1.3em !important; color: dodgerblue;"></ion-icon>Total Recievable</ion-label><ion-label style="text-align: left;font-weight: bold">PKR:{{this.sum_rec | shortNumber }}</ion-label>
                          </ion-col>
                        </ion-row> 
                        <!-- <ion-row>
@@ -96,10 +96,10 @@
                   <ion-card-content>
                    <ion-row>
                      <ion-col>
-                      <ion-label style="font-weight: bold;text-align: left"><ion-icon name="stats" style="margin-right: inherit;font-size: 1.3em !important;color: mediumpurple;"></ion-icon>Total Income</ion-label><ion-label style="text-align: left;font-weight: bold">PKR:{{this.sum_rec}}</ion-label>
+                      <ion-label style="font-weight: bold;text-align: left"><ion-icon name="stats" style="margin-right: inherit;font-size: 1.3em !important;color: mediumpurple;"></ion-icon>Total Income</ion-label><ion-label style="text-align: left;font-weight: bold">PKR:{{this.sum_rec | shortNumber}}</ion-label>
                      </ion-col>
                      <ion-col>
-                        <ion-label style="font-weight: bold;text-align: left"><ion-icon name="stats"  style="margin-right: inherit;font-size: 1.3em !important; color: dodgerblue;"></ion-icon>Total Expense</ion-label><ion-label style="text-align: left;font-weight: bold">PKR:{{this.expensevalue}}</ion-label>
+                        <ion-label style="font-weight: bold;text-align: left"><ion-icon name="stats"  style="margin-right: inherit;font-size: 1.3em !important; color: dodgerblue;"></ion-icon>Total Expense</ion-label><ion-label style="text-align: left;font-weight: bold">PKR:{{this.expensevalue | shortNumber}}</ion-label>
                      </ion-col>
                    </ion-row> 
                    

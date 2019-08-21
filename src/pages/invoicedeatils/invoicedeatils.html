@@ -6,7 +6,7 @@
           -->
           <ion-header>
           <ion-navbar color="lightblue"> 
-          <ion-title color="grey">invoice Details</ion-title>
+          <ion-title color="grey">Invoice details</ion-title>
          
           <ion-buttons end>
           <button ion-button (click)="sendEmail()">
@@ -141,13 +141,13 @@
 
               <ion-col style="padding-left: initial;">
                <ion-item style="padding-left: initial;">
-                 <ion-label>{{quantity}}</ion-label><ion-label>X</ion-label><ion-label>{{rate}}</ion-label>
+                 <ion-label>{{quantity}}</ion-label><ion-label>X</ion-label><ion-label>{{rate |  shortNumber}}</ion-label>
                </ion-item> 
               </ion-col>
               <ion-col style="padding-right: initial;">
                 <ion-item>
                   <ion-label style="text-align: right;">
-                      {{subtotal | number : fractionSize}}
+                      {{subtotal |  shortNumber}}
                   </ion-label>
                 </ion-item>
               </ion-col>
@@ -159,7 +159,7 @@
           Sub Total
           </ion-col>
           <ion-col text-end style="margin-top: 5%; color: grey">
-          {{subtotal | number : fractionSize}}
+          {{subtotal | shortNumber}}
           </ion-col>
           </ion-row>
 
@@ -194,7 +194,17 @@
           </ion-col>
           </ion-row>
 
+          <!--Tax Value-->
 
+          <ion-row >
+              <ion-col col-8 text-end style="color:coral; margin-top: 5%">
+              Tax %
+              </ion-col>
+              <ion-col text-end style="margin-top: 4%; color: red">
+                 {{this.taxname}} - {{this.taxpercentage}}%
+                 <!-- {{discount}} -->
+              </ion-col>
+              </ion-row>
 
           <!-- Total -->
           <ion-row >
@@ -202,7 +212,7 @@
             Total
           </ion-col>
           <ion-col text-end style="margin-top: 5%; color: grey">
-              {{balance | number : fractionSize}}
+              {{balance | shortNumber}}
           </ion-col>
           </ion-row>
 
@@ -211,7 +221,7 @@
               Balance Due
             </ion-col>
             <ion-col text-end style="margin-top: 5%; color: grey">
-                {{balance | number : fractionSize}}
+                {{balance | shortNumber}}
             </ion-col>
           </ion-row>
 

@@ -59,7 +59,7 @@ import {EdititemPage} from '../pages/edititem/edititem';
 import {ForgotpasswordPage} from '../pages/forgotpassword/forgotpassword';
 import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts';
 import { GlobalProvider } from '../providers/global/global';
-import { SignupProvider } from '../providers/signup/signup';
+// import { SignupProvider } from '../providers/signup/signup';
 import {CreateYourCompanyPage} from '../pages/create-your-company/create-your-company';
 import {CompanytaxPage} from '../pages/companytax/companytax';
 import {SalesbycustomerreportPage} from '../pages/salesbycustomerreport/salesbycustomerreport';
@@ -85,6 +85,12 @@ import { AngularFireAuthModule }from 'angularfire2/auth';
 import { environment } from '../environment/environment';
 import { Device } from '@ionic-native/device';
 import { AppAvailability } from '@ionic-native/app-availability';
+import {ShortNumberPipe} from '../pipes/short-number/short-number';
+import { CompanyProvider } from '../providers/company/company';
+import { AutoCompleteModule } from 'ionic2-auto-complete';
+import { CompleteTestServiceProvider } from '../providers/complete-test-service/complete-test-service';
+import { Network } from '@ionic-native/network';
+
 const firebaseConfig = {
   apiKey: "AIzaSyBDowWJg2HFOlYivSbA6oReSq4U7AEsZp4",
   authDomain: "sum-invoice.firebaseapp.com",
@@ -149,7 +155,8 @@ firebase.initializeApp(firebaseConfig);
     ItemslistComponent,
     ContactlistComponent,
     InvoicelistComponent,
-    AppDashboardPage
+    AppDashboardPage,
+    ShortNumberPipe
   ],
   imports: [ 
     FormsModule, 
@@ -157,11 +164,13 @@ firebase.initializeApp(firebaseConfig);
     //MbscModule,
     BrowserModule,
     HttpModule,
+    AutoCompleteModule,
     IonicModule.forRoot(MyApp),
     RecaptchaModule.forRoot(),
     IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule
+    //ShortNumberPipe
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -233,11 +242,14 @@ firebase.initializeApp(firebaseConfig);
     AndroidPermissions,
     GlobalProvider,
     NativeStorage,
-    SignupProvider,
+    // SignupProvider,
     CheckemailProvider,
     ReportsProvider,
     Device,
-    AppAvailability 
+    AppAvailability,
+    CompanyProvider,
+    Network,
+    CompleteTestServiceProvider 
     ]
 })
 export class AppModule {}

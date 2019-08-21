@@ -58,14 +58,28 @@
             <ion-item style="border-bottom: 1px solid grey">
                 <ion-label >Date</ion-label>
                 <!-- <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="invoicedate"></ion-input> -->
-                <ion-datetime displayFormat="DD MMM YYYY" (ionChange)="fecha()" pickerFormat="DD MMM YYYY"  [(ngModel)]="expensedate" cancelText ="Cancelar" doneText="Ok" ></ion-datetime>
+                <ion-datetime displayFormat="DD MMM YYYY" (ionChange)="fecha()" pickerFormat="DD MMM YYYY"  [(ngModel)]="expensedate" cancelText ="Cancel" doneText="Ok" ></ion-datetime>
               </ion-item>
 
-             <ion-item style="border-bottom: 1px solid grey">
-                <ion-label >Amount</ion-label>
-                <ion-input type="number" value="0" name="amount" [(ngModel)]="amount"></ion-input>
-              </ion-item>
+           
+              <ion-row>
 
+                <ion-col style="border-bottom: 1px solid grey">
+                  <ion-item>
+                      <ion-label style="color:lightgray">Amount</ion-label>
+                  </ion-item>
+                </ion-col>
+                
+                <ion-col style="border-bottom: 1px solid grey">
+                    <ion-item>
+                        <ion-input type="number" value="0" name="amount" [(ngModel)]="amount" style="text-align: right;"></ion-input>
+                      </ion-item>
+                  
+                </ion-col>
+            
+              </ion-row>      
+                
+          
              
                 <ion-item>
                     <ion-label>Item Name</ion-label>  

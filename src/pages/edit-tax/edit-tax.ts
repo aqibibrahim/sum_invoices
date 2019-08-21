@@ -24,7 +24,7 @@ export class EditTaxPage {
   id:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public http:Http, public platform:Platform, public app:App) {
     this.id= this.navParams.get('id');
-    this.http.get('https://sum-finance-latest2.herokuapp.com/tax/get/'+this.id+'').map(res => res.json()).subscribe(data => {
+    this.http.get('https://sum-invoice-app.herokuapp.com/tax/get/'+this.id+'').map(res => res.json()).subscribe(data => {
       console.log(data);
       var key = Object.keys(data)[1];
       this.tax_name = data[key];
@@ -63,7 +63,7 @@ updatetax(){
       tax_precentage : this.taxvalue
     };
     //console.log(this.data.username);
-    this.http.post('https://sum-finance-latest2.herokuapp.com/tax/update/'+this.id+'', data)
+    this.http.post('https://sum-invoice-app.herokuapp.com/tax/update/'+this.id+'', data)
         .subscribe(response => {
           console.log('POST Response:', response);
           this.navCtrl.push(TaxPage);

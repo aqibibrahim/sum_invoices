@@ -67,7 +67,7 @@ export class AddLineItemPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddLineItemPage');
-    this.http.get('https://sum-finance-latest2.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+    this.http.get('https://sum-invoice-app.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
       console.log(data);
          this.items = data
        });
@@ -114,7 +114,7 @@ export class AddLineItemPage {
           item_quantity:this.qtyinhands
         };
         //console.log(this.data.username);
-        this.http.post('https://sum-finance-latest2.herokuapp.com/item/update/'+this.item_id+'', data)
+        this.http.post('https://sum-invoice-app.herokuapp.com/item/update/'+this.item_id+'', data)
             .subscribe(response => {
               console.log('POST Response:', response);
               //this.navCtrl.push(ItemPage);

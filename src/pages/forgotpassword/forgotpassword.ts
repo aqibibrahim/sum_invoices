@@ -41,12 +41,13 @@ export class ForgotpasswordPage {
     if(data == 'email'){
       this.isEmail = true;
     }
-    else if(data == 'password'){
-      this.isPassword = true;
-    }
+    // else if(data == 'password'){
+    //   this.isPassword = true;
+    // }
   }
   submit(){
     if(firebase.auth().currentUser.email == this.email){
+      //this.resetPassword(this.email);
       console.log(firebase.auth().currentUser.email);
       let loader = this.loadingCtrl.create({
         content:'Waiting...'
@@ -56,7 +57,7 @@ export class ForgotpasswordPage {
         email:this.email,
         password: this.password
     };
-    this.http.post('https://sum-finance-latest2.herokuapp.com/user/forget', data)
+    this.http.post('https://sum-invoice-app.herokuapp.com/user/forget', data)
     .subscribe(response => {
       console.log('POST Response:', response);
       
@@ -66,6 +67,11 @@ export class ForgotpasswordPage {
       });
       loader.dismiss();
       toast.present();
+      firebase.auth().currentUser.updatePassword(this.password).then(function(){
+        console.log("Update password succesfully");
+      }).catch(function(error){
+        alert(error);
+      });
       this.navCtrl.push(LoginPage);
     }, error => {
       loader.dismiss();
@@ -80,6 +86,12 @@ export class ForgotpasswordPage {
     else{
       alert("Email does not exist");
     }
+  }
+  resetPassword(email: string) {
+    var auth = firebase.auth();
+    return auth.sendPasswordResetEmail(email)
+      .then(() => alert("email sent"))
+      .catch((error) => console.log(error))
   }
   }
 

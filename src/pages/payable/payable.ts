@@ -1,4 +1,4 @@
-import { Component,ViewChild } from '@angular/core';
+import { Component,ViewChild,NgModule  } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform,LoadingController,AlertController,Nav, ToastController,Navbar } from 'ionic-angular';
 import {CreateInvoicesPage} from '../create-invoices/create-invoices';
 import {EditinvoicePage} from '../editinvoice/editinvoice';
@@ -11,6 +11,7 @@ import { FileOpener } from '@ionic-native/file-opener';
 import {GlobalProvider} from '../../providers/global/global';
 import {HomePage} from '../home/home';
 import { App } from 'ionic-angular';
+import { PipesModule } from '../../pipes/pipes.module';
 
 /**
  * Generated class for the PayablePage page.
@@ -24,6 +25,7 @@ import { App } from 'ionic-angular';
   selector: 'page-payable',
   templateUrl: 'payable.html',
 })
+
 export class PayablePage {
   @ViewChild(Navbar) navBar: Navbar;
   public sum : number = 0;
@@ -32,10 +34,11 @@ export class PayablePage {
   fixedamountarray = [];
   constructor(public navCtrl: NavController, public navParams: NavParams,public app: App,public alertCtrl:AlertController,public global:GlobalProvider,private plt: Platform, public http: Http,private file: File, private fileOpener: FileOpener,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     console.log(this.global.userid);
-    this.http.get('https://sum-finance-latest2.herokuapp.com/invoice/payable/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+    this.http.get('https://sum-invoice-app.herokuapp.com/invoice/payable/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
     console.log(data);  
     if(data.length == 0){
       alert("There is no invoice genrated by this user");
+      this.sum = 0;
     }
       this.invoices = data 
       this.sum = 0;
@@ -61,7 +64,8 @@ export class PayablePage {
       // Checks if can go back before show up the alert
       if(activeView.name === 'PayablePage') {
           if (nav.canGoBack()){
-              nav.pop();
+            this.navCtrl.push(HomePage);
+              //nav.pop();
           } else {
               this.navCtrl.push(HomePage);
               

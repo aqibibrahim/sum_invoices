@@ -11,7 +11,7 @@ import {ItemPage} from '../item/item'
 import {BillsPage} from '../bills/bills';
 import {ExpensePage} from '../expense/expense';
 import {GlobalProvider} from '../../providers/global/global';
-import {SignupProvider} from '../../providers/signup/signup';
+// import {SignupProvider} from '../../providers/signup/signup';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -23,6 +23,8 @@ import { App } from 'ionic-angular';
 import {EditProfilePage} from '../edit-profile/edit-profile';
 import { ModalController } from 'ionic-angular';
 import {Http ,Response} from '@angular/http';
+import { LoginPage } from '../login/login';
+import { Network } from '@ionic-native/network';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -36,22 +38,26 @@ export class HomePage {
   userid:any;
   nativename:any;
   // books: Observable<any[]>;
-   constructor(public navCtrl: NavController, public http:Http ,public modalCtrl: ModalController,private navparm:NavParams,public app:App,public alertCtrl:AlertController,public signuppro:SignupProvider,public global:GlobalProvider,private plt: Platform, private file: File, private fileOpener: FileOpener, private storage: Storage,private contacts: Contacts) {
+   constructor(public navCtrl: NavController, private network: Network,public http:Http ,public modalCtrl: ModalController,private navparm:NavParams,public app:App,public alertCtrl:AlertController,public global:GlobalProvider,private plt: Platform, private file: File, private fileOpener: FileOpener, private storage: Storage,private contacts: Contacts) {
     // this.books = afDB.list('/Books/Books').valueChanges();
     
     this.companyname = this.global.company_name;
-    console.log(this.signuppro.mailstatus);
+    // console.log(this.signuppro.mailstatus);
     //this.storage.set('customername', this.companyname);
     this.userid = this.global.userid;
     console.log(this.companyname, "User ID" +this.userid);
     console.log("User ID : "+ this.global.userid);
+
+    this.network.onConnect().subscribe(()=> {
+      console.log('Connected Constructor');
+     });
+
+     this.network.onDisconnect().subscribe(()=> {
+       console.log('Disonnected Constructor');
+     });
 }
  
  ionViewDidLoad() {
-   if(this.global.mailstatus == false){
-     alert("Please verify your email address")
-   }
-
    
   this.nativename = this.global.company_name;
   console.log('ionViewDidLoad DashboardPage');
@@ -65,13 +71,13 @@ export class HomePage {
                 title: 'Exit',
                 message: 'Want to Exit App?',
                 buttons: [{
-                    text: 'Cancel',
+                    text: 'No',
                     role: 'cancel',
                     handler: () => {
                       this.navCtrl.push(HomePage);
                                         }
                 },{
-                    text: 'OK',
+                    text: 'Yes',
                     handler: () => {
                       this.plt.exitApp();
                     }
@@ -85,8 +91,25 @@ export class HomePage {
 //http://localhost:3000/user/userdata/5d1512f52b7d6f0017908263
  }
  ionViewWillEnter(){
-  console.log(this.global.userid);
-  this.http.get('https://sum-finance-latest2.herokuapp.com/user/userdata/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+  if(this.global.mailstatus == false){
+    const alert = this.alertCtrl.create({
+      title: 'One More Step',
+      message: 'Thanks so much for joining Sum Invoices! You are almost ready to start exploring. Confirm your email and you are good to go ',
+      buttons: [{
+          text: 'OK',
+          handler: () => {
+            this.navCtrl.push(LoginPage);
+          }
+      }],
+      cssClass: 'alertDanger'
+  });
+  alert.present();
+
+    //alert("Please verify your email address")
+  }
+  
+console.log(this.global.userid);
+  this.http.get('https://sum-invoice-app.herokuapp.com/user/userdata/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
     console.log(data);
     this.nativename = data[0].company_name;
      });
@@ -105,14 +128,17 @@ export class HomePage {
                     text: 'Cancel',
                     role: 'cancel',
                     handler: () => {
-                      this.navCtrl.push(HomePage);
+                      console.log('Cancel clicked');
                     }
+                    
                 },{
                     text: 'OK',
                     handler: () => {
                       this.plt.exitApp();
                     }
-                }]
+                }],
+                cssClass: 'alertCustomCss'
+                
             });
             alert.present();
         
@@ -120,13 +146,13 @@ export class HomePage {
 });
  
 }
-getcontacts(){
-this.contacts.find(['displayName', 'name', 'phoneNumbers', 'emails'], {filter: "", multiple: true})
-    .then(data => {
-      this.allContacts = data
-      console.log(this.allContacts);
-    });
-}
+// getcontacts(){
+// this.contacts.find(['displayName', 'name', 'phoneNumbers', 'emails'], {filter: "", multiple: true})
+//     .then(data => {
+//       this.allContacts = data
+//       console.log(this.allContacts);
+//     });
+// }
 selectCP(item){
 alert(item);
 }

@@ -41,7 +41,7 @@ export class SalesCustomerPage {
   date:any;
   myDate = new Date().toISOString();
   constructor(public navCtrl: NavController,private plt: Platform,public global:GlobalProvider,public loadingCtrl: LoadingController, public tostctrl: ToastController,public http:Http, public navParams: NavParams, private file: File, private fileOpener: FileOpener,private actionSheet: ActionSheet,public actionSheetCtrl: ActionSheetController) {
-    this.http.get('https://sum-finance-latest2.herokuapp.com/finance/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+    this.http.get('https://sum-invoice-app.herokuapp.com/finance/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
       console.log(data);
          //this.posts = data.json();
          this.namesList = data 
