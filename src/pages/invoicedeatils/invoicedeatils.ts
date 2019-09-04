@@ -27,6 +27,7 @@ import { App } from 'ionic-angular';
 export class InvoicedeatilsPage {
   @ViewChild(Navbar) navBar: Navbar;
   @ViewChild(Nav) nav: Nav;
+  alert:any;
   invoice_date:any;
   due_date:any;
   customer_name:any;
@@ -49,7 +50,8 @@ export class InvoicedeatilsPage {
   shipping_address:any;
   taxname:any;
   taxpercentage:any;
-
+  discountedprice:any;
+  taxpercentagevalue:any;
   pdfObj = null;
   letterObj = {
     to: '',
@@ -82,7 +84,8 @@ export class InvoicedeatilsPage {
       this.companyname = this.navParams.get('companyname');
       this.taxname = this.navParams.get('taxname');
       this.taxpercentage = this.navParams.get('taxper');
-      
+      this.discountedprice = this.navParams.get('discountedprice');
+      this.taxpercentagevalue = this.navParams.get('taxpercentage')
   console.log("Customer Name:"+this.customer_name,"Email:"+this.email);
   
   
@@ -97,12 +100,6 @@ export class InvoicedeatilsPage {
     }
     else{
       this.discount = this.discount;
-    }
-    if(this.adjustment == undefined){
-      this.adjustment = 0.00;
-    }
-    else{
-      this.adjustment = this.adjustment;
     }
     this.craetepdf();
     
@@ -188,6 +185,14 @@ export class InvoicedeatilsPage {
   }
   sendEmail(){
     // alert("Send email");
+    let dirPath = "";
+    let dirName = 'DailySheet';
+    if (this.platform.is('android')) {
+      		dirPath = this.file.externalRootDirectory;
+      	  } else if (this.platform.is('ios')) {
+      		dirPath = this.file.documentsDirectory;
+      	  }
+          let saveDir = dirPath + '/' + dirName+ '/';
     this.emailComposer.isAvailable().then((available: boolean) =>{
       if(available) {
         //Now we know we can send
@@ -198,7 +203,7 @@ export class InvoicedeatilsPage {
        to: this.email,
        cc: '',
        bcc: [],
-       attachments: [this.file.externalDataDirectory +'Invoice'+this.invoice_number+'.pdf'],
+       attachments: [saveDir +'Invoice'+this.invoice_number+'.pdf'],
        subject: 'Invoice Generated for '+this.item_name+'',
        body: 'Hi '+this.companyname+' <br><br> Please find the attached invoice. <br><br> Thanks ',
        
@@ -210,7 +215,15 @@ export class InvoicedeatilsPage {
    }
    sharelink(){
       //Common sharing event will open all available application to share
-      this.socialSharing.share("Message","Subject", this.file.externalDataDirectory +'Invoice'+this.invoice_number+'.pdf', this.invoice_number)
+      let dirPath = "";
+    let dirName = 'DailySheet';
+    if (this.platform.is('android')) {
+      		dirPath = this.file.externalRootDirectory;
+      	  } else if (this.platform.is('ios')) {
+      		dirPath = this.file.documentsDirectory;
+      	  }
+          let saveDir = dirPath + '/' + dirName+ '/';
+      this.socialSharing.share('Hi '+this.companyname+ ' Please find the attached invoice.','Invoice Generated for '+this.item_name+' ', saveDir +'Invoice'+this.invoice_number+'.pdf', 'Invoice #'+this.invoice_number)
         .then((entries) => {
           console.log('success ' + JSON.stringify(entries));
         })
@@ -233,13 +246,13 @@ export class InvoicedeatilsPage {
    
 
        { text: 'To', style: 'subheader' },
-       this.customer_name,
+       { text:  this.customer_name, style: 'subheader'},
       
        { text: 'Items', style: 'subheader'},
        {
            style: 'itemsTable',
            table: {
-               widths: ['*', 75, 75,75],
+               widths: ['*', 75, 75,75,75],
                body: [
                    [ 
                        { text: 'Item&Description', style: 'itemsTableHeader' },
@@ -253,7 +266,8 @@ export class InvoicedeatilsPage {
                   
                    [this.item_name,this.quantity,this.rate, this.subtotal],
                    ['Shipping Charges','','',this.shipping],
-                   ['Discount Price','','',this.discount],
+                   ['Discount Price'+'-'+this.discount+'%','','',this.discountedprice],
+                   ['Tax Price' +'-'+ this.taxpercentage +'%','','',this.taxpercentagevalue],
                    ['','','Total',this.balance]
                ]
            }
@@ -313,6 +327,7 @@ export class InvoicedeatilsPage {
            
        }
    }
+   
   //  footer: {
   //  columns: [
   //       {
@@ -344,26 +359,91 @@ export class InvoicedeatilsPage {
   //   margin: [0, 0, 0, 0]
   // }
 }
-   this.pdfObj = pdfMake.createPdf(docDefinition);
+this.pdfObj = pdfMake.createPdf(docDefinition);
+if (this.plt.is('cordova')) {
+  this.pdfObj.getBuffer((buffer) => {
+    var utf8 = new Uint8Array(buffer); // Convert to UTF-8...
+	  let binaryArray = utf8.buffer; // Convert to Binary...
 
-   if (this.plt.is('cordova')) {
-     this.pdfObj.getBuffer((buffer) => {
-       var blob = new Blob([buffer], { type: 'application/pdf' });
-       this.file.writeFile(this.file.externalDataDirectory, 'Invoice'+this.invoice_number+'.pdf', blob, { replace: true }).then(fileEntry => {
-        console.log("Pdf save in Phone directory")
-        this.fileOpener.open(this.file.dataDirectory + 'Invoice'+this.invoice_number+'.pdf', 'application/pdf');
-       })
-     });
-   } else {
-     this.pdfObj.download();
-   }
+	  let dirPath = "";
+	  if (this.platform.is('android')) {
+		dirPath = this.file.externalRootDirectory;
+	  } else if (this.platform.is('ios')) {
+		dirPath = this.file.documentsDirectory;
+	  }
+
+	  let dirName = 'DailySheet';
+    this.file.createDir(dirPath, dirName, true).then((dirEntry) => {
+      let saveDir = dirPath + '/' + dirName + '/';
+      this.file.createFile(saveDir, 'Invoice'+this.invoice_number+'.pdf', true).then((fileEntry) => {
+        fileEntry.createWriter((fileWriter) => {
+        fileWriter.onwriteend = () => {
+          this.alert = this.alertCtrl.create({
+            title: 'Oh Great!',
+            message: 'Invoice Generate Successfully',
+            buttons: [{
+                text: 'OK',
+                handler: () => {
+                  //this.navCtrl.push(CreateInvoicesPage);
+                }
+            }],
+            cssClass: 'alertDanger'
+        });
+        this.alert.present();
+        };
+        fileWriter.onerror = (e) => {
+          //this.hideLoading();
+          console.log('Cannot write report');
+        };
+        fileWriter.write(binaryArray);
+        });
+      }).catch((error) => { console.log('Cannot create file', error); });
+      }).catch((error) => { console.log('Cannot create folder', error); });
+    });
   }
+  else{
+    this.pdfObj.download();
+  }
+ 
+ }
+ 
+
   saveinvoice(){
     
   }
   viewpdf(){
-    this.fileOpener.open(this.file.externalDataDirectory +'Invoice'+this.invoice_number+'.pdf', 'application/pdf')
-    .then(() => console.log('File is opened'))
-    .catch(e => console.log('Error opening file', e));
+    // this.fileOpener.open(this.file.externalDataDirectory +'Invoice'+this.invoice_number+'.pdf', 'application/pdf')
+    // .then(() => console.log('File is opened'))
+    // .catch(e => console.log('Error opening file', e));
+    let dirPath = "";
+    let dirName = 'DailySheet';
+    if (this.platform.is('android')) {
+      		dirPath = this.file.externalRootDirectory;
+      	  } else if (this.platform.is('ios')) {
+      		dirPath = this.file.documentsDirectory;
+      	  }
+          let saveDir = dirPath + '/' + dirName+ '/';
+          
+          this.fileOpener.open(saveDir + 'Invoice'+this.invoice_number+'.pdf', 'application/pdf')
+				  .then(() => console.log('File is opened'))
+          .catch(e => 
+            this.alert = this.alertCtrl.create({
+              title: 'Oh Great!',
+              message: e.message,
+              buttons: [{
+                  text: 'OK',
+                  handler: () => {
+                    //this.navCtrl.push(CreateInvoicesPage);
+                  }
+              }],
+              cssClass: 'alertDanger'
+          }));
+          this.alert.present();
+            
+			}
+    // this.fileOpener.open(saveDir + 'Invoice'+this.invoice_number+'.pdf', 'application/pdf')
+		// 		  .then(() => console.log('File is opened'))
+		// 		  .catch(e => console.log('Error openening file', e));
+		// 	};
   }
-}
+

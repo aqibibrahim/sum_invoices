@@ -34,6 +34,9 @@ import {ReportsPage} from '../reports/reports';
     sale_rate:any;
     purchase_rate:any;
     quatity:any;
+    discount=0;
+    shipment=0;
+    tax=0;
       constructor(public navCtrl: NavController,public global:GlobalProvider,public alertCtrl:AlertController,public platform:Platform,public app:App,public ionicApp:IonicApp,public loadingCtrl: LoadingController, public tostctrl: ToastController, public navParams: NavParams, public http:Http) {
         this.http.get('https://sum-invoice-app.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
           console.log(data.name);
@@ -114,7 +117,7 @@ import {ReportsPage} from '../reports/reports';
         itemId:this.item_id
       }
       console.log(data);
-      this.http.post('https://sum-invoice-app.herokuapp.com/expense/expensedate', data).map(response => response.json())
+      this.http.post('https://sum-invoice-app.herokuapp.com/expense/profitandloss', data).map(response => response.json())
         .subscribe(data => {
           //response = jQuery.parseJSON(response);
           console.log(data);
@@ -135,8 +138,11 @@ import {ReportsPage} from '../reports/reports';
           this.purchase_rate = data[0].purchaserate;
           this.sale_rate = data[0].salerate;
           this.quatity = data[0].totalquantity;
+          this.discount = data[0].totalDiscount;
+          this.shipment = data[0].totalShipment;
+          this.tax = data[0].totalTax;
           this.navCtrl.push(ProfitLossReportPage,{expenseamount:this.expenseamount,purchaserate:this.purchase_rate,salerate:this.sale_rate,quantity:this.quatity,fromdate:this.fromdate,todate:this.todate,itemname:this.item_name
-          ,startdate:this.fromdate,enddate:this.todate});
+          ,startdate:this.fromdate,enddate:this.todate,discount:this.discount,shiping:this.shipment,tax:this.tax});
         }
         }, error => {
         console.log("Oooops!");

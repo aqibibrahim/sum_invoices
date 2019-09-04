@@ -18,7 +18,7 @@
         </button>
         </ion-buttons>
       <ion-buttons end>
-          <button ion-button (click)="savedata()" [disabled]="companyname?.length > 15 || !companyname || !email ||phone?.length > 11 || !phone ||mobile?.length > 15 || !mobile || !billingaddress || !shippingaddress">
+          <button ion-button (click)="savedata()" [disabled]="companyname?.length > 15 || !companyname || !email ||phone?.length > 13 || !phone ||mobile?.length > 15 || !mobile || !billingaddress || !shippingaddress">
           Save
         </button>
         </ion-buttons>
@@ -37,9 +37,9 @@
                 <ion-select [(ngModel)]="gaming" interface="popover">
                     <ion-option value="dr">Dr.</ion-option>
                     <ion-option value="Mr">Mr.</ion-option>
+                    <ion-option value="Ms">Ms.</ion-option>
                     <ion-option value="Mrs">Mrs.</ion-option>
                     <ion-option value="Miss">Miss.</ion-option>
-                    <ion-option value="Ms">Ms.</ion-option>
                   </ion-select>
                 </ion-item>
 
@@ -84,7 +84,7 @@
                              <ion-row>
                             <ion-col>
                                 <ion-item style="border-bottom: 0.3px solid">
-                                    <ion-input type="number" placeholder="Work Phone." [(ngModel)]="phone" value="{{this.contactnumber}}"></ion-input>
+                                    <ion-input type="number" placeholder="Work Phone." [(ngModel)]="phone"></ion-input>
                               </ion-item>
                               <p style="color:red" *ngIf="phone?.length > 11">
                                 Max 11 digit Number
@@ -95,7 +95,7 @@
                             </ion-col>
                             <ion-col>
                               <ion-item style="border-bottom: 0.3px solid">
-                                <ion-input type="number" placeholder="Mobile" [(ngModel)]="mobile"></ion-input>
+                                <ion-input type="number" placeholder="Mobile" [(ngModel)]="mobile"  value={{this.contactnumber}}>{{this.contactnumber}}</ion-input>
                               </ion-item>
                               <p style="color:red" *ngIf="mobile?.length == 15">
                                 Max 15 digit Number

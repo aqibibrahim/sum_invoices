@@ -137,23 +137,6 @@
                     </button>
               </ion-col>
             </ion-row>
-            <ion-row style="border-bottom: 1px solid lightgray">
-              <ion-col col-10>
-                  <ion-list>
-                      <ion-item >
-                          <ion-label>Tax</ion-label>
-                          <ion-select #S interface="popover" class="selector" [(ngModel)]="taxname" ionCancel="onCancel()" okText="Ok" (ionChange)="ontaxChange()" >
-                            <ion-option *ngFor="let tax of taxvalue" [value] = "tax" class="option" text-wrap>{{tax.tax_name}}</ion-option>
-                          </ion-select>
-                        </ion-item>
-                </ion-list>
-              </ion-col>
-              <ion-col col-2>
-                  <button ion-button icon-only clear (click)="opentax()">
-                      <ion-icon ios="ios-add-circle" md="md-add-circle" style="color: coral;"></ion-icon>
-                    </button>
-              </ion-col>
-            </ion-row>
             <ion-row>
                 <ion-col >
                     <ion-item style="border-bottom: 1px solid grey">
@@ -165,78 +148,138 @@
                     <ion-item style="border-bottom: 1px solid grey">
                         <ion-label floating>Rate</ion-label>
                         <!-- <ion-input type="number" value="{{this.value_rate}}" name="rate" [readonly]="isReadonly()" [(ngModel)]="rate" ></ion-input> -->
-                        <ion-input type="number" value="{{this.value_rate1}}" name="rate" [(ngModel)]="rate" [readonly]="isReadonly()"></ion-input>
+                        <ion-input type="number" value="{{this.value_rate}}" name="rate" [(ngModel)]="rate" [readonly]="isReadonly()"></ion-input>
                       </ion-item>
                 </ion-col>
               </ion-row> 
-              
-                <!-- <button ion-button icon-end clear full (click)='adlineitem()' style="background-color: transparent !important;">
-                    Add Line Item
-                    <ion-icon name="add"></ion-icon>
-                  </button> -->
-          
-                  <ion-item>
-
-                     
-                   
-                      <ion-row style="border-bottom: 1px solid lightgrey; height: 33.33%">
-                          <ion-col col-6>
-                              <ion-item >
-                                <h3 >SubTotal</h3>
-                                </ion-item>
-                        </ion-col>
-                        <ion-col col-5>
-                          <ion-item>
-                              <ion-input type="number" value="{{this.value_rate}}" [(ngModel)]="amount_total" [readonly]="isReadonly()"></ion-input>
-                            </ion-item>
-                      </ion-col>
-                    </ion-row>
+              <ion-row>
+                <ion-col col-6>
+                      <ion-item >
+                        <h4>Total Price</h4>
+                       
+                        </ion-item>
+                </ion-col>
+                <ion-col col-6>
+                <ion-item style="border-bottom: 1px solid lightgrey">
+                        <ion-input type="number" value={{this.totalprice}} style="text-align: right" [readonly]="isReadonly()"></ion-input>
+                
+                      </ion-item>
+                </ion-col>
+                
+              </ion-row>
+              <ion-row>
+                <ion-col col-6>
+                      <ion-item >
+                        <h4>Discount %</h4>
+                       
+                        </ion-item>
+                </ion-col>
+                <ion-col col-6>
+                <ion-item style="border-bottom: 1px solid lightgrey">
+                        <ion-input type="number" [(ngModel)]="discountprice" style="text-align: right" (ionChange)="onInputTime()"></ion-input>
+                
+                      </ion-item>
+                </ion-col>
+                
+              </ion-row>
               <ion-row>
                   <ion-col col-6>
                         <ion-item >
-                          <h4>Discount %</h4>
+                          <h4>Discount Price</h4>
                          
                           </ion-item>
                   </ion-col>
                   <ion-col col-6>
                   <ion-item style="border-bottom: 1px solid lightgrey">
-                          <ion-input type="number" placeholder="Discount" [(ngModel)]="discountprice" style="text-align: right" (input)='onInputTime($event.target.value)'></ion-input>
-                        </ion-item>
+                      <ion-input type="number" placeholder="Discount" value={{this.discountedprice}} style="text-align: right" [readonly]="isReadonly()"></ion-input>        
+                  </ion-item>
                   </ion-col>
                   
                 </ion-row>
 
-                <ion-row>
-                    <ion-col col-6>
-                          <ion-item >
-                            <h4>Shipping</h4>
-                           
-                            </ion-item>
-                    </ion-col>
-                    <ion-col col-6>
-                    <ion-item style="border-bottom: 1px solid lightgrey">
-                            <ion-input type="number" placeholder="Shipping" [(ngModel)]="shippingprice" style="text-align: right" (input)='onShipping($event.target.value)'></ion-input>
-                          </ion-item>
-                    </ion-col>
-                    
-                  </ion-row>
-
-                  
-               <ion-row>
-                        <ion-col col-6>
-                              <ion-item >
-                                <h3>Total</h3>
-                               
-                                </ion-item>
-                        </ion-col>
-                        <ion-col col-6>
-                        <ion-item>
-                                <ion-input type="number" value="{{this.gentotal}}" [(ngModel)]="total" style="text-align: right" [readonly]="isReadonly()"></ion-input>
-                              </ion-item>
-                        </ion-col>
-                        
-                      </ion-row>
+              
+              <ion-row style="border-bottom: 1px solid lightgrey; height: 33.33%">
+                <ion-col col-6>
+                    <ion-item >
+                      <h3 >SubTotal</h3>
+                      </ion-item>
+              </ion-col>
+              <ion-col col-5>
+                <ion-item>
+                    <ion-input type="number" value="{{this.subtotal}}" [(ngModel)]="amount_total" [readonly]="isReadonly()"></ion-input>
                   </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-6>
+                  <ion-item >
+                    <h4>Shipping</h4>
+                   
+                    </ion-item>
+            </ion-col>
+            <ion-col col-6>
+            <ion-item style="border-bottom: 1px solid lightgrey">
+                    <ion-input type="number" placeholder="Shipping" [(ngModel)]="shippingprice" style="text-align: right" (input)='onShipping($event.target.value)'></ion-input>
+                  </ion-item>
+            </ion-col>
+            
+          </ion-row>
+          <ion-row style="border-bottom: 1px solid lightgray">
+            <ion-col col-10>
+                <ion-list>
+                    <ion-item >
+                        <ion-label>Tax</ion-label>
+                        <ion-select #S interface="popover" class="selector" [(ngModel)]="taxname" ionCancel="onCancel()" okText="Ok" (ionChange)="ontaxChange()" >
+                          <ion-option *ngFor="let tax of taxvalue" [value] = "tax" class="option" text-wrap>{{tax.tax_name}}</ion-option>
+                        </ion-select>
+                      </ion-item>
+              </ion-list>
+            </ion-col>
+            <ion-col col-2>
+                <button ion-button icon-only clear (click)="opentax()">
+                    <ion-icon ios="ios-add-circle" md="md-add-circle" style="color: coral;"></ion-icon>
+                  </button>
+            </ion-col>
+          </ion-row> 
+          <ion-row>
+              <ion-col col-6>
+                    <ion-item >
+                      <h4>Tax Price</h4>
+                     
+                      </ion-item>
+              </ion-col>
+              <ion-col col-6>
+              <ion-item style="border-bottom: 1px solid lightgrey">
+                      <ion-input type="number" style="text-align: right" value="{{this.totalper}}" [readonly]="isReadonly()"></ion-input>
+                    </ion-item>
+              </ion-col>
+              
+            </ion-row>
+          <ion-row>
+            <ion-col col-6>
+                  <ion-item >
+                    <h3>Total</h3>
+                   
+                    </ion-item>
+            </ion-col>
+            <ion-col col-6>
+            <ion-item>
+                    <ion-input type="number" value="{{this.gentotal}}" [(ngModel)]="total" style="text-align: right" [readonly]="isReadonly()"></ion-input>
+                  </ion-item>
+            </ion-col>
+            
+          </ion-row>
+          
+                  <!-- <ion-item>
+
+                     
+                   
+                      
+           
+                
+                
+              
+                  </ion-item> -->
 
               </ion-card-content>
           

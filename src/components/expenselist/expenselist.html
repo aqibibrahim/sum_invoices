@@ -1,0 +1,25 @@
+<ion-list class="expenselist">
+  <ion-list-header no-lines no-padding style="border-radius: 5px">
+    <button ion-item detail-none
+            [style.background]="textColor"
+            (click)="toggleAccordion()"
+            class="accordion-header"
+            [class.active]="expanded">
+            <label item-right class="statuscolor">{{ date  | date: 'yyyy/MM/dd' }}</label>  
+        <ion-icon
+          item-right
+          name="ios-arrow-forward"
+          class="ionicicons"
+          >
+        </ion-icon>
+        {{ title }}
+     
+    </button>
+    <section #accordionContent
+             [style.background]="contentColor"
+             [class.active]="expanded"
+             class="accordion-content">
+      <ng-content></ng-content>
+    </section>
+  </ion-list-header>
+</ion-list>

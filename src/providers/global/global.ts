@@ -17,6 +17,7 @@ user_email:any;
 user_name:any;
 userid:any;
 mailstatus:any;
+initialcash = 0;
   constructor(public http: Http,public loadingCtrl: LoadingController, public app: App,public tostctrl: ToastController, public alrtctrl:AlertController) {
     console.log('Hello GlobalProvider Provider');
 
@@ -41,7 +42,7 @@ login(email,password,status){
            this.user_email = data[0].email;
            this.user_name = data[0].user_name;
            this.userid = data[0]._id;
-          
+            this.initialcash = data[0].intial_cash;
           let toast = this.tostctrl.create({
                 message:'Login Successfully',
                 duration:2000

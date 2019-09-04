@@ -25,6 +25,7 @@ import { ModalController } from 'ionic-angular';
 import {Http ,Response} from '@angular/http';
 import { LoginPage } from '../login/login';
 import { Network } from '@ionic-native/network';
+import { AppMinimize } from '@ionic-native/app-minimize';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -38,7 +39,7 @@ export class HomePage {
   userid:any;
   nativename:any;
   // books: Observable<any[]>;
-   constructor(public navCtrl: NavController, private network: Network,public http:Http ,public modalCtrl: ModalController,private navparm:NavParams,public app:App,public alertCtrl:AlertController,public global:GlobalProvider,private plt: Platform, private file: File, private fileOpener: FileOpener, private storage: Storage,private contacts: Contacts) {
+   constructor(public navCtrl: NavController, private appMinimize: AppMinimize,private network: Network,public http:Http ,public modalCtrl: ModalController,private navparm:NavParams,public app:App,public alertCtrl:AlertController,public global:GlobalProvider,private plt: Platform, private file: File, private fileOpener: FileOpener, private storage: Storage,private contacts: Contacts) {
     // this.books = afDB.list('/Books/Books').valueChanges();
     
     this.companyname = this.global.company_name;
@@ -80,6 +81,7 @@ export class HomePage {
                     text: 'Yes',
                     handler: () => {
                       this.plt.exitApp();
+                      
                     }
                 }]
             });

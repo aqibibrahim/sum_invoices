@@ -25,6 +25,7 @@ export class ItemPage {
   @ViewChild(Nav) nav: Nav;
   @ViewChild("cc") cardContent : any;
   selectedItem: any;
+  alert:any;
   items: any;
   itemssort:any;
   accordianExpanded = false;
@@ -44,18 +45,18 @@ export class ItemPage {
     this.http.get('https://sum-finance-latest2.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
       console.log(data);
       if(data.length == 0){
-        const alert = this.alertCtrl.create({
+        this.alert = this.alertCtrl.create({
           title: 'Oh Snap!',
           message: 'We do not have any Item for this company',
           buttons: [{
-              text: 'Please first add your Item',
+              text: 'Please add your First Item',
               handler: () => {
                this.navCtrl.push(CreateItemsPage);
               }
           }],
           cssClass: 'alertDanger'
       });
-      alert.present();
+      this.alert.present();
       
       }
       data.sort((a, b) => a.item_name.localeCompare(b.item_name))
@@ -65,6 +66,8 @@ export class ItemPage {
          console.log(this.items);
         //this.itemssort = this.items.
        });
+       //this.platform.registerBackButtonAction(()=>this.myHandlerFunction());
+    
 }
 ngOnInit(){
   console.log(this.cardContent);
@@ -76,37 +79,40 @@ ionViewDidEnter() {
     data.sort((a, b) => a.item_name.localeCompare(b.item_name))
     console.log(data);
        this.items = data;
-       
      });
      this.platform.registerBackButtonAction(() => {
-      // Catches the active view
-      let nav = this.app.getActiveNavs()[0];
-      let activeView = nav.getActive();                
-      // Checks if can go back before show up the alert
-      if(activeView.name === 'ItemPage') {
-          if (nav.canGoBack()){
-            this.navCtrl.push(HomePage);
-          } else {
-            this.navCtrl.push(HomePage);
-          }
+      let nav = this.app._appRoot._getActivePortal() || this.app.getActiveNav();
+      let activeView = nav.getActive();
+  
+      if (activeView != null) {
+        if (nav.canGoBack()) {
+          this.navCtrl.push(HomePage);
+        } else if(activeView.isOverlay) {
+          activeView.dismiss();
+        } else {
+          this.navCtrl.push(HomePage);
+          //this.closeApp();
+        }
       }
-  });
+    });
 }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ItemPage');
     this.platform.registerBackButtonAction(() => {
-      // Catches the active view
-      let nav = this.app.getActiveNavs()[0];
-      let activeView = nav.getActive();                
-      // Checks if can go back before show up the alert
-      if(activeView.name === 'ItemPage') {
-          if (nav.canGoBack()){
-              nav.pop();
-          } else {
-            this.navCtrl.push(HomePage);
-          }
+      let nav = this.app._appRoot._getActivePortal() || this.app.getActiveNav();
+      let activeView = nav.getActive();
+  
+      if (activeView != null) {
+        if (nav.canGoBack()) {
+          this.navCtrl.push(HomePage);
+        } else if(activeView.isOverlay) {
+          activeView.dismiss();
+        } else {
+          this.navCtrl.push(HomePage);
+          //this.closeApp();
+        }
       }
-  });
+    });
   }
   
   createcitems(){

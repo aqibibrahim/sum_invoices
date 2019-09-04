@@ -11,6 +11,7 @@ import {GlobalProvider} from '../../providers/global/global';
 import {CheckemailProvider} from '../../providers/checkemail/checkemail';
 import {HomePage} from '../home/home';
 import { App } from 'ionic-angular';
+import { Network } from '@ionic-native/network';
 /**
  * Generated class for the CreateContactPage page.
  *
@@ -53,148 +54,57 @@ export class CreateContactPage {
 
   contactdisplayname:any;
   contactemail:any;
-  contactnumber:any;
+  contactnumber=0;
   contactcompany:any;
   contactaddress:any;
-  
-  constructor(public navCtrl: NavController, public checkemail:CheckemailProvider,private ionicApp: IonicApp,public platform: Platform,public app: App,public global:GlobalProvider,public navParams: NavParams, private sms: SMS,private alertCtrl: AlertController,private contacts: Contacts,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+  alert:any;
+  constructor(public navCtrl: NavController, public network:Network,public checkemail:CheckemailProvider,private ionicApp: IonicApp,public platform: Platform,public app: App,public global:GlobalProvider,public navParams: NavParams, private sms: SMS,private alertCtrl: AlertController,private contacts: Contacts,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     //this.data.username = '';
     this.contactList = contacts;
-    this.platform.registerBackButtonAction(() => {
-      // Catches the active view
-      let nav = this.app.getActiveNavs()[0];
-      let activeView = nav.getActive();  
-      let activePortal = this.ionicApp._loadingPortal.getActive() ||
-      this.ionicApp._modalPortal.getActive() ||
-      this.ionicApp._toastPortal.getActive() ||
-      this.ionicApp._overlayPortal.getActive();
-
-    if (activePortal) {
-      activePortal.dismiss();
-    }
-    else {
-      if(activeView.name === 'CreateContactPage') {
-        if (nav.canGoBack()){
-            nav.pop();
-        } else {
-            const alert = this.alertCtrl.create({
-                title: 'Exit',
-                message: 'Want to Exit App?',
-                buttons: [{
-                    text: 'Cancel',
-                    role: 'cancel',
-                    handler: () => {
-                      this.nav.setRoot('HomePage');
-                    }
-                },{
-                    text: 'OK',
-                    handler: () => {
-                      this.platform.exitApp();
-                    }
-                }]
-            });
-            //alert.present();
-        }
-    } else {
-      this.nav.setRoot('HomePage');
-      }
-    }
-   
-  });
+  
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CreateContactPage');
     this.platform.registerBackButtonAction(() => {
-      // Catches the active view
-      let nav = this.app.getActiveNavs()[0];
-      let activeView = nav.getActive();  
-      let activePortal = this.ionicApp._loadingPortal.getActive() ||
-      this.ionicApp._modalPortal.getActive() ||
-      this.ionicApp._toastPortal.getActive() ||
-      this.ionicApp._overlayPortal.getActive();
-
-    if (activePortal) {
-      activePortal.dismiss();
-    }
-    else {
-      if(activeView.name === 'CreateContactPage') {
-        if (nav.canGoBack()){
-            nav.pop();
+      let nav = this.app._appRoot._getActivePortal() || this.app.getActiveNav();
+      let activeView = nav.getActive();
+  
+      if (activeView != null) {
+        if (nav.canGoBack()) {
+          nav.pop();
+        } else if(activeView.isOverlay) {
+          activeView.dismiss();
         } else {
-            const alert = this.alertCtrl.create({
-                title: 'Exit',
-                message: 'Want to Exit App?',
-                buttons: [{
-                    text: 'Cancel',
-                    role: 'cancel',
-                    handler: () => {
-                      this.nav.setRoot('HomePage');
-                    }
-                },{
-                    text: 'OK',
-                    handler: () => {
-                      this.platform.exitApp();
-                    }
-                }]
-            });
-            //alert.present();
+          this.navCtrl.push(HomePage);
+          //this.closeApp();
         }
-    } else {
-      this.nav.setRoot('HomePage');
-      }
-    }
-   
-  });
+     
+      }  
+    
+});
+  
   }
   ionViewWillEnter(){
     console.log('ionViewDidLoad CreateContactPage');
     this.platform.registerBackButtonAction(() => {
-      // Catches the active view
-      let nav = this.app.getActiveNavs()[0];
-      let activeView = nav.getActive();  
-      let activePortal = this.ionicApp._loadingPortal.getActive() ||
-      this.ionicApp._modalPortal.getActive() ||
-      this.ionicApp._toastPortal.getActive() ||
-      this.ionicApp._overlayPortal.getActive();
-
-    if (activePortal) {
-      activePortal.dismiss();
-    }
-    else {
-      if(activeView.name === 'CreateContactPage') {
-        if (nav.canGoBack()){
-            nav.pop();
+      let nav = this.app._appRoot._getActivePortal() || this.app.getActiveNav();
+      let activeView = nav.getActive();
+  
+      if (activeView != null) {
+        if (nav.canGoBack()) {
+          nav.pop();
+        } else if(activeView.isOverlay) {
+          activeView.dismiss();
         } else {
-            const alert = this.alertCtrl.create({
-                title: 'Exit',
-                message: 'Want to Exit App?',
-                buttons: [{
-                    text: 'Cancel',
-                    role: 'cancel',
-                    handler: () => {
-                      //this.nav.setRoot('HomePage');
-                    }
-                },{
-                    text: 'OK',
-                    handler: () => {
-                      this.platform.exitApp();
-                    }
-                }]
-            });
-            //alert.present();
+          this.navCtrl.push(HomePage);
+          //this.closeApp();
         }
-    } else {
-      this.navCtrl.push(HomePage);
-      }
-    }
-        
-    
      
-      // let activeView = nav.getActive();                
-      // // Checks if can go back before show up the alert
-      
-  });
+      }  
+    
+});
+ 
   }
   openshippingpage(){
     this.navCtrl.push(ShippingPage);
@@ -206,29 +116,44 @@ export class CreateContactPage {
    
   this.contactList.pickContact().then((contact)=>{
     console.log(contact);
-   
+    console.log(contact.phoneNumbers[0].value);
     this.contactdisplayname = contact.displayName;
-    this.contactemail = contact.emails;
-    if(contact.organizations[0].name == ""){
+    this.contactemail = contact.emails[0].value;
+    if(contact.organizations[0].name == null){
       this.contactcompany == "";  
     }
     else{
       this.contactcompany = contact.organizations[0].name;
     }
-    if(contact.phoneNumbers[0].value == ""){
-      this.contactnumber == ""
+    if(contact.phoneNumbers[0].value == null){
+      this.contactnumber == 0
     }
     else{
-      this.contactnumber = contact.phoneNumbers[0].value;
+      this.contactnumber = +contact.phoneNumbers[0].value;
     }
     
-    this.contactaddress = contact.addresses;
+    this.contactaddress = contact.addresses[0].streetAddress;
     
 }),(error) =>{
     console.log(error);
     }
   }
   savedata(){
+    if(this.network.type === 'none'){
+      this.alert = this.alertCtrl.create({
+        title: 'Alert!',
+        message: 'There is no Internet connection available, please proceed again when you have a connnection',
+        buttons: [{
+            text: 'OK',
+            handler: () => {
+             this.alert.dismiss();
+            }
+        }],
+        cssClass: 'alertDanger'
+    });
+    this.alert.present();
+  }
+  else{
     if(this.sexe == undefined){
       alert("Please select customer type")
     }
@@ -237,6 +162,7 @@ export class CreateContactPage {
       this.checkemail.checkemail(this.email,this.gaming,this.firstname,this.lastname,this.companyname,this.contactdisplay,this.phone,this.mobile,this.sexe,this.currency
         ,this.payment,this.language,this.billingaddress,this.shippingaddress);
       }
-       }
+  }
+    }
       
 }

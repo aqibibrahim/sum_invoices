@@ -20,8 +20,10 @@ import { App } from 'ionic-angular';
 export class ReceivablePage {
   @ViewChild(Nav) nav: Nav;
   @ViewChild(Navbar) navBar: Navbar;
-  public sum : number = 0;
+  //public sum : number = 0;
+  sum:any;
   invoices:any;
+  alert:any;
   fixedamount:any;
   fixedamountarray = [];
   constructor(public navCtrl: NavController, public navParams: NavParams,public app: App,public alertCtrl:AlertController,public global:GlobalProvider,private plt: Platform, public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
@@ -33,19 +35,21 @@ export class ReceivablePage {
     this.http.get('https://sum-invoice-app.herokuapp.com/invoice/status/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
       console.log(data);  
       if(data.length == 0){
-        const alert = this.alertCtrl.create({
+        this.sum = 0;
+        this.alert = this.alertCtrl.create({
           title: 'Oh Snap!',
-          message: 'We do not have any Item for this company',
+          message: 'We do not have any Invoice for this company',
           buttons: [{
               text: 'OK',
               handler: () => {
-               alert.dismiss();
+               this.alert.dismiss();
               }
           }],
           cssClass: 'alertDanger'
       });
-      alert.present();
-    
+      this.alert.present();
+      }
+   
         this.invoices = data 
         this.sum = 0;
       for(var i=0;i<this.invoices.length;i++){
@@ -59,34 +63,46 @@ export class ReceivablePage {
       }
       console.log(this.sum);
         loader.dismiss();
-    }
-        });
-  }
-
+    });
+        this.plt.registerBackButtonAction(() => {
+          let nav = this.app._appRoot._getActivePortal() || this.app.getActiveNav();
+          let activeView = nav.getActive();
+      
+          if (activeView != null) {
+            if (nav.canGoBack()) {
+              this.navCtrl.push(HomePage);
+            } else if(activeView.isOverlay) {
+              activeView.dismiss();
+            } else {
+              this.navCtrl.push(HomePage);
+              //this.closeApp();
+            }
+         
+          }  
+        
+  });
+}
   ionViewDidLoad() {
     console.log('ionViewDidLoad ReceivablePage');
     this.plt.registerBackButtonAction(() => {
-      // Catches the active view
-      let nav = this.app.getActiveNavs()[0];
-      let activeView = nav.getActive();                
-      // Checks if can go back before show up the alert
-      if(activeView.name === 'ReceivablePage') {
-          if (nav.canGoBack()){
-              nav.pop();
-          } else {
-              this.navCtrl.push(HomePage);
-              
-          }
+      let nav = this.app._appRoot._getActivePortal() || this.app.getActiveNav();
+      let activeView = nav.getActive();
+  
+      if (activeView != null) {
+        if (nav.canGoBack()) {
+          this.navCtrl.push(HomePage);
+        } else if(activeView.isOverlay) {
+          activeView.dismiss();
+        } else {
+          this.navCtrl.push(HomePage);
+          //this.closeApp();
+        }
       }
-  });
-  this.setBackButtonAction();
-  }
-  setBackButtonAction(){
+    });
     this.navBar.backButtonClick = () => {
-    //alert("Where you want to go");
-    this.navCtrl.push(HomePage);
-     //this.navCtrl.pop()
-    }
+      //alert("Where you want to go");
+      this.navCtrl.push(HomePage);
+       //this.navCtrl.pop()
+      }
   }
-
 }

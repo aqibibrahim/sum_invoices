@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,LoadingController, ToastController,AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,LoadingController, ToastController,AlertController, Platform } from 'ionic-angular';
 import {Http ,Response } from '@angular/http';
 import {HomePage} from '../home/home';
 import {GlobalProvider} from '../../providers/global/global';
 import {LoginPage} from '../login/login';
-import {SignupProvider} from '../../providers/signup/signup';
+import { Network } from '@ionic-native/network';
+// import {SignupProvider} from '../../providers/signup/signup';
 /**
  * Generated class for the TaxPage page.
  *
@@ -20,14 +21,42 @@ import {SignupProvider} from '../../providers/signup/signup';
 export class CreateTaxPage {
   taxname: string;
   taxvalue: any;
-  constructor(public navCtrl: NavController, public alertCtrl:AlertController,private global: SignupProvider, public navParams: NavParams,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+  userid:any;
+  alert:any;
+  constructor(public navCtrl: NavController, public network:Network,public alertCtrl:AlertController, public platform:Platform,public navParams: NavParams,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+  this.userid = this.navParams.get('userid');
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad TaxPage');
+    console.log('ionViewDidLoad CreateYourCompanyPage');
+    this.platform.registerBackButtonAction(function (event) {
+      console.log("BackButton Pressed")
+      event.preventDefault();
+      
+  }, 100);
   }
+  ionViewDidEnter() {
+    this.platform.registerBackButtonAction(function (event) {
+      console.log("BackButton Pressed")
+      event.preventDefault();
+      
+  }, 100);
+}
   savedata(){ 
-
+    if(this.network.type === 'none'){
+      this.alert = this.alertCtrl.create({
+        title: 'Alert!',
+        message: 'There is no Internet connection available, please proceed again when you have a connnection',
+        buttons: [{
+            text: 'OK',
+            handler: () => {
+             this.alert.dismiss();
+            }
+        }],
+        cssClass: 'alertDanger'
+    });
+    this.alert.present();
+  }else{
     if(this.taxname == undefined || this.taxvalue == undefined || this.taxvalue == 0){
 
       const alert = this.alertCtrl.create({
@@ -52,7 +81,7 @@ export class CreateTaxPage {
       let data = {
         tax_name:this.taxname,
         tax_precentage: this.taxvalue,
-        userId:this.global.userid
+        userId:this.userid
     };
       //console.log(this.data.username);
       this.http.post('https://sum-invoice-app.herokuapp.com/tax/create', data)
@@ -60,7 +89,7 @@ export class CreateTaxPage {
             console.log('POST Response:', response);
             loader.dismiss();
             let toast = this.tostctrl.create({
-              message:'Data Save',
+              message:'Add new Tax in your system',
               duration:2000
             });
             toast.present();
@@ -75,8 +104,8 @@ export class CreateTaxPage {
           console.log("Oooops!");
           });
     }
-  
-        }
+  }
+    }
         login(){
           this.navCtrl.push(LoginPage);
         }

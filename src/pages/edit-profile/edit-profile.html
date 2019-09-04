@@ -48,6 +48,7 @@
           <span style="color: red" ion-text *ngIf="myForm.get('email').hasError('email')">It is not an email</span>
         </p>
       </form>
+      <ion-auto-complete [dataProvider]="completeTestService" [(ngModel)]="country" placeholder="Type to search Country"></ion-auto-complete>
       <!-- <ion-list>
           <ion-item>
               <ion-label>Choose Country</ion-label>

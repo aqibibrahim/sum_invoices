@@ -22,6 +22,7 @@ import { CreateContactPage } from '../create-contact/create-contact';
 import { CreateItemsPage } from '../create-items/create-items';
 import { CreateTaxPage } from '../create-tax/create-tax';
 import {CompanytaxPage} from '../companytax/companytax';
+
 /**
  * Generated class for the CreateInvoicesPage page.
  *
@@ -30,12 +31,26 @@ import {CompanytaxPage} from '../companytax/companytax';
  */
 
 @IonicPage()
+
 @Component({
   selector: 'page-create-invoices',
   templateUrl: 'create-invoices.html',
 })
 export class CreateInvoicesPage {
   @ViewChild(Nav) nav: Nav;
+  // Item Default variables
+    
+  quantity=0;
+  value_rate=0;
+  dst=0;
+  shp=0;
+  subtotal=0;
+  gentotal=0;
+  taxpercentage=0;
+  discountedprice=0;
+  totalper=0;
+  totalprice=0;
+
   registrationForm: FormGroup;
   public anArray:any=[];
 
@@ -45,7 +60,7 @@ export class CreateInvoicesPage {
   shippingprice:any;
   adjustmentprice:any;
   total:any;
-  subtotal:any;
+  
   amount_total:any;
   subamounttotall:any;
   purchase_rate:any;
@@ -53,8 +68,7 @@ export class CreateInvoicesPage {
   item_id:any;
   status = "Pending"
   //tax:any;
-  dst:any;
-  shp:any;
+  
   adj:any;
   customer_id:any;
   email:any;
@@ -67,6 +81,7 @@ export class CreateInvoicesPage {
   rat:any;
   tax:any;
   taxtotal:any;
+  invoiceno:any;
   x:any;
   items:any;
   items1:any;
@@ -92,16 +107,16 @@ export class CreateInvoicesPage {
 
         itemarray=[];
         description:string;
-        quantity:any;
+        
         rate:string;
         
-        itemname1:string;
+        itemname1:any;
         
         taxvalue:any;
         taxinput:any;
         key:string;
         value_item:any;
-        value_rate:any;
+        
         value_desc:any;
         taxrate:any;
         finalrate:any;
@@ -129,24 +144,25 @@ export class CreateInvoicesPage {
        * 
        
        */
-      taxpercentage:any;
+      //taxpercentage:any;
       tax_name:any;
       tax_perc:any;
-
+      taxcalculatedvalue:any;
+      priceqtytotal:any;
 
   taxname:any;
   billing_address:any;
   shipping_address:any;
   discamount:any;
   fixeddistamount:any;
-  gentotal:any;
+  
 
   gaming:any;
   invoicedate:any;
   duedate:any;
   userid:any;
   contact_sal:any;
-  tax_precentage:any;
+ 
   letterObj = {
     to: '',
     from: '',
@@ -155,9 +171,13 @@ export class CreateInvoicesPage {
   Isshowing =false;
   pdfObj = null;
   pdfnumber =2;
+ 
+  discprice:any;
+  pricetotal:any;
   constructor(public navCtrl: NavController,private ionicApp: IonicApp,public platform: Platform,public alertCtrl:AlertController, public app: App,private nativeStorage: NativeStorage, public global:GlobalProvider,private sms: SMS,public http:Http,public loadingCtrl: LoadingController, public tostctrl: ToastController, private storage: Storage,public navParams: NavParams,public emailComposer: EmailComposer, private plt: Platform, private file: File, private fileOpener: FileOpener) {
     // this.value=navParams.get('item_name');
     // console.log(this.value);
+   
     this.registrationForm = new FormGroup({
       invoice: new FormControl('', [Validators.required,Validators.minLength(1
         )]),
@@ -201,99 +221,29 @@ export class CreateInvoicesPage {
         console.log(data);
            this.taxvalue = data 
          });
-         this.platform.registerBackButtonAction(() => {
-          // Catches the active view
-          let nav = this.app.getActiveNavs()[0];
-          let activeView = nav.getActive();                
-          // Checks if can go back before show up the alert
-    
-          let activePortal = this.ionicApp._loadingPortal.getActive() ||
-          this.ionicApp._modalPortal.getActive() ||
-          this.ionicApp._toastPortal.getActive() ||
-          this.ionicApp._overlayPortal.getActive();
-    
-        if (activePortal) {
-          activePortal.dismiss();
-          return;
-        }
-        else {
-          if(activeView.name === 'CreateInvoicesPage') {
-            if (nav.canGoBack()){
-                nav.pop();
-            } else {
-                const alert = this.alertCtrl.create({
-                    title: 'Exit',
-                    message: 'Want to Exit App?',
-                    buttons: [{
-                        text: 'Cancel',
-                        role: 'cancel',
-                        handler: () => {
-                          this.nav.setRoot('HomePage');
-                        }
-                    },{
-                        text: 'OK',
-                        handler: () => {
-                          
-                          this.platform.exitApp();
-                        }
-                    }]
-                });
-                alert.present();
-            }
-        }else {
-          this.nav.setRoot('HomePage');
-          }
-        }
-          
-      });
-    
+         
   }
    
   ionViewDidLoad() {
     this.platform.registerBackButtonAction(() => {
-      // Catches the active view
-      let nav = this.app.getActiveNavs()[0];
-      let activeView = nav.getActive();                
-      // Checks if can go back before show up the alert
-
-      let activePortal = this.ionicApp._loadingPortal.getActive() ||
-      this.ionicApp._modalPortal.getActive() ||
-      this.ionicApp._toastPortal.getActive() ||
-      this.ionicApp._overlayPortal.getActive();
-
-    if (activePortal) {
-      activePortal.dismiss();
-    }
-    else {
-      if(activeView.name === 'CreateInvoicesPage') {
-        if (nav.canGoBack()){
-            nav.pop();
+      let nav = this.app._appRoot._getActivePortal() || this.app.getActiveNav();
+      let activeView = nav.getActive();
+      let currentRootPage = activeView.component.name;
+      console.log(currentRootPage);
+      if (activeView != null) {
+        if (nav.canGoBack()) {
+          this.navCtrl.push(HomePage);
+        } else if(activeView.isOverlay) {
+          activeView.dismiss();
         } else {
-            const alert = this.alertCtrl.create({
-                title: 'Exit',
-                message: 'Want to Exit App?',
-                buttons: [{
-                    text: 'Cancel',
-                    role: 'cancel',
-                    handler: () => {
-                      this.nav.setRoot('HomePage');
-                    }
-                },{
-                    text: 'OK',
-                    handler: () => {
-                      
-                      this.platform.exitApp();
-                    }
-                }]
-            });
-            alert.present();
+          this.navCtrl.push(HomePage);
+          //this.closeApp();
         }
-    }else {
-      this.nav.setRoot('HomePage');
+     
       }
-    }
       
-  });
+    
+      });
     console.log('ionViewDidLoad CreateInvoicesPage');
     console.log(this.input_name);
     
@@ -329,6 +279,10 @@ export class CreateInvoicesPage {
       console.log(data);
          this.items1 = data
        });
+       this.http.get('https://sum-invoice-app.herokuapp.com/tax/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+        console.log(data);
+           this.taxvalue = data 
+         });
   this.nativeinvoice = this.navParams.get('add_inno');
   this.nativeorder = this.navParams.get('add_orno');
   this.nativeindate = this.navParams.get('add_indate');
@@ -336,48 +290,21 @@ export class CreateInvoicesPage {
     this.nativeval = this.navParams.get('valuesel');
   console.log(this.nativeindate,this.nativeduedate)
   this.platform.registerBackButtonAction(() => {
-    // Catches the active view
-    let nav = this.app.getActiveNavs()[0];
-    let activeView = nav.getActive();                
-    // Checks if can go back before show up the alert
+    let nav = this.app._appRoot._getActivePortal() || this.app.getActiveNav();
+    let activeView = nav.getActive();
 
-    let activePortal = this.ionicApp._loadingPortal.getActive() ||
-    this.ionicApp._modalPortal.getActive() ||
-    this.ionicApp._toastPortal.getActive() ||
-    this.ionicApp._overlayPortal.getActive();
-
-  if (activePortal) {
-    activePortal.dismiss();
-  }
-  else {
-    if(activeView.name === 'CreateInvoicesPage') {
-      if (nav.canGoBack()){
-          nav.pop();
+    if (activeView != null) {
+      if (nav.canGoBack()) {
+        this.navCtrl.push(HomePage);
+      } else if(activeView.isOverlay) {
+        activeView.dismiss();
       } else {
-          const alert = this.alertCtrl.create({
-              title: 'Exit',
-              message: 'Want to Exit App?',
-              buttons: [{
-                  text: 'Cancel',
-                  role: 'cancel',
-                  handler: () => {
-                    //this.nav.setRoot('HomePage');
-                  }
-              },{
-                  text: 'OK',
-                  handler: () => {
-                    
-                    this.platform.exitApp();
-                  }
-              }]
-          });
-          alert.present();
+        this.navCtrl.push(HomePage);
+        //this.closeApp();
       }
-  }else {
-    this.nav.setRoot('HomePage');
-    }
-  }
-    
+   
+    }  
+  
 });
   }
   opencontact(){
@@ -404,44 +331,21 @@ export class CreateInvoicesPage {
   ontaxChange(){
     console.log(this.taxname);
     console.log(this.taxname.tax_precentage);
-    this.tax_perc = this.taxname.tax_precentage;
     this.tax_name = this.taxname.tax_name;
-    this.taxpercentage = this.taxname.tax_precentage/100
-    var totalper = this.taxpercentage*this.amount_total;
-    var intpervalue = +this.amount_total;
-
-    this.gentotal = intpervalue + totalper;
-
+    this.tax_perc = this.taxname.tax_precentage;
+    this.taxpercentage = this.taxname.tax_precentage/100;
+    this.totalper = parseFloat((this.taxpercentage * this.subtotal).toFixed(2));
+    this.gentotal = parseFloat((((this.quantity * this.value_rate) - this.discountedprice) + this.shp + this.totalper).toFixed(2));
+  
 }
   opentax(){
     this.navCtrl.push(CompanytaxPage)
   }
-  onInputTime(data) : void {
-    console.log("onChangeTime to time: " + this.discountprice + ". Event data: " + data);  
-    this.dst = +this.discountprice;
-    this.discamount = (this.total/100)*this.dst;
-
-    this.fixeddistamount=this.discamount.toFixed(2);
-    //this.total = this.dst + this.subtotal;  
-    if(this.shp !== undefined && this.dst !== undefined){
-      this.total = this.shp + this.value_rate - this.fixeddistamount;  
-      
-    } 
-    else{
-      this.total =  this.total -this.fixeddistamount; 
-    }
-    this.gentotal = this.total.toFixed(2);
-  }
+  
   onShipping(data) : void {
     console.log("onChangeTime to time: " + this.shippingprice + ". Event data: " + data); 
     this.shp = +this.shippingprice
-    if(this.dst!== undefined && this.shp == undefined){
-      this.total = this.value_rate - this.fixeddistamount; 
-     
-    }else{
-      this.total = this.shp +this.value_rate - this.fixeddistamount;   
-    }
-    this.gentotal = this.total.toFixed(2);
+    this.gentotal = ((this.quantity * this.value_rate) - this.discountedprice) + this.shp + this.totalper
   }
   onAdjustment(data) : void {
     console.log("onChangeTime to time: " + this.adjustmentprice + ". Event data: " + data);
@@ -503,135 +407,110 @@ export class CreateInvoicesPage {
    }
 
    craetepdf(){
-    
     var docDefinition = {
 
-
-     content: [
-       { text: 'INVOICE#'+ this.invoice, style: 'header'},
-       { text: 'Date' + this.invoicedate, alignment: 'right'},
-
-       { text: 'From', style: 'subheader'},
-       this.global.company_name,
-       "this.shipping_address",
-       { text: 'To', style: 'subheader' },
-       this.gamingname,
-       this.email,
-        
-       { text: 'Invoice Date:', style: 'inoices', alignment: 'right' },
-       {text:this.invoicedate, alignment:'right'},
-       { text: 'Due Date:', style: 'inoices', alignment: 'right' },
-       {text:this.duedate, alignment:'right'},
-       { text: 'P.O #: '+this.order+'', style: 'inoices', alignment: 'right' },
-      //  {text:this.order_number, alignment:'right'},
+      content: [
+       { text:  this.global.company_name, style: 'compheader'},
+        { text: 'INVOICE# ' + this.invoiceno, style: 'invoiceheader'},
+        { text: 'Status: ' + this.status, style: 'header'},
+        { text: 'Date: ' + this.invoicedate, alignment: 'right'},
+    
+ 
+        { text: 'To', style: 'subheader' },
+        this.gamingname,
        
-
-       { text: 'Items', style: 'subheader'},
-       {
-           style: 'itemsTable',
-           table: {
-               widths: ['*', 75, 75,75],
-               body: [
-                   [ 
-                       { text: 'Item&Description', style: 'itemsTableHeader' },
-                       
-                       { text: 'Quantity', style: 'itemsTableHeader' },
-                       
-                       { text: 'Rate', style: 'itemsTableHeader' },
-                       { text: 'Amount', style: 'itemsTableHeader' },
-                       
-                   ],
-                   [this.itemname1,this.quantity,this.rate, this.total]
-               ]
-           }
-       },
-       {
-           style: 'totalsTable',
-           table: {
-               widths: ['*', 75,75,75,75],
-               body: [
-                   [
-                       'Subtotal',
-                       this.amount_total,
-                      
-                   ],
-                   [
-                       'Shipping',
-                       this.shippingprice,
-                   ],
-                   [
-                       'Adjustment',
-                       this.adjustmentprice
-                   ],
-                   [
-                     'Total',
-                      this.total
-                   ],
-                   [
-                     'Balance Due',
-                      this.total
-                   ]
-               ]
-           },
-           
-           layout: 'noBorders'
-       },
-       { text: 'Notes:', style: 'subheader'},
-       { text: 'Thanks for Your Business', style: 'subheader'},
-   ],
-     styles: {
-       header: {
-           fontSize: 20,
-           bold: true,
-           margin: [0, 0, 0, 10],
-           alignment: 'right'
-       },
-       subheader: {
-           fontSize: 16,
-           bold: true,
-           margin: [0, 20, 0, 5]
-       },
-       inoices: {
-        fontSize: 16,
-        bold: true,
-        margin: [0, 20, 0, 5]
-    },
-       
-       itemsTable: {
-           margin: [0, 5, 0, 15]
-       },
-       itemsTableHeader: {
-           bold: true,
-           fontSize: 13,
-           color: 'black',
-           
-       },
-       totalsTable: {
-          //margin: 2%,
+        { text: 'Items', style: 'subheader'},
+        {
+            style: 'itemsTable',
+            table: {
+                widths: ['*', 75, 75,75],
+                body: [
+                    [ 
+                        { text: 'Item&Description', style: 'itemsTableHeader' },
+                        
+                        { text: 'Quantity', style: 'itemsTableHeader' },
+                        
+                        { text: 'Rate', style: 'itemsTableHeader' },
+                        { text: 'Amount', style: 'itemsTableHeader' },
+                        
+                    ],
+                   
+                    [this.itemname1,this.quantity,this.rate, this.subtotal],
+                    ['Shipping Charges','','',this.shippingprice],
+                    ['Discount Price','','',this.discountprice],
+                    ['','','Total',this.total]
+                ]
+            }
+        },
+        { text: 'Notes:', style: 'subheader'},
+        { text: 'Thanks for Your Business', style: 'subheader'},
         
-           bold: true,
-           margin: [0, 0, 0, 0],
-           alignment:'right'
-           
-       }
-   }
-     
-   }
-   this.pdfObj = pdfMake.createPdf(docDefinition);
-
-   if (this.plt.is('cordova')) {
-     this.pdfObj.getBuffer((buffer) => {
-       var blob = new Blob([buffer], { type: 'application/pdf' });
-       this.file.writeFile(this.file.externalDataDirectory, 'Invoice'+this.invoice+'.pdf', blob, { replace: true }).then(fileEntry => {
-         this.fileOpener.open(this.file.externalDataDirectory +'Invoice'+this.invoice+'.pdf', 'application/pdf')
- .then(() => console.log('File is opened'))
- .catch(e => console.log('Error opening file', e));
-       })
-     });
-   } else {
-     // On a browser simply use download!
-     this.pdfObj.download();
-   }
+    ],
+      styles: {
+        header: {
+            fontSize: 10,
+            margin: [0, 0, 0, 10],
+            alignment: 'right'
+        },
+        invoiceheader: {
+         fontSize: 20,
+         bold: true,
+         margin: [0, 0, 0, 10],
+         alignment: 'center',
+         decoration: 'underline'
+     },
+ 
+        compheader: {
+         fontSize: 30,
+         bold: true,
+         margin: [0, 0, 0, 10],
+ 
+         alignment: 'left'
+     },
+ 
+        subheader: {
+            fontSize: 16,
+            bold: true,
+            margin: [0, 20, 0, 5]
+        },
+        inoices: {
+         fontSize: 16,
+         bold: true,
+         margin: [0, 20, 0, 5]
+     },
+        
+        itemsTable: {
+            margin: [0, 5, 0, 15]
+        },
+        itemsTableHeader: {
+            bold: true,
+            fontSize: 13,
+            color: 'black',
+            
+        },
+        totalsTable: {
+           //margin: 2%,
+         
+            bold: true,
+            margin: [0, 0, 0, 0],
+            alignment:'center'
+            
+        }
+    }
+ }
+    this.pdfObj = pdfMake.createPdf(docDefinition);
+ 
+    if (this.plt.is('cordova')) {
+      this.pdfObj.getBuffer((buffer) => {
+        var blob = new Blob([buffer], { type: 'application/pdf' });
+        this.file.writeFile(this.file.externalDataDirectory, 'Invoice'+this.invoiceno+'.pdf', blob, { replace: true }).then(fileEntry => {
+         console.log("Pdf save in Phone directory")
+         this.fileOpener.open(this.file.dataDirectory + 'Invoice'+this.invoiceno+'.pdf', 'application/pdf');
+        })
+      });
+    } else {
+      this.pdfObj.download();
+    }
   }
 
    /////////Open invoice detail page/////////////////////
@@ -639,7 +518,7 @@ export class CreateInvoicesPage {
     // var key = Object.keys(this.gaming)[1];
     // var value = this.gaming[key];
    
-   if(this.gaming == undefined){
+   if(this.gaming == undefined || this.quantity == 0){
       alert("Please choose Contact First");
     }
    if(this.quantity == 0){
@@ -694,28 +573,30 @@ export class CreateInvoicesPage {
            customer_note:this.customer_notes,
            terms_and_conditions:this.terms_condition,
            item_quantity:this.quantity,
-           item_discount:this.discountprice,
-           shipping_charges:this.shippingprice,
+           item_discount:this.discountedprice,
+           shipping_charges:this.shp,
            adjustment:this.adjustmentprice,
-           total_cost:this.total,
+           total_cost:this.gentotal,
            userId:this.global.userid,
            item_name:this.value_item,
            item_id:this.item_id,
-           sale_rate:this.value_rate1,
+           sale_rate:this.value_rate,
            purchase_rate:this.purchase_rate1,
            status:this.status,
           //  payment_option: this.paymentoption,
            cont_id:this.customer_id,
            other_user_id:this.other_user_id,
-           tax:this.tax_perc,
+           tax:this.totalper,
            user_name:this.global.user_name
          }
          this.http.post('https://sum-invoice-app.herokuapp.com/invoice/create', data)
          .subscribe(response => {
           console.log('API Response : ', response.json());
           this.responsedate = response.json();
+          this.invoiceno= this.responsedate.invoice_number;
           //resolve(response.json());
            console.log('POST Response:', this.responsedate.invoice_number);
+           
            loader.dismiss();
            let toast = this.tostctrl.create({
              message:'Invoice Create Succesfully',
@@ -724,10 +605,11 @@ export class CreateInvoicesPage {
            toast.present();
            
        //    this.navCtrl.push(InvoicesPage);
-           this.navCtrl.push(InvoicedeatilsPage,{'customername':this.gamingname,'invoice':this.responsedate.invoice_number,'balance':this.total,'invoicedate':this.invoicedate,'duedate':this.duedate,'description':this.desc,
-         'item_name':this.value_item,'subtotal':this.value_rate,'discount':this.discountprice,'shipping':this.shippingprice,'adjustment':this.adjustmentprice,'quantity':this.quantity,'rate':this.value_rate1,
-       'email':this.email,'order':this.order,'status':"Pending",'billingaddress':this.billing_address,'shippingaddress':this.shipping_address,contactsaln:this.contact_sal,companyname:this.gaming.comp_name,'taxname':this.tax_name,'taxper':this.tax_perc});
-        
+           this.navCtrl.push(InvoicedeatilsPage,{'customername':this.gamingname,'invoice':this.responsedate.invoice_number,'balance':this.gentotal,'invoicedate':this.invoicedate,'duedate':this.duedate,'description':this.desc,
+         'item_name':this.value_item,'subtotal':this.subtotal,'discount':this.discountprice,'shipping':this.shp,'adjustment':this.adjustmentprice,'quantity':this.quantity,'rate':this.value_rate,
+       'email':this.email,'order':this.order,'status':"Pending",'billingaddress':this.billing_address,'shippingaddress':this.shipping_address,contactsaln:this.contact_sal,companyname:this.gaming.comp_name,'taxname':this.tax_name,'taxper':this.tax_perc,
+      'discountedprice':this.discountedprice,'taxpercentage':this.totalper});
+       //this.craetepdf();
          }, error => {
            loader.dismiss();
            let toast = this.tostctrl.create({
@@ -763,7 +645,7 @@ export class CreateInvoicesPage {
     }
     onItemChange(){
    
-      console.log(this.itemname1);
+      console.log(this.itemname1.item_quantity);
         const arr = Object.keys(this.itemname1).map((key) => [key, this.itemname1[key]]);
 
         console.log(arr);
@@ -771,56 +653,28 @@ export class CreateInvoicesPage {
             console.log(arr[i][1]);
             this.itemarray.push(arr[i][0])
         }
-      // for(var i in myobj)
-      //   this.itemarray.push([i,myobj[i]]);
-      //   console.log(this.itemarray);
-    //   Object.keys(this.itemname1).forEach(function(key) {
-    //     this.push(values[key]);
-    //  });
-      var key = Object.keys(this.itemname1)[1];
-       this.value_item = this.itemname1[key];
-      
-      var key_id = Object.keys(this.itemname1)[0];
-      this.item_id = this.itemname1[key_id];
-      var key_id3 = Object.keys(this.itemname1)[6];
-      
-      var key_id4 = Object.keys(this.itemname1)[7];
-      var key_id5 = Object.keys(this.itemname1)[2];
-      var key_id6 = Object.keys(this.itemname1)[3];
-      var key_id7 = Object.keys(this.itemname1)[8];
-      var key_id8 = Object.keys(this.itemname1)[9];
-      var key_id9 = Object.keys(this.itemname1)[10];
-  
-      var key_desc = Object.keys(this.itemname1)[5];
-      this.itemquantity = this.itemname1[key_id7];
-      this.value_desc = this.itemname1[key_id9];
-      var key_item_quantity =Object.keys(this.itemname1)[5];
-      var key_rate = Object.keys(this.itemname1)[4];
-      this.purchase_rate1 = this.itemname1[key_id3];
-      this.quanitytnillrate = this.itemname1[key_rate];
-      this.value_key_rate = this.itemname1[key_rate];
-      this.value_rate1 = this.itemname1[key_rate];
-      this.value_rate = this.value_rate1;
-      this.total = this.value_rate;
-      this.gentotal = this.total.toFixed(2);
-  console.log("key = ", key, "Key_Desc=",key_desc, "key_rate = ",key_rate,key_id,key_id3,key_id4,key_id5,key_id6,key_id7,key_id8,key_id9) // bar
-  console.log("value = ", this.value_item,"value_Des = ", this.value_desc,"value_rate = ", this.value_rate,this.itemquantity,this.purchase_rate, this.item_id) // baz
+        
+        this.value_item = this.itemname1.item_name;
+        this.item_id = this.itemname1._id;
+        this.itemquantity = this.itemname1.item_quantity;
+        this.purchase_rate1 = this.itemname1.purchase_rate;
+        this.value_rate = this.itemname1.sale_rate;
+        this.subtotal = this.value_rate;
+        this.priceqtytotal = this.subtotal;
+        this.total = this.value_rate;
+        this.gentotal = this.total.toFixed(2);
     }
     quantitychange(){
       console.log(this.quantity);
      
       //this.itemquantity = this.quantity;
-      this.xyz = +this.value_rate;
-      if(this.quantity == ""){
-        this.value_rate = this.quanitytnillrate * this.quantity;
-        
-      }else{
-        this.value_rate = this.quanitytnillrate * this.quantity;
-        this.total = this.value_rate;
-      }
-  
+      this.xyz = + this.value_rate;
+      this.totalprice = this.quantity * this.value_rate;
+      this.subtotal = this.totalprice - this.discountedprice;
+      this.totalper = parseFloat((this.taxpercentage * this.subtotal).toFixed(2));
+      this.gentotal = ((this.quantity * this.value_rate) - this.discountedprice) + this.shp + this.totalper;
       
-    }
+  }
     onSelectChange(tax){
 
       console.log(tax);
@@ -840,4 +694,16 @@ export class CreateInvoicesPage {
       console.log(this.finalrate);
       //this.value_rate=this.finalrate;
     }
-}
+    onInputTime(){
+      this.dst = +this.discountprice;
+      //var pricedisc = (this.pricetotal/100)*this.dst;
+      this.discountedprice = parseFloat(((this.totalprice/100)*this.dst).toFixed(2));
+      this.subtotal = this.totalprice - this.discountedprice;
+      this.totalper = parseFloat((this.taxpercentage * this.subtotal).toFixed(2));
+      this.gentotal = parseFloat((((this.quantity * this.value_rate) - this.discountedprice) + this.shp + this.totalper).toFixed(2));
+     // this.gentotal = this.gentotal.toFixed(2);
+      }
+
+  }
+
+

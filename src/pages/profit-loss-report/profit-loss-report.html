@@ -125,6 +125,31 @@
         </ion-col>
       </ion-row>
 
+      <ion-row>
+        <ion-col >
+            <ion-item style="padding-left: initial;">
+                <ion-label>Total Shipment</ion-label>
+              </ion-item>
+        </ion-col>
+        <ion-col>
+            <ion-item style="text-align: right;">
+                <ion-label style="margin: 0px 0px 0px 0px;">{{this.shipment}}</ion-label>
+              </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col >
+            <ion-item style="padding-left: initial;">
+                <ion-label>Total Discount</ion-label>
+              </ion-item>
+        </ion-col>
+        <ion-col>
+            <ion-item style="text-align: right;">
+                <ion-label style="margin: 0px 0px 0px 0px;">{{this.discount}}</ion-label>
+              </ion-item>
+        </ion-col>
+      </ion-row>
+
       <!-- <ion-item>
         <ion-label fixed>Total Expense</ion-label>
         <ion-input type="text" value={{this.expense}} text-wrap  [readonly]="isReadonly()" style="border-bottom: 1px solid grey">Fruit</ion-input>
@@ -133,9 +158,12 @@
         <ion-col style="text-align: left;">
             Total Profit/Loss
         </ion-col>
-        <ion-col style="text-align: right;color: red;">
-         {{this.stringpandr1}} 
+        <ion-col style="text-align: right;color: green;" *ngIf="this.greatertringpandr">
+         {{this.greatertringpandr}} 
         </ion-col>
+        <ion-col style="text-align: right;color: red;" *ngIf="this.lessstringpandr">
+          {{this.lessstringpandr}} 
+         </ion-col>
       </ion-row>
   </ion-card-content>
     </ion-card>

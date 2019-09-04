@@ -14,6 +14,7 @@ import { Device } from '@ionic-native/device';
 import { AppAvailability } from '@ionic-native/app-availability';
 import { Platform } from 'ionic-angular';
 import { CompleteTestServiceProvider } from '../../providers/complete-test-service/complete-test-service';
+import {CreateYourCompanyPage} from '../create-your-company/create-your-company'
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html'
@@ -35,14 +36,15 @@ export class SignupPage {
   password:any;
   country:any;
   country1:any;
-
+  userid:any;
   countrypak:any;
+  initialcash=0;
 
   verifystatus:any;
   constructor(
     public platform:Platform,
     public navCtrl: NavController,public afAuth: AngularFireAuth,
-    public fb: FormBuilder, public device:Device , public signup:SignupProvider,public completeTestService: CompleteTestServiceProvider , public alertCtrl: AlertController,public appavail:AppAvailability , public http: Http,public loadingCtrl: LoadingController, public alrtctrl:AlertController, public tostctrl: ToastController) {
+    public fb: FormBuilder, public device:Device ,public completeTestService: CompleteTestServiceProvider , public alertCtrl: AlertController,public appavail:AppAvailability , public http: Http,public loadingCtrl: LoadingController, public alrtctrl:AlertController, public tostctrl: ToastController) {
       
     this.myForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern("[a-zA-Z ]*")]],
@@ -52,17 +54,7 @@ export class SignupPage {
        //phone: ['',[Validators.required, Validators.maxLength(11), Validators.minLength(11)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
-    // this.http.get('https://restcountries.eu/rest/v2/all').map(res => res.json()).subscribe(data => {
-    // console.log(data);
-      
-    //    this.country1 = data 
-    //   //  for(var i=0;i<data.length;i++){
-    //   //   console.log(data[i].name);
-    //   //   //this.countrypak = data[i].name=Pakistan
-    //   //  }
-    //   // this.countrypak = "Pakistan";
-       
-    //  });
+    
     
   }
 
@@ -111,6 +103,7 @@ export class SignupPage {
   }
   submit(){
     console.log(this.country);
+    
     return new Promise<any>((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
   .then(res => {
@@ -120,7 +113,46 @@ export class SignupPage {
         console.log(res.user.emailVerified);
         this.verifystatus = res.user.emailVerified;
         this.sendEmailVerification();
-        this.signup.signup(this.email,this.password,this.compname,this.fullname,this.country);
+        //this.signup.signup(this.email,this.password,this.compname,this.fullname,this.country);
+        let data = {
+          email:this.email,
+          password: this.password,
+          company_name: this.compname,
+          user_name:this.fullname,
+          country:this.country,
+          intial_cash:this.initialcash
+      };
+        let loader = this.loadingCtrl.create({
+            content:'Waiting...'
+          });
+          loader.present();
+          
+        this.http.post('https://sum-invoice-app.herokuapp.com/user/signup', data).map(response => response.json())
+        .subscribe(data => {
+          console.log('POST Response:', data);
+          
+          console.log(data.company_name)
+          // this.company_name = data.company_name;
+           this.userid = data._id;
+          // this.countryname = data.country;
+          // this.user_name = data.user_name;
+          // this.user_email = data.email;
+         let toast = this.tostctrl.create({
+                message:'Signup Successfully',
+                duration:2000
+              });
+             this.navCtrl.push(CreateYourCompanyPage,{companyname:this.compname,userid:this.userid,country:this.country,uname:this.fullname});
+             loader.dismiss();
+              toast.present();
+           
+        }, error => {
+          let toast = this.tostctrl.create({
+            message:'User already exist',
+            duration:2000
+          });
+          loader.dismiss();
+          toast.present();
+        });
       }, err => {
         let alert = this.alertCtrl.create({
           title: 'Please Try Again !',

@@ -112,6 +112,7 @@ stringcashrec:any;
         this.cashrec = this.cash+this.recievable;
         this.fixedcashrec = this.cashrec.toFixed(2);
         this.totalcash = this.cash-this.expense-this.payment;
+        //this.totalcash = Math.abs(this.totalcash)
         this.fixedtotalcash = this.totalcash.toFixed(2);
         console.log(this.cash);
         

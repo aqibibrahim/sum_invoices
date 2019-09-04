@@ -23,8 +23,9 @@ import { App } from 'ionic-angular';
 export class ContactsPage {
   @ViewChild(Nav) nav: Nav;
   posts: any;
+  alert:any;
   constructor(public navCtrl: NavController, public global: GlobalProvider,public app: App,public platform:Platform,public navParams: NavParams,public http: Http,public loadingCtrl: LoadingController,public alertCtrl:AlertController, public tostctrl: ToastController) {
-    
+    //this.platform.registerBackButtonAction(()=>this.myHandlerFunction());
   }
 
   ionViewDidLoad() {
@@ -34,7 +35,7 @@ export class ContactsPage {
      console.log(data);
     
      if(data.length == 0){
-      const alert = this.alertCtrl.create({
+      this.alert = this.alertCtrl.create({
         title: 'Oh Snap!',
         message: 'We do not have any Contact for this company',
         buttons: [{
@@ -45,26 +46,42 @@ export class ContactsPage {
         }],
         cssClass: 'alertDanger'
     });
-    alert.present();
+    this.alert.present();
     }
     data.sort((a, b) => a.first_name.localeCompare(b.first_name))
     console.log(data);
        this.posts = data;
       });
+
       this.platform.registerBackButtonAction(() => {
-          // Catches the active view
-          let nav = this.app.getActiveNavs()[0];
-          let activeView = nav.getActive();                
-          // Checks if can go back before show up the alert
-          if(activeView.name === 'ContactsPage') {
-              if (nav.canGoBack()){
-                this.navCtrl.push(HomePage);
-              } else {
-                this.navCtrl.push(HomePage);
-                 
-              }
+        let nav = this.app._appRoot._getActivePortal() || this.app.getActiveNav();
+        let activeView = nav.getActive();
+    
+        if (activeView != null) {
+          if (nav.canGoBack()) {
+            this.navCtrl.push(HomePage);
+          } else if(activeView.isOverlay) {
+            activeView.dismiss();
+          } else {
+            this.navCtrl.push(HomePage);
+            //this.closeApp();
           }
+        }
       });
+      // this.platform.registerBackButtonAction(() => {
+      //     // Catches the active view
+      //     let nav = this.app.getActiveNavs()[0];
+      //     let activeView = nav.getActive();                
+      //     // Checks if can go back before show up the alert
+      //     if(activeView.name === 'ContactsPage') {
+      //         if (nav.canGoBack()){
+      //           this.navCtrl.push(HomePage);
+      //         } else {
+      //           this.navCtrl.push(HomePage);
+                 
+      //         }
+      //     }
+      // });
     }
     ionViewDidEnter() {
       this.http.get('https://sum-invoice-app.herokuapp.com/finance/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
@@ -75,22 +92,24 @@ export class ContactsPage {
          this.posts = data;
            
          });
+         //this.platform.registerBackButtonAction(()=>this.myHandlerFunction());
          this.platform.registerBackButtonAction(() => {
-          // Catches the active view
-          let nav = this.app.getActiveNavs()[0];
-          let activeView = nav.getActive();                
-          // Checks if can go back before show up the alert
-          if(activeView.name === 'ContactsPage') {
-              if (nav.canGoBack()){
-                this.navCtrl.push(HomePage);
-              } else {
-                this.navCtrl.push(HomePage);
-              }
+          let nav = this.app._appRoot._getActivePortal() || this.app.getActiveNav();
+          let activeView = nav.getActive();
+      
+          if (activeView != null) {
+            if (nav.canGoBack()) {
+              this.navCtrl.push(HomePage);
+            } else if(activeView.isOverlay) {
+              activeView.dismiss();
+            } else {
+              this.navCtrl.push(HomePage);
+              //this.closeApp();
+            }
           }
-      });
+        });
          
     }
-    
   createcontact(){
     this.navCtrl.push(CreateContactPage);
   }

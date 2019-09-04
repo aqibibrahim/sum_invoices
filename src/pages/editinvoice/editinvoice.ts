@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams,LoadingController, ToastController,
 import {Http ,Response} from '@angular/http';
 import {InvoicesPage} from '../invoices/invoices';
 import { App } from 'ionic-angular';
+import { Network } from '@ionic-native/network';
 /**
  * Generated class for the EditinvoicePage page.
  *
@@ -18,6 +19,9 @@ import { App } from 'ionic-angular';
 export class EditinvoicePage {
   @ViewChild(Nav) nav: Nav;
 id:any;
+itemid:any;
+itemquantity:any;
+finalquantity:any;
 invoice:any;
 status:any;
   value_due_date:any;
@@ -39,8 +43,8 @@ status:any;
   value_item_name:any;
   value_payment_option:any;
   paymentoption:any;
-
-  constructor(public navCtrl: NavController, private ionicApp: IonicApp,public navParams: NavParams,public app: App,public platform:Platform,public alertCtrl:AlertController,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+  alert:any;
+  constructor(public navCtrl: NavController, private ionicApp: IonicApp,public network:Network,public navParams: NavParams,public app: App,public platform:Platform,public alertCtrl:AlertController,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     this.id= this.navParams.get('id');
     this.http.get('https://sum-invoice-app.herokuapp.com/invoice/get/'+this.id+'').map(res => res.json()).subscribe(data => {
       console.log(data);
@@ -60,13 +64,19 @@ status:any;
           this.value_email = data[0].email;
           this.value_item_name = data[0].item_name;
           this.value_payment_option = data[0].payment_option;
+          this.itemid = data[0].item_id;
 
-console.log( this.value_invoice_number);
+      console.log( this.value_invoice_number);
+      console.log(this.itemid);
 
        });
+       
+
+
   }
 
   ionViewDidLoad() {
+    
     console.log('ionViewDidLoad EditinvoicePage');
     this.platform.registerBackButtonAction(() => {
       // Catches the active view
@@ -87,23 +97,7 @@ console.log( this.value_invoice_number);
             nav.pop();
         } else {
           console.log("Back Pressed")
-            // const alert = this.alertCtrl.create({
-            //     title: 'Exit',
-            //     message: 'Want to Exit App?',
-            //     buttons: [{
-            //         text: 'Cancel',
-            //         role: 'cancel',
-            //         handler: () => {
-            //           //this.nav.setRoot('HomePage');
-            //         }
-            //     },{
-            //         text: 'OK',
-            //         handler: () => {
-            //           this.platform.exitApp();
-            //         }
-            //     }]
-            // });
-            //alert.present();
+           
         }
     } else {
       this.navCtrl.push(InvoicesPage);
@@ -137,6 +131,22 @@ console.log( this.value_invoice_number);
     
 }
   updateinvoice(){
+
+    if(this.network.type === 'none'){
+      this.alert = this.alertCtrl.create({
+        title: 'Alert!',
+        message: 'There is no Internet connection available, please proceed again when you have a connnection',
+        buttons: [{
+            text: 'OK',
+            handler: () => {
+             this.alert.dismiss();
+            }
+        }],
+        cssClass: 'alertDanger'
+    });
+    this.alert.present();
+  }
+  else{
     let loader = this.loadingCtrl.create({
       content:'Waiting...'
     });
@@ -165,51 +175,87 @@ console.log( this.value_invoice_number);
         
         });
   }
+    
+  }
   isReadonly() {
     return this.isReadonly;   //return true/false 
   }
   deleteinvoice(){
-    const alert = this.alertCtrl.create({
-      title: 'Invoice Delete',
-      message: 'Do you Want to Delete this Invoice',
-      buttons: [{
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-                              }
-      },{
-          text: 'OK',
-          handler: () => {
-            let loader = this.loadingCtrl.create({
-              content:'Waiting...'
-            });
-            loader.present();
-            let data={
-              id:this.id
+    if(this.network.type === 'none'){
+      this.alert = this.alertCtrl.create({
+        title: 'Alert!',
+        message: 'There is no Internet connection available, please proceed again when you have a connnection',
+        buttons: [{
+            text: 'OK',
+            handler: () => {
+             this.alert.dismiss();
             }
-            this.http.post('https://sum-invoice-app.herokuapp.com/invoice/delete/'+this.id+'', data)
-            .subscribe(res => {
-              
-              loader.dismiss();
-                    let toast = this.tostctrl.create({
-                      message:'Item Delete Successfully',
-                      duration:2000
-                    });
-                    toast.present();
-              this.navCtrl.push(InvoicesPage);
-            }, err => {
-              loader.dismiss();
-                    let toast = this.tostctrl.create({
-                      message:'Item not Delete',
-                      duration:2000
-                    });
-                    toast.present();
-             
-            });
+        }],
+        cssClass: 'alertDanger'
+    });
+    this.alert.present();
+  }
+  else{
+    this.http.get('https://sum-invoice-app.herokuapp.com/item/get/'+this.itemid+'').map(res => res.json()).subscribe(data => {
+      console.log(data);
+       this.itemquantity = data[0].item_quantity;
+       var quanity =+this.itemquantity
+       this.finalquantity =  this.value_item_quantity + quanity
+       console.log(this.finalquantity)
+       });
+  const alert = this.alertCtrl.create({
+    title: 'Invoice Delete',
+    message: 'Do you Want to Delete this Invoice',
+    buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+                            }
+    },{
+        text: 'OK',
+        handler: () => {
+          let loader = this.loadingCtrl.create({
+            content:'Waiting...'
+          });
+          loader.present();
+          let data={
+            id:this.id
           }
-      }]
-  });
-  alert.present();
+         
+          this.http.post('https://sum-invoice-app.herokuapp.com/invoice/delete/'+this.id+'', data)
+          .subscribe(res => {
+            
+            loader.dismiss();
+                  let toast = this.tostctrl.create({
+                    message:'Invoice Delete Successfully',
+                    duration:2000
+                  });
+                  toast.present();
+            this.navCtrl.push(InvoicesPage);
+          }, err => {
+            loader.dismiss();
+                  let toast = this.tostctrl.create({
+                    message:'Invoice not Delete',
+                    duration:2000
+                  });
+                  toast.present();
+           
+          });
+          let data1  = {
+            item_quantity:this.finalquantity
+          };
+          this.http.post('https://sum-invoice-app.herokuapp.com/item/update/'+this.itemid+'', data1)
+                  .subscribe(response => {
+                    console.log('POST Response:', response);
+                    //this.navCtrl.push(ItemPage);
+                  }, error => {
+                  console.log("Oooops!");
+                  });
+        }
+    }]
+});
+alert.present();
+  }
   }
 }

@@ -6,6 +6,8 @@ import {Http ,Response } from '@angular/http';
 import {GlobalProvider} from '../../providers/global/global';
 import { HomePage } from '../home/home';
 import { App } from 'ionic-angular';
+import { CompleteTestServiceProvider } from '../../providers/complete-test-service/complete-test-service';
+import { Network } from '@ionic-native/network';
 /**
  * Generated class for the EditProfilePage page.
  *
@@ -34,7 +36,8 @@ export class EditProfilePage {
   password:any;
   country:any;
   country1:any;
-  constructor(public navCtrl: NavController, public platform: Platform,private ionicApp: IonicApp,public alertCtrl:AlertController, public app: App,public navParams: NavParams,public fb: FormBuilder,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController, public global:GlobalProvider) {
+  alert:any;
+  constructor(public navCtrl: NavController, public network:Network,public platform: Platform,public completeTestService: CompleteTestServiceProvider , private ionicApp: IonicApp,public alertCtrl:AlertController, public app: App,public navParams: NavParams,public fb: FormBuilder,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController, public global:GlobalProvider) {
     this.myForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern("[a-zA-Z ]*")]],
       fullname:['',[Validators.required,Validators.pattern("[a-zA-Z ]*")]],
@@ -52,6 +55,7 @@ export class EditProfilePage {
       this.compname = this.global.company_name;
       this.fullname = this.global.user_name;
       this.email = this.global.user_email;
+      
       console.log(this.compname, this.fullname, this.email);
   }
   ionViewWillEnter(){
@@ -125,6 +129,22 @@ export class EditProfilePage {
   });
   }
 updateprofile(){
+
+  if(this.network.type === 'none'){
+    this.alert = this.alertCtrl.create({
+      title: 'Alert!',
+      message: 'There is no Internet connection available, please proceed again when you have a connnection',
+      buttons: [{
+          text: 'OK',
+          handler: () => {
+           this.alert.dismiss();
+          }
+      }],
+      cssClass: 'alertDanger'
+  });
+  this.alert.present();
+}
+else{
   let loader = this.loadingCtrl.create({
     content:'Waiting...'
   });
@@ -132,8 +152,8 @@ updateprofile(){
   let data = {
     company_name:this.compname,
     user_name : this.fullname,
-    email:this.email
-    // country: this.country,
+    email:this.email,
+    country: this.country,
   };
   //console.log(this.data.username);
   this.http.post('https://sum-invoice-app.herokuapp.com/user/updateprofile/'+this.global.userid+'', data)
@@ -144,5 +164,6 @@ updateprofile(){
       }, error => {
       console.log("Oooops!");
       });
-}
+    }
+  }
 }

@@ -142,7 +142,7 @@ updatecontact(){
       .subscribe(response => {
         loader.dismiss();
           let toast = this.tostctrl.create({
-            message:'Data Save',
+            message:'Contact Update Successfully',
             duration:2000
           });
           toast.present();

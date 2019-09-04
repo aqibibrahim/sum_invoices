@@ -30,16 +30,16 @@
           </ion-list-header>
           <ion-item (click)="sales_by_customer()">Sales by Customer</ion-item>
           <ion-item (click)="sales_by_item()">Sales by Item</ion-item>
-          <ion-item (click)="sales_sales_person()">Sales by Sales Person</ion-item>
+          <!-- <ion-item (click)="sales_sales_person()">Sales by Sales Person</ion-item> -->
         </ion-list>
-        <ion-list>
+        <!-- <ion-list>
             <ion-list-header color="dark">
               Receivables
             </ion-list-header>
             <ion-item (click)="customer_balance()">Customer Balances</ion-item>
             <ion-item (click)="aging_summary()">Aging Summary</ion-item>
             <ion-item (click)="payment_recieved()">Payment Recieved</ion-item>
-          </ion-list>
+          </ion-list> -->
           <ion-list>
               <ion-list-header color="dark">
                 Expenses
@@ -48,12 +48,19 @@
               
             </ion-list>
             <ion-list>
+              <ion-list-header color="dark">
+                Tax
+              </ion-list-header>
+              <ion-item (click)="tax_by_category()">Tax by Items</ion-item>
+              
+            </ion-list>
+            <!-- <ion-list>
                 <ion-list-header color="dark">
                   Payables
                 </ion-list-header>
                 <ion-item (click)="vendor_balance()">Vendor Balances</ion-item>
                 <ion-item (click)="payment_made()">Payments Made</ion-item>
                 
-              </ion-list>
+              </ion-list> -->
 
 </ion-content>

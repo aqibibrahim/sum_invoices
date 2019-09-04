@@ -7,8 +7,10 @@ import { App } from 'ionic-angular';
 import {EditTaxPage} from '../edit-tax/edit-tax';
 import {GlobalProvider} from '../../providers/global/global';
 import {CompanytaxPage} from '../companytax/companytax';
+import { ExpensePage } from '../expense/expense';
+import {EditexpensePage} from '../editexpense/editexpense';
 /**
- * Generated class for the TaxPage page.
+ * Generated class for the ExpenselistPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -16,48 +18,47 @@ import {CompanytaxPage} from '../companytax/companytax';
 
 @IonicPage()
 @Component({
-  selector: 'page-tax',
-  templateUrl: 'tax.html',
+  selector: 'page-expenselist',
+  templateUrl: 'expenselist.html',
 })
-export class TaxPage {
-  taxname: string;
-  taxvalue: string;
-  record:any;
-  alert:any;
-  
-  constructor(public navCtrl: NavController,public global:GlobalProvider, public alertCtrl:AlertController,public navParams: NavParams,public http: Http,public app: App,public platform:Platform,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+export class ExpenselistPage {
+alert:any;
+record:any;
+expensename:any;
+expensevalue:any;
+itemname:any;
+date:any;
+  constructor(public navCtrl: NavController,public global:GlobalProvider, public plt:Platform,public alertCtrl:AlertController,public navParams: NavParams,public http: Http,public app: App,public platform:Platform,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     let loader = this.loadingCtrl.create({
       content:'Waiting...'
     });
     loader.present();
-
-    this.http.get('https://sum-invoice-app.herokuapp.com/tax/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+    //http://localhost:3000/expense/getByUserId/5d5bebdc785c65001733f219
+    this.http.get('https://sum-invoice-app.herokuapp.com/expense/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
       console.log(data);
       if(data.length == 0){
         this.alert = this.alertCtrl.create({
           title: 'Oh Snap!',
-          message: 'We do not have any Tax for this company',
+          message: 'We do not have any Expense for this company',
           buttons: [{
-              text: 'Please Add your first Tax',
+              text: ' Add your first Expense',
               handler: () => {
-               this.navCtrl.push(CompanytaxPage);
+               this.navCtrl.push(ExpensePage);
               }
           }],
           cssClass: 'alertDanger'
       });
       this.alert.present();
-    
-       
-      }
+    }
       this.record = data
 
       loader.dismiss();
      
   });
-}
+  }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad TaxPage');
+    console.log('ionViewDidLoad ExpenselistPage');
     this.platform.registerBackButtonAction(() => {
       let nav = this.app._appRoot._getActivePortal() || this.app.getActiveNav();
       let activeView = nav.getActive();
@@ -74,52 +75,38 @@ export class TaxPage {
       }
     });
   }
-  ionViewDidEnter(){
-    this.http.get('https://sum-invoice-app.herokuapp.com/tax/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
-    console.log(data);
-      
-    this.record = data
-       
-     });
-     this.platform.registerBackButtonAction(() => {
-      let nav = this.app._appRoot._getActivePortal() || this.app.getActiveNav();
-      let activeView = nav.getActive();
+  createexpense(){
+    this.navCtrl.push(ExpensePage);
+  }
+  ionViewDidEnter() {
+    this.http.get('https://sum-invoice-app.herokuapp.com/expense/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+      console.log(data);
+          this.record = data 
+          console.log(this.record)
+              });
   
-      if (activeView != null) {
-        if (nav.canGoBack()) {
-          this.navCtrl.push(HomePage);
-        } else if(activeView.isOverlay) {
-          activeView.dismiss();
-        } else {
-          this.navCtrl.push(HomePage);
-          //this.closeApp();
-        }
-      }
-    });
+              this.platform.registerBackButtonAction(() => {
+                let nav = this.app._appRoot._getActivePortal() || this.app.getActiveNav();
+                let activeView = nav.getActive();
+            
+                if (activeView != null) {
+                  if (nav.canGoBack()) {
+                    this.navCtrl.push(HomePage);
+                  } else if(activeView.isOverlay) {
+                    activeView.dismiss();
+                  } else {
+                    this.navCtrl.push(HomePage);
+                    //this.closeApp();
+                  }
+                }
+              });
   }
+  removeItem(expense):void{
 
-  myHandlerFunction(){
-   
-    this.alert.dismiss();
-    let nav = this.app.getActiveNavs()[0];
-      let activeView = nav.getActive();                
-      // Checks if can go back before show up the alert
-      if(activeView.name === 'TaxPage') {
-          if (nav.canGoBack()){
-            this.navCtrl.push(HomePage);
-          } else {
-            this.navCtrl.push(HomePage);
-          }
-      }
-     }
-  createctax(){
-    this.navCtrl.push(CompanytaxPage);
-  }
-  removeItem(item):void{
 
     const alert = this.alertCtrl.create({
-      title: 'Tax Delete',
-      message: 'Do you Want to Delete this tax',
+      title: 'Expense Delete',
+      message: 'Do you Want to Delete this Expense',
       buttons: [{
           text: 'Cancel',
           role: 'cancel',
@@ -134,14 +121,14 @@ export class TaxPage {
             });
             loader.present();
             let data={
-              id:item._id
+              expenseId:expense._id
             }
-            this.http.post('https://sum-invoice-app.herokuapp.com/tax/delete/'+item._id+'', data)
+            this.http.post('https://sum-invoice-app.herokuapp.com/expense/delete', data)
             .subscribe(res => {
               
               loader.dismiss();
                     let toast = this.tostctrl.create({
-                      message:'Tax Delete Successfully',
+                      message:'Expense Delete Successfully',
                       duration:2000
                     });
                     toast.present();
@@ -149,7 +136,7 @@ export class TaxPage {
             }, err => {
               loader.dismiss();
                     let toast = this.tostctrl.create({
-                      message:'Tax not Deleted',
+                      message:'Expense not Delete',
                       duration:2000
                     });
                     toast.present();
@@ -160,7 +147,9 @@ export class TaxPage {
   });
   alert.present();
   }
-  edititems(item):void{
-    this.navCtrl.push(EditTaxPage,{id:item._id})
-  }
+  editexpense(expense):void {
+    //console.log(item.title);
+    console.log(expense._id);
+    this.navCtrl.push(EditexpensePage,{id:expense._id})
+}
 }

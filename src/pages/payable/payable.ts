@@ -31,15 +31,28 @@ export class PayablePage {
   public sum : number = 0;
   invoices:any;
   fixedamount:any;
+  alert:any;
   fixedamountarray = [];
   constructor(public navCtrl: NavController, public navParams: NavParams,public app: App,public alertCtrl:AlertController,public global:GlobalProvider,private plt: Platform, public http: Http,private file: File, private fileOpener: FileOpener,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     console.log(this.global.userid);
     this.http.get('https://sum-invoice-app.herokuapp.com/invoice/payable/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
     console.log(data);  
     if(data.length == 0){
-      alert("There is no invoice genrated by this user");
       this.sum = 0;
+      this.alert = this.alertCtrl.create({
+        title: 'Oh Snap!',
+        message: 'We do not have any Item for this company',
+        buttons: [{
+            text: 'OK',
+            handler: () => {
+             this.alert.dismiss();
+            }
+        }],
+        cssClass: 'alertDanger'
+    });
+    this.alert.present();
     }
+    
       this.invoices = data 
       this.sum = 0;
       for(var i=0;i<this.invoices.length;i++){
@@ -52,34 +65,31 @@ export class PayablePage {
         this.sum += Number(this.fixedamountarray[i]);
       }
       console.log(this.sum);
-       });
+    });
+   
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PayablePage');
     this.plt.registerBackButtonAction(() => {
-      // Catches the active view
-      let nav = this.app.getActiveNavs()[0];
-      let activeView = nav.getActive();                
-      // Checks if can go back before show up the alert
-      if(activeView.name === 'PayablePage') {
-          if (nav.canGoBack()){
-            this.navCtrl.push(HomePage);
-              //nav.pop();
-          } else {
-              this.navCtrl.push(HomePage);
-              
-          }
+      let nav = this.app._appRoot._getActivePortal() || this.app.getActiveNav();
+      let activeView = nav.getActive();
+  
+      if (activeView != null) {
+        if (nav.canGoBack()) {
+          this.navCtrl.push(HomePage);
+        } else if(activeView.isOverlay) {
+          activeView.dismiss();
+        } else {
+          this.navCtrl.push(HomePage);
+          //this.closeApp();
+        }
       }
-  });
-  this.setBackButtonAction();
-  }
-  setBackButtonAction(){
+    });
     this.navBar.backButtonClick = () => {
-    //alert("Where you want to go");
-    this.navCtrl.push(HomePage);
-     //this.navCtrl.pop()
-    }
+      //alert("Where you want to go");
+      this.navCtrl.push(HomePage);
+       //this.navCtrl.pop()
+      }
   }
-
 }

@@ -1,11 +1,13 @@
-import { Component,ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,LoadingController, Nav,ToastController,Platform, IonicApp } from 'ionic-angular';
 import {Http ,Response} from '@angular/http';
 import {GlobalProvider} from '../../providers/global/global';
 import { App } from 'ionic-angular';
-import { HomePage } from '../home/home';
+import { ExpensePage } from '../expense/expense';
+import { ExpenselistPage } from '../expenselist/expenselist';
+
 /**
- * Generated class for the ExpensePage page.
+ * Generated class for the EditexpensePage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -13,55 +15,45 @@ import { HomePage } from '../home/home';
 
 @IonicPage()
 @Component({
-  selector: 'page-expense',
-  templateUrl: 'expense.html',
+  selector: 'page-editexpense',
+  templateUrl: 'editexpense.html',
 })
-export class ExpensePage {
-  @ViewChild(Nav) nav: Nav;
-items:any;
+export class EditexpensePage {
+id:any;
+expensename:any;
+expamount:any;
+expitem:any;
 expensedate:any;
 itemname:any;
 amount:any;
 name:any;
 item_id:any;
 item_name:any;
-public itemexpense:boolean=false;
+items:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public ionicApp:IonicApp,public app:App,public platform:Platform,public loadingCtrl: LoadingController, public tostctrl: ToastController,public global:GlobalProvider, public http:Http) {
-    this.http.get('https://sum-invoice-app.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+    this.id= this.navParams.get('id');
+    this.http.get('https://sum-invoice-app.herokuapp.com/expense/get/'+this.id+'').map(res => res.json()).subscribe(data => {
+      console.log(data);
+         this.expensename = data[0].exp_name;
+          this.expamount = data[0].exp_amount;
+         this.expitem = data[0].sale_rate;
+         this.expensedate = data[0].exp_date;
+
+       });
+       this.http.get('https://sum-invoice-app.herokuapp.com/item/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
       console.log(data);
          this.items = data 
        });
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ExpensePage');
-    this.platform.registerBackButtonAction(() => {
-      // Catches the active view
-      let nav = this.app.getActiveNavs()[0];
-      let activeView = nav.getActive();                
-      // Checks if can go back before show up the alert
-
-      let activePortal = this.ionicApp._loadingPortal.getActive() ||
-      this.ionicApp._modalPortal.getActive() ||
-      this.ionicApp._toastPortal.getActive() ||
-      this.ionicApp._overlayPortal.getActive();
-
-    if (activePortal) {
-      activePortal.dismiss();
-    }
-    else {
-      if(activeView.name === 'ExpensePage') {
-        if (nav.canGoBack()){
-            nav.pop();
-        } else {
-      this.nav.setRoot('HomePage');
-      }
-    }
-  }  
-  });
+    console.log('ionViewDidLoad EditexpensePage');
   }
-  addexpense(){
-    console.log(this.name)
+  isReadonly() {
+    return this.isReadonly;   //return true/false 
+  
+  }
+  updateexpense(){
     let loader = this.loadingCtrl.create({
       content:'Waiting...'
     });
@@ -74,16 +66,16 @@ public itemexpense:boolean=false;
       exp_amount:this.amount,
       userId:this.global.userid
     }
-    this.http.post('https://sum-invoice-app.herokuapp.com/expense/create', data)
+    this.http.post('https://sum-invoice-app.herokuapp.com/expense/update/'+this.id+'', data)
     .subscribe(response => {
       console.log('POST Response:', response);
       loader.dismiss();
       let toast = this.tostctrl.create({
-        message:'New Expense Created',
+        message:'Expense Update Succesfully in your system',
         duration:2000
       });
       toast.present();
-      this.navCtrl.push(HomePage);
+      this.navCtrl.push(ExpenselistPage);
     }, error => {
       loader.dismiss();
       let toast = this.tostctrl.create({

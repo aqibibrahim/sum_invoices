@@ -12,6 +12,7 @@ import {GlobalProvider} from '../../providers/global/global';
 import {HomePage} from '../home/home';
 import { App } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { Network } from '@ionic-native/network';
 
 
 /**
@@ -42,8 +43,9 @@ export class InvoicesPage {
   duedate=[];
   //selectcity = [];
   pdfObj = null;
-  constructor(public navCtrl: NavController, public navParams: NavParams,private socialSharing: SocialSharing,public app: App,public alertCtrl:AlertController,public global:GlobalProvider,private plt: Platform, public http: Http,private file: File, private fileOpener: FileOpener,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+  constructor(public navCtrl: NavController, public network:Network,public navParams: NavParams,private socialSharing: SocialSharing,public app: App,public alertCtrl:AlertController,public global:GlobalProvider,private plt: Platform, public http: Http,private file: File, private fileOpener: FileOpener,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     console.log(this.global.userid);
+
     this.http.get('https://sum-invoice-app.herokuapp.com/invoice/getByUserId/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
     console.log(data);  
     if(data.length == 0){
@@ -74,42 +76,29 @@ export class InvoicesPage {
       }
   });
       this.invoices = data 
+
       console.log(this.invoices)
        });
-       this.plt.registerBackButtonAction(() => {
-        this.alert.dismiss();
-        // Catches the active view
-        let nav = this.app.getActiveNavs()[0];
-        let activeView = nav.getActive();                
-        // Checks if can go back before show up the alert
-        if(activeView.name === 'InvoicesPage') {
-            if (nav.canGoBack()){
-                nav.pop();
-            } else {
-                this.navCtrl.push(HomePage);
-                
-            }
-        }
-    });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad InvoicesPage');
     this.plt.registerBackButtonAction(() => {
-      this.alert.dismiss();
-      // Catches the active view
-      let nav = this.app.getActiveNavs()[0];
-      let activeView = nav.getActive();                
-      // Checks if can go back before show up the alert
-      if(activeView.name === 'InvoicesPage') {
-          if (nav.canGoBack()){
-            this.navCtrl.push(HomePage);
-          } else {
-              this.navCtrl.push(HomePage);
-              
-          }
+      let nav = this.app._appRoot._getActivePortal() || this.app.getActiveNav();
+      let activeView = nav.getActive();
+      console.log("Invoice clicked")
+      if (activeView != null) {
+        if (nav.canGoBack()) {
+          this.navCtrl.push(HomePage);
+        } else if(activeView.isOverlay) {
+          activeView.dismiss();
+        } else {
+          this.navCtrl.push(HomePage);
+          //this.closeApp();
+        }
       }
-  });
+    });
+  
   this.setBackButtonAction();
   }
   setBackButtonAction(){
@@ -120,19 +109,38 @@ export class InvoicesPage {
     }
   }
   sharelink(invoice){
-    console.log(invoice);
-    //Common sharing event will open all available application to share
-    this.socialSharing.share("Message","Subject", this.file.externalDataDirectory +'Invoice'+invoice.invoice_number+'.pdf', invoice.invoice_number)
-      .then((entries) => {
-        console.log('success ' + JSON.stringify(entries));
-      })
-      .catch((error) => {
-        alert('error ' + JSON.stringify(error));
-      });
-      // this.fileOpener.open(this.file.externalDataDirectory +'Invoice'+invoice.invoice_number+'.pdf', 'application/pdf')
-      // .then(() => console.log('File is opened'))
-      // .catch(e => console.log('Error opening file', e));
-}
+    let dirPath = "";
+    let dirName = 'DailySheet';
+    if (this.plt.is('android')) {
+      		dirPath = this.file.externalRootDirectory;
+      	  } else if (this.plt.is('ios')) {
+      		dirPath = this.file.documentsDirectory;
+      	  }
+          let saveDir = dirPath + '/' + dirName+ '/';
+          
+          this.fileOpener.open(saveDir + 'Invoice'+invoice.invoice_number+'.pdf', 'application/pdf')
+				  .then(() => console.log('File is opened'))
+          .catch(e => {
+            let toast = this.tostctrl.create({
+              message: e.message,
+              duration:2000
+            });
+            toast.present();
+          })
+            // this.alert = this.alertCtrl.create({
+            //   title: 'Oh Snap!',
+            //   message: e.message,
+            //   buttons: [{
+            //       text: 'OK',
+            //       handler: () => {
+            //         //this.navCtrl.push(CreateInvoicesPage);
+            //       }
+            //   }],
+            //   cssClass: 'alertDanger'
+          
+          
+};
+
   createinvoice(){
 
     this.navCtrl.push(CreateInvoicesPage);
@@ -156,24 +164,45 @@ export class InvoicesPage {
         this.invoices = data 
         console.log(this.invoices)
             });
-
-           this.plt.registerBackButtonAction(() => {
-      // Catches the active view
-      let nav = this.app.getActiveNavs()[0];
-      let activeView = nav.getActive();                
-      // Checks if can go back before show up the alert
-      if(activeView.name === 'InvoicesPage') {
-          if (nav.canGoBack()){
-            this.navCtrl.push(HomePage);
-          } else {
-            this.navCtrl.push(HomePage);
-          }
-      }
-  });
+            this.plt.registerBackButtonAction(() => {
+              let nav = this.app._appRoot._getActivePortal() || this.app.getActiveNav();
+              let activeView = nav.getActive();
+              console.log("Invoice clicked")
+              if (activeView != null) {
+                if (nav.canGoBack()) {
+                  this.navCtrl.push(HomePage);
+                } else if(activeView.isOverlay) {
+                  activeView.dismiss();
+                } else {
+                  this.navCtrl.push(HomePage);
+                  //this.closeApp();
+                }
+              }
+            });
+            //this.plt.registerBackButtonAction(()=>this.myHandlerFunction());
 }
+myHandlerFunction(){
+
+  
+
+  //  if(this.alert.show()){
+  //   this.alert.dismiss();
+  //  }
+  // this.alert.dismiss();
+  // let nav = this.app.getActiveNavs()[0];
+  //   let activeView = nav.getActive();                
+  //   // Checks if can go back before show up the alert
+  //   if(activeView.name === 'InvoicesPage') {
+  //       if (nav.canGoBack()){
+  //         this.navCtrl.push(HomePage);
+  //       } else {
+  //         this.navCtrl.push(HomePage);
+  //       }
+  //   }
+   }
  removeItem(invoice):void{
 
-
+  console.log(invoice);
   const alert = this.alertCtrl.create({
     title: 'Invoice Delete',
     message: 'Do you Want to Delete this Invoice',

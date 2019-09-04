@@ -22,19 +22,23 @@ import {LoginPage} from '../pages/login/login';
 import Parse from 'parse';
 import {AppDashboardPage} from '../pages/app-dashboard/app-dashboard';
 import { Icon } from 'ionic-angular';
+import {ExpenselistPage} from '../pages/expenselist/expenselist';
+import {GlobalProvider} from '../providers/global/global';
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
+  
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = DashboardPage;
+  //rootPage: any 
 
   pages: Array<{title: string, component: any, Icon:string}>;
 
-  constructor(public platform: Platform,  private ionicApp: IonicApp,public statusBar: StatusBar, public splashScreen: SplashScreen,public app: App,public alertCtrl: AlertController) {
+  constructor(public platform: Platform, public global:GlobalProvider ,private ionicApp: IonicApp,public statusBar: StatusBar, public splashScreen: SplashScreen,public app: App,public alertCtrl: AlertController) {
     this.initializeApp();
-
+    //console.log("LOcalstorage page"+localStorage.LastPage)
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage, Icon: 'ios-information-circle' },
@@ -48,12 +52,13 @@ export class MyApp {
       {title:'Payable' ,component: PayablePage,Icon: 'ios-information-circle'},
       // {title: 'Bills', component: BillsPage },
       {title:'Tax' ,component: TaxPage,Icon: 'ios-information-circle'},
-      
-      {title:'Logout' ,component: DashboardPage,Icon: 'ios-information-circle'}
+      {title:'Expense' ,component: ExpenselistPage,Icon: 'ios-information-circle'},
+      {title:'Logout' ,component: LoginPage,Icon: 'ios-information-circle'}
+
 
       // { title: 'Items', component: CreateEstimatePage }
     ];
-
+    
   }
 
   initializeApp() {
@@ -65,9 +70,7 @@ export class MyApp {
       //this.statusBar.backgroundColorByHexString('#f37321');
       this.hideSplashScreen();
       
-      //this.splashScreen.hide();
     });
-  
   }
   showAlert() {
     let confirm = this.alertCtrl.create({

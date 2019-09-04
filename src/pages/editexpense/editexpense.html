@@ -1,15 +1,9 @@
-<!--
-  Generated template for the ExpensePage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
   <ion-navbar color="lightblue">
-    <ion-title>Expense</ion-title>
+    <ion-title>Edit Expense</ion-title>
     <ion-buttons end>
-      <button ion-button (click)="addexpense()">
-      Save
+      <button ion-button (click)="updateexpense()">
+      Update
     </button>
     </ion-buttons>
   </ion-navbar>
@@ -18,6 +12,10 @@
 <ion-content padding class="my-class">
     <ion-card>
         <ion-card-content>
+            <ion-item style="border-bottom: 1px solid grey">
+                <ion-input type="text" placeholder="Expense Name" name="amount" value= {{this.expensename}} [(ngModel)]="name1" [readonly]="isReadonly()">{{this.expensename}}</ion-input>
+           </ion-item>
+               
             <ion-list>
                 <ion-item>
                   <ion-label color="lightblue">Expense Name</ion-label>
@@ -58,25 +56,17 @@
             <ion-item style="border-bottom: 1px solid grey">
                 <ion-label >Date</ion-label>
                 <!-- <ion-input type="date" (input)="date = $event.target.value"  [(ngModel)]="invoicedate"></ion-input> -->
-                <ion-datetime displayFormat="DD MMM YYYY" (ionChange)="fecha()" pickerFormat="DD MMM YYYY"  [(ngModel)]="expensedate" cancelText ="Cancel" doneText="Ok" ></ion-datetime>
+                <ion-datetime displayFormat="DD MMM YYYY" (ionChange)="fecha()" pickerFormat="DD MMM YYYY" [(ngModel)]="expensedate" cancelText ="Cancel" doneText="Ok" ></ion-datetime>
               </ion-item>
 
-           
-             
-
-                <!-- <ion-col style="border-bottom: 1px solid grey">
-                  <ion-item>
-                      <ion-label style="color:lightgray">Amount</ion-label>
-                  </ion-item>
-                </ion-col> -->
-                
-               
-                    <ion-item style="border-bottom: 1px solid grey">
-                        <ion-input type="number" placeholder="Amount" name="amount" [(ngModel)]="amount"></ion-input>
-                      </ion-item>
+              <ion-item style="border-bottom: 1px solid grey">
+                   <ion-input type="number" placeholder="Amount" name="amount"  value={{this.expamount}} [(ngModel)]="amount">{{this.expamount}}</ion-input>
+              </ion-item>
                   
                 
-          
+              <ion-item style="border-bottom: 1px solid grey">
+                  <ion-input type="number" placeholder="Item Name" name="item"  [(ngModel)]="itemname" value={{this.expitem}} [readonly]="isReadonly()" ></ion-input>
+             </ion-item>
              
                 <ion-item>
                     <ion-label>Item Name</ion-label>  

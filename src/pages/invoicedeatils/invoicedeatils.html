@@ -14,8 +14,8 @@
           </button>
           </ion-buttons>
           <ion-buttons end>
-          <button ion-button (click)="presentActionSheet()">
-            <ion-icon name="more"></ion-icon>
+          <button ion-button (click)="sharelink()">
+            <ion-icon name="share"></ion-icon>
           </button>
           </ion-buttons>
           </ion-navbar>
@@ -173,6 +173,15 @@
              <!-- {{discount}} -->
           </ion-col>
           </ion-row>
+          <ion-row >
+              <ion-col col-8 text-end style="color:coral; margin-top: 5%">
+              Discount Price
+              </ion-col>
+              <ion-col text-end style="margin-top: 4%; color: red">
+                 {{this.discountedprice}}
+                 <!-- {{discount}} -->
+              </ion-col>
+              </ion-row>
 
           <!-- Adjustment -->
           <!-- <ion-row >
@@ -205,6 +214,16 @@
                  <!-- {{discount}} -->
               </ion-col>
               </ion-row>
+
+              <ion-row >
+                  <ion-col col-8 text-end style="color:coral; margin-top: 5%">
+                  Tax Price
+                  </ion-col>
+                  <ion-col text-end style="margin-top: 4%; color: red">
+                     {{this.taxpercentagevalue}}
+                     <!-- {{discount}} -->
+                  </ion-col>
+                  </ion-row>
 
           <!-- Total -->
           <ion-row >

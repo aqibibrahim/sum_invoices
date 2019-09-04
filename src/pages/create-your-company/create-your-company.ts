@@ -6,7 +6,7 @@ import {TaxPage} from '../tax/tax';
 import {Http ,Response} from '@angular/http';
 import {CompanytaxPage} from '../companytax/companytax';
 import {CreateTaxPage} from '../create-tax/create-tax';
-
+import { Network } from '@ionic-native/network';
 /**
  * Generated class for the CreateYourCompanyPage page.
  *
@@ -32,7 +32,8 @@ fiscal:any;
 formatt:any;
 address:any;
 emailstatus:any;
-  constructor(public http: Http,public navCtrl: NavController, public platform:Platform,public navParams: NavParams,public loadingCtrl: LoadingController,public tostctrl: ToastController, public alrtctrl:AlertController) {
+alert:any;
+  constructor(public http: Http,public navCtrl: NavController, public network:Network,public platform:Platform,public navParams: NavParams,public loadingCtrl: LoadingController,public tostctrl: ToastController, public alrtctrl:AlertController) {
     this.companyname = this.navParams.get('companyname');
     this.userid = this.navParams.get('userid');
     this.country = this.navParams.get('country');
@@ -52,21 +53,21 @@ emailstatus:any;
     });
     
   }
-  // initializeApp() {
-  //   this.platform.ready().then(() => {
-  //     this.platform.backButton.subscribeWithPriority(9999, () => {
-  //       document.addEventListener('backbutton', function (event) {
-  //         event.preventDefault();
-  //         event.stopPropagation();
-  //         console.log('hello');
-  //       }, false);
-  //     });
-  //     //this.statusBar.styleDefault();
-  //   });
-  // }
   ionViewDidLoad() {
     console.log('ionViewDidLoad CreateYourCompanyPage');
+    this.platform.registerBackButtonAction(function (event) {
+      console.log("BackButton Pressed")
+      event.preventDefault();
+      
+  }, 100);
   }
+  ionViewDidEnter() {
+    this.platform.registerBackButtonAction(function (event) {
+      console.log("BackButton Pressed")
+      event.preventDefault();
+      
+  }, 100);
+}
 checkemail(){
   if(this.emailstatus == true){
     this.ionViewDidLoad();
@@ -87,8 +88,34 @@ checkemail(){
   }
 }
   taxpage(){
+    if(this.network.type === 'none'){
+      this.alert = this.alrtctrl.create({
+        title: 'Alert!',
+        message: 'There is no Internet connection available, please proceed again when you have a connnection',
+        buttons: [{
+            text: 'OK',
+            handler: () => {
+             this.alert.dismiss();
+            }
+        }],
+        cssClass: 'alertDanger'
+    });
+    this.alert.present();
+  }
+  else{
     if(this.business_email == undefined){
-      alert("Please Add Business Email");
+      this.alert = this.alrtctrl.create({
+        title: 'Oh Snap!',
+        message: 'Please Enter Business Email',
+        buttons: [{
+            text: 'OK',
+            handler: () => {
+              console.log("Nothing")
+            }
+        }],
+        cssClass: 'alertDanger'
+    });
+    this.alert.present();
 }
     else{
  
@@ -115,17 +142,17 @@ checkemail(){
           .subscribe(response => {
             console.log('POST Response:', response);
             let toast = this.tostctrl.create({
-              message:'Company Created',
+              message:'Successfully company created',
               duration:2000
               
             });
             loader.dismiss();
             toast.present();
-            this.navCtrl.push(CreateTaxPage);
+            this.navCtrl.push(CreateTaxPage,{'userid':this.userid});
           }, error => {
             loader.dismiss();
             let toast = this.tostctrl.create({
-              message:'Data not Save',
+              message:'Company not create',
               duration:2000
             });
             toast.present();
@@ -133,6 +160,8 @@ checkemail(){
           });
       
     }
+  }
+    
     
   }
   isReadonly() {

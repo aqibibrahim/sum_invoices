@@ -1,0 +1,49 @@
+<!--
+  Generated template for the ExpenselistPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="lightblue">
+    <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+  <ion-title>Expense</ion-title> 
+</ion-navbar>
+</ion-header>
+
+<ion-content padding class="my-class">
+    <expenselist *ngFor="let expense of record; let index = index"
+    [title]="expense.exp_name"
+    [date]="expense.exp_date"
+    textColor="#747474"
+    hasMargin="false"
+    headerColor="#F53D3D"
+    >
+    <ion-row>
+        <ion-col style="font-size: large; color: black" col-6>
+         {{expense.exp_amount}} 
+        </ion-col>
+        <ion-col style="font-size: large; color: black" col-4>
+            {{expense.item_name}}
+        </ion-col>
+      </ion-row>
+        <ion-row>
+            <ion-col style="text-align: center">
+            <button ion-button item-end  (click)="removeItem(expense)" color="editbutton" style="border-radius: 10px; width: -webkit-fill-available;"><ion-icon name="trash" style="
+              margin-right: 11%;
+          "></ion-icon>Delete</button>
+            </ion-col>
+            <ion-col style="text-align: center">
+                <button ion-button item-end (click)="editexpense(expense)" color="editbutton" style="border-radius: 10px; width: -webkit-fill-available;"><ion-icon name="create" style="
+                  margin-right: 11%;
+              "></ion-icon>Edit</button>
+            </ion-col>
+          </ion-row>
+    </expenselist>
+
+  <ion-fab bottom right >
+      <button ion-fab (click)="createexpense()" color="lightblue"><ion-icon name="add" ></ion-icon></button>
+    </ion-fab>
+</ion-content>

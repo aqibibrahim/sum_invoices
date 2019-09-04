@@ -46,9 +46,13 @@ export class ForgotpasswordPage {
     // }
   }
   submit(){
+     console.log(firebase.auth().currentUser.email);
+    //  if(firebase.auth().fetchSignInMethodsForEmail(this.email)){}
+
+
     if(firebase.auth().currentUser.email == this.email){
       //this.resetPassword(this.email);
-      console.log(firebase.auth().currentUser.email);
+     
       let loader = this.loadingCtrl.create({
         content:'Waiting...'
       });

@@ -77,6 +77,7 @@ import {CashFlowReportPage} from '../pages/cash-flow-report/cash-flow-report';
 import {ItemslistComponent} from '../components/itemslist/itemslist';
 import {ContactlistComponent} from '../components/contactlist/contactlist';
 import {InvoicelistComponent} from '../components/invoicelist/invoicelist';
+import {ExpenselistComponent} from '../components/expenselist/expenselist';
 import { IonicSelectableModule } from 'ionic-selectable';
 import {AppDashboardPage} from '../pages/app-dashboard/app-dashboard';
 import { ReportsProvider } from '../providers/reports/reports';
@@ -90,7 +91,9 @@ import { CompanyProvider } from '../providers/company/company';
 import { AutoCompleteModule } from 'ionic2-auto-complete';
 import { CompleteTestServiceProvider } from '../providers/complete-test-service/complete-test-service';
 import { Network } from '@ionic-native/network';
-
+import {ExpenselistPage} from '../pages/expenselist/expenselist';
+import { AppMinimize } from '@ionic-native/app-minimize';
+import {EditexpensePage} from '../pages/editexpense/editexpense';
 const firebaseConfig = {
   apiKey: "AIzaSyBDowWJg2HFOlYivSbA6oReSq4U7AEsZp4",
   authDomain: "sum-invoice.firebaseapp.com",
@@ -156,7 +159,10 @@ firebase.initializeApp(firebaseConfig);
     ContactlistComponent,
     InvoicelistComponent,
     AppDashboardPage,
-    ShortNumberPipe
+    ShortNumberPipe,
+    ExpenselistPage,
+    ExpenselistComponent,
+    EditexpensePage
   ],
   imports: [ 
     FormsModule, 
@@ -223,7 +229,9 @@ firebase.initializeApp(firebaseConfig);
     PayablePage,
     BalanceSheetReportPage,
     CashFlowReportPage,
-    AppDashboardPage
+    AppDashboardPage,
+    ExpenselistPage,
+    EditexpensePage
   ],
   providers: [
     
@@ -249,6 +257,7 @@ firebase.initializeApp(firebaseConfig);
     AppAvailability,
     CompanyProvider,
     Network,
+    AppMinimize,
     CompleteTestServiceProvider 
     ]
 })
