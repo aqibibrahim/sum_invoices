@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams,LoadingController, ToastController,
 import {Http ,Response} from '@angular/http';
 import {InvoicesPage} from '../invoices/invoices';
 import { App } from 'ionic-angular';
+import {GlobalProvider} from '../../providers/global/global'
 import { Network } from '@ionic-native/network';
 /**
  * Generated class for the EditinvoicePage page.
@@ -33,6 +34,7 @@ status:any;
   value_invoice_number:any;
   value_item_discount:any;
   value_item_quantity:any;
+  value_sale_rate:any;
   value_order_no:any;
   value_sales_person:any;
   value_shipping_charges:any;
@@ -44,7 +46,8 @@ status:any;
   value_payment_option:any;
   paymentoption:any;
   alert:any;
-  constructor(public navCtrl: NavController, private ionicApp: IonicApp,public network:Network,public navParams: NavParams,public app: App,public platform:Platform,public alertCtrl:AlertController,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
+  updateinitialcash=0;
+  constructor(public navCtrl: NavController, public global:GlobalProvider,private ionicApp: IonicApp,public network:Network,public navParams: NavParams,public app: App,public platform:Platform,public alertCtrl:AlertController,public http: Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
     this.id= this.navParams.get('id');
     this.http.get('https://sum-invoice-app.herokuapp.com/invoice/get/'+this.id+'').map(res => res.json()).subscribe(data => {
       console.log(data);
@@ -59,6 +62,7 @@ status:any;
           this.value_sales_person = data[0].sales_person;
           this.value_terms = data[0].comp_name;
           this.value_total_cost = data[0].total_cost;
+          this.value_sale_rate = data[0].sale_rate;
           this.value_status = data[0].status;
           this.value_customer = data[0].customer;
           this.value_email = data[0].email;
@@ -70,7 +74,10 @@ status:any;
       console.log(this.itemid);
 
        });
-       
+       this.http.get('https://sum-invoice-app.herokuapp.com/user/userdata/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+      console.log( data);
+      this.updateinitialcash = data[0].update_initial_cash
+       });
 
 
   }
@@ -147,6 +154,23 @@ status:any;
     this.alert.present();
   }
   else{
+
+    var stringvaluetotalcost =+ this.value_total_cost 
+    this.updateinitialcash = stringvaluetotalcost + this.updateinitialcash;
+    
+    let data1 = {
+      update_initial_cash:this.updateinitialcash
+    };
+    //console.log(this.data.username);
+    this.http.post('https://sum-invoice-app.herokuapp.com/user/updateprofile/'+this.global.userid+'', data1)
+        .subscribe(response => {
+          console.log('POST Response:', response);
+          //loader.dismiss();
+          //this.navCtrl.push(HomePage);
+        }, error => {
+        console.log("Oooops!");
+        });
+
     let loader = this.loadingCtrl.create({
       content:'Waiting...'
     });

@@ -83,6 +83,36 @@
                       
                   </ion-col>
                 </ion-row>
+
+                <ion-row style="color: black; font-size: larger">
+                  <ion-col >
+                    <ion-label  style="color: grey">
+                        Quantity
+                    </ion-label>
+                      
+                  </ion-col>
+                  <ion-col style="text-align: right;font-size: large">
+                      <ion-label>
+                          {{this.value_item_quantity}}
+                      </ion-label>
+                      
+                  </ion-col>
+                </ion-row>
+
+                <ion-row style="color: black; font-size: larger">
+                  <ion-col >
+                    <ion-label  style="color: grey">
+                        Sale Rate
+                    </ion-label>
+                      
+                  </ion-col>
+                  <ion-col style="text-align: right;font-size: large">
+                      <ion-label>
+                          {{this.value_sale_rate | number : fractionSize}}
+                      </ion-label>
+                      
+                  </ion-col>
+                </ion-row>
   
                 <ion-row style="color: black; font-size: larger">
                     <ion-col >

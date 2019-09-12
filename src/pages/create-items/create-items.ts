@@ -35,7 +35,7 @@ export class CreateItemsPage {
   purchase_desc:any;
   qty:any;
   alert:any;
-  initialcash=0;
+  updateinitialcash=0;
   public saleinformation:boolean=false;
   public purchaseinformation:boolean=false;
   constructor(public navCtrl: NavController,public network:Network,public platform: Platform,private ionicApp: IonicApp,public alertCtrl:AlertController, public app: App,public global:GlobalProvider,public navParams: NavParams, public http:Http,public loadingCtrl: LoadingController, public tostctrl: ToastController) {
@@ -45,6 +45,10 @@ export class CreateItemsPage {
 //    name:['',Validators.required],
 //    units:['',Validators.required]
 //  });
+this.http.get('https://sum-invoice-app.herokuapp.com/user/userdata/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+      console.log( data);
+      this.updateinitialcash = data[0].update_initial_cash
+       });
  
   }
 
@@ -138,16 +142,33 @@ else{
   }
   else{
     console.log(this.sexe);
+  
+  var totalitemcash = 0;
+ totalitemcash = this.purchase_rate * this.qty;
+
+ if(totalitemcash > this.updateinitialcash){
+  const alert = this.alertCtrl.create({
+    title: 'Attention',
+    message: 'Your cash is below than your purchasing amount, please add more cash in your Vault',
+    buttons: [{
+        text: 'OK',
+        handler: () => {
+          console.log("Cancel")
+          alert.dismiss();
+        }
+    }],
+    cssClass: 'alertDanger'
+});
+alert.present();
+}
+else{
+  this.updateinitialcash = this.updateinitialcash - totalitemcash;
   let loader = this.loadingCtrl.create({
     content:'Waiting...'
   });
   loader.present();
-  var totalitemcash = 0;
- totalitemcash = this.purchase_rate * this.qty;
- this.initialcash = this.global.initialcash - totalitemcash;
-
   let data1 = {
-    intial_cash:this.initialcash
+    update_initial_cash:this.updateinitialcash
   };
   //console.log(this.data.username);
   this.http.post('https://sum-invoice-app.herokuapp.com/user/updateprofile/'+this.global.userid+'', data1)
@@ -159,71 +180,71 @@ else{
       console.log("Oooops!");
       });
 
-
-
-  //this.afd.list('Books/Books').push({name:this.name});
-  let data = {
-    item_name:this.name,
-    item_type : this.sexe,
-    unit:this.units,
-    sale_rate: this.sale_rate,
-    sale_tax:this.sale_tax,
-    sale_desc:this.sale_desc,
-    purchase_rate:this.purchase_rate,
-    //purchase_account:this.purchase_account,
-    purchase_desc:this.purchase_desc,
-    item_quantity:this.qty,
-    userId:this.global.userid
-    //sale_account:this.sale_account
-
-  };
-  //console.log(this.data.username);
-  this.http.post('https://sum-invoice-app.herokuapp.com/item/create', data)
-      .subscribe(response => {
-        console.log('POST Response:', response);
-        loader.dismiss();
-        let toast = this.tostctrl.create({
-          message:'New Item Created Successfully',
-          duration:2000
-        });
-        let nav = this.app.getActiveNavs()[0];
-          let activeView = nav.getActive();   
-          if(activeView.name === 'CreateItemsPage') {
-            if (nav.canGoBack()){
-                nav.pop();
-            }else{
-              const alert = this.alertCtrl.create({
-                title: 'Exit',
-                message: 'Want to Exit App?',
-                buttons: [{
-                    text: 'Cancel',
-                    role: 'cancel',
-                    handler: () => {
-                      this.nav.setRoot('ItemPage');
-                    }
-                },{
-                    text: 'OK',
-                    handler: () => {
-                      this.platform.exitApp();
-                    }
-                }]
+      let data = {
+        item_name:this.name,
+        item_type : this.sexe,
+        unit:this.units,
+        sale_rate: this.sale_rate,
+        sale_tax:this.sale_tax,
+        sale_desc:this.sale_desc,
+        purchase_rate:this.purchase_rate,
+        //purchase_account:this.purchase_account,
+        purchase_desc:this.purchase_desc,
+        item_quantity:this.qty,
+        userId:this.global.userid
+        //sale_account:this.sale_account
+    
+      };
+      //console.log(this.data.username);
+      this.http.post('https://sum-invoice-app.herokuapp.com/item/create', data)
+          .subscribe(response => {
+            console.log('POST Response:', response);
+            loader.dismiss();
+            let toast = this.tostctrl.create({
+              message:'New Item Created Successfully',
+              duration:2000
             });
-            alert.present();
-            }
-          } else {
-          this.nav.setRoot('ItemPage');
-          }
-        toast.present();
-      // this.navCtrl.push(ItemPage);
-      }, error => {
-        loader.dismiss();
-        let toast = this.tostctrl.create({
-          message:'Data not Save',
-          duration:2000
-        });
-        toast.present();
-       console.log("Oooops!");
-      });
+            let nav = this.app.getActiveNavs()[0];
+              let activeView = nav.getActive();   
+              if(activeView.name === 'CreateItemsPage') {
+                if (nav.canGoBack()){
+                    nav.pop();
+                }else{
+                  const alert = this.alertCtrl.create({
+                    title: 'Exit',
+                    message: 'Want to Exit App?',
+                    buttons: [{
+                        text: 'Cancel',
+                        role: 'cancel',
+                        handler: () => {
+                          this.nav.setRoot('ItemPage');
+                        }
+                    },{
+                        text: 'OK',
+                        handler: () => {
+                          this.platform.exitApp();
+                        }
+                    }]
+                });
+                alert.present();
+                }
+              } else {
+              this.nav.setRoot('ItemPage');
+              }
+            toast.present();
+          // this.navCtrl.push(ItemPage);
+          }, error => {
+            loader.dismiss();
+            let toast = this.tostctrl.create({
+              message:'Data not Save',
+              duration:2000
+            });
+            toast.present();
+           console.log("Oooops!");
+          });
+}
+ //this.afd.list('Books/Books').push({name:this.name});
+  
   }
 }
 }

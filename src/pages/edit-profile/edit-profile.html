@@ -57,7 +57,12 @@
               </ion-select>
             </ion-item>
     </ion-list> -->
-      
+    <ion-item  style="padding-left: initial;">
+      <ion-label color="lightblue" >Email<span class="required">*</span></ion-label>
+   </ion-item>
+   <ion-item>
+      <ion-input type="text" value="{{this.updatecash}}" [(ngModel)]="updatecashvalue" style="border-bottom: 1px solid lightgrey;">{{this.updatecash}}</ion-input>
+     </ion-item>
    
         <!-- <button ion-button block round style="margin-top: 15px;" type="submit" [disabled]="myForm.invalid" color="lightblue"> -->
             <form [formGroup]="myForm" novalidate>

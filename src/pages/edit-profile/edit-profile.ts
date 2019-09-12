@@ -24,7 +24,10 @@ export class EditProfilePage {
   @ViewChild(Nav) nav: Nav;
   myForm: FormGroup;
   pattern: string;
-
+  initialcash=0;
+  updatecash=0;
+  updatecashvalue=0;
+  initialcashvalue = 0;
   isName: boolean = false;
   isEmail: boolean = false;
   isfullname: boolean = false;
@@ -65,7 +68,8 @@ export class EditProfilePage {
       this.compname = data[0].company_name;
       this.fullname = data[0].user_name;
       this.email = data[0].email;
-
+      this.initialcash = data[0].intial_cash;
+      this.updatecash = data[0].update_initial_cash;
        });
       }
   validate(data){
@@ -145,15 +149,23 @@ updateprofile(){
   this.alert.present();
 }
 else{
+  var intupdatecashvalue =+this.updatecashvalue
+  this.updatecash = intupdatecashvalue + this.updatecash
+  this.initialcashvalue = this.initialcash + intupdatecashvalue;
   let loader = this.loadingCtrl.create({
     content:'Waiting...'
   });
   loader.present();
+  if(this.updatecash < 0){
+    this.updatecash = 0;
+  }
   let data = {
     company_name:this.compname,
     user_name : this.fullname,
     email:this.email,
     country: this.country,
+    update_initial_cash:this.updatecash,
+    intial_cash:this.initialcashvalue
   };
   //console.log(this.data.username);
   this.http.post('https://sum-invoice-app.herokuapp.com/user/updateprofile/'+this.global.userid+'', data)

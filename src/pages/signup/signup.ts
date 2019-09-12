@@ -120,7 +120,8 @@ export class SignupPage {
           company_name: this.compname,
           user_name:this.fullname,
           country:this.country,
-          intial_cash:this.initialcash
+          intial_cash:this.initialcash,
+          update_initial_cash:this.initialcash
       };
         let loader = this.loadingCtrl.create({
             content:'Waiting...'

@@ -38,7 +38,7 @@
           Total Assets
       </ion-col>
       </ion-row>
-
+      
       <ion-row style="font-size: medium;text-align: left">
           <ion-col>
               <ion-item style="min-height: fit-content; padding-left: initial">
@@ -47,7 +47,7 @@
           </ion-col>
           <ion-col style="padding-right: initial">
             <ion-item style="text-align: right;min-height: fit-content;">
-                <ion-label style="margin: 0px 0px 0px 0px">{{this.totalcash}}</ion-label>
+                <ion-label style="margin: 0px 0px 0px 0px">{{this.cashinhand}}</ion-label>
               </ion-item>
         </ion-col>
         </ion-row>
@@ -118,6 +118,33 @@
         </ion-col>
         </ion-row>
     
+        <ion-row style="font-size: medium;text-align: left">
+          <ion-col>
+              <ion-item style="min-height: fit-content; padding-left: initial">
+                  <ion-label style="margin: 0px 0px 0px 0px">General Payables</ion-label>
+                </ion-item>
+          </ion-col>
+          <ion-col style="padding-right: initial">
+            <ion-item style="text-align: right;min-height: fit-content;">
+                <ion-label style="margin: 0px 0px 0px 0px">{{this.generalpayables}}</ion-label>
+              </ion-item>
+        </ion-col>
+        </ion-row>
+
+        <ion-row style="font-size: medium;text-align: left">
+          <ion-col>
+              <ion-item style="min-height: fit-content; padding-left: initial">
+                  <ion-label style="margin: 0px 0px 0px 0px">VAT Payables</ion-label>
+                </ion-item>
+          </ion-col>
+          <ion-col style="padding-right: initial">
+            <ion-item style="text-align: right;min-height: fit-content;">
+                <ion-label style="margin: 0px 0px 0px 0px">{{this.vatpayables}}</ion-label>
+              </ion-item>
+        </ion-col>
+        </ion-row>
+
+
       <ion-row style="font-size: medium;text-align: left">
         <ion-col >
             <ion-item style="min-height: fit-content; padding-left: initial">
@@ -126,7 +153,7 @@
         </ion-col>
         <ion-col style="padding-right: initial">
           <ion-item style="text-align: right;min-height: fit-content;">
-              <ion-label style="margin: 0px 0px 0px 0px">{{this.fixedcapital}}</ion-label>
+              <ion-label style="margin: 0px 0px 0px 0px">{{this.initialcash}}</ion-label>
             </ion-item>
       </ion-col>
       </ion-row>
@@ -139,13 +166,13 @@
           </ion-col>
           <ion-col style="padding-right: initial">
             <ion-item style="text-align: right;min-height: fit-content;">
-                <ion-label style="margin: 0px 0px 0px 0px">{{this.stringprofit}}</ion-label>
+                <ion-label style="margin: 0px 0px 0px 0px">{{this.fixedprofit}}</ion-label>
               </ion-item>
         </ion-col>
       </ion-row>
     
 
-        <ion-row style="font-size: medium;text-align: left;border-bottom: 1px solid grey">
+        <!-- <ion-row style="font-size: medium;text-align: left;border-bottom: 1px solid grey">
             <ion-col >
                 <ion-item style="min-height: fit-content; padding-left: initial">
                     <ion-label style="margin: 0px 0px 0px 0px">Payable</ion-label>
@@ -156,7 +183,7 @@
                   <ion-label style="margin: 0px 0px 0px 0px">{{this.stringpayable}}</ion-label>
                 </ion-item>
           </ion-col>
-        </ion-row>
+        </ion-row> -->
      
      <ion-row style="color: black; font-size: medium; font-weight: bold">
         <ion-col >

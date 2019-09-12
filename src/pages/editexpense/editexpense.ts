@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,LoadingController, Nav,ToastController,Platform, IonicApp } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,LoadingController, Nav,ToastController,Platform, IonicApp, AlertController } from 'ionic-angular';
 import {Http ,Response} from '@angular/http';
 import {GlobalProvider} from '../../providers/global/global';
 import { App } from 'ionic-angular';
@@ -30,7 +30,9 @@ name:any;
 item_id:any;
 item_name:any;
 items:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public ionicApp:IonicApp,public app:App,public platform:Platform,public loadingCtrl: LoadingController, public tostctrl: ToastController,public global:GlobalProvider, public http:Http) {
+
+updateinitialcash = 0;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl:AlertController,public ionicApp:IonicApp,public app:App,public platform:Platform,public loadingCtrl: LoadingController, public tostctrl: ToastController,public global:GlobalProvider, public http:Http) {
     this.id= this.navParams.get('id');
     this.http.get('https://sum-invoice-app.herokuapp.com/expense/get/'+this.id+'').map(res => res.json()).subscribe(data => {
       console.log(data);
@@ -44,6 +46,12 @@ items:any;
       console.log(data);
          this.items = data 
        });
+
+       this.http.get('https://sum-invoice-app.herokuapp.com/user/userdata/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+      console.log( data);
+      this.updateinitialcash = data[0].update_initial_cash
+       console.log(this.updateinitialcash);
+       });
   }
 
   ionViewDidLoad() {
@@ -54,37 +62,74 @@ items:any;
   
   }
   updateexpense(){
-    let loader = this.loadingCtrl.create({
-      content:'Waiting...'
+    
+
+    if(this.updateinitialcash < this.amount){
+      const alert = this.alertCtrl.create({
+        title: 'Attention',
+        message: 'Your cash is below than your Expense amount, please add more cash in your Vault',
+        buttons: [{
+            text: 'OK',
+            handler: () => {
+              console.log("Cancel")
+            }
+        }],
+        cssClass: 'alertDanger'
     });
-    loader.present();
-    let data = {
-      exp_name:this.name,
-      exp_date:this.expensedate,
-      item_name:this.item_name,
-      item_id:this.item_id,
-      exp_amount:this.amount,
-      userId:this.global.userid
+    alert.present();
     }
-    this.http.post('https://sum-invoice-app.herokuapp.com/expense/update/'+this.id+'', data)
-    .subscribe(response => {
-      console.log('POST Response:', response);
-      loader.dismiss();
-      let toast = this.tostctrl.create({
-        message:'Expense Update Succesfully in your system',
-        duration:2000
-      });
-      toast.present();
-      this.navCtrl.push(ExpenselistPage);
-    }, error => {
-      loader.dismiss();
-      let toast = this.tostctrl.create({
-        message:'Expense not addedd succesfully',
-        duration:2000
-      });
-      toast.present(); 
-    console.log("Oooops!");
+else{
+  let loader = this.loadingCtrl.create({
+    content:'Waiting...'
+  });
+  loader.present();
+  this.updateinitialcash = this.updateinitialcash - this.amount;
+  //this.initialcash = this.initialcash - totalexpensecash
+
+  let data1 = {
+    update_initial_cash:this.updateinitialcash
+  };
+  //console.log(this.data.username);
+  this.http.post('https://sum-invoice-app.herokuapp.com/user/updateprofile/'+this.global.userid+'', data1)
+      .subscribe(response => {
+        console.log('POST Response:', response);
+        loader.dismiss();
+        //this.navCtrl.push(HomePage);
+      }, error => {
+      console.log("Oooops!");
+      }); 
+      
+  let data = {
+    exp_name:this.name,
+    exp_date:this.expensedate,
+    item_name:this.item_name,
+    item_id:this.item_id,
+    exp_amount:this.amount,
+    userId:this.global.userid
+  }
+  this.http.post('https://sum-invoice-app.herokuapp.com/expense/update/'+this.id+'', data)
+  .subscribe(response => {
+    console.log('POST Response:', response);
+    loader.dismiss();
+    let toast = this.tostctrl.create({
+      message:'Expense Update Succesfully in your system',
+      duration:2000
     });
+    toast.present();
+    this.navCtrl.push(ExpenselistPage);
+  }, error => {
+    loader.dismiss();
+    let toast = this.tostctrl.create({
+      message:'Expense not addedd succesfully',
+      duration:2000
+    });
+    toast.present(); 
+  console.log("Oooops!");
+  });
+
+}
+
+    
   }
   onItemChange(){
     var key_id = Object.keys(this.itemname)[0];

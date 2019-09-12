@@ -174,6 +174,9 @@ export class CreateInvoicesPage {
  
   discprice:any;
   pricetotal:any;
+
+  initialcash =0;
+  updateinitialcash =0;
   constructor(public navCtrl: NavController,private ionicApp: IonicApp,public platform: Platform,public alertCtrl:AlertController, public app: App,private nativeStorage: NativeStorage, public global:GlobalProvider,private sms: SMS,public http:Http,public loadingCtrl: LoadingController, public tostctrl: ToastController, private storage: Storage,public navParams: NavParams,public emailComposer: EmailComposer, private plt: Platform, private file: File, private fileOpener: FileOpener) {
     // this.value=navParams.get('item_name');
     // console.log(this.value);

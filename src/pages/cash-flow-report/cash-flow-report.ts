@@ -52,7 +52,8 @@ export class CashFlowReportPage {
   stringendingcash:any;
   stringprepayment:any;
   stringoutgoing:any;
-    
+  cashinhand=0;
+  initialcash=0;
 
 
 
@@ -61,6 +62,15 @@ export class CashFlowReportPage {
     this.s_date = this.navParams.get('startdate');
     this.e_date = this.navParams.get('enddate');
     this.companyname = this.global.company_name;
+
+
+
+    this.http.get('https://sum-invoice-app.herokuapp.com/user/userdata/'+this.global.userid+'').map(res => res.json()).subscribe(data => {
+      console.log( data);
+      this.cashinhand = data[0].update_initial_cash
+      this.initialcash = data[0].intial_cash
+
+       });
     let loader = this.loadingCtrl.create({
       content:'Waiting...'
     });
@@ -142,11 +152,7 @@ export class CashFlowReportPage {
       }, error => {
       console.log("Oooops!");
        });
-
-       
-
-
-  }
+}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CashFlowReportPage');

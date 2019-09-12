@@ -4,6 +4,7 @@ import {Http ,Response} from '@angular/http';
 import {ItemPage} from '../item/item';
 import { App } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
+import {GlobalProvider} from '../../providers/global/global';
 /**
  * Generated class for the EdititemPage page.
  *
@@ -39,11 +40,11 @@ export class EdititemPage {
   new_purchase_rate:any;
   purchase_account:any;
   purchase_desc:any;
-  
+  updateinitialcash=0;
 
   public check1:boolean=false;
   public purchaseinformation:boolean=false;
-  constructor(public navCtrl: NavController, public network:Network,public navParams: NavParams, public loadingCtrl:LoadingController, public app: App,public platform:Platform,public http: Http,public alertCtrl:AlertController) {
+  constructor(public navCtrl: NavController, public global:GlobalProvider,public network:Network,public navParams: NavParams, public loadingCtrl:LoadingController, public app: App,public platform:Platform,public http: Http,public alertCtrl:AlertController) {
     this.id= this.navParams.get('id');
     
   this.http.get('https://sum-invoice-app.herokuapp.com/item/get/'+this.id+'').map(res => res.json()).subscribe(data => {
@@ -111,48 +112,81 @@ export class EdititemPage {
     //return;
     }
     else{
+      
+      var totalitemcash = 0;
+      totalitemcash = this.purchase_rate * this.qty;
+     
+      if(totalitemcash > this.updateinitialcash){
+       const alert = this.alertCtrl.create({
+         title: 'Attention',
+         message: 'Your cash is below than your purchasing amount, please add more cash in your Vault',
+         buttons: [{
+             text: 'OK',
+             handler: () => {
+               console.log("Cancel")
+               alert.dismiss();
+             }
+         }],
+         cssClass: 'alertDanger'
+     });
+     alert.present();
+     }
+    else{
+      this.updateinitialcash = this.updateinitialcash - totalitemcash;
       let loader = this.loadingCtrl.create({
         content:'Waiting...'
       });
       loader.present();
-      var y = +this.oldqty;
-      var y1 = +this.qty;
-      this.newqty = y+y1;
-      // this.new_sale_rate = this.old_sale_rate+this.sale_rate;
-      var x = +this.old_purchase_rate;
-      var x1 = +this.purchase_rate;
-      this.new_purchase_rate = x+x1;
-  
-      var old_total_value = y*x;
-      var new_total_value = y1*x1;
-  
-      var total_value = (old_total_value+new_total_value)/this.newqty;
-  
-      console.log(this.newqty,"Purchase rate"+total_value);
-      let data = {
-        item_name:this.name,
-        item_type : this.sexe,
-        unit:this.units,
-        sale_rate: this.sale_rate,
-        sale_tax:this.sale_tax,
-        sale_desc:this.sale_desc,
-        purchase_rate:total_value,
-        purchase_account:this.purchase_account,
-        purchase_desc:this.purchase_desc,
-        item_quantity:this.newqty
+      let data1 = {
+        update_initial_cash:this.updateinitialcash
       };
       //console.log(this.data.username);
-      this.http.post('https://sum-invoice-app.herokuapp.com/item/update/'+this.id+'', data)
+      this.http.post('https://sum-invoice-app.herokuapp.com/user/updateprofile/'+this.global.userid+'', data1)
           .subscribe(response => {
             console.log('POST Response:', response);
             loader.dismiss();
-            this.navCtrl.push(ItemPage);
+            //this.navCtrl.push(HomePage);
           }, error => {
           console.log("Oooops!");
           });
-  
-    }
+
+        var y = +this.oldqty;
+        var y1 = +this.qty;
+        this.newqty = y+y1;
+        // this.new_sale_rate = this.old_sale_rate+this.sale_rate;
+        var x = +this.old_purchase_rate;
+        var x1 = +this.purchase_rate;
+        this.new_purchase_rate = x+x1;
     
+        var old_total_value = y*x;
+        var new_total_value = y1*x1;
+    
+        var total_value = (old_total_value+new_total_value)/this.newqty;
+    
+        console.log(this.newqty,"Purchase rate"+total_value);
+        let data = {
+          item_name:this.name,
+          item_type : this.sexe,
+          unit:this.units,
+          sale_rate: this.sale_rate,
+          sale_tax:this.sale_tax,
+          sale_desc:this.sale_desc,
+          purchase_rate:total_value,
+          purchase_account:this.purchase_account,
+          purchase_desc:this.purchase_desc,
+          item_quantity:this.newqty
+        };
+        //console.log(this.data.username);
+        this.http.post('https://sum-invoice-app.herokuapp.com/item/update/'+this.id+'', data)
+            .subscribe(response => {
+              console.log('POST Response:', response);
+              loader.dismiss();
+              this.navCtrl.push(ItemPage);
+            }, error => {
+            console.log("Oooops!");
+            });
+    }
+      }
         }
         
         
